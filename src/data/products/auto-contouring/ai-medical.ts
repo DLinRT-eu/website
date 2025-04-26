@@ -12,22 +12,22 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning contours", "Fast processing", "Multiple anatomical sites"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://www.aimedical.io/wp-content/uploads/2021/11/AI-Medical-Logo.png",
+    logoUrl: "public/logos/ai-medical.png",
     website: "https://www.aimedical.io/products",
-    anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    anatomicalLocation: ["Brain"],
+    modality: "MRI",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered contouring", "Workflow integration", "Multiple anatomical sites"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT"],
+      input: ["MRI"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]
     },
     technology: {
-      integration: ["TPS integration", "PACS integration"],
+      integration: ["PACS integration"],
       deployment: ["Cloud-based", "On-premises"],
       triggerForAnalysis: "Manual or automated",
       processingTime: "Minutes per case"

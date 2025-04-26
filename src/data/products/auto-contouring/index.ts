@@ -16,7 +16,6 @@ import { MANTEIA_PRODUCTS } from "./manteia";
 import { MIM_SOFTWARE_PRODUCTS } from "./mim-software";
 import { RADFORMATION_PRODUCTS } from "./radformation";
 import { SIEMENS_PRODUCTS } from "./siemens";
-import { DIRECTORGANS_PRODUCTS } from "./directorgans";
 import { SPECTRONIC_PRODUCTS } from "./spectronic";
 import { SYNAPTIQ_PRODUCTS } from "./synaptiq";
 import { VYSIONER_PRODUCTS } from "./vysioner";
@@ -39,7 +38,6 @@ export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...MIM_SOFTWARE_PRODUCTS,
   ...RADFORMATION_PRODUCTS,
   ...SIEMENS_PRODUCTS,
-  ...DIRECTORGANS_PRODUCTS,
   ...SPECTRONIC_PRODUCTS,
   ...SYNAPTIQ_PRODUCTS,
   ...VYSIONER_PRODUCTS,

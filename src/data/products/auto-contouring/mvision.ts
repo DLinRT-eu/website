@@ -6,7 +6,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     name: "MVision AI",
     company: "MVision AI",
     companyUrl: "https://www.mvision.ai/",
-    productUrl: "https://www.mvision.ai/products/",
+    productUrl: "https://mvision.ai/guideline-based-segmentation/",
     description: "Cloud-based auto-segmentation tool for radiation therapy planning that utilizes deep learning algorithms.",
     features: ["Cloud-based segmentation", "AI algorithms", "Multiple cancer sites"],
     category: "Auto-Contouring",

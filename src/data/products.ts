@@ -1,4 +1,3 @@
-
 export const SAMPLE_PRODUCTS = [
   {
     id: "contour-ai-pro",
@@ -59,21 +58,6 @@ export const SAMPLE_PRODUCTS = [
     subspeciality: "Clinical Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     lastUpdated: "2024-04-18"
-  },
-  {
-    id: "synth-image",
-    name: "SynthImage AI",
-    company: "DeepMedical",
-    description: "Advanced medical image synthesis platform for radiotherapy planning.",
-    features: ["CT to MRI synthesis", "Artifact reduction", "Resolution enhancement"],
-    category: "Image Synthesis",
-    certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Brain", "Pelvis"],
-    modality: "CT/MRI",
-    subspeciality: "Medical Imaging",
-    diseaseTargeted: ["Brain Tumors", "Prostate Cancer"],
-    lastUpdated: "2024-04-22"
   },
   {
     id: "qa-master",

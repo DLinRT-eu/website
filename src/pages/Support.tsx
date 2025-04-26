@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { GitHub } from 'lucide-react';
+import { Github } from 'lucide-react';
 
 const Support = () => {
   const handleGitHubIssue = () => {
@@ -21,7 +21,7 @@ const Support = () => {
 
         <div className="flex justify-center">
           <Button onClick={handleGitHubIssue} variant="outline" className="flex items-center gap-2">
-            <GitHub className="h-5 w-5" />
+            <Github className="h-5 w-5" />
             Submit an Issue on GitHub
           </Button>
         </div>

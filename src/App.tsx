@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,6 +14,7 @@ import News from "./pages/News";
 import Support from "./pages/Support";
 import NewsDetail from "./pages/NewsDetail";
 import Products from "./pages/Products";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 const BASE_URL = import.meta.env.BASE_URL || '/ai-rad-product-finder/';
@@ -36,6 +36,7 @@ const App = () => (
           <Route path="news" element={<News />} />
           <Route path="support" element={<Support />} />
           <Route path="news/:id" element={<NewsDetail />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

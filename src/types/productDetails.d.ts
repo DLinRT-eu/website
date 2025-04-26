@@ -2,6 +2,8 @@
 import { Product } from './product';
 
 export interface ProductDetails extends Product {
+  companyUrl?: string;
+  productUrl?: string;
   subspeciality?: string;
   modality?: string;
   diseaseTargeted?: string[];

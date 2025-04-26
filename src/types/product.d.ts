@@ -8,6 +8,8 @@ export interface Product {
   category: string;
   certification?: string;
   logoUrl: string;
+  companyUrl?: string;
+  productUrl?: string;
   anatomicalLocation?: string[];
   modality?: string;
   subspeciality?: string;

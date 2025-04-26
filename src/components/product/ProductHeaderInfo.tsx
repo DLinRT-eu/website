@@ -1,5 +1,5 @@
 
-import { Calendar, Info } from "lucide-react";
+import { Calendar, Info, ExternalLink } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
 
 interface ProductHeaderInfoProps {
@@ -23,6 +23,19 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
         )}
       </div>
       <p className="text-lg text-gray-700 mb-6">{product.description}</p>
+      
+      {product.website && (
+        <div className="mb-4">
+          <a 
+            href={product.website} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="text-[#00A6D6] flex items-center gap-1 hover:underline inline-flex"
+          >
+            Visit official website <ExternalLink className="h-4 w-4" />
+          </a>
+        </div>
+      )}
     </div>
   );
 };

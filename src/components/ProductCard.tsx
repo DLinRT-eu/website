@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -13,6 +14,7 @@ interface ProductCardProps {
   category: string;
   certification?: string;
   logoUrl: string;
+  website?: string;
   productUrl?: string;
   companyUrl?: string;
   releaseDate?: string;
@@ -28,6 +30,7 @@ const ProductCard = ({
   category, 
   certification, 
   logoUrl,
+  website,
   productUrl,
   companyUrl,
   releaseDate,
@@ -78,6 +81,21 @@ const ProductCard = ({
           </div>
         </div>
         <p className="text-gray-600 mb-4 line-clamp-2">{description}</p>
+        
+        {/* Website link if available */}
+        {website && (
+          <div className="mb-4">
+            <a 
+              href={website} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-[#00A6D6] flex items-center gap-1 hover:underline"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Visit website <ExternalLink className="h-3 w-3" />
+            </a>
+          </div>
+        )}
         
         {/* Version and release date information */}
         {(version || releaseDate) && (

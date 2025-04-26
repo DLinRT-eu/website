@@ -1,7 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 import { CompanyDetails } from "@/types/company";
-import { NEWS_ITEMS } from "./news";
+import { NewsItem, NEWS_ITEMS } from "./news";
 import { COMPANIES } from "./companies";
 import { AUTO_CONTOURING_PRODUCTS } from "./products/auto-contouring";
 import { REGISTRATION_PRODUCTS } from "./products/registration";

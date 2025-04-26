@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
@@ -11,6 +12,7 @@ interface FilterState {
   locations: string[];
   companies: string[];
   certifications: string[];
+  modalities: string[];
 }
 
 const Index = () => {
@@ -20,6 +22,7 @@ const Index = () => {
     locations: [],
     companies: [],
     certifications: [],
+    modalities: [],
   });
 
   const handleResetFilters = () => {
@@ -31,6 +34,7 @@ const Index = () => {
       locations: [],
       companies: [],
       certifications: [],
+      modalities: [],
     });
   };
 

@@ -1,9 +1,10 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   ChartContainer, 
-  ChartTooltip,
   ChartTooltipContent, 
+  ChartTooltip,
   ChartLegend,
   ChartLegendContent 
 } from "@/components/ui/chart";
@@ -52,6 +53,11 @@ const Dashboard = () => {
     '#F59E0B',   // Amber
   ];
 
+  // Custom label formatter for pie chart
+  const renderCustomizedLabel = ({ name, percent }) => {
+    return `${name} (${(percent * 100).toFixed(0)}%)`;
+  };
+
   return (
     <div className="container mx-auto p-6">
       <div className="flex items-center gap-2 mb-6">
@@ -93,12 +99,7 @@ const Dashboard = () => {
                     cx="50%"
                     cy="50%"
                     outerRadius={100}
-                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                    labelStyle={{ 
-                      fontSize: '12px', 
-                      fill: 'var(--foreground)',
-                      fontWeight: 500 
-                    }}
+                    label={renderCustomizedLabel}
                   >
                     {locationData.map((entry, index) => (
                       <Cell 

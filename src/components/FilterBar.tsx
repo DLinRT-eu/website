@@ -11,6 +11,7 @@ import {
 // Sample data - in a real app, this would come from your data source
 const TASKS = ["Auto-Contouring", "Dose Optimization", "Quality Assurance", "Treatment Planning"];
 const COMPANIES = ["RadTech Solutions", "AI Medical Systems", "HealthAI Solutions"];
+const CERTIFICATIONS = ["CE", "FDA", "CE & FDA"];
 
 const FilterBar = () => {
   return (
@@ -41,6 +42,19 @@ const FilterBar = () => {
           {COMPANIES.map((company) => (
             <SelectItem key={company} value={company.toLowerCase()}>
               {company}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select certification" />
+        </SelectTrigger>
+        <SelectContent>
+          {CERTIFICATIONS.map((cert) => (
+            <SelectItem key={cert} value={cert.toLowerCase()}>
+              {cert}
             </SelectItem>
           ))}
         </SelectContent>

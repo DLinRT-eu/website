@@ -7,21 +7,24 @@ const SAMPLE_PRODUCTS = [
     company: "RadTech Solutions",
     description: "Automated contouring system using deep learning for precise organ-at-risk delineation in radiotherapy planning.",
     features: ["Auto-Contouring", "Deep Learning", "Real-time"],
-    category: "Treatment Planning"
+    category: "Treatment Planning",
+    certification: "CE & FDA"
   },
   {
     name: "DoseOptimize Pro",
     company: "AI Medical Systems",
     description: "AI-powered dose optimization platform for personalized radiation therapy treatment planning.",
     features: ["Dose Optimization", "Adaptive Planning", "Cloud-based"],
-    category: "Dosimetry"
+    category: "Dosimetry",
+    certification: "FDA"
   },
   {
     name: "QAIntelligence",
     company: "HealthAI Solutions",
     description: "Intelligent quality assurance system for radiation therapy, featuring automated plan verification.",
     features: ["Quality Assurance", "Plan Verification", "Analytics"],
-    category: "Quality Assurance"
+    category: "Quality Assurance",
+    certification: "CE"
   }
 ];
 

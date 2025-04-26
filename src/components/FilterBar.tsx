@@ -1,3 +1,4 @@
+
 import { Filter } from "lucide-react";
 import {
   Select,
@@ -35,6 +36,19 @@ const FilterBar = () => {
 
       <Select>
         <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select location" />
+        </SelectTrigger>
+        <SelectContent>
+          {ANATOMICAL_LOCATIONS.map((location) => (
+            <SelectItem key={location} value={location.toLowerCase()}>
+              {location}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-[180px]">
           <SelectValue placeholder="Select company" />
         </SelectTrigger>
         <SelectContent>
@@ -54,19 +68,6 @@ const FilterBar = () => {
           {CERTIFICATIONS.map((cert) => (
             <SelectItem key={cert} value={cert.toLowerCase()}>
               {cert}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      <Select>
-        <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select location" />
-        </SelectTrigger>
-        <SelectContent>
-          {ANATOMICAL_LOCATIONS.map((location) => (
-            <SelectItem key={location} value={location.toLowerCase()}>
-              {location}
             </SelectItem>
           ))}
         </SelectContent>

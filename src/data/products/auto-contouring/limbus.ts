@@ -6,6 +6,8 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     id: "limbus-contour",
     name: "Limbus Contour",
     company: "Limbus AI",
+    companyUrl: "https://limbus.ai/",
+    productUrl: "https://limbus.ai/solutions/limbus-contour/",
     description: "AI-powered auto-contouring software for fast and accurate target volume delineation in radiation therapy planning.",
     features: ["Automated OAR contouring", "Fast processing", "Deep learning algorithms"],
     category: "Auto-Contouring",

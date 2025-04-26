@@ -1,10 +1,13 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
   {
     id: "raysearch-raystation",
-    name: "RayStation",
+    name: "RayStation Deep Learning Segmentation",
     company: "RaySearch Laboratories",
+    companyUrl: "https://www.raysearchlabs.com/",
+    productUrl: "https://www.raysearchlabs.com/solutions/raystation/deep-learning-segmentation",
     description: "Advanced treatment planning system with machine learning-based auto-segmentation for rapid and consistent contouring.",
     features: ["Deep learning segmentation", "Integrated planning", "Atlas-based backup"],
     category: "Auto-Contouring",

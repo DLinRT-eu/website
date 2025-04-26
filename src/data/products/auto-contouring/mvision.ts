@@ -4,8 +4,10 @@ import { ProductDetails } from "@/types/productDetails";
 export const MVISION_PRODUCTS: ProductDetails[] = [
   {
     id: "mvision-autosegment",
-    name: "MVision AutoSegment",
+    name: "MVision AI",
     company: "MVision AI",
+    companyUrl: "https://www.mvision.ai/",
+    productUrl: "https://www.mvision.ai/products/",
     description: "Cloud-based auto-segmentation tool for radiation therapy planning that utilizes deep learning algorithms.",
     features: ["Cloud-based segmentation", "AI algorithms", "Multiple cancer sites"],
     category: "Auto-Contouring",

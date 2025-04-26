@@ -1,10 +1,13 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
   {
-    id: "therapixel-autocontour",
-    name: "TherapAnalytics AutoContour",
+    id: "therapanacea-annotate",
+    name: "Annotate",
     company: "Therapanacea",
+    companyUrl: "https://www.therapanacea.eu/",
+    productUrl: "https://www.therapanacea.eu/solutions/",
     description: "AI-powered auto-contouring solution for radiation oncology that delivers accurate, consistent and fast delineation of organs at risk.",
     features: ["Precise contouring", "Fast processing", "Customizable workflows"],
     category: "Auto-Contouring",

@@ -1,10 +1,13 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const MIRADA_PRODUCTS: ProductDetails[] = [
   {
-    id: "mirada-dln",
-    name: "DLCExpert",
+    id: "mirada-dlc",
+    name: "DLC Expert",
     company: "Mirada Medical",
+    companyUrl: "https://mirada-medical.com/",
+    productUrl: "https://mirada-medical.com/solutions/dlc-expert/",
     description: "Deep learning-based auto-contouring software for radiation oncology providing consistent and rapid contouring of normal tissues.",
     features: ["Multi-structure contouring", "Consistent results", "Workflow integration"],
     category: "Auto-Contouring",

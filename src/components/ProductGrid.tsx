@@ -1,4 +1,5 @@
-import { FileExcel } from "lucide-react";
+
+import { FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "./ProductCard";
 
@@ -49,13 +50,14 @@ const SAMPLE_PRODUCTS = [
 
 const ProductGrid = () => {
   const exportToExcel = () => {
-    const headers = ["Name", "Company", "Category", "Certification", "Features"];
+    const headers = ["Name", "Company", "Category", "Certification", "Features", "Anatomical Location"];
     const data = SAMPLE_PRODUCTS.map(product => [
       product.name,
       product.company,
       product.category,
       product.certification || "N/A",
-      product.features.join(", ")
+      product.features.join(", "),
+      (product.anatomicalLocation || []).join(", ")
     ]);
 
     const csvContent = [
@@ -82,7 +84,7 @@ const ProductGrid = () => {
           onClick={exportToExcel}
           className="flex items-center gap-2"
         >
-          <FileExcel className="h-4 w-4" />
+          <FileSpreadsheet className="h-4 w-4" />
           Export to CSV
         </Button>
       </div>

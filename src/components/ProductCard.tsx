@@ -1,6 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 interface ProductCardProps {
   name: string;
@@ -9,11 +10,22 @@ interface ProductCardProps {
   features: string[];
   category: string;
   certification?: string;
+  logoUrl: string;
 }
 
-const ProductCard = ({ name, company, description, features, category, certification }: ProductCardProps) => {
+const ProductCard = ({ name, company, description, features, category, certification, logoUrl }: ProductCardProps) => {
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">
+      <div className="mb-6 bg-gray-50 rounded-lg overflow-hidden">
+        <AspectRatio ratio={16/9} className="bg-white">
+          <img
+            src={logoUrl}
+            alt={`${name} logo`}
+            className="object-contain w-full h-full p-4"
+          />
+        </AspectRatio>
+      </div>
+      
       <div className="flex justify-between items-start mb-4">
         <div>
           <h3 className="text-xl font-semibold text-gray-900">{name}</h3>

@@ -3,31 +3,66 @@ import { CompanyDetails } from "@/types/company";
 
 export const COMPANIES: CompanyDetails[] = [
   {
-    id: "radtech-solutions",
-    name: "RadTech Solutions",
-    description: "Specializing in AI-powered contouring and treatment planning solutions.",
-    website: "https://radtechsolutions.example.com",
-    productIds: ["contour-ai-pro", "dose-optimizer"]
+    id: "limbus-ai",
+    name: "Limbus AI",
+    description: "Specializing in AI-powered auto-contouring solutions for radiation therapy planning.",
+    website: "https://www.limbus.ai",
+    productIds: ["limbus-contour"]
   },
   {
-    id: "medicalvision",
-    name: "MedicalVision",
-    description: "Pioneers in medical image registration and analysis technologies.",
-    website: "https://medicalvision.example.com",
-    productIds: ["register-master"]
+    id: "mvision-ai",
+    name: "MVision AI",
+    description: "Pioneers in cloud-based auto-segmentation solutions for radiation therapy.",
+    website: "https://www.mvision.ai",
+    productIds: ["mvision-autosegment"]
   },
   {
-    id: "medai-systems",
-    name: "MedAI Systems",
-    description: "Focused on treatment optimization and clinical decision support.",
-    website: "https://medaisystems.example.com",
-    productIds: ["dose-optimizer"]
+    id: "mirada-medical",
+    name: "Mirada Medical",
+    description: "Leaders in medical imaging software solutions with focus on AI-powered contouring.",
+    website: "https://mirada-medical.com",
+    productIds: ["mirada-dln"]
   },
   {
-    id: "deepmedical",
-    name: "DeepMedical",
-    description: "Experts in medical image synthesis and augmentation.",
-    website: "https://deepmedical.example.com",
-    productIds: ["synth-image"]
+    id: "philips-healthcare",
+    name: "Philips Healthcare",
+    description: "Global leader in health technology, offering comprehensive radiation oncology solutions.",
+    website: "https://www.philips.com/healthcare",
+    productIds: ["philips-mrcat"]
+  },
+  {
+    id: "siemens-healthineers",
+    name: "Siemens Healthineers",
+    description: "Pioneer in medical technology and digital health solutions.",
+    website: "https://www.siemens-healthineers.com",
+    productIds: ["siemens-syngo-ct"]
+  },
+  {
+    id: "ge-healthcare",
+    name: "GE Healthcare",
+    description: "Leading provider of medical imaging and information technologies.",
+    website: "https://www.gehealthcare.com",
+    productIds: ["mr-box-synthetic"]
+  },
+  {
+    id: "spectronic-medical",
+    name: "Spectronic Medical",
+    description: "Specialists in MRI-only radiotherapy planning solutions.",
+    website: "https://spectronicmedical.com/",
+    productIds: ["spectronic-mriplus"]
+  },
+  {
+    id: "raysearch",
+    name: "RaySearch Laboratories",
+    description: "Developer of innovative software solutions for radiation therapy treatment planning.",
+    website: "https://www.raysearchlabs.com",
+    productIds: ["raysearch-raystation"]
+  },
+  {
+    id: "therapanacea",
+    name: "Therapanacea",
+    description: "Innovators in AI solutions for radiation oncology and medical imaging.",
+    website: "https://www.therapanacea.eu",
+    productIds: ["therapixel-autocontour"]
   }
 ];

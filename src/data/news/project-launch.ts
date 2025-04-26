@@ -4,11 +4,9 @@ import { NewsItem } from "@/types/news";
 export const projectLaunch: NewsItem = {
   id: "project-launch",
   date: "April 26, 2025",
-  title: "DLinRT Product Finder Launch",
+  title: "DLinRT product finder launch",
   summary: "A new open community-driven initiative to catalog deep learning solutions in radiotherapy.",
-  content: `# DLinRT Product Finder Launch
-
-We are excited to announce the launch of DLinRT product finder, a project deeply influenced by the [Health AI Register](https://radiology.healthairegister.com/) approach to cataloging AI solutions in radiology.
+  content: `We are excited to announce the launch of DLinRT product finder, a project deeply influenced by the [Health AI Register](https://radiology.healthairegister.com/) approach to cataloging AI solutions in radiology.
 
 ## Our Mission
 

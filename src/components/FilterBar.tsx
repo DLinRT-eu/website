@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Filter } from "lucide-react";
 import {
@@ -70,14 +71,24 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
 
   const getAllOptions = (field: keyof Product): string[] => {
     switch (field) {
-      case 'category':
+      case 'category': {
+        // Get unique categories
         const categories = [...new Set(SAMPLE_PRODUCTS.map(p => p.category))];
-        const imageSynthesisIndex = categories.indexOf("Image Synthesis");
+        
+        // Find "Image Synthesis" if it exists
+        const imageSynthesisIndex = categories.findIndex(cat => cat === "Image Synthesis");
+        
+        // If "Image Synthesis" exists, move it to be the second item
         if (imageSynthesisIndex > -1) {
+          // Remove it from its current position
           categories.splice(imageSynthesisIndex, 1);
+          
+          // Insert it at position 1 (second item)
           categories.splice(1, 0, "Image Synthesis");
         }
+        
         return categories;
+      }
       case 'anatomicalLocation':
         return [...new Set(SAMPLE_PRODUCTS.flatMap(p => p.anatomicalLocation || []))];
       case 'company':

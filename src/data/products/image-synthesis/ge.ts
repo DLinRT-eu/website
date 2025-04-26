@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const GE_PRODUCTS: ProductDetails[] = [
@@ -5,6 +6,8 @@ export const GE_PRODUCTS: ProductDetails[] = [
     id: "mr-box-synthetic",
     name: "MR-Box",
     company: "GE Healthcare",
+    companyUrl: "https://www.gehealthcare.com",
+    productUrl: "https://www.gehealthcare.com/products/magnetic-resonance-imaging/mr-applications/mr-radiation-oncology",
     description: "Advanced MR simulation solution that enables synthetic CT generation from MR images for radiation therapy planning.",
     features: ["MR-only simulation", "Synthetic CT generation", "Clinical workflow integration"],
     category: "Image Synthesis",

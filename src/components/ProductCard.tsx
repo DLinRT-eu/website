@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -56,14 +55,26 @@ const ProductCard = ({
           <div>
             <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
               {productUrl ? (
-                <a href={productUrl} target="_blank" rel="noopener noreferrer" className="hover:text-[#00A6D6] flex items-center gap-1">
+                <a 
+                  href={productUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-[#00A6D6] flex items-center gap-1"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   {name} <ExternalLink className="h-4 w-4" />
                 </a>
               ) : name}
             </h3>
             <p className="text-sm text-[#00A6D6]">
               {companyUrl ? (
-                <a href={companyUrl} target="_blank" rel="noopener noreferrer" className="hover:text-[#00A6D6]/80 flex items-center gap-1">
+                <a 
+                  href={companyUrl} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="hover:text-[#00A6D6]/80 flex items-center gap-1"
+                  onClick={(e) => e.stopPropagation()}
+                >
                   {company} <ExternalLink className="h-4 w-4" />
                 </a>
               ) : company}

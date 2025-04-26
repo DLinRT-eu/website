@@ -1,3 +1,4 @@
+
 import { HeartHandshake } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -78,23 +79,6 @@ const Donate = () => {
                     Submit Product Information
                   </Button>
                 </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Button 
-                  variant="default"
-                  className="bg-[#9b87f5] hover:bg-[#8b5cf6] w-full"
-                  onClick={() => window.open('https://example.com/donate', '_blank')}
-                >
-                  Make a One-Time Donation
-                </Button>
-                <Button 
-                  variant="outline"
-                  className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5] hover:text-white w-full"
-                  onClick={() => window.open('https://example.com/sponsor', '_blank')}
-                >
-                  Become a Monthly Sponsor
-                </Button>
               </div>
             </div>
           </section>

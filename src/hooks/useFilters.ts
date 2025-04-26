@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { FilterState } from "@/types/filters";
-import { SAMPLE_PRODUCTS } from "@/data/products";
+import { ALL_PRODUCTS } from "@/data";
 import { Product } from "@/types/product";
 
 export const useFilters = (

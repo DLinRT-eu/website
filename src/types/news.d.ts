@@ -4,5 +4,5 @@ export interface NewsItem {
   date: string;
   title: string;
   summary: string;
-  content?: string;
+  content?: string; // Markdown content
 }

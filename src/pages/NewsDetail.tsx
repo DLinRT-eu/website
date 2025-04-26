@@ -3,6 +3,7 @@ import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import ReactMarkdown from 'react-markdown';
 import dataService from '@/services/DataService';
 
 const NewsDetail = () => {
@@ -36,8 +37,8 @@ const NewsDetail = () => {
         <p className="text-gray-600 text-lg leading-relaxed mb-8">{newsItem.summary}</p>
         
         {newsItem.content && (
-          <div className="prose max-w-none">
-            <p className="text-gray-700 leading-relaxed">{newsItem.content}</p>
+          <div className="prose prose-blue max-w-none">
+            <ReactMarkdown>{newsItem.content}</ReactMarkdown>
           </div>
         )}
       </main>

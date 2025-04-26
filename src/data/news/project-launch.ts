@@ -6,11 +6,26 @@ export const projectLaunch: NewsItem = {
   date: "April 26, 2025",
   title: "DLinRT Product Finder Launch",
   summary: "A new open community-driven initiative to catalog deep learning solutions in radiotherapy.",
-  content: `We are excited to announce the launch of DLinRT product finder, a project deeply influenced by the Health AI Register's approach to cataloging AI solutions in radiology (https://radiology.healthairegister.com/). 
+  content: `# DLinRT Product Finder Launch
+
+We are excited to announce the launch of DLinRT product finder, a project deeply influenced by the [Health AI Register](https://radiology.healthairegister.com/) approach to cataloging AI solutions in radiology.
+
+## Our Mission
 
 Our goal is to create an open, transparent, and community-maintained repository of deep learning-based commercial solutions available for radiotherapy in the European market. 
 
-This initiative aims to help healthcare professionals, researchers, and decision-makers easily find, compare, and evaluate DL solutions in radiotherapy. What makes our platform unique is its community-driven nature - the information is maintained and updated by the users themselves, ensuring the most current and relevant information is always available.
+## Key Features
 
-We invite all stakeholders in the radiotherapy community to join us in this endeavor and contribute to building a comprehensive resource for DL solutions in radiotherapy.`
+- **Open Access**: All information is freely available
+- **Community-Driven**: Information is maintained and updated by users
+- **Transparency**: Clear and accurate product information
+- **European Focus**: Specially curated for the European market
+
+## Get Involved
+
+We invite all stakeholders in the radiotherapy community to join us in this endeavor and contribute to building a comprehensive resource for DL solutions in radiotherapy.
+
+---
+
+*Together, we can create a valuable resource for the entire radiotherapy community.*`
 };

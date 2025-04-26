@@ -1,4 +1,3 @@
-
 import { FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "./ProductCard";
@@ -21,7 +20,7 @@ interface ProductGridProps {
 
 const ProductGrid = ({ filters }: ProductGridProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   const filteredProducts = SAMPLE_PRODUCTS.filter((product: Product) => {
     if (filters?.tasks.length && !filters.tasks.includes(product.category)) {
@@ -41,7 +40,6 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
     return true;
   });
 
-  // Calculate pagination
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
@@ -54,10 +52,9 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
 
   const handleItemsPerPageChange = (value: string) => {
     setItemsPerPage(Number(value));
-    setCurrentPage(1); // Reset to first page when changing items per page
+    setCurrentPage(1);
   };
 
-  // Export functionality
   const exportToExcel = () => {
     const headers = ["Name", "Company", "Category", "Certification", "Features", "Anatomical Location"];
     const data = filteredProducts.map(product => [
@@ -115,7 +112,7 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {[6, 12, 24, 48].map((number) => (
+              {[5, 10, 20, 50].map((number) => (
                 <SelectItem key={number} value={String(number)}>
                   {number}
                 </SelectItem>

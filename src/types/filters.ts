@@ -2,7 +2,6 @@
 export interface FilterState {
   tasks: string[];
   locations: string[];
-  companies: string[];
   certifications: string[];
   modalities: string[];
 }

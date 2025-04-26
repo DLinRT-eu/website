@@ -25,7 +25,7 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
 
       <FilterSelect
         placeholder="Select locations"
-        options={getAllOptions('anatomicalLocation')}
+        options={[...getAllOptions('anatomicalLocation'), 'Head & Neck']}
         selectedValues={filters.locations}
         onValueChange={(value) => handleFilterChange(value, 'locations')}
       />

@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 
 const SearchHeader = () => {
   return (
-    <header className="w-full bg-white shadow-sm py-6 px-4 md:px-8">
+    <section className="w-full bg-white py-6 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           DL in Radiotherapy Products
@@ -17,7 +17,7 @@ const SearchHeader = () => {
           />
         </div>
       </div>
-    </header>
+    </section>
   );
 };
 

@@ -4,6 +4,7 @@ import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
 import FilterBar from "@/components/FilterBar";
 import ProductGrid from "@/components/ProductGrid";
+import SearchHeader from "@/components/SearchHeader";
 import { Link } from "react-router-dom";
 
 interface FilterState {
@@ -41,6 +42,7 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <IntroSection />
       <NewsSection />
+      <SearchHeader />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-900">Featured Products</h2>

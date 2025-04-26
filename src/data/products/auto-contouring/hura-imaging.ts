@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
@@ -15,7 +14,7 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/huraimaging.png",
     website: "http://www.huraimaging.com",
     anatomicalLocation: ["Head & Neck", "Thorax", "Breast", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Clinical workflow integration", "Multi-organ support"],

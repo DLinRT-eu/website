@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const SIEMENS_PRODUCTS: ProductDetails[] = [
@@ -15,7 +14,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/siemens.png",
     website: "https://www.siemens-healthineers.com/medical-imaging/ai-rad-companion",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: ["CT", "MR"],
+    modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Clinical decision support", "Integration with Siemens ecosystem"],

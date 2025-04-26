@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const CORELINE_PRODUCTS: ProductDetails[] = [
@@ -15,7 +14,7 @@ export const CORELINE_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/coreline.jpg",
     website: "https://www.corelinesoft.com/product/acs/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Deep learning segmentation", "Fast processing", "Clinical workflow integration"],

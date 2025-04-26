@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
@@ -15,7 +14,7 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/mimsoftware.svg",
     website: "https://www.mimsoftware.com/radiation-oncology",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT, MR",
+    modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-based segmentation", "Integration with MIM platform", "Multiple modality support"],

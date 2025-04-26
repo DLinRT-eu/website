@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const CARINA_PRODUCTS: ProductDetails[] = [
@@ -15,7 +14,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/carina.jpg",
     website: "https://carina.ai/products/intcontour",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Cloud platform", "Rapid processing"],

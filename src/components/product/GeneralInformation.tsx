@@ -33,7 +33,11 @@ const GeneralInformation = ({ product }: GeneralInformationProps) => {
             {product.modality && (
               <TableRow>
                 <TableHead>Modality</TableHead>
-                <TableCell>{product.modality}</TableCell>
+                <TableCell>
+                  {Array.isArray(product.modality) 
+                    ? product.modality.join(", ")
+                    : product.modality}
+                </TableCell>
               </TableRow>
             )}
           </TableBody>

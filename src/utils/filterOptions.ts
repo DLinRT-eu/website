@@ -15,13 +15,17 @@ export const getAllOptions = (field: keyof Product): string[] => {
       return categories;
     }
     case 'anatomicalLocation':
-      return [...new Set(ALL_PRODUCTS.flatMap(p => p.anatomicalLocation || []))].filter(Boolean) as string[];
+      return [...new Set(ALL_PRODUCTS.flatMap(p => p.anatomicalLocation || []))].sort();
     case 'company':
-      return [...new Set(ALL_PRODUCTS.map(p => p.company))];
+      return [...new Set(ALL_PRODUCTS.map(p => p.company))].sort();
     case 'certification':
-      return [...new Set(ALL_PRODUCTS.map(p => p.certification || '').filter(Boolean))];
-    case 'modality':
-      return [...new Set(ALL_PRODUCTS.map(p => p.modality || '').filter(Boolean))];
+      return [...new Set(ALL_PRODUCTS.map(p => p.certification || '').filter(Boolean))].sort();
+    case 'modality': {
+      const modalitiesArray = ALL_PRODUCTS.map(p => 
+        typeof p.modality === 'string' ? [p.modality] : (p.modality || [])
+      ).flat();
+      return [...new Set(modalitiesArray)].filter(Boolean).sort();
+    }
     default:
       return [];
   }

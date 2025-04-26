@@ -1,4 +1,3 @@
-
 export interface Product {
   id?: string;
   name: string;
@@ -11,7 +10,7 @@ export interface Product {
   companyUrl?: string;
   productUrl?: string;
   anatomicalLocation?: string[];
-  modality?: string;
+  modality?: string | string[];
   subspeciality?: string;
   diseaseTargeted?: string[];
   releaseDate?: string;

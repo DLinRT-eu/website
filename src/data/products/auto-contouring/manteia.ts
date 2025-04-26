@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const MANTEIA_PRODUCTS: ProductDetails[] = [
@@ -15,7 +14,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/manteia.png",
     website: "https://www.manteiatech.com/index_en.html",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Clinical workflow integration"],

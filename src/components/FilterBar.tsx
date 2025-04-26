@@ -31,13 +31,6 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
       />
 
       <FilterSelect
-        placeholder="Select companies"
-        options={getAllOptions('company')}
-        selectedValues={filters.companies}
-        onValueChange={(value) => handleFilterChange(value, 'companies')}
-      />
-
-      <FilterSelect
         placeholder="Select certifications"
         options={getAllOptions('certification')}
         selectedValues={filters.certifications}

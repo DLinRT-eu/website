@@ -1,6 +1,6 @@
-
 export const SAMPLE_PRODUCTS = [
   {
+    id: "carebot-ai",
     name: "ContourAI Pro",
     company: "RadTech Solutions",
     description: "Advanced auto-contouring system using deep learning for precise organ-at-risk delineation in radiotherapy planning.",
@@ -8,16 +8,62 @@ export const SAMPLE_PRODUCTS = [
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Head & Neck", "Thorax"],
-    releaseDate: "2024-03-15",
-    version: "3.2.1",
-    price: 12500,
-    website: "https://radtechsolutions.example.com/contour-ai",
-    supportEmail: "support@radtech.example.com",
-    trainingRequired: true,
-    compatibleSystems: ["ARIA", "RayStation", "Eclipse"],
-    userRating: 4.7,
-    lastUpdated: "2024-10-01"
+    subspeciality: "Chest",
+    modality: "X-ray",
+    diseaseTargeted: [
+      "Atelectasis",
+      "Consolidation",
+      "Cardiomegaly",
+      "Pleural effusion",
+      "Pneumothorax",
+      "Pulmonary lesion",
+      "Subcutaneous emphysema"
+    ],
+    keyFeatures: [
+      "Radiologic abnormal finding detection",
+      "Textual report generation",
+      "Worklist prioritisation"
+    ],
+    technicalSpecifications: {
+      population: "Patients aged 18 years or older",
+      input: ["Chest X-ray PA (posterior-anterior view)", "Chest X-ray AP (anterior-posterior view)"],
+      inputFormat: ["DICOM"],
+      output: ["Localization (bounding-boxes, report)", "Abnormality score", "Worklist order", "Multi-language radiology report"],
+      outputFormat: ["DICOM GSPS", "DICOM SR", "DICOM DOC", "DICOM SC"]
+    },
+    technology: {
+      integration: [
+        "Integration in standard reading environment (PACS)",
+        "Integration via AI marketplace",
+        "Stand-alone webbased"
+      ],
+      deployment: [
+        "Locally on dedicated hardware",
+        "Locally virtualized (virtual machine, docker)",
+        "Cloud-based"
+      ],
+      triggerForAnalysis: "Automatically, right after the image acquisition",
+      processingTime: "10 - 60 seconds"
+    },
+    regulatory: {
+      ce: {
+        status: "Certified",
+        class: "IIa",
+        type: "MDR"
+      },
+      fda: "No or not yet",
+      intendedUseStatement: "Carebot AI CXR is a medical device that employs artificial intelligence, specifically machine learning and computer vision algorithms, to detect abnormalities in chest X-ray images..."
+    },
+    market: {
+      onMarketSince: "03-2024",
+      countriesPresent: 10,
+      payingCustomers: "100+",
+    },
+    pricing: {
+      model: ["Pay-per-use", "Subscription"],
+      basedOn: ["Number of users", "Number of installations", "Number of analyses"]
+    },
+    lastUpdated: "2024-04-15"
   },
   {
     name: "SynthImage RT",

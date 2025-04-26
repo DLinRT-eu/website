@@ -1,3 +1,4 @@
+
 export const SAMPLE_PRODUCTS = [
   {
     name: "ContourAI Pro",
@@ -7,7 +8,16 @@ export const SAMPLE_PRODUCTS = [
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Head & Neck", "Thorax"]
+    anatomicalLocation: ["Head & Neck", "Thorax"],
+    releaseDate: "2024-03-15",
+    version: "3.2.1",
+    price: 12500,
+    website: "https://radtechsolutions.example.com/contour-ai",
+    supportEmail: "support@radtech.example.com",
+    trainingRequired: true,
+    compatibleSystems: ["ARIA", "RayStation", "Eclipse"],
+    userRating: 4.7,
+    lastUpdated: "2024-10-01"
   },
   {
     name: "SynthImage RT",
@@ -17,7 +27,16 @@ export const SAMPLE_PRODUCTS = [
     category: "Image Synthesis",
     certification: "FDA",
     logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Brain", "Pelvis"]
+    anatomicalLocation: ["Brain", "Pelvis"],
+    releaseDate: "2023-11-20",
+    version: "2.5.0",
+    price: 9800,
+    website: "https://medtechinnovations.example.com/synthimage",
+    supportEmail: "help@medtech.example.com",
+    trainingRequired: true,
+    compatibleSystems: ["ProSoma", "MIM", "Eclipse"],
+    userRating: 4.5,
+    lastUpdated: "2024-09-15"
   },
   {
     name: "RegAlign Pro",
@@ -27,7 +46,16 @@ export const SAMPLE_PRODUCTS = [
     category: "Image Registration",
     certification: "CE",
     logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Thorax", "Abdomen"]
+    anatomicalLocation: ["Thorax", "Abdomen"],
+    releaseDate: "2024-01-10",
+    version: "1.8.3",
+    price: 7500,
+    website: "https://healthai.example.com/regalign",
+    supportEmail: "tech@healthai.example.com",
+    trainingRequired: false,
+    compatibleSystems: ["MIM", "Velocity", "Pinnacle"],
+    userRating: 4.2,
+    lastUpdated: "2024-08-20"
   },
   {
     name: "PlanMaster AI",
@@ -37,7 +65,16 @@ export const SAMPLE_PRODUCTS = [
     category: "Treatment Planning",
     certification: "FDA",
     logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Breast", "Prostate"]
+    anatomicalLocation: ["Breast", "Prostate"],
+    releaseDate: "2023-07-05",
+    version: "4.0.2",
+    price: 18500,
+    website: "https://medtechinnovations.example.com/planmaster",
+    supportEmail: "planning@medtech.example.com",
+    trainingRequired: true,
+    compatibleSystems: ["ARIA", "Mosaiq", "Eclipse"],
+    userRating: 4.8,
+    lastUpdated: "2024-09-30"
   },
   {
     name: "QAIntelligence",
@@ -47,7 +84,16 @@ export const SAMPLE_PRODUCTS = [
     category: "Quality Assurance",
     certification: "CE",
     logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["All Sites"]
+    anatomicalLocation: ["All Sites"],
+    releaseDate: "2024-02-28",
+    version: "2.1.5",
+    price: 8900,
+    website: "https://healthai.example.com/qaintelligence",
+    supportEmail: "qa@healthai.example.com",
+    trainingRequired: false,
+    compatibleSystems: ["ARIA", "Mosaiq", "RayStation"],
+    userRating: 4.3,
+    lastUpdated: "2024-08-15"
   },
   {
     name: "PredictCare RT",
@@ -57,6 +103,15 @@ export const SAMPLE_PRODUCTS = [
     category: "Clinical Prediction",
     certification: "CE & FDA",
     logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["All Sites"]
+    anatomicalLocation: ["All Sites"],
+    releaseDate: "2023-09-12",
+    version: "1.5.0",
+    price: 11200,
+    website: "https://aimedical.example.com/predictcare",
+    supportEmail: "predict@aimedical.example.com",
+    trainingRequired: true,
+    compatibleSystems: ["ARIA", "Mosaiq", "Oncology Information Systems"],
+    userRating: 4.6,
+    lastUpdated: "2024-07-22"
   }
 ];

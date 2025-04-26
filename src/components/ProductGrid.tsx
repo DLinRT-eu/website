@@ -1,3 +1,4 @@
+
 import { FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "./ProductCard";
@@ -56,14 +57,29 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
   };
 
   const exportToExcel = () => {
-    const headers = ["Name", "Company", "Category", "Certification", "Features", "Anatomical Location"];
+    const headers = [
+      "Name", "Company", "Category", "Certification", "Features", 
+      "Anatomical Location", "Release Date", "Version", "Price",
+      "Website", "Support Email", "Training Required", "Compatible Systems", 
+      "User Rating", "Last Updated"
+    ];
+    
     const data = filteredProducts.map(product => [
       product.name,
       product.company,
       product.category,
       product.certification || "N/A",
       product.features.join(", "),
-      (product.anatomicalLocation || []).join(", ")
+      (product.anatomicalLocation || []).join(", "),
+      product.releaseDate || "N/A",
+      product.version || "N/A",
+      product.price ? `$${product.price}` : "N/A",
+      product.website || "N/A",
+      product.supportEmail || "N/A",
+      product.trainingRequired ? "Yes" : "No",
+      (product.compatibleSystems || []).join(", "),
+      product.userRating?.toString() || "N/A",
+      product.lastUpdated || "N/A"
     ]);
 
     const csvContent = [

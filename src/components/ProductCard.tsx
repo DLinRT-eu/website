@@ -1,7 +1,8 @@
+
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Calendar, Tag } from "lucide-react";
 
 interface ProductCardProps {
   name: string;
@@ -13,6 +14,8 @@ interface ProductCardProps {
   logoUrl: string;
   productUrl?: string;
   companyUrl?: string;
+  releaseDate?: string;
+  version?: string;
 }
 
 const ProductCard = ({ 
@@ -24,8 +27,13 @@ const ProductCard = ({
   certification, 
   logoUrl,
   productUrl,
-  companyUrl 
+  companyUrl,
+  releaseDate,
+  version
 }: ProductCardProps) => {
+  // Format date if available
+  const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString() : null;
+
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">
       <div className="mb-6 bg-gray-50 rounded-lg overflow-hidden">
@@ -67,6 +75,25 @@ const ProductCard = ({
         </div>
       </div>
       <p className="text-gray-600 mb-4 line-clamp-2">{description}</p>
+      
+      {/* Version and release date information */}
+      {(version || releaseDate) && (
+        <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-500">
+          {version && (
+            <div className="flex items-center gap-1">
+              <Tag className="h-4 w-4" />
+              <span>v{version}</span>
+            </div>
+          )}
+          {formattedDate && (
+            <div className="flex items-center gap-1">
+              <Calendar className="h-4 w-4" />
+              <span>Released: {formattedDate}</span>
+            </div>
+          )}
+        </div>
+      )}
+      
       <div className="flex flex-wrap gap-2">
         {features.map((feature, index) => (
           <Badge key={index} variant="outline" className="bg-gray-50">

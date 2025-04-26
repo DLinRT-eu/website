@@ -1,11 +1,10 @@
-import { FileSpreadsheet } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import ProductCard from "./ProductCard";
+
+import { useState } from "react";
 import { SAMPLE_PRODUCTS } from "@/data/products";
 import { Product } from "@/types/product";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
-import { useState } from "react";
+import ProductCard from "./ProductCard";
+import ProductGridControls from "./grid/ProductGridControls";
+import ProductPagination from "./grid/ProductPagination";
 
 interface FilterState {
   tasks: string[];
@@ -55,119 +54,13 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
     setCurrentPage(1);
   };
 
-  const exportToExcel = () => {
-    const headers = [
-      "Name", "Company", "Category", "Description", "Features",
-      "Subspeciality", "Modality", "Disease Targeted", "Key Features",
-      "Technical Population", "Technical Input", "Technical Output",
-      "Integration Methods", "Deployment Options", "Processing Time",
-      "CE Status", "CE Class", "FDA Status", "Intended Use",
-      "Market Since", "Countries Present", "Paying Customers",
-      "Pricing Model", "Pricing Factors",
-      "Release Date", "Version", "Price", "Website", "Support Email",
-      "Training Required", "Compatible Systems", "User Rating",
-      "Last Updated"
-    ];
-    
-    const data = filteredProducts.map(product => [
-      product.name,
-      product.company,
-      product.category,
-      product.description,
-      product.features?.join(", ") || "N/A",
-      product.subspeciality || "N/A",
-      product.modality || "N/A",
-      product.diseaseTargeted?.join(", ") || "N/A",
-      product.keyFeatures?.join(", ") || "N/A",
-      product.technicalSpecifications?.population || "N/A",
-      product.technicalSpecifications?.input?.join(", ") || "N/A",
-      product.technicalSpecifications?.output?.join(", ") || "N/A",
-      product.technology?.integration?.join(", ") || "N/A",
-      product.technology?.deployment?.join(", ") || "N/A",
-      product.technology?.processingTime || "N/A",
-      product.regulatory?.ce?.status || "N/A",
-      product.regulatory?.ce?.class || "N/A",
-      product.regulatory?.fda || "N/A",
-      product.regulatory?.intendedUseStatement || "N/A",
-      product.market?.onMarketSince || "N/A",
-      product.market?.countriesPresent?.toString() || "N/A",
-      product.market?.payingCustomers || "N/A",
-      product.pricing?.model?.join(", ") || "N/A",
-      product.pricing?.basedOn?.join(", ") || "N/A",
-      product.releaseDate || "N/A",
-      product.version || "N/A",
-      product.price ? `$${product.price}` : "N/A",
-      product.website || "N/A",
-      product.supportEmail || "N/A",
-      product.trainingRequired ? "Yes" : "No",
-      product.compatibleSystems?.join(", ") || "N/A",
-      product.userRating?.toString() || "N/A",
-      product.lastUpdated || "N/A"
-    ]);
-
-    const csvContent = [
-      headers.join(","),
-      ...data.map(row => row.join(","))
-    ].join("\n");
-
-    const blob = new Blob([csvContent], { type: "text/csv" });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.setAttribute("hidden", "");
-    a.setAttribute("href", url);
-    a.setAttribute("download", "products.csv");
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  };
-
-  const renderPaginationItems = () => {
-    const items = [];
-    for (let i = 1; i <= totalPages; i++) {
-      items.push(
-        <PaginationItem key={i}>
-          <PaginationLink 
-            onClick={() => handlePageChange(i)}
-            isActive={currentPage === i}
-          >
-            {i}
-          </PaginationLink>
-        </PaginationItem>
-      );
-    }
-    return items;
-  };
-
   return (
     <div>
-      <div className="mb-6 flex justify-between items-center">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500">Products per page:</span>
-          <Select
-            value={String(itemsPerPage)}
-            onValueChange={handleItemsPerPageChange}
-          >
-            <SelectTrigger className="w-[100px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {[5, 10, 20, 50].map((number) => (
-                <SelectItem key={number} value={String(number)}>
-                  {number}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <Button
-          variant="outline"
-          onClick={exportToExcel}
-          className="flex items-center gap-2"
-        >
-          <FileSpreadsheet className="h-4 w-4" />
-          Export to CSV
-        </Button>
-      </div>
+      <ProductGridControls
+        itemsPerPage={itemsPerPage}
+        onItemsPerPageChange={handleItemsPerPageChange}
+        products={filteredProducts}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentProducts.map((product, index) => (
@@ -177,25 +70,11 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
 
       {totalPages > 1 && (
         <div className="mt-8">
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious 
-                  onClick={() => handlePageChange(currentPage - 1)}
-                  className={currentPage === 1 ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                />
-              </PaginationItem>
-              
-              {renderPaginationItems()}
-
-              <PaginationItem>
-                <PaginationNext 
-                  onClick={() => handlePageChange(currentPage + 1)}
-                  className={currentPage === totalPages ? 'pointer-events-none opacity-50' : 'cursor-pointer'}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
+          <ProductPagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       )}
     </div>

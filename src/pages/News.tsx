@@ -1,7 +1,6 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card";
+import NewsCard from '@/components/news/NewsCard';
 import dataService from '@/services/DataService';
 
 const News = () => {
@@ -17,15 +16,7 @@ const News = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {newsItems.map((item) => (
-            <Link key={item.id} to={`/news/${item.id}`}>
-              <Card className="bg-white hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <time className="text-sm text-blue-600 mb-2 block">{item.date}</time>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">{item.title}</h3>
-                  <p className="text-gray-600">{item.summary}</p>
-                </CardContent>
-              </Card>
-            </Link>
+            <NewsCard key={item.id} item={item} />
           ))}
         </div>
       </main>

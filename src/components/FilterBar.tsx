@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Filter } from "lucide-react";
 import {
@@ -16,6 +15,7 @@ interface FilterState {
   locations: string[];
   companies: string[];
   certifications: string[];
+  modalities: string[];
 }
 
 export interface FilterBarProps {
@@ -29,6 +29,7 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
     locations: [],
     companies: [],
     certifications: [],
+    modalities: []
   });
 
   useEffect(() => {
@@ -38,6 +39,7 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
         locations: [],
         companies: [],
         certifications: [],
+        modalities: []
       });
     };
 
@@ -47,7 +49,7 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
 
   useEffect(() => {
     onFiltersChange?.(
-      Boolean(filters.tasks.length || filters.locations.length || filters.companies.length || filters.certifications.length)
+      Boolean(filters.tasks.length || filters.locations.length || filters.companies.length || filters.certifications.length || filters.modalities.length)
     );
     onFilterUpdate?.(filters);
   }, [filters, onFiltersChange, onFilterUpdate]);
@@ -76,6 +78,8 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
         return [...new Set(SAMPLE_PRODUCTS.map(p => p.company))];
       case 'certification':
         return [...new Set(SAMPLE_PRODUCTS.map(p => p.certification || '').filter(Boolean))];
+      case 'modality':
+        return [...new Set(SAMPLE_PRODUCTS.map(p => p.modality || '').filter(Boolean))];
       default:
         return [];
     }
@@ -163,6 +167,26 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
               className={filters.certifications.includes(cert) ? "bg-[#00A6D6]/10" : ""}
             >
               {cert}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select
+        value={filters.modalities.join(',')}
+        onValueChange={(value) => handleFilterChange(value, 'modalities')}
+      >
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select modality" />
+        </SelectTrigger>
+        <SelectContent>
+          {getAllOptions('modality').map((modality) => (
+            <SelectItem 
+              key={modality} 
+              value={modality}
+              className={filters.modalities.includes(modality) ? "bg-[#00A6D6]/10" : ""}
+            >
+              {modality}
             </SelectItem>
           ))}
         </SelectContent>

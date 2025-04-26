@@ -9,6 +9,9 @@ export interface Product {
   certification?: string;
   logoUrl: string;
   anatomicalLocation?: string[];
+  modality?: string;
+  subspeciality?: string;
+  diseaseTargeted?: string[];
   releaseDate?: string;
   version?: string;
   price?: number;

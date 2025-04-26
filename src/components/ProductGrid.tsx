@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { SAMPLE_PRODUCTS } from "@/data/products";
 import { Product } from "@/types/product";
@@ -11,6 +10,7 @@ interface FilterState {
   locations: string[];
   companies: string[];
   certifications: string[];
+  modalities: string[];
 }
 
 interface ProductGridProps {
@@ -34,6 +34,10 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
     }
     if (filters?.certifications.length && !filters.certifications.includes(
       product.certification || '')) {
+      return false;
+    }
+    if (filters?.modalities.length && !filters.modalities.includes(
+      product.modality || '')) {
       return false;
     }
     return true;

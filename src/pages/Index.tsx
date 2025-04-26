@@ -1,4 +1,5 @@
 
+import React, { useState } from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
 import SearchHeader from "@/components/SearchHeader";

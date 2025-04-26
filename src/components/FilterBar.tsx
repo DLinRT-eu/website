@@ -1,4 +1,3 @@
-
 import { Filter } from "lucide-react";
 import {
   Select,
@@ -8,7 +7,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const TASKS = ["Auto-Contouring", "Treatment Planning", "Dose Optimization", "Quality Assurance"];
+const TASKS = [
+  "Auto-Contouring",
+  "Image Synthesis",
+  "Image Registration",
+  "Treatment Planning",
+  "Quality Assurance",
+  "Clinical Prediction"
+];
 const COMPANIES = ["RadTech Solutions", "MedTech Innovations", "AI Medical Systems", "HealthAI Solutions"];
 const CERTIFICATIONS = ["CE", "FDA", "CE & FDA"];
 const ANATOMICAL_LOCATIONS = ["Head & Neck", "Thorax", "Breast", "Prostate", "Abdomen", "Pelvis"];

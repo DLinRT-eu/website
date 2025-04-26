@@ -14,7 +14,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/spectronic medical.jpg",
     website: "http://medical.spectronic.se/",
     anatomicalLocation: ["Head & Neck", "Pelvis", "Brain"],
-    modality: ["MRI"],
+    modality: "MRI",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types", "Prostate Cancer", "Brain Tumors"],
     keyFeatures: ["MRI-based contouring", "Synthetic CT generation", "Streamlined workflow"],

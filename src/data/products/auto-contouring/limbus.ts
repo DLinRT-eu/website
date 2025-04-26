@@ -14,7 +14,7 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/Limbus-ai.png",
     website: "https://limbus.ai/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Breast", "Pelvis"],
-    modality: ["CT", "MRI", "CBCT"],
+    modality: "CT, MRI, CBCT",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Automated contouring", "Cloud-based", "DICOM compatibility"],

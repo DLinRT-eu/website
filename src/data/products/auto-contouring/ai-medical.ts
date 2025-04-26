@@ -14,7 +14,7 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/ai-medical.png",
     website: "https://www.aimedical.io/products",
     anatomicalLocation: ["Brain"],
-    modality: ["MRI"],
+    modality: "MRI",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered contouring", "Workflow integration", "Multiple anatomical sites"],

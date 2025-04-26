@@ -20,7 +20,7 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["Integrated platform", "Workflow efficiency", "Multiple anatomical sites"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT"],
+      input: "CT",
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]

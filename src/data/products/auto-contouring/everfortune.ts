@@ -14,7 +14,7 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/ever-fortune.png",
     website: "https://www.everfortuneai.com.tw/en/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: ["CT"],
+    modality: "CT",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Deep learning segmentation", "Treatment planning tools", "Workflow integration"],

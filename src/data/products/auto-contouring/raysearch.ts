@@ -14,7 +14,7 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/raystation.jpg",
     website: "https://www.raysearchlabs.com/machine-learning-in-raystation/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: ["CT"],
+    modality: "CT",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Machine learning algorithms", "Multi-atlas fallback", "TPS integration"],

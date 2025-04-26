@@ -15,7 +15,7 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     logoUrl: "public/logos/radformation.svg",
     website: "https://www.radformation.com/autocontour/autocontour",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis", "Brain"],
-    modality: ["CT", "MRI"],
+    modality: "CT, MRI",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Clinical workflow integration", "Quality assurance tools"],

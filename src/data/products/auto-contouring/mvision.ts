@@ -11,7 +11,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     features: ["Cloud-based segmentation", "AI algorithms", "Multiple cancer sites"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://www.mvision.ai/wp-content/themes/mvision/images/logo.svg",
+    logoUrl: "public/logos/mvision-ai.png",
     website: "https://www.mvision.ai/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",
@@ -20,7 +20,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["Deep learning segmentation", "Cloud-based platform", "Multi-vendor integration"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT scans"],
+      input: ["CT"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]

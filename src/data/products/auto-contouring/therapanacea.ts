@@ -85,7 +85,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     ],
     technicalSpecifications: {
       population: "Adult male patients",
-      input: ["CBCT scans"],
+      input: ["CBCT"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]

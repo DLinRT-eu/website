@@ -3,17 +3,19 @@ import { CompanyDetails } from "@/types/company";
 import { NewsItem } from "@/types/news";
 import { NEWS_ITEMS } from "./news";
 import { COMPANIES } from "./companies";
-import { AUTO_CONTOURING_PRODUCTS } from "./products/auto-contouring";
+import { AUTO_CONTOURING_PRODUCTS } from "./products/auto-contouring/index";
+import { IMAGE_SYNTHESIS_PRODUCTS } from "./products/image-synthesis/index";
 import { REGISTRATION_PRODUCTS } from "./products/registration";
 import { TREATMENT_PLANNING_PRODUCTS } from "./products/treatment-planning";
-import { IMAGE_SYNTHESIS_PRODUCTS } from "./products/image-synthesis/index";
+import { CLINICAL_PREDICTION_PRODUCTS } from "./products/clinical-prediction";
 
 // Combine all products
 export const ALL_PRODUCTS: ProductDetails[] = [
   ...AUTO_CONTOURING_PRODUCTS,
+  ...IMAGE_SYNTHESIS_PRODUCTS,
   ...REGISTRATION_PRODUCTS,
   ...TREATMENT_PLANNING_PRODUCTS,
-  ...IMAGE_SYNTHESIS_PRODUCTS
+  ...CLINICAL_PREDICTION_PRODUCTS
 ];
 
 // Export everything
@@ -21,9 +23,10 @@ export {
   NEWS_ITEMS,
   COMPANIES,
   AUTO_CONTOURING_PRODUCTS,
+  IMAGE_SYNTHESIS_PRODUCTS,
   REGISTRATION_PRODUCTS,
   TREATMENT_PLANNING_PRODUCTS,
-  IMAGE_SYNTHESIS_PRODUCTS
+  CLINICAL_PREDICTION_PRODUCTS
 };
 
 // Type exports

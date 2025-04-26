@@ -11,7 +11,7 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     features: ["Automated OAR contouring", "Fast processing", "Deep learning algorithms"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://limbus.ai/images/limbus-logo.svg",
+    logoUrl: "public/logos/Limbus-ai.png",
     website: "https://www.limbus.ai/limbus-contour",
     anatomicalLocation: ["Head & Neck", "Thorax", "Pelvis", "Brain"],
     modality: "CT",
@@ -20,7 +20,7 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["Automated contouring", "Cloud-based", "DICOM compatibility"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT scans"],
+      input: ["CT"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]

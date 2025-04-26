@@ -19,8 +19,8 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Machine learning algorithms", "Multi-atlas fallback", "TPS integration"],
     technicalSpecifications: {
-      population: "Adult and pediatric patients",
-      input: ["CT scans", "MRI", "PET"],
+      population: "Adult patients",
+      input: ["CT", "MRI", "PET"],
       inputFormat: ["DICOM"],
       output: ["Structure sets", "Treatment plans"],
       outputFormat: ["DICOM-RT"]

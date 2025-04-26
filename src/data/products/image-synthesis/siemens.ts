@@ -12,7 +12,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     features: ["Synthetic CT generation", "Multimodality image registration", "Treatment planning"],
     category: "Image Synthesis",
     certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "public/logos/siemens.png",
     website: "https://www.siemens-healthineers.com/magnetic-resonance-imaging/clinical-specialities/synthetic-ct",
     anatomicalLocation: ["Brain", "Pelvis", "Head & Neck"],
     modality: "MRI",
@@ -21,7 +21,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["MR-based synthetic CT", "Integrated workflow", "Automated processing"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["MRI images"],
+      input: ["MRI"],
       inputFormat: ["DICOM"],
       output: ["Synthetic CT"],
       outputFormat: ["DICOM"]

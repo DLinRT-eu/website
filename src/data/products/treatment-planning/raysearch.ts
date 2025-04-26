@@ -21,7 +21,7 @@ export const RAYSEARCH_TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["Deep learning algorithms", "Automatic plan generation", "Dose prediction", "Plan quality estimation"],
     technicalSpecifications: {
       population: "Adult and pediatric patients",
-      input: ["CT scans", "MRI", "Structure sets", "Clinical goals"],
+      input: ["CT", "MRI", "Structure sets", "Clinical goals"],
       inputFormat: ["DICOM", "DICOM-RT"],
       output: ["Treatment plans", "Dose distributions"],
       outputFormat: ["DICOM-RT"]

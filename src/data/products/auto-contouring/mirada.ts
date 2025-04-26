@@ -11,7 +11,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     features: ["Multi-structure contouring", "Consistent results", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://mirada-medical.com/wp-content/themes/mirada/images/mirada-medical-logo.svg",
+    logoUrl: "public/logos/mirada-medical.png",
     website: "https://mirada-medical.com/solutions/radiation-oncology/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",
@@ -20,7 +20,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["Deep learning algorithms", "Batch processing", "Clinical workflow integration"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT scans"],
+      input: ["CT"],
       inputFormat: ["DICOM"],
       output: ["Structure sets", "Contour reports"],
       outputFormat: ["DICOM-RT"]

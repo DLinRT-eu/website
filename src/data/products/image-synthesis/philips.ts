@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
@@ -12,7 +11,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     features: ["MR-only workflow", "Synthetic CT generation", "Radiation therapy planning", "Head and Neck specific"],
     category: "Image Synthesis",
     certification: "CE & FDA",
-    logoUrl: "https://www.philips.com/c-dam/corporate/about-philips/philips-logo.svg",
+    logoUrl: "/lovable-uploads/f6cf3221-0ad7-410e-acc9-bc3e40f98d06.png",
     website: "https://www.usa.philips.com/healthcare",
     anatomicalLocation: ["Head & Neck"],
     modality: "MRI",
@@ -66,7 +65,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     features: ["MR-only workflow", "Synthetic CT generation", "Radiation therapy planning", "Brain specific"],
     category: "Image Synthesis",
     certification: "CE & FDA",
-    logoUrl: "https://www.philips.com/c-dam/corporate/about-philips/philips-logo.svg",
+    logoUrl: "/lovable-uploads/f6cf3221-0ad7-410e-acc9-bc3e40f98d06.png",
     website: "https://www.usa.philips.com/healthcare",
     anatomicalLocation: ["Brain"],
     modality: "MRI",
@@ -120,7 +119,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     features: ["MR-only workflow", "Synthetic CT generation", "Radiation therapy planning", "Pelvis specific"],
     category: "Image Synthesis",
     certification: "CE & FDA",
-    logoUrl: "https://www.philips.com/c-dam/corporate/about-philips/philips-logo.svg",
+    logoUrl: "/lovable-uploads/f6cf3221-0ad7-410e-acc9-bc3e40f98d06.png",
     website: "https://www.usa.philips.com/healthcare",
     anatomicalLocation: ["Pelvis"],
     modality: "MRI",

@@ -11,7 +11,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     features: ["Integrated in TPS", "Multiple segmentation methods", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://www.philips.com/c-dam/corporate/about-philips/philips-logo.svg",
+    logoUrl: "/lovable-uploads/f6cf3221-0ad7-410e-acc9-bc3e40f98d06.png",
     website: "https://www.philips.com/healthcare/solutions/radiation-oncology/radiation-treatment-planning",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

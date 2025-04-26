@@ -9,6 +9,7 @@ export const SAMPLE_PRODUCTS = [
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/placeholder.svg",
+    anatomicalLocation: ["Chest", "Abdomen"], // Added this property
     subspeciality: "Enter medical subspeciality",
     modality: "Enter imaging modality type",
     diseaseTargeted: [

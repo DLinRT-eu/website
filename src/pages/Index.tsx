@@ -1,6 +1,7 @@
 
 import SearchHeader from "@/components/SearchHeader";
 import ProductGrid from "@/components/ProductGrid";
+import FilterBar from "@/components/FilterBar";
 
 const Index = () => {
   return (
@@ -11,6 +12,7 @@ const Index = () => {
           <h2 className="text-xl font-semibold text-gray-900">Featured Products</h2>
           <span className="text-sm text-gray-500">Showing all products</span>
         </div>
+        <FilterBar />
         <ProductGrid />
       </main>
     </div>

@@ -1,8 +1,12 @@
 
 import { useEffect, useRef } from 'react';
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { useNavigate } from 'react-router-dom';
 
 const IntroSection = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -94,6 +98,12 @@ const IntroSection = () => {
     };
   }, []);
 
+  const handleSearch = (query: string) => {
+    if (query) {
+      navigate(`/products?search=${encodeURIComponent(query)}`);
+    }
+  };
+
   return (
     <section className="relative overflow-hidden">
       <canvas
@@ -109,6 +119,14 @@ const IntroSection = () => {
             <p className="text-xl text-gray-100 mb-8">
               Find the deep learning-based commercial solutions for radiotherapy available for the European market.
             </p>
+            <div className="relative max-w-2xl mx-auto">
+              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-500" />
+              <Input 
+                placeholder="Search for products, companies, or features..." 
+                className="pl-10 bg-white/95 border-gray-200"
+                onChange={(e) => handleSearch(e.target.value)}
+              />
+            </div>
           </div>
         </div>
       </div>

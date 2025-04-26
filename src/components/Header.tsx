@@ -10,7 +10,7 @@ const Header = () => {
           <img 
             src="/lovable-uploads/93a71ef6-4725-4b3a-95fa-95c6cd267e53.png" 
             alt="DLnRT Logo" 
-            className="w-8 h-8"
+            className="w-12 h-12 object-contain"  // Increased size and added object-contain
           />
           <Link 
             to="/" 

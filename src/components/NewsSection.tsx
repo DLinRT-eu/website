@@ -1,7 +1,7 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 
-const NEWS_ITEMS = [
+export const NEWS_ITEMS = [
   {
     date: "April 24, 2025",
     title: "AI in Contouring: Latest Developments",

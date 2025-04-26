@@ -92,9 +92,6 @@ const Header = () => {
             >
               Support
             </NavLink>
-            <div className="ml-2">
-              <UserMenu />
-            </div>
           </nav>
         )}
       </div>
@@ -168,9 +165,6 @@ const Header = () => {
             >
               Support
             </NavLink>
-            <div className="py-2">
-              <UserMenu />
-            </div>
           </div>
         </nav>
       )}

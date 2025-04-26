@@ -1,11 +1,15 @@
 
+import IntroSection from "@/components/IntroSection";
+import NewsSection from "@/components/NewsSection";
 import SearchHeader from "@/components/SearchHeader";
 import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
+      <IntroSection />
+      <NewsSection />
       <SearchHeader />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex justify-between items-center mb-6">

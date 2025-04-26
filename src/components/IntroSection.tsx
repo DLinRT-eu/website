@@ -107,7 +107,7 @@ const IntroSection = () => {
               Deep Learning in Radiotherapy
             </h1>
             <p className="text-xl text-gray-100 mb-8">
-              Exploring cutting-edge deep learning technologies transforming radiation therapy treatment and patient care.
+              Find the deep learning-based commercial solutions for radiotherapy available for the European market.
             </p>
           </div>
         </div>

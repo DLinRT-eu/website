@@ -6,23 +6,11 @@ import { User } from "lucide-react";
 
 const TEAM_MEMBERS = [
   {
-    name: "Sarah Chen",
+    name: "Matteo Maspero",
     role: "Lead Developer",
-    image: "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952",
-    bio: "https://example.com/sarah-chen",
-  },
-  {
-    name: "Alex Thompson",
-    role: "System Administrator",
-    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81",
-    bio: "https://example.com/alex-thompson",
-  },
-  {
-    name: "Maria Rodriguez",
-    role: "DevOps Engineer",
-    image: "https://images.unsplash.com/photo-1519389950473-47ba0277781c",
-    bio: "https://example.com/maria-rodriguez",
-  },
+    image: "https://cig-utrecht.org/img/people/mmasp.jpg",
+    bio: "https://cig-utrecht.org/members/matteo-maspero",
+  }
 ];
 
 const MaintenanceTeam = () => {

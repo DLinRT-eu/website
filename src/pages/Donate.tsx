@@ -63,7 +63,7 @@ const Donate = () => {
                 <div className="bg-purple-50 p-4 rounded-md">
                   <h3 className="font-medium text-purple-900 mb-2">Contribute Product Information</h3>
                   <p className="text-gray-600 mb-2">
-                    Help expand our database by gathering and submitting information about AI products in radiotherapy:
+                    Help expand our database by gathering and submitting information about DL products in radiotherapy:
                   </p>
                   <ul className="list-disc list-inside text-gray-600 mb-4 ml-2">
                     <li>Research product specifications</li>

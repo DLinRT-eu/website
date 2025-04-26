@@ -7,7 +7,7 @@ import { User } from "lucide-react";
 const TEAM_MEMBERS = [
   {
     name: "Matteo Maspero",
-    role: "Lead Developer",
+    role: "Website creator, Lead Developer",
     image: "https://cig-utrecht.org/img/people/mmasp.jpg",
     bio: "https://cig-utrecht.org/members/matteo-maspero",
   }

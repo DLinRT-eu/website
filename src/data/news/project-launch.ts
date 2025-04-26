@@ -8,8 +8,11 @@ export const projectLaunch: NewsItem = {
   summary: "A new open community-driven initiative to catalog deep learning solutions in radiotherapy.",
   content: `# DLinRT Product Finder Launch
 
-We are excited to announce the launch of **DLinRT product finder**, a project deeply influenced by the [Health AI Register](https://radiology.healthairegister.com/) approach to cataloging AI solutions in radiology.
-**N.B.** The products details and list has just started and is not complete and fully up to date. We started populating the site and decided to open it already to allow the community joining the effort. 
+We are excited to announce the launch of **DLinRT product finder**, a project deeply influenced by the [Health AI Register](https://radiology.healthairegister.com/), to cataloging deep
+learning solutions in radiotherapy.
+
+**N.B.** The products details and list has just started and is not complete and fully up to date.
+The site has been populated and opened at an early stage to allow the community joining the effort, aiming at sharing the initiative during [ESTRO2025](https://www.estro.org/Congresses/ESTRO-2025). 
 
 ## Our Mission
 
@@ -32,7 +35,9 @@ We invite all stakeholders in the radiotherapy community to join us in this ende
 2. **Verify information**: Ensure accuracy of existing entries
 3. **Share feedback**: Tell us how we can improve
 
----
+*Together, we can create a valuable resource for the entire radiotherapy community.*
 
-*Together, we can create a valuable resource for the entire radiotherapy community.*`
+Thank you for joining force.
+
+Matteo`
 };

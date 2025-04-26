@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const MIRADA_PRODUCTS: ProductDetails[] = [
@@ -12,7 +11,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     features: ["Multi-structure contouring", "Consistent results", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "https://mirada-medical.com/wp-content/themes/mirada/images/mirada-medical-logo.svg",
     website: "https://mirada-medical.com/solutions/radiation-oncology/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

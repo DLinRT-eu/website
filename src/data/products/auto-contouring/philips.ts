@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
@@ -12,7 +11,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     features: ["Integrated in TPS", "Multiple segmentation methods", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "https://www.philips.com/c-dam/corporate/about-philips/philips-logo.svg",
     website: "https://www.philips.com/healthcare/solutions/radiation-oncology/radiation-treatment-planning",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

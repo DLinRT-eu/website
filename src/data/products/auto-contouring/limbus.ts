@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const LIMBUS_PRODUCTS: ProductDetails[] = [
@@ -12,7 +11,7 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     features: ["Automated OAR contouring", "Fast processing", "Deep learning algorithms"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "https://limbus.ai/images/limbus-logo.svg",
     website: "https://www.limbus.ai/limbus-contour",
     anatomicalLocation: ["Head & Neck", "Thorax", "Pelvis", "Brain"],
     modality: "CT",

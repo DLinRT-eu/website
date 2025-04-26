@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
@@ -12,7 +11,7 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning segmentation", "Integrated planning", "Atlas-based backup"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "https://www.raysearchlabs.com/wp-content/themes/raysearch/assets/images/logo.svg",
     website: "https://www.raysearchlabs.com/raystation/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT, MR, PET",

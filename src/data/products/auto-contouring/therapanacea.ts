@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
@@ -12,7 +11,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     features: ["Precise contouring", "Fast processing", "Customizable workflows"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "https://www.therapanacea.eu/wp-content/uploads/2021/03/logo.png",
     website: "https://www.therapanacea.eu/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

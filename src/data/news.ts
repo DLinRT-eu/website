@@ -9,24 +9,17 @@ export interface NewsItem {
 
 export const NEWS_ITEMS: NewsItem[] = [
   {
-    id: "ai-contouring",
-    date: "April 24, 2025",
-    title: "AI in Contouring: Latest Developments",
-    summary: "New breakthroughs in auto-contouring accuracy and efficiency.",
-    content: "Recent developments in AI-powered auto-contouring have shown significant improvements in both accuracy and efficiency. These advancements leverage deep learning techniques to better identify critical structures while reducing the time needed for manual adjustments. Research teams across multiple institutions have been working on training models with larger and more diverse datasets, resulting in more robust performance across different anatomical sites. These improvements are expected to greatly reduce the workload for radiation oncologists and medical physicists, enabling them to focus more on treatment planning optimization."
-  },
-  {
-    id: "qa-evolution",
-    date: "April 22, 2025",
-    title: "Quality Assurance Evolution",
-    summary: "How AI is revolutionizing QA processes in radiotherapy.",
-    content: "Quality assurance processes in radiotherapy are undergoing a major transformation thanks to artificial intelligence. New AI-driven QA tools can automatically detect anomalies in treatment plans, identify potential errors in beam delivery, and provide comprehensive verification with minimal human intervention. These systems are being integrated into existing radiotherapy workflows, offering real-time feedback and reducing the time needed for plan verification. Several leading hospitals have reported significant reductions in QA time while maintaining or even improving the quality of verification processes."
-  },
-  {
-    id: "treatment-planning",
-    date: "April 20, 2025",
-    title: "Treatment Planning Innovation",
-    summary: "AI-driven personalization in treatment planning systems.",
-    content: "Treatment planning systems are becoming increasingly personalized with the help of AI algorithms. These advanced systems can now analyze a patient's individual anatomy, disease characteristics, and response patterns to generate highly optimized treatment plans. By incorporating data from thousands of previous cases, AI can predict potential outcomes for different treatment approaches and suggest the most promising options. Clinicians report that this collaboration between human expertise and AI assistance is resulting in more efficient planning processes and potentially better treatment outcomes for patients."
+    id: "project-launch",
+    date: "April 26, 2025",
+    title: "AI-RAD Product Finder Launch",
+    summary: "A new open community-driven initiative to catalog AI solutions in radiotherapy.",
+    content: `We are excited to announce the launch of AI-RAD Product Finder, a project deeply influenced by the Health AI Register's approach to cataloging AI solutions in radiology (https://radiology.healthairegister.com/). 
+
+Our goal is to create an open, transparent, and community-maintained repository of deep learning-based commercial solutions available for radiotherapy in the European market. 
+
+This initiative aims to help healthcare professionals, researchers, and decision-makers easily find, compare, and evaluate AI solutions in radiotherapy. What makes our platform unique is its community-driven nature - the information is maintained and updated by the users themselves, ensuring the most current and relevant information is always available.
+
+We invite all stakeholders in the radiotherapy community to join us in this endeavor and contribute to building a comprehensive resource for AI solutions in radiotherapy.`
   }
 ];
+

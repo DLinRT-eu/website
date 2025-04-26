@@ -16,6 +16,21 @@ export const SAMPLE_PRODUCTS = [
     lastUpdated: "2024-04-15"
   },
   {
+    id: "register-master",
+    name: "RegisterMaster AI",
+    company: "MedicalVision",
+    description: "High-precision multimodal image registration for treatment planning and adaptation.",
+    features: ["Deformable registration", "Multi-modality fusion", "Real-time processing"],
+    category: "Registration",
+    certification: "CE",
+    logoUrl: "/placeholder.svg",
+    anatomicalLocation: ["Brain", "Spine", "Whole Body"],
+    modality: "MRI",
+    subspeciality: "Medical Physics",
+    diseaseTargeted: ["Brain Tumors", "Metastases"],
+    lastUpdated: "2024-04-20"
+  },
+  {
     id: "dose-optimizer",
     name: "DoseOptimizer AI",
     company: "MedAI Systems",
@@ -29,6 +44,36 @@ export const SAMPLE_PRODUCTS = [
     subspeciality: "Medical Physics",
     diseaseTargeted: ["Brain Tumors", "Spine Metastases"],
     lastUpdated: "2024-04-10"
+  },
+  {
+    id: "clinical-predict",
+    name: "ClinicalPredict Pro",
+    company: "AIHealth Analytics",
+    description: "Advanced clinical outcome prediction system for radiotherapy treatment.",
+    features: ["Survival prediction", "Toxicity assessment", "Treatment response modeling"],
+    category: "Clinical Prediction",
+    certification: "FDA",
+    logoUrl: "/placeholder.svg",
+    anatomicalLocation: ["Whole Body"],
+    modality: "CT",
+    subspeciality: "Clinical Oncology",
+    diseaseTargeted: ["Multiple Cancer Types"],
+    lastUpdated: "2024-04-18"
+  },
+  {
+    id: "synth-image",
+    name: "SynthImage AI",
+    company: "DeepMedical",
+    description: "Advanced medical image synthesis platform for radiotherapy planning.",
+    features: ["CT to MRI synthesis", "Artifact reduction", "Resolution enhancement"],
+    category: "Image Synthesis",
+    certification: "CE & FDA",
+    logoUrl: "/placeholder.svg",
+    anatomicalLocation: ["Brain", "Pelvis"],
+    modality: "CT/MRI",
+    subspeciality: "Medical Imaging",
+    diseaseTargeted: ["Brain Tumors", "Prostate Cancer"],
+    lastUpdated: "2024-04-22"
   },
   {
     id: "qa-master",

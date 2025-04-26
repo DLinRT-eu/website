@@ -1,12 +1,11 @@
-
 import { Link, NavLink } from 'react-router-dom';
-import { useMobile } from '@/hooks/use-mobile';
+import { useIsMobile } from '@/hooks/use-mobile';
 import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
 import UserMenu from './auth/UserMenu';
 
 const Header = () => {
-  const isMobile = useMobile();
+  const isMobile = useIsMobile();
   const [isOpen, setIsOpen] = useState(false);
   const baseUrl = import.meta.env.BASE_URL || '/ai-rad-product-finder/';
 
@@ -100,7 +99,6 @@ const Header = () => {
         )}
       </div>
 
-      {/* Mobile Menu */}
       {isMobile && isOpen && (
         <nav className="p-4 border-t">
           <div className="flex flex-col space-y-2">

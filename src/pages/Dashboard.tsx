@@ -1,4 +1,4 @@
-
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { 
   ChartContainer, 
@@ -7,7 +7,7 @@ import {
   ChartLegend,
   ChartLegendContent 
 } from "@/components/ui/chart";
-import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import dataService from "@/services/DataService";
 import { LayoutDashboard } from "lucide-react";
 import { getAllOptions } from "@/utils/filterOptions";
@@ -43,7 +43,14 @@ const Dashboard = () => {
     }))
     .sort((a, b) => b.value - a.value);
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
+  // Custom colors with better contrast and readability
+  const COLORS = [
+    '#0EA5E9',   // Bright Ocean Blue
+    '#8B5CF6',   // Vivid Purple
+    '#10B981',   // Emerald Green
+    '#F43F5E',   // Vibrant Red
+    '#F59E0B',   // Amber
+  ];
 
   return (
     <div className="container mx-auto p-6">
@@ -76,24 +83,46 @@ const Dashboard = () => {
             <CardTitle>Products by Location</CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartContainer className="h-[300px]" config={{}}>
-              <PieChart>
-                <Pie
-                  data={locationData}
-                  dataKey="value"
-                  nameKey="name"
-                  cx="50%"
-                  cy="50%"
-                  outerRadius={100}
-                  label
-                >
-                  {locationData.map((entry, index) => (
-                    <Cell key={entry.name} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip content={<ChartTooltipContent />} />
-                <ChartLegend content={<ChartLegendContent />} />
-              </PieChart>
+            <ChartContainer className="h-[400px]" config={{}}>
+              <ResponsiveContainer>
+                <PieChart>
+                  <Pie
+                    data={locationData}
+                    dataKey="value"
+                    nameKey="name"
+                    cx="50%"
+                    cy="50%"
+                    outerRadius={100}
+                    label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
+                    labelStyle={{ 
+                      fontSize: '12px', 
+                      fill: 'var(--foreground)',
+                      fontWeight: 500 
+                    }}
+                  >
+                    {locationData.map((entry, index) => (
+                      <Cell 
+                        key={entry.name} 
+                        fill={COLORS[index % COLORS.length]} 
+                        stroke="var(--background)"
+                        strokeWidth={2}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip content={<ChartTooltipContent />} />
+                  <Legend 
+                    layout="horizontal" 
+                    verticalAlign="bottom" 
+                    align="center"
+                    wrapperStyle={{ 
+                      paddingTop: '10px',
+                      fontSize: '12px',
+                      color: 'var(--muted-foreground)'
+                    }}
+                    iconType="circle"
+                  />
+                </PieChart>
+              </ResponsiveContainer>
             </ChartContainer>
           </CardContent>
         </Card>

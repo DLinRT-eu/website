@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const SIEMENS_PRODUCTS: ProductDetails[] = [
@@ -6,13 +7,13 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     name: "syngo.via RT Image Suite",
     company: "Siemens Healthineers",
     companyUrl: "https://www.siemens-healthineers.com",
-    productUrl: "https://www.siemens-healthineers.com/radiotherapy/precision-radiation-oncology/syngo-via-rt-image-suite",
+    productUrl: "https://www.siemens-healthineers.com/magnetic-resonance-imaging/clinical-specialities/synthetic-ct",
     description: "Advanced imaging solution for radiation therapy planning including synthetic CT generation from MR data.",
     features: ["Synthetic CT generation", "Multimodality image registration", "Treatment planning"],
     category: "Image Synthesis",
     certification: "CE & FDA",
     logoUrl: "/placeholder.svg",
-    website: "https://www.siemens-healthineers.com/radiotherapy/precision-radiation-oncology/syngo-via-rt-image-suite",
+    website: "https://www.siemens-healthineers.com/magnetic-resonance-imaging/clinical-specialities/synthetic-ct",
     anatomicalLocation: ["Brain", "Pelvis", "Head & Neck"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
@@ -56,3 +57,4 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     lastUpdated: "2024-03-15"
   }
 ];
+

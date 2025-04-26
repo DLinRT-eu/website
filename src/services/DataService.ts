@@ -1,8 +1,8 @@
-
 import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS } from "@/data";
 import type { ProductDetails } from "@/types/productDetails";
 import type { CompanyDetails } from "@/types/company";
 import type { NewsItem } from "@/types/news";
+import type { FilterState } from "@/types/filters";
 
 /**
  * DataService provides methods to access and manipulate product, company, and news data
@@ -30,22 +30,13 @@ class DataService {
     );
   }
 
-  filterProducts(filters: {
-    tasks?: string[],
-    locations?: string[],
-    companies?: string[],
-    certifications?: string[],
-    modalities?: string[]
-  }): ProductDetails[] {
+  filterProducts(filters: FilterState): ProductDetails[] {
     return ALL_PRODUCTS.filter((product: ProductDetails) => {
       if (filters.tasks?.length && !filters.tasks.includes(product.category)) {
         return false;
       }
       if (filters.locations?.length && !product.anatomicalLocation?.some(loc => 
         filters.locations?.includes(loc))) {
-        return false;
-      }
-      if (filters.companies?.length && !filters.companies.includes(product.company)) {
         return false;
       }
       if (filters.certifications?.length && !filters.certifications.includes(

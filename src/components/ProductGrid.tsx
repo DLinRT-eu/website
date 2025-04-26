@@ -5,14 +5,7 @@ import ProductCard from "./ProductCard";
 import ProductGridControls from "./grid/ProductGridControls";
 import ProductPagination from "./grid/ProductPagination";
 import dataService from "@/services/DataService";
-
-interface FilterState {
-  tasks: string[];
-  locations: string[];
-  companies: string[];
-  certifications: string[];
-  modalities: string[];
-}
+import { FilterState } from "@/types/filters";
 
 interface ProductGridProps {
   filters?: FilterState;

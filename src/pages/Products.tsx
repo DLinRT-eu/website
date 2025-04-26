@@ -3,21 +3,13 @@ import SearchHeader from "@/components/SearchHeader";
 import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
 import { useState } from "react";
-
-interface FilterState {
-  tasks: string[];
-  locations: string[];
-  companies: string[];
-  certifications: string[];
-  modalities: string[];
-}
+import type { FilterState } from "@/types/filters";
 
 const Products = () => {
   const [filtersActive, setFiltersActive] = useState(false);
   const [currentFilters, setCurrentFilters] = useState<FilterState>({
     tasks: [],
     locations: [],
-    companies: [],
     certifications: [],
     modalities: [],
   });
@@ -29,7 +21,6 @@ const Products = () => {
     setCurrentFilters({
       tasks: [],
       locations: [],
-      companies: [],
       certifications: [],
       modalities: [],
     });

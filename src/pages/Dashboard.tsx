@@ -10,6 +10,7 @@ import {
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import dataService from "@/services/DataService";
 import { LayoutDashboard } from "lucide-react";
+import { getAllOptions } from "@/utils/filterOptions";
 
 const Dashboard = () => {
   // Get all data needed for charts

@@ -1,3 +1,4 @@
+
 import { Product } from "@/types/product";
 import { SAMPLE_PRODUCTS } from "@/data/products";
 
@@ -25,5 +26,3 @@ export const getAllOptions = (field: keyof Product): string[] => {
       return [];
   }
 };
-
-export { getAllOptions };

@@ -23,7 +23,7 @@ const Header = () => {
         <nav className="hidden md:flex">
           <ul className="flex space-x-4">
             <li>
-              <Link to="/" className="flex items-center px-4 py-2 hover:text-white/90">
+              <Link to="/products" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Package className="w-4 h-4 mr-2" />
                 Products
               </Link>

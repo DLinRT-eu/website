@@ -7,7 +7,7 @@ const SearchHeader = () => {
     <header className="w-full bg-white shadow-sm py-6 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          AI in Radiotherapy Products
+          DL in Radiotherapy Products
         </h1>
         <div className="relative max-w-2xl">
           <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />

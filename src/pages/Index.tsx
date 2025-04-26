@@ -4,6 +4,7 @@ import NewsSection from "@/components/NewsSection";
 import SearchHeader from "@/components/SearchHeader";
 import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
@@ -18,6 +19,16 @@ const Index = () => {
         </div>
         <FilterBar />
         <ProductGrid />
+        <footer className="mt-16 border-t border-gray-200 pt-8 pb-12">
+          <div className="text-center">
+            <Link 
+              to="/maintenance-team" 
+              className="text-[#00A6D6] hover:text-[#00A6D6]/80 transition-colors duration-200"
+            >
+              Meet Our Maintenance Team →
+            </Link>
+          </div>
+        </footer>
       </main>
     </div>
   );

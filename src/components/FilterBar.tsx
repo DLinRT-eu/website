@@ -15,9 +15,9 @@ const CERTIFICATIONS = ["CE", "FDA", "CE & FDA"];
 
 const FilterBar = () => {
   return (
-    <div className="flex flex-wrap gap-4 items-center mb-6">
+    <div className="flex flex-wrap gap-4 items-center mb-8 p-4 rounded-lg bg-[#00A6D6]/5">
       <div className="flex items-center gap-2">
-        <Filter className="h-5 w-5 text-gray-500" />
+        <Filter className="h-5 w-5 text-[#00A6D6]" />
         <span className="text-sm font-medium text-gray-700">Filters:</span>
       </div>
       

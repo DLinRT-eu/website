@@ -1,14 +1,14 @@
 
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { NEWS_ITEMS } from '@/components/NewsSection';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import dataService from '@/services/DataService';
 
 const NewsDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const newsItem = NEWS_ITEMS[Number(id)];
+  const newsItem = dataService.getNewsById(id || '');
 
   if (!newsItem) {
     return (
@@ -34,6 +34,12 @@ const NewsDetail = () => {
         <time className="text-sm text-blue-600 mb-2 block">{newsItem.date}</time>
         <h1 className="text-3xl font-bold mb-6">{newsItem.title}</h1>
         <p className="text-gray-600 text-lg leading-relaxed mb-8">{newsItem.summary}</p>
+        
+        {newsItem.content && (
+          <div className="prose max-w-none">
+            <p className="text-gray-700 leading-relaxed">{newsItem.content}</p>
+          </div>
+        )}
       </main>
     </div>
   );

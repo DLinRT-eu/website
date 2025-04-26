@@ -1,12 +1,11 @@
 
 import { useParams } from 'react-router-dom';
 import ProductDetailsPage from '@/components/ProductDetails';
-import { SAMPLE_PRODUCTS } from '@/data/products';
-import { ProductDetails } from '@/types/productDetails';
+import dataService from '@/services/DataService';
 
 const ProductDetailsRoute = () => {
   const { id } = useParams();
-  const product = SAMPLE_PRODUCTS.find((p) => p.id === id) as ProductDetails;
+  const product = dataService.getProductById(id || '');
 
   if (!product) {
     return <div className="p-8 text-center">Product not found</div>;

@@ -1,9 +1,10 @@
+
 import { useState } from "react";
-import { SAMPLE_PRODUCTS } from "@/data/products";
 import { Product } from "@/types/product";
 import ProductCard from "./ProductCard";
 import ProductGridControls from "./grid/ProductGridControls";
 import ProductPagination from "./grid/ProductPagination";
+import dataService from "@/services/DataService";
 
 interface FilterState {
   tasks: string[];
@@ -21,27 +22,10 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  const filteredProducts = SAMPLE_PRODUCTS.filter((product: Product) => {
-    if (filters?.tasks.length && !filters.tasks.includes(product.category)) {
-      return false;
-    }
-    if (filters?.locations.length && !product.anatomicalLocation?.some(loc => 
-      filters.locations.includes(loc))) {
-      return false;
-    }
-    if (filters?.companies.length && !filters.companies.includes(product.company)) {
-      return false;
-    }
-    if (filters?.certifications.length && !filters.certifications.includes(
-      product.certification || '')) {
-      return false;
-    }
-    if (filters?.modalities.length && !filters.modalities.includes(
-      product.modality || '')) {
-      return false;
-    }
-    return true;
-  });
+  // Get filtered products from data service
+  const filteredProducts = filters 
+    ? dataService.filterProducts(filters)
+    : dataService.getAllProducts();
 
   const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -67,8 +51,8 @@ const ProductGrid = ({ filters }: ProductGridProps) => {
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {currentProducts.map((product, index) => (
-          <ProductCard key={index} {...product} />
+        {currentProducts.map((product) => (
+          <ProductCard key={product.id} {...product} />
         ))}
       </div>
 

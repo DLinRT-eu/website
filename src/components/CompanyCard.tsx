@@ -8,10 +8,11 @@ import ProductCard from './ProductCard';
 
 interface CompanyCardProps {
   name: string;
+  description: string;
   products: Product[];
 }
 
-const CompanyCard = ({ name, products }: CompanyCardProps) => {
+const CompanyCard = ({ name, description, products }: CompanyCardProps) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => setExpanded(!expanded);
@@ -22,6 +23,7 @@ const CompanyCard = ({ name, products }: CompanyCardProps) => {
         <div className="flex justify-between items-center">
           <div>
             <h3 className="text-xl font-bold">{name}</h3>
+            <p className="text-gray-600 mt-1 text-sm">{description}</p>
             <div className="flex items-center mt-1 text-gray-500">
               <Package className="w-4 h-4 mr-1" />
               <span>{products.length} product{products.length !== 1 ? 's' : ''}</span>
@@ -37,8 +39,8 @@ const CompanyCard = ({ name, products }: CompanyCardProps) => {
         <>
           <CardContent className="pt-0">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {products.map((product, index) => (
-                <ProductCard key={index} {...product} />
+              {products.map((product) => (
+                <ProductCard key={product.id} {...product} />
               ))}
             </div>
           </CardContent>

@@ -1,46 +1,36 @@
 
 import React, { useState, useMemo } from 'react';
-import { SAMPLE_PRODUCTS } from '@/data/products';
 import { Input } from '@/components/ui/input';
 import { Search } from 'lucide-react';
 import CompanyCard from '@/components/CompanyCard';
-import { Product } from '@/types/product';
+import dataService from '@/services/DataService';
 
 const Companies = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Group products by company
-  const companiesWithProducts = useMemo(() => {
-    // Create a map of company names to arrays of products
-    const companyMap = SAMPLE_PRODUCTS.reduce((acc: Record<string, Product[]>, product) => {
-      if (!acc[product.company]) {
-        acc[product.company] = [];
-      }
-      acc[product.company].push(product);
-      return acc;
-    }, {});
-
-    // Convert to array of company objects
-    return Object.entries(companyMap).map(([name, products]) => ({
-      name,
-      products,
-      productCount: products.length
+  // Get companies and their products
+  const companies = useMemo(() => {
+    return dataService.getAllCompanies().map(company => ({
+      ...company,
+      products: dataService.getProductsByCompany(company.id),
+      productCount: company.productIds.length
     }));
   }, []);
 
   // Filter companies based on search query
   const filteredCompanies = useMemo(() => {
-    if (!searchQuery) return companiesWithProducts;
+    if (!searchQuery) return companies;
     
     const query = searchQuery.toLowerCase();
-    return companiesWithProducts.filter(company => 
+    return companies.filter(company => 
       company.name.toLowerCase().includes(query) ||
+      company.description.toLowerCase().includes(query) ||
       company.products.some(product => 
         product.name.toLowerCase().includes(query) || 
         product.description.toLowerCase().includes(query)
       )
     );
-  }, [companiesWithProducts, searchQuery]);
+  }, [companies, searchQuery]);
 
   return (
     <div className="min-h-screen bg-white">
@@ -72,9 +62,10 @@ const Companies = () => {
         <div className="space-y-6">
           {filteredCompanies.map((company) => (
             <CompanyCard 
-              key={company.name} 
+              key={company.id} 
               name={company.name} 
-              products={company.products} 
+              products={company.products}
+              description={company.description}
             />
           ))}
           

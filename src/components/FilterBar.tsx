@@ -1,4 +1,3 @@
-
 import { Filter } from "lucide-react";
 import {
   Select,
@@ -8,10 +7,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-// Updated categories to match the products
 const TASKS = ["Auto-Contouring", "Treatment Planning", "Dose Optimization", "Quality Assurance"];
 const COMPANIES = ["RadTech Solutions", "MedTech Innovations", "AI Medical Systems", "HealthAI Solutions"];
 const CERTIFICATIONS = ["CE", "FDA", "CE & FDA"];
+const ANATOMICAL_LOCATIONS = ["Head & Neck", "Thorax", "Breast", "Prostate", "Abdomen", "Pelvis"];
 
 const FilterBar = () => {
   return (
@@ -55,6 +54,19 @@ const FilterBar = () => {
           {CERTIFICATIONS.map((cert) => (
             <SelectItem key={cert} value={cert.toLowerCase()}>
               {cert}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      <Select>
+        <SelectTrigger className="w-[180px]">
+          <SelectValue placeholder="Select location" />
+        </SelectTrigger>
+        <SelectContent>
+          {ANATOMICAL_LOCATIONS.map((location) => (
+            <SelectItem key={location} value={location.toLowerCase()}>
+              {location}
             </SelectItem>
           ))}
         </SelectContent>

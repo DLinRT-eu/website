@@ -8,8 +8,8 @@ const Header = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <img 
-            src="/placeholder.svg" 
-            alt="Logo" 
+            src="/lovable-uploads/93a71ef6-4725-4b3a-95fa-95c6cd267e53.png" 
+            alt="DLnRT Logo" 
             className="w-8 h-8"
           />
           <Link 

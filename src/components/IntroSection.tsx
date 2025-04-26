@@ -32,7 +32,7 @@ const IntroSection = () => {
     // Create particles
     const createParticles = () => {
       const numberOfParticles = 50;
-      const colors = ['#00A6D6', '#9b87f5', '#ffffff'];
+      const colors = ['#0077b6', '#00a8e8', '#ffffff']; // UMC Utrecht blue palette
 
       for (let i = 0; i < numberOfParticles; i++) {
         particles.push({
@@ -48,7 +48,7 @@ const IntroSection = () => {
 
     // Animation loop
     const animate = () => {
-      ctx.fillStyle = 'rgba(26, 31, 44, 0.1)'; // Dark background with slight transparency
+      ctx.fillStyle = 'rgba(0, 119, 182, 0.1)'; // UMC Utrecht blue with transparency
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw particles
@@ -74,7 +74,7 @@ const IntroSection = () => {
 
           if (distance < 100) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(155, 135, 245, ${0.2 * (1 - distance / 100)})`;
+            ctx.strokeStyle = `rgba(0, 168, 232, ${0.2 * (1 - distance / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(particle.x, particle.y);
             ctx.lineTo(otherParticle.x, otherParticle.y);
@@ -100,14 +100,14 @@ const IntroSection = () => {
         ref={canvasRef}
         className="absolute top-0 left-0 w-full z-0"
       />
-      <div className="relative z-10 bg-gradient-to-b from-[#1A1F2C]/80 to-white py-16">
+      <div className="relative z-10 bg-gradient-to-b from-[#0077b6]/80 to-white py-16">
         <div className="max-w-7xl mx-auto px-4 md:px-8">
           <div className="text-center max-w-3xl mx-auto">
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              AI Solutions in Radiotherapy
+              Deep Learning in Radiotherapy
             </h1>
-            <p className="text-xl text-gray-200 mb-8">
-              Discover the latest AI-powered tools and technologies transforming radiation therapy treatment planning and delivery.
+            <p className="text-xl text-gray-100 mb-8">
+              Exploring cutting-edge deep learning technologies transforming radiation therapy treatment and patient care.
             </p>
           </div>
         </div>

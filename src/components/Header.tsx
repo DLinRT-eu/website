@@ -1,3 +1,4 @@
+
 import { Link } from 'react-router-dom';
 import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard } from 'lucide-react';
 
@@ -17,12 +18,6 @@ const Header = () => {
         <nav className="hidden md:flex">
           <ul className="flex space-x-4">
             <li>
-              <Link to="/dashboard" className="flex items-center px-4 py-2 hover:text-white/90">
-                <LayoutDashboard className="w-4 h-4 mr-2" />
-                Dashboard
-              </Link>
-            </li>
-            <li>
               <Link to="/products" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Package className="w-4 h-4 mr-2" />
                 Products
@@ -32,6 +27,12 @@ const Header = () => {
               <Link to="/companies" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Building2 className="w-4 h-4 mr-2" />
                 Companies
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard" className="flex items-center px-4 py-2 hover:text-white/90">
+                <LayoutDashboard className="w-4 h-4 mr-2" />
+                Dashboard
               </Link>
             </li>
             <li>

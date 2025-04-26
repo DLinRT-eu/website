@@ -1,5 +1,4 @@
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Filter } from "lucide-react";
 import {
   Select,
@@ -11,13 +10,30 @@ import {
 import { SAMPLE_PRODUCTS } from "@/data/products";
 import { Product } from "@/types/product";
 
-const FilterBar = () => {
+const FilterBar = ({ onFiltersChange }: { onFiltersChange?: (active: boolean) => void }) => {
   const [selectedTask, setSelectedTask] = useState<string>("");
   const [selectedLocation, setSelectedLocation] = useState<string>("");
   const [selectedCompany, setSelectedCompany] = useState<string>("");
   const [selectedCertification, setSelectedCertification] = useState<string>("");
 
-  // Filter available options based on current selections
+  useEffect(() => {
+    const handleReset = () => {
+      setSelectedTask("");
+      setSelectedLocation("");
+      setSelectedCompany("");
+      setSelectedCertification("");
+    };
+
+    window.addEventListener('resetFilters', handleReset);
+    return () => window.removeEventListener('resetFilters', handleReset);
+  }, []);
+
+  useEffect(() => {
+    onFiltersChange?.(
+      Boolean(selectedTask || selectedLocation || selectedCompany || selectedCertification)
+    );
+  }, [selectedTask, selectedLocation, selectedCompany, selectedCertification, onFiltersChange]);
+
   const getFilteredOptions = (field: 'task' | 'location' | 'company' | 'certification') => {
     const products = SAMPLE_PRODUCTS.filter((product: Product) => {
       if (selectedTask && product.category !== selectedTask) return false;

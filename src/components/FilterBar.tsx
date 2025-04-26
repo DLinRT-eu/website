@@ -1,4 +1,5 @@
 
+import React, { useState } from "react";
 import { Filter } from "lucide-react";
 import {
   Select,
@@ -7,28 +8,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const TASKS = [
-  "Auto-Contouring",
-  "Image Synthesis",
-  "Image Registration",
-  "Treatment Planning",
-  "Quality Assurance",
-  "Clinical Prediction"
-];
-const COMPANIES = ["RadTech Solutions", "MedTech Innovations", "AI Medical Systems", "HealthAI Solutions"];
-const CERTIFICATIONS = ["CE", "FDA", "CE & FDA"];
-const ANATOMICAL_LOCATIONS = ["Head & Neck", "Thorax", "Breast", "Prostate", "Abdomen", "Pelvis"];
+import { SAMPLE_PRODUCTS } from "@/data/products";
+import { Product } from "@/types/product";
 
 const FilterBar = () => {
-  const [selectedTask, setSelectedTask] = React.useState<string>("");
-  const [selectedLocation, setSelectedLocation] = React.useState<string>("");
-  const [selectedCompany, setSelectedCompany] = React.useState<string>("");
-  const [selectedCertification, setSelectedCertification] = React.useState<string>("");
+  const [selectedTask, setSelectedTask] = useState<string>("");
+  const [selectedLocation, setSelectedLocation] = useState<string>("");
+  const [selectedCompany, setSelectedCompany] = useState<string>("");
+  const [selectedCertification, setSelectedCertification] = useState<string>("");
 
   // Filter available options based on current selections
   const getFilteredOptions = (field: 'task' | 'location' | 'company' | 'certification') => {
-    const products = SAMPLE_PRODUCTS.filter(product => {
+    const products = SAMPLE_PRODUCTS.filter((product: Product) => {
       if (selectedTask && product.category !== selectedTask) return false;
       if (selectedLocation && !product.anatomicalLocation?.includes(selectedLocation)) return false;
       if (selectedCompany && product.company !== selectedCompany) return false;
@@ -44,7 +35,7 @@ const FilterBar = () => {
       case 'company':
         return [...new Set(products.map(p => p.company))];
       case 'certification':
-        return [...new Set(products.map(p => p.certification || ''))];
+        return [...new Set(products.map(p => p.certification || '').filter(Boolean))];
       default:
         return [];
     }
@@ -63,8 +54,8 @@ const FilterBar = () => {
         </SelectTrigger>
         <SelectContent>
           {getFilteredOptions('task').map((task) => (
-            <SelectItem key={task} value={task}>
-              {task}
+            <SelectItem key={task as string} value={task as string}>
+              {task as string}
             </SelectItem>
           ))}
         </SelectContent>
@@ -76,8 +67,8 @@ const FilterBar = () => {
         </SelectTrigger>
         <SelectContent>
           {getFilteredOptions('location').map((location) => (
-            <SelectItem key={location} value={location}>
-              {location}
+            <SelectItem key={location as string} value={location as string}>
+              {location as string}
             </SelectItem>
           ))}
         </SelectContent>
@@ -89,8 +80,8 @@ const FilterBar = () => {
         </SelectTrigger>
         <SelectContent>
           {getFilteredOptions('company').map((company) => (
-            <SelectItem key={company} value={company}>
-              {company}
+            <SelectItem key={company as string} value={company as string}>
+              {company as string}
             </SelectItem>
           ))}
         </SelectContent>
@@ -102,8 +93,8 @@ const FilterBar = () => {
         </SelectTrigger>
         <SelectContent>
           {getFilteredOptions('certification').map((cert) => (
-            <SelectItem key={cert} value={cert}>
-              {cert}
+            <SelectItem key={cert as string} value={cert as string}>
+              {cert as string}
             </SelectItem>
           ))}
         </SelectContent>

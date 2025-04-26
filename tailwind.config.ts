@@ -86,6 +86,42 @@ export default {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
       },
+      typography: {
+        DEFAULT: {
+          css: {
+            maxWidth: '100%',
+            color: 'var(--foreground)',
+            h1: {
+              fontWeight: '700',
+              marginTop: '1.5em',
+              marginBottom: '0.5em',
+            },
+            h2: {
+              fontWeight: '600',
+              marginTop: '1.25em',
+              marginBottom: '0.5em',
+            },
+            h3: {
+              fontWeight: '600',
+              marginTop: '1.25em',
+              marginBottom: '0.5em',
+            },
+            a: {
+              color: 'var(--primary)',
+              textDecoration: 'underline',
+              '&:hover': {
+                color: 'var(--primary-foreground)',
+              },
+            },
+            code: {
+              color: 'var(--primary)',
+              backgroundColor: 'var(--muted)',
+              padding: '0.2em 0.4em',
+              borderRadius: '0.25rem',
+            },
+          },
+        },
+      },
     },
   },
   plugins: [

@@ -6,7 +6,9 @@ export const projectLaunch: NewsItem = {
   date: "April 26, 2025",
   title: "DLinRT product finder launch",
   summary: "A new open community-driven initiative to catalog deep learning solutions in radiotherapy.",
-  content: `We are excited to announce the launch of DLinRT product finder, a project deeply influenced by the [Health AI Register](https://radiology.healthairegister.com/) approach to cataloging AI solutions in radiology.
+  content: `# DLinRT Product Finder Launch
+
+We are excited to announce the launch of **DLinRT product finder**, a project deeply influenced by the [Health AI Register](https://radiology.healthairegister.com/) approach to cataloging AI solutions in radiology.
 
 ## Our Mission
 
@@ -22,6 +24,12 @@ Our goal is to create an open, transparent, and community-maintained repository 
 ## Get Involved
 
 We invite all stakeholders in the radiotherapy community to join us in this endeavor and contribute to building a comprehensive resource for DL solutions in radiotherapy.
+
+### How to Contribute
+
+1. **Submit products**: Help us expand our database
+2. **Verify information**: Ensure accuracy of existing entries
+3. **Share feedback**: Tell us how we can improve
 
 ---
 

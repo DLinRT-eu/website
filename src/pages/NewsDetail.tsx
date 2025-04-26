@@ -37,7 +37,7 @@ const NewsDetail = () => {
         <p className="text-gray-600 text-lg leading-relaxed mb-8">{newsItem.summary}</p>
         
         {newsItem.content && (
-          <div className="prose prose-blue max-w-none">
+          <div className="prose prose-blue max-w-none prose-headings:text-blue-700 prose-a:text-blue-600 prose-strong:text-blue-600">
             <ReactMarkdown>{newsItem.content}</ReactMarkdown>
           </div>
         )}

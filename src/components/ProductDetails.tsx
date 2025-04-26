@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, ArrowLeft } from 'lucide-react';
@@ -20,7 +21,7 @@ const ProductDetailsPage = ({ product }: { product: ProductDetails }) => {
             className="text-gray-600 hover:text-blue-600 flex items-center"
           >
             <Home className="mr-2 h-5 w-5" />
-            <span>HealthAI Register</span>
+            <span>DLinRT-products</span>
           </Link>
           <Link 
             to="/" 

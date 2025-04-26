@@ -8,13 +8,15 @@ import dataService from '@/services/DataService';
 const Companies = () => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Get companies and their products
+  // Get companies and their products, filtering out companies with no products
   const companies = useMemo(() => {
-    return dataService.getAllCompanies().map(company => ({
-      ...company,
-      products: dataService.getProductsByCompany(company.id),
-      productCount: dataService.getProductsByCompany(company.id).length
-    }));
+    return dataService.getAllCompanies()
+      .map(company => ({
+        ...company,
+        products: dataService.getProductsByCompany(company.id),
+        productCount: dataService.getProductsByCompany(company.id).length
+      }))
+      .filter(company => company.productCount > 0);
   }, []);
 
   // Filter companies based on search query

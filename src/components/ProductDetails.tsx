@@ -9,6 +9,7 @@ import TechnicalSpecifications from './product/TechnicalSpecifications';
 import RegulatoryInformation from './product/RegulatoryInformation';
 import MarketInformation from './product/MarketInformation';
 import PricingInformation from './product/PricingInformation';
+import ProductCommentsSection from './product/ProductCommentsSection';
 
 const ProductDetailsPage = ({ product }: { product: ProductDetails }) => {
   return (
@@ -23,6 +24,7 @@ const ProductDetailsPage = ({ product }: { product: ProductDetails }) => {
         <RegulatoryInformation product={product} />
         <MarketInformation product={product} />
         <PricingInformation product={product} />
+        <ProductCommentsSection product={product} />
       </div>
     </div>
   );

@@ -11,12 +11,15 @@ import Donate from "./pages/Donate";
 
 const queryClient = new QueryClient();
 
+// Get the base URL from the import.meta.env or fallback to the one defined in vite.config.ts
+const BASE_URL = import.meta.env.BASE_URL || '/ai-rad-product-finder/';
+
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <BrowserRouter basename={BASE_URL}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="maintenance-team" element={<MaintenanceTeam />} />

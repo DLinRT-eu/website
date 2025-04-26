@@ -61,14 +61,15 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     company: "Therapanacea",
     companyUrl: "https://www.therapanacea.eu/",
     productUrl: "https://www.therapanacea.eu/our-products/adaptbox/",
-    description: "AI-powered image registration and auto-contouring solution for adaptive radiotherapy, specifically designed for male pelvis CBCT imaging.",
+    description: "AI-powered software that provides one-click augmented CBCT images with organs-at-risk delineations for improved and more efficient adaptive radiotherapy workflow",
     features: [
       "CBCT auto-contouring",
       "Fast processing",
       "Adaptive radiotherapy support",
-      "Male pelvis specialization"
+      "Male pelvis specialization",
+      "CBCT image synthesis"
     ],
-    category: "Auto-Contouring",
+    category: "Image Synthesis",
     certification: "CE",
     logoUrl: "https://www.therapanacea.eu/wp-content/uploads/2021/03/logo.png",
     website: "https://www.therapanacea.eu/our-products/adaptbox/",
@@ -79,7 +80,8 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     keyFeatures: [
       "CBCT-based contouring",
       "Clinical workflow integration",
-      "Rapid processing for adaptive RT"
+      "Rapid processing for adaptive RT",
+      "CBCT image enhancement"
     ],
     technicalSpecifications: {
       population: "Adult male patients",

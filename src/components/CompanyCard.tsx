@@ -2,36 +2,54 @@
 import React, { useState } from 'react';
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Package, ChevronDown, ChevronUp } from 'lucide-react';
+import { Package, ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { Product } from '@/types/product';
 import ProductCard from './ProductCard';
 
 interface CompanyCardProps {
   name: string;
   description: string;
+  website?: string;
   products: Product[];
 }
 
-const CompanyCard = ({ name, description, products }: CompanyCardProps) => {
+const CompanyCard = ({ name, description, website, products }: CompanyCardProps) => {
   const [expanded, setExpanded] = useState(false);
 
   const toggleExpanded = () => setExpanded(!expanded);
 
   return (
     <Card className="mb-4 w-full border-[#00A6D6]/10 hover:shadow-md transition-shadow">
-      <CardHeader className="pb-3 cursor-pointer" onClick={toggleExpanded}>
-        <div className="flex justify-between items-center">
-          <div>
-            <h3 className="text-xl font-bold">{name}</h3>
-            <p className="text-gray-600 mt-1 text-sm">{description}</p>
-            <div className="flex items-center mt-1 text-gray-500">
+      <CardHeader className="pb-3">
+        <div className="flex justify-between items-start">
+          <div className="flex-1">
+            <div className="flex items-center gap-2 mb-1">
+              <h3 className="text-xl font-bold">{name}</h3>
+              {website && (
+                <a 
+                  href={website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#00A6D6] hover:text-[#00A6D6]/80"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                </a>
+              )}
+            </div>
+            <p className="text-gray-600 text-sm">{description}</p>
+            <div className="flex items-center mt-2 text-gray-500">
               <Package className="w-4 h-4 mr-1" />
               <span>{products.length} product{products.length !== 1 ? 's' : ''}</span>
             </div>
           </div>
-          <Badge variant="outline" className="flex items-center">
-            {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </Badge>
+          <button
+            onClick={toggleExpanded}
+            className="ml-4"
+          >
+            <Badge variant="outline" className="flex items-center cursor-pointer">
+              {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+            </Badge>
+          </button>
         </div>
       </CardHeader>
 

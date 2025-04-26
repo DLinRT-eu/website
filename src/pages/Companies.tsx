@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { Search } from 'lucide-react';
+import { Search, Building } from 'lucide-react';
 import CompanyCard from '@/components/CompanyCard';
 import dataService from '@/services/DataService';
 
@@ -13,7 +13,7 @@ const Companies = () => {
     return dataService.getAllCompanies().map(company => ({
       ...company,
       products: dataService.getProductsByCompany(company.id),
-      productCount: company.productIds.length
+      productCount: dataService.getProductsByCompany(company.id).length
     }));
   }, []);
 
@@ -33,18 +33,22 @@ const Companies = () => {
   }, [companies, searchQuery]);
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <h1 className="text-3xl font-bold mb-6">Companies</h1>
-        <p className="text-gray-600 mb-8">
-          Discover companies developing AI solutions for radiotherapy.
+        <div className="flex items-center gap-3 mb-6">
+          <Building className="h-8 w-8 text-[#00A6D6]" />
+          <h1 className="text-3xl font-bold">Companies</h1>
+        </div>
+        
+        <p className="text-gray-600 mb-8 max-w-2xl">
+          Explore leading companies developing innovative AI solutions for radiation therapy, medical imaging synthesis, and clinical decision support in radiotherapy.
         </p>
 
         {/* Search input */}
         <div className="relative max-w-md mb-8">
           <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
           <Input 
-            placeholder="Search for companies or their products..." 
+            placeholder="Search companies or products..." 
             className="pl-10 bg-white border-gray-200"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -63,7 +67,8 @@ const Companies = () => {
           {filteredCompanies.map((company) => (
             <CompanyCard 
               key={company.id} 
-              name={company.name} 
+              name={company.name}
+              website={company.website}
               products={company.products}
               description={company.description}
             />

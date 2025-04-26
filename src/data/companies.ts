@@ -1,4 +1,3 @@
-
 import { CompanyDetails } from "@/types/company";
 
 export const COMPANIES: CompanyDetails[] = [
@@ -28,7 +27,12 @@ export const COMPANIES: CompanyDetails[] = [
     name: "Philips Healthcare",
     description: "Global leader in health technology, offering comprehensive radiation oncology solutions.",
     website: "https://www.philips.com/healthcare",
-    productIds: ["philips-mrcat"]
+    productIds: [
+      "philips-auto-contouring",
+      "philips-mrcat-head-neck",
+      "philips-mrcat-brain",
+      "philips-mrcat-pelvis"
+    ]
   },
   {
     id: "siemens-healthineers",

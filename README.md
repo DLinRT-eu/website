@@ -1,4 +1,28 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![GNU GPL-3.0][license-shield]][license-url]
+
 # Welcome to your Lovable project
+
+> **Note**: The website is currently under development. We welcome contributions to verify and improve the product information accuracy.
+
+## Team
+
+<div align="center">
+  <img src="https://cig-utrecht.org/wp-content/uploads/2020/12/matteo-pic.jpg" width="200" style="border-radius: 50%;" alt="Matteo Maspero"/>
+  <p><strong>Matteo Maspero</strong></p>
+  <p>Project Lead - Computational Imaging Group Utrecht</p>
+</div>
+
+## How to Contribute
+
+We welcome contributions to improve the accuracy of product information. If you notice any inaccuracies or have updates about the AI products listed, please:
+
+1. Open an issue describing the update needed
+2. Submit a pull request with your changes
+3. Ensure proper attribution and documentation
 
 ## Project info
 
@@ -71,3 +95,20 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## License
+
+This project is licensed under the GNU GPL-3.0 License - see the LICENSE file for details. You are free to reuse and modify the code, provided you maintain the same license and provide proper attribution to the original authors.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/your-username/your-repo.svg?style=for-the-badge
+[contributors-url]: https://github.com/your-username/your-repo/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/your-username/your-repo.svg?style=for-the-badge
+[forks-url]: https://github.com/your-username/your-repo/network/members
+[stars-shield]: https://img.shields.io/github/stars/your-username/your-repo.svg?style=for-the-badge
+[stars-url]: https://github.com/your-username/your-repo/stargazers
+[issues-shield]: https://img.shields.io/github/issues/your-username/your-repo.svg?style=for-the-badge
+[issues-url]: https://github.com/your-username/your-repo/issues
+[license-shield]: https://img.shields.io/github/license/your-username/your-repo.svg?style=for-the-badge
+[license-url]: https://github.com/your-username/your-repo/blob/master/LICENSE

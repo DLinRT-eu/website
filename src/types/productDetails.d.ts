@@ -1,4 +1,6 @@
 
+import { Product } from './product';
+
 export interface ProductDetails extends Product {
   subspeciality?: string;
   modality?: string;

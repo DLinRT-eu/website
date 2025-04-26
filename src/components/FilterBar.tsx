@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Filter } from "lucide-react";
 import {
@@ -10,18 +11,34 @@ import {
 import { SAMPLE_PRODUCTS } from "@/data/products";
 import { Product } from "@/types/product";
 
-const FilterBar = ({ onFiltersChange }: { onFiltersChange?: (active: boolean) => void }) => {
-  const [selectedTask, setSelectedTask] = useState<string>("");
-  const [selectedLocation, setSelectedLocation] = useState<string>("");
-  const [selectedCompany, setSelectedCompany] = useState<string>("");
-  const [selectedCertification, setSelectedCertification] = useState<string>("");
+interface FilterState {
+  tasks: string[];
+  locations: string[];
+  companies: string[];
+  certifications: string[];
+}
+
+export interface FilterBarProps {
+  onFiltersChange?: (active: boolean) => void;
+  onFilterUpdate?: (filters: FilterState) => void;
+}
+
+const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
+  const [filters, setFilters] = useState<FilterState>({
+    tasks: [],
+    locations: [],
+    companies: [],
+    certifications: [],
+  });
 
   useEffect(() => {
     const handleReset = () => {
-      setSelectedTask("");
-      setSelectedLocation("");
-      setSelectedCompany("");
-      setSelectedCertification("");
+      setFilters({
+        tasks: [],
+        locations: [],
+        companies: [],
+        certifications: [],
+      });
     };
 
     window.addEventListener('resetFilters', handleReset);
@@ -30,28 +47,35 @@ const FilterBar = ({ onFiltersChange }: { onFiltersChange?: (active: boolean) =>
 
   useEffect(() => {
     onFiltersChange?.(
-      Boolean(selectedTask || selectedLocation || selectedCompany || selectedCertification)
+      Boolean(filters.tasks.length || filters.locations.length || filters.companies.length || filters.certifications.length)
     );
-  }, [selectedTask, selectedLocation, selectedCompany, selectedCertification, onFiltersChange]);
+    onFilterUpdate?.(filters);
+  }, [filters, onFiltersChange, onFilterUpdate]);
 
-  const getFilteredOptions = (field: 'task' | 'location' | 'company' | 'certification') => {
-    const products = SAMPLE_PRODUCTS.filter((product: Product) => {
-      if (selectedTask && product.category !== selectedTask) return false;
-      if (selectedLocation && !product.anatomicalLocation?.includes(selectedLocation)) return false;
-      if (selectedCompany && product.company !== selectedCompany) return false;
-      if (selectedCertification && product.certification !== selectedCertification) return false;
-      return true;
+  const handleFilterChange = (value: string, filterType: keyof FilterState) => {
+    setFilters(prev => {
+      const currentValues = prev[filterType];
+      const newValues = currentValues.includes(value)
+        ? currentValues.filter(v => v !== value)
+        : [...currentValues, value];
+      
+      return {
+        ...prev,
+        [filterType]: newValues
+      };
     });
+  };
 
+  const getAllOptions = (field: keyof Product): string[] => {
     switch (field) {
-      case 'task':
-        return [...new Set(products.map(p => p.category))];
-      case 'location':
-        return [...new Set(products.flatMap(p => p.anatomicalLocation || []))];
+      case 'category':
+        return [...new Set(SAMPLE_PRODUCTS.map(p => p.category))];
+      case 'anatomicalLocation':
+        return [...new Set(SAMPLE_PRODUCTS.flatMap(p => p.anatomicalLocation || []))];
       case 'company':
-        return [...new Set(products.map(p => p.company))];
+        return [...new Set(SAMPLE_PRODUCTS.map(p => p.company))];
       case 'certification':
-        return [...new Set(products.map(p => p.certification || '').filter(Boolean))];
+        return [...new Set(SAMPLE_PRODUCTS.map(p => p.certification || '').filter(Boolean))];
       default:
         return [];
     }
@@ -64,53 +88,81 @@ const FilterBar = ({ onFiltersChange }: { onFiltersChange?: (active: boolean) =>
         <span className="text-sm font-medium text-gray-700">Filters:</span>
       </div>
       
-      <Select value={selectedTask} onValueChange={setSelectedTask}>
+      <Select
+        value={filters.tasks.join(',')}
+        onValueChange={(value) => handleFilterChange(value, 'tasks')}
+      >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select task" />
+          <SelectValue placeholder="Select tasks" />
         </SelectTrigger>
         <SelectContent>
-          {getFilteredOptions('task').map((task) => (
-            <SelectItem key={task as string} value={task as string}>
-              {task as string}
+          {getAllOptions('category').map((task) => (
+            <SelectItem 
+              key={task} 
+              value={task}
+              className={filters.tasks.includes(task) ? "bg-[#00A6D6]/10" : ""}
+            >
+              {task}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select value={selectedLocation} onValueChange={setSelectedLocation}>
+      <Select
+        value={filters.locations.join(',')}
+        onValueChange={(value) => handleFilterChange(value, 'locations')}
+      >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select location" />
+          <SelectValue placeholder="Select locations" />
         </SelectTrigger>
         <SelectContent>
-          {getFilteredOptions('location').map((location) => (
-            <SelectItem key={location as string} value={location as string}>
-              {location as string}
+          {getAllOptions('anatomicalLocation').map((location) => (
+            <SelectItem 
+              key={location} 
+              value={location}
+              className={filters.locations.includes(location) ? "bg-[#00A6D6]/10" : ""}
+            >
+              {location}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select value={selectedCompany} onValueChange={setSelectedCompany}>
+      <Select
+        value={filters.companies.join(',')}
+        onValueChange={(value) => handleFilterChange(value, 'companies')}
+      >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select company" />
+          <SelectValue placeholder="Select companies" />
         </SelectTrigger>
         <SelectContent>
-          {getFilteredOptions('company').map((company) => (
-            <SelectItem key={company as string} value={company as string}>
-              {company as string}
+          {getAllOptions('company').map((company) => (
+            <SelectItem 
+              key={company} 
+              value={company}
+              className={filters.companies.includes(company) ? "bg-[#00A6D6]/10" : ""}
+            >
+              {company}
             </SelectItem>
           ))}
         </SelectContent>
       </Select>
 
-      <Select value={selectedCertification} onValueChange={setSelectedCertification}>
+      <Select
+        value={filters.certifications.join(',')}
+        onValueChange={(value) => handleFilterChange(value, 'certifications')}
+      >
         <SelectTrigger className="w-[180px]">
-          <SelectValue placeholder="Select certification" />
+          <SelectValue placeholder="Select certifications" />
         </SelectTrigger>
         <SelectContent>
-          {getFilteredOptions('certification').map((cert) => (
-            <SelectItem key={cert as string} value={cert as string}>
-              {cert as string}
+          {getAllOptions('certification').map((cert) => (
+            <SelectItem 
+              key={cert} 
+              value={cert}
+              className={filters.certifications.includes(cert) ? "bg-[#00A6D6]/10" : ""}
+            >
+              {cert}
             </SelectItem>
           ))}
         </SelectContent>

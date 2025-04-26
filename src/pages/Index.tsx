@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
@@ -7,14 +6,32 @@ import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
 import { Link } from "react-router-dom";
 
+interface FilterState {
+  tasks: string[];
+  locations: string[];
+  companies: string[];
+  certifications: string[];
+}
+
 const Index = () => {
   const [filtersActive, setFiltersActive] = useState(false);
+  const [currentFilters, setCurrentFilters] = useState<FilterState>({
+    tasks: [],
+    locations: [],
+    companies: [],
+    certifications: [],
+  });
 
   const handleResetFilters = () => {
-    // We'll dispatch a custom event that FilterBar will listen to
     const event = new CustomEvent('resetFilters');
     window.dispatchEvent(event);
     setFiltersActive(false);
+    setCurrentFilters({
+      tasks: [],
+      locations: [],
+      companies: [],
+      certifications: [],
+    });
   };
 
   return (
@@ -29,11 +46,14 @@ const Index = () => {
             onClick={handleResetFilters}
             className="text-sm text-gray-500 hover:text-[#00A6D6] transition-colors cursor-pointer"
           >
-            Showing all products
+            Showing {filtersActive ? 'filtered' : 'all'} products
           </button>
         </div>
-        <FilterBar onFiltersChange={setFiltersActive} />
-        <ProductGrid />
+        <FilterBar 
+          onFiltersChange={setFiltersActive} 
+          onFilterUpdate={setCurrentFilters}
+        />
+        <ProductGrid filters={currentFilters} />
         <footer className="mt-16 border-t border-gray-200 pt-8 pb-12">
           <div className="flex justify-center space-x-8">
             <Link 

@@ -1,74 +1,42 @@
 import { FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ProductCard from "./ProductCard";
+import { SAMPLE_PRODUCTS } from "@/data/products";
+import { Product } from "@/types/product";
 
-const SAMPLE_PRODUCTS = [
-  {
-    name: "ContourAI Pro",
-    company: "RadTech Solutions",
-    description: "Advanced auto-contouring system using deep learning for precise organ-at-risk delineation in radiotherapy planning.",
-    features: ["Auto-Contouring", "Deep Learning", "Real-time"],
-    category: "Auto-Contouring",
-    certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Head & Neck", "Thorax"]
-  },
-  {
-    name: "SynthImage RT",
-    company: "MedTech Innovations",
-    description: "Deep learning-powered image synthesis platform for generating synthetic CT images from MRI scans.",
-    features: ["Image Synthesis", "Deep Learning", "MRI-to-CT"],
-    category: "Image Synthesis",
-    certification: "FDA",
-    logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Brain", "Pelvis"]
-  },
-  {
-    name: "RegAlign Pro",
-    company: "HealthAI Solutions",
-    description: "Intelligent image registration system for precise alignment of multi-modal imaging in radiation therapy.",
-    features: ["Image Registration", "Multi-Modal", "Automated"],
-    category: "Image Registration",
-    certification: "CE",
-    logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Thorax", "Abdomen"]
-  },
-  {
-    name: "PlanMaster AI",
-    company: "MedTech Innovations",
-    description: "Advanced treatment planning system with AI-driven optimization for precise radiotherapy planning.",
-    features: ["Treatment Planning", "AI Optimization", "Dose Calculation"],
-    category: "Treatment Planning",
-    certification: "FDA",
-    logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["Breast", "Prostate"]
-  },
-  {
-    name: "QAIntelligence",
-    company: "HealthAI Solutions",
-    description: "Comprehensive quality assurance platform featuring automated plan verification and deep learning-based error detection.",
-    features: ["Quality Assurance", "Plan Verification", "Analytics"],
-    category: "Quality Assurance",
-    certification: "CE",
-    logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["All Sites"]
-  },
-  {
-    name: "PredictCare RT",
-    company: "AI Medical Systems",
-    description: "Clinical prediction system using deep learning to forecast treatment outcomes and optimize patient care pathways.",
-    features: ["Clinical Prediction", "Outcome Analysis", "Risk Assessment"],
-    category: "Clinical Prediction",
-    certification: "CE & FDA",
-    logoUrl: "/placeholder.svg",
-    anatomicalLocation: ["All Sites"]
-  }
-];
+interface FilterState {
+  tasks: string[];
+  locations: string[];
+  companies: string[];
+  certifications: string[];
+}
 
-const ProductGrid = () => {
+interface ProductGridProps {
+  filters?: FilterState;
+}
+
+const ProductGrid = ({ filters }: ProductGridProps) => {
+  const filteredProducts = SAMPLE_PRODUCTS.filter((product: Product) => {
+    if (filters?.tasks.length && !filters.tasks.includes(product.category)) {
+      return false;
+    }
+    if (filters?.locations.length && !product.anatomicalLocation?.some(loc => 
+      filters.locations.includes(loc))) {
+      return false;
+    }
+    if (filters?.companies.length && !filters.companies.includes(product.company)) {
+      return false;
+    }
+    if (filters?.certifications.length && !filters.certifications.includes(
+      product.certification || '')) {
+      return false;
+    }
+    return true;
+  });
+
   const exportToExcel = () => {
     const headers = ["Name", "Company", "Category", "Certification", "Features", "Anatomical Location"];
-    const data = SAMPLE_PRODUCTS.map(product => [
+    const data = filteredProducts.map(product => [
       product.name,
       product.company,
       product.category,
@@ -106,7 +74,7 @@ const ProductGrid = () => {
         </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {SAMPLE_PRODUCTS.map((product, index) => (
+        {filteredProducts.map((product, index) => (
           <ProductCard key={index} {...product} />
         ))}
       </div>

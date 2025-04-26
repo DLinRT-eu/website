@@ -1,7 +1,6 @@
 
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { ProductDetails } from "@/types/productDetails";
 
 interface TechnicalSpecificationsProps {
@@ -13,15 +12,7 @@ const TechnicalSpecifications = ({ product }: TechnicalSpecificationsProps) => {
 
   return (
     <Card>
-      <CardHeader className="space-y-4">
-        {product.logoUrl && (
-          <div className="flex justify-start">
-            <Avatar className="h-16 w-16">
-              <AvatarImage src={product.logoUrl} alt={`${product.company} logo`} />
-              <AvatarFallback>{product.company[0]}</AvatarFallback>
-            </Avatar>
-          </div>
-        )}
+      <CardHeader>
         <CardTitle>Technical Specifications</CardTitle>
       </CardHeader>
       <CardContent>

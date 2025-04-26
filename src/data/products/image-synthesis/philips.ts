@@ -1,10 +1,11 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
     id: "philips-mrcat-head-neck",
     name: "MRCAT Head and Neck",
-    company: "Philips Healthcare",
+    company: "Philips",
     companyUrl: "https://www.usa.philips.com/healthcare",
     productUrl: "https://www.usa.philips.com/healthcare/product/HCNMRF439/mrcat-head-and-neck-hcnmrf439-mr-rt-clinical-application",
     description: "MR-only simulation solution that generates CT-like density information from MR images for radiation therapy planning in the head and neck region.",
@@ -58,7 +59,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
     id: "philips-mrcat-brain",
     name: "MRCAT Brain",
-    company: "Philips Healthcare",
+    company: "Philips",
     companyUrl: "https://www.usa.philips.com/healthcare",
     productUrl: "https://www.usa.philips.com/healthcare/product/HCNMRF320/mrcat-brain-mr-rt-clinical-application",
     description: "MR-only simulation solution that generates CT-like density information from MR images for radiation therapy planning in the brain region.",
@@ -112,7 +113,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
     id: "philips-mrcat-pelvis",
     name: "MRCAT Pelvis",
-    company: "Philips Healthcare",
+    company: "Philips",
     companyUrl: "https://www.usa.philips.com/healthcare",
     productUrl: "https://www.usa.philips.com/healthcare/product/HCNMRF266/mrcat-pelvis-mr-rt-clinical-application",
     description: "MR-only simulation solution that generates CT-like density information from MR images for radiation therapy planning in the pelvic region.",

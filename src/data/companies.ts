@@ -25,7 +25,7 @@ export const COMPANIES: CompanyDetails[] = [
   },
   {
     id: "philips-healthcare",
-    name: "Philips Healthcare",
+    name: "Philips",
     description: "Global leader in health technology, offering comprehensive radiation oncology solutions.",
     website: "https://www.philips.com/healthcare",
     productIds: [
@@ -47,7 +47,7 @@ export const COMPANIES: CompanyDetails[] = [
     name: "GE Healthcare",
     description: "Leading provider of medical imaging and information technologies.",
     website: "https://www.gehealthcare.com",
-    productIds: ["mr-box-synthetic"]
+    productIds: []
   },
   {
     id: "spectronic-medical",
@@ -61,13 +61,13 @@ export const COMPANIES: CompanyDetails[] = [
     name: "RaySearch Laboratories",
     description: "Developer of innovative software solutions for radiation therapy treatment planning.",
     website: "https://www.raysearchlabs.com",
-    productIds: ["raysearch-raystation"]
+    productIds: ["raysearch-raystation", "raysearch-raystation-deep-learning"]
   },
   {
     id: "therapanacea",
     name: "Therapanacea",
     description: "Innovators in AI solutions for radiation oncology and medical imaging.",
     website: "https://www.therapanacea.eu",
-    productIds: ["therapanacea-annotate", "therapanacea-adaptbox"]
+    productIds: ["therapanacea-annotate", "therapanacea-adaptbox", "mr-box-synthetic"]
   }
 ];

@@ -1,10 +1,11 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
     id: "philips-auto-contouring",
     name: "Auto Contouring",
-    company: "Philips Healthcare",
+    company: "Philips",
     companyUrl: "https://www.philips.com/healthcare",
     productUrl: "https://www.philips.com/healthcare/resources/feature-detail/auto-contouring-for-radiation-oncology",
     description: "Integrated auto-segmentation solution within the Pinnacle treatment planning system using model-based and atlas-based algorithms.",

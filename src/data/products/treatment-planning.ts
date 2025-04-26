@@ -1,5 +1,6 @@
 
 import { ProductDetails } from "@/types/productDetails";
+import { RAYSEARCH_TREATMENT_PLANNING_PRODUCTS } from "./treatment-planning/raysearch";
 
 export const TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
   {
@@ -52,5 +53,6 @@ export const TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
     version: "1.8",
     releaseDate: "2023-09-20",
     lastUpdated: "2024-04-10"
-  }
+  },
+  ...RAYSEARCH_TREATMENT_PLANNING_PRODUCTS
 ];

@@ -2,7 +2,7 @@
 import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS } from "@/data";
 import type { ProductDetails } from "@/types/productDetails";
 import type { CompanyDetails } from "@/types/company";
-import type { NewsItem } from "@/data/news";
+import type { NewsItem } from "@/types/news";
 
 /**
  * DataService provides methods to access and manipulate product, company, and news data

@@ -1,3 +1,4 @@
+
 import { CompanyDetails } from "@/types/company";
 
 export const COMPANIES: CompanyDetails[] = [
@@ -20,7 +21,7 @@ export const COMPANIES: CompanyDetails[] = [
     name: "Mirada Medical",
     description: "Leaders in medical imaging software solutions with focus on AI-powered contouring.",
     website: "https://mirada-medical.com",
-    productIds: ["mirada-dln"]
+    productIds: ["mirada-dlc"]
   },
   {
     id: "philips-healthcare",
@@ -67,6 +68,6 @@ export const COMPANIES: CompanyDetails[] = [
     name: "Therapanacea",
     description: "Innovators in AI solutions for radiation oncology and medical imaging.",
     website: "https://www.therapanacea.eu",
-    productIds: ["therapixel-autocontour"]
+    productIds: ["therapanacea-annotate", "therapanacea-adaptbox"]
   }
 ];

@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/ai-rad-product-finder/', // Make sure this matches your repository name exactly
+  base: '/dlinrt-products/', // Updated to match the actual repository name
   server: {
     host: "::",
     port: 8080,

@@ -18,7 +18,7 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
-const BASE_URL = import.meta.env.BASE_URL || '/ai-rad-product-finder/';
+const BASE_URL = import.meta.env.BASE_URL || '/dlinrt-products/';
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

@@ -11,7 +11,7 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning segmentation", "Integrated planning", "Atlas-based backup"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://www.raysearchlabs.com/wp-content/themes/raysearch/assets/images/logo.svg",
+    logoUrl: "public/logos/raystation.jpg",
     website: "https://www.raysearchlabs.com/machine-learning-in-raystation/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: ["CT"],

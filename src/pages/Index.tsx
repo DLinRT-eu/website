@@ -20,12 +20,18 @@ const Index = () => {
         <FilterBar />
         <ProductGrid />
         <footer className="mt-16 border-t border-gray-200 pt-8 pb-12">
-          <div className="text-center">
+          <div className="flex justify-center space-x-8">
             <Link 
               to="/maintenance-team" 
               className="text-[#00A6D6] hover:text-[#00A6D6]/80 transition-colors duration-200"
             >
-              Meet Our Maintenance Team →
+              Meet Our Maintenance Team
+            </Link>
+            <Link 
+              to="/donate" 
+              className="text-[#9b87f5] hover:text-[#8b5cf6] transition-colors duration-200"
+            >
+              Support Our Project
             </Link>
           </div>
         </footer>

@@ -1,0 +1,59 @@
+
+import { ProductDetails } from "@/types/productDetails";
+
+export const VYSIONER_PRODUCTS: ProductDetails[] = [
+  {
+    id: "vysioner-vbrain",
+    name: "Vbrain",
+    company: "Vysioner",
+    companyUrl: "https://www.vysioneer.com/",
+    productUrl: "https://www.vysioneer.com/vbrain",
+    description: "AI-powered solution specialized in brain tumor auto-segmentation for radiation therapy planning.",
+    features: ["Brain tumor segmentation", "Fast processing", "Clinical workflow integration"],
+    category: "Auto-Contouring",
+    certification: "CE & FDA",
+    logoUrl: "https://www.vysioneer.com/wp-content/uploads/2022/01/vysioneer-logo.png",
+    website: "https://www.vysioneer.com/vbrain",
+    anatomicalLocation: ["Brain"],
+    modality: "CT, MR",
+    subspeciality: "Radiation Oncology",
+    diseaseTargeted: ["Brain Tumors", "Metastases"],
+    keyFeatures: ["AI-powered brain tumor segmentation", "Fast processing", "Multiple tumor support"],
+    technicalSpecifications: {
+      population: "Adult patients",
+      input: ["CT", "MR"],
+      inputFormat: ["DICOM"],
+      output: ["Structure sets"],
+      outputFormat: ["DICOM-RT"]
+    },
+    technology: {
+      integration: ["TPS integration", "PACS integration"],
+      deployment: ["Cloud-based", "On-premises"],
+      triggerForAnalysis: "Manual or automated",
+      processingTime: "Minutes per case"
+    },
+    regulatory: {
+      ce: {
+        status: "Certified",
+        class: "IIa",
+        type: "Medical Device"
+      },
+      fda: "510(k) cleared",
+      intendedUseStatement: "For automatic segmentation of brain tumors in radiation therapy planning."
+    },
+    market: {
+      onMarketSince: "2020",
+      distributionChannels: ["Direct sales", "Partnerships"],
+      countriesPresent: 15,
+      payingCustomers: "Multiple clinical sites globally",
+      researchUsers: "Research institutions"
+    },
+    pricing: {
+      model: ["Subscription", "Pay-per-use"],
+      basedOn: ["Annual license", "Number of patients"]
+    },
+    version: "2.5",
+    releaseDate: "2023-10-05",
+    lastUpdated: "2024-03-10"
+  }
+];

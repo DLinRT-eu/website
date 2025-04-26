@@ -1,2 +1,85 @@
 
+import React, { useState } from 'react';
+import IntroSection from "@/components/IntroSection";
+import NewsSection from "@/components/NewsSection";
+import FilterBar from "@/components/FilterBar";
+import ProductGrid from "@/components/ProductGrid";
+import { Link } from "react-router-dom";
 import SearchHeader from "@/components/SearchHeader";
+
+interface FilterState {
+  tasks: string[];
+  locations: string[];
+  companies: string[];
+  certifications: string[];
+  modalities: string[];
+}
+
+const Index = () => {
+  const [filtersActive, setFiltersActive] = useState(false);
+  const [currentFilters, setCurrentFilters] = useState<FilterState>({
+    tasks: [],
+    locations: [],
+    companies: [],
+    certifications: [],
+    modalities: [],
+  });
+
+  const handleResetFilters = () => {
+    const event = new CustomEvent('resetFilters');
+    window.dispatchEvent(event);
+    setFiltersActive(false);
+    setCurrentFilters({
+      tasks: [],
+      locations: [],
+      companies: [],
+      certifications: [],
+      modalities: [],
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      <IntroSection />
+      <NewsSection />
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
+        <SearchHeader />
+      </div>
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-xl font-semibold text-gray-900">Featured Products</h2>
+          <button 
+            onClick={handleResetFilters}
+            className="text-sm text-gray-500 hover:text-[#00A6D6] transition-colors cursor-pointer"
+          >
+            Showing {filtersActive ? 'filtered' : 'all'} products
+          </button>
+        </div>
+        <FilterBar 
+          onFiltersChange={setFiltersActive} 
+          onFilterUpdate={setCurrentFilters}
+        />
+        <ProductGrid filters={currentFilters} />
+
+        <footer className="mt-16 border-t border-gray-200 pt-8 pb-12">
+          <div className="flex justify-center space-x-8">
+            <Link 
+              to="/maintenance-team" 
+              className="text-[#00A6D6] hover:text-[#00A6D6]/80 transition-colors duration-200"
+            >
+              Meet Our Maintenance Team
+            </Link>
+            <Link 
+              to="/donate" 
+              className="text-[#9b87f5] hover:text-[#8b5cf6] transition-colors duration-200"
+            >
+              Support Our Project
+            </Link>
+          </div>
+        </footer>
+      </main>
+    </div>
+  );
+};
+
+export default Index;

@@ -10,6 +10,9 @@ import NotFound from "./pages/NotFound";
 import MaintenanceTeam from "./pages/MaintenanceTeam";
 import Donate from "./pages/Donate";
 import ProductDetails from "./pages/ProductDetails";
+import Companies from "./pages/Companies";
+import News from "./pages/News";
+import Support from "./pages/Support";
 
 const queryClient = new QueryClient();
 const BASE_URL = import.meta.env.BASE_URL || '/ai-rad-product-finder/';
@@ -26,6 +29,9 @@ const App = () => (
           <Route path="maintenance-team" element={<MaintenanceTeam />} />
           <Route path="donate" element={<Donate />} />
           <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="companies" element={<Companies />} />
+          <Route path="news" element={<News />} />
+          <Route path="support" element={<Support />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

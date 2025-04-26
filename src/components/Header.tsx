@@ -1,8 +1,8 @@
+
 import { Link, NavLink } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useState, useEffect } from 'react';
 import { Menu } from 'lucide-react';
-import UserMenu from './auth/UserMenu';
 
 const Header = () => {
   const isMobile = useIsMobile();

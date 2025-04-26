@@ -11,7 +11,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning algorithms", "Fast processing", "Multiple anatomical sites"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "public/logos/carina.jpg",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/carina.jpg",
     website: "https://carina.ai/products/intcontour",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

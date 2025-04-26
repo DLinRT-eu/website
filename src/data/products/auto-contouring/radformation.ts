@@ -12,7 +12,7 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning algorithms", "Multiple anatomical sites", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "public/logos/radformation.svg",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/radformation.svg",
     website: "https://www.radformation.com/autocontour/autocontour",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis", "Brain"],
     modality: "CT, MRI",

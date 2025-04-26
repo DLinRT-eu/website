@@ -11,7 +11,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     features: ["Multi-structure contouring", "Consistent results", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "public/logos/mirada-medical.png",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/mirada-medical.png",
     website: "https://mirada-medical.com/product/mirada-dlcexpert-ai-autocontouring/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

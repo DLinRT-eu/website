@@ -11,7 +11,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     features: ["Cloud-based segmentation", "AI algorithms", "Multiple cancer sites"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "public/logos/mvision-ai.png",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/mvision-ai.png",
     website: "https://www.mvision.ai/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

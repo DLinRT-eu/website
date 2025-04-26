@@ -11,7 +11,7 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
     features: ["Auto-contouring", "Treatment planning support", "AI optimization"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "public/logos/ever-fortune.png",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/ever-fortune.png",
     website: "https://www.everfortuneai.com.tw/en/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

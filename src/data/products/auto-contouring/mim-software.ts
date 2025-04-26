@@ -11,7 +11,7 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "public/logos/mimsoftware.svg",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/mimsoftware.svg",
     website: "https://www.mimsoftware.com/radiation-oncology",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT, MRI",

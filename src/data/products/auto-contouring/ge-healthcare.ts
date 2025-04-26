@@ -11,7 +11,7 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     features: ["Integrated workflow", "Multiple anatomical sites", "Advanced algorithms"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "public/logos/ge_healthcare.png",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/ge_healthcare.png",
     website: "https://www.gehealthcare.com/products/advanced-visualization/advanced-visualization/auto-segmentation",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: ["CT"],

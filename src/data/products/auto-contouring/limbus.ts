@@ -11,7 +11,7 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     features: ["Automated OAR contouring", "Fast processing", "Deep learning algorithms"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "public/logos/Limbus-ai.png",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/Limbus-ai.png",
     website: "https://limbus.ai/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Breast", "Pelvis"],
     modality: "CT, MRI, CBCT",

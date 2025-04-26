@@ -12,7 +12,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     features: ["Synthetic CT generation", "Multimodality image registration", "Treatment planning"],
     category: "Image Synthesis",
     certification: "CE & FDA",
-    logoUrl: "public/logos/siemens.png",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/siemens.png",
     website: "https://www.siemens-healthineers.com/magnetic-resonance-imaging/clinical-specialities/synthetic-ct",
     anatomicalLocation: ["Brain", "Pelvis", "Head & Neck"],
     modality: "MRI",

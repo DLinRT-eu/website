@@ -11,7 +11,7 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning contours", "Fast processing", "Multiple anatomical sites"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "public/logos/ai-medical.png",
+    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/ai-medical.png",
     website: "https://www.aimedical.io/products",
     anatomicalLocation: ["Brain"],
     modality: "MRI",

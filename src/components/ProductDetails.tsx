@@ -1,5 +1,6 @@
-
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Home, ArrowLeft } from 'lucide-react';
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -11,6 +12,26 @@ const ProductDetailsPage = ({ product }: { product: ProductDetails }) => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Navigation Header */}
+      <header className="mb-8 flex items-center justify-between">
+        <div className="flex items-center space-x-4">
+          <Link 
+            to="/" 
+            className="text-gray-600 hover:text-blue-600 flex items-center"
+          >
+            <Home className="mr-2 h-5 w-5" />
+            <span>HealthAI Register</span>
+          </Link>
+          <Link 
+            to="/" 
+            className="text-gray-500 hover:text-blue-600 flex items-center text-sm"
+          >
+            <ArrowLeft className="mr-1 h-4 w-4" />
+            Back to Products
+          </Link>
+        </div>
+      </header>
+
       <div className="space-y-8">
         {/* Header Section */}
         <div className="mb-8">

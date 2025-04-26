@@ -7,11 +7,6 @@ const Header = () => {
     <header className="bg-[#00A6D6] text-white py-4 px-4 md:px-8 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <img 
-            src="/lovable-uploads/93a71ef6-4725-4b3a-95fa-95c6cd267e53.png" 
-            alt="DLnRT Logo" 
-            className="w-12 h-12 object-contain"  // Increased size and added object-contain
-          />
           <Link 
             to="/" 
             className="text-xl md:text-2xl font-bold hover:text-white/90 transition-colors"

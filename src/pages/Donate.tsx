@@ -1,4 +1,3 @@
-
 import { HeartHandshake } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -44,6 +43,43 @@ const Donate = () => {
                 Your support helps us maintain and improve this valuable resource for the medical community. 
                 You can contribute in several ways:
               </p>
+              
+              <div className="space-y-4 mb-6">
+                <div className="bg-purple-50 p-4 rounded-md">
+                  <h3 className="font-medium text-purple-900 mb-2">Submit Issues</h3>
+                  <p className="text-gray-600 mb-2">
+                    Help us improve by reporting bugs, suggesting improvements, or requesting new features through GitHub issues.
+                  </p>
+                  <Button 
+                    variant="outline"
+                    className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5] hover:text-white"
+                    onClick={() => window.open('https://github.com/matteomaspero/dlinrt-products/issues/new', '_blank')}
+                  >
+                    Submit an Issue
+                  </Button>
+                </div>
+
+                <div className="bg-purple-50 p-4 rounded-md">
+                  <h3 className="font-medium text-purple-900 mb-2">Contribute Product Information</h3>
+                  <p className="text-gray-600 mb-2">
+                    Help expand our database by gathering and submitting information about AI products in radiotherapy:
+                  </p>
+                  <ul className="list-disc list-inside text-gray-600 mb-4 ml-2">
+                    <li>Research product specifications</li>
+                    <li>Gather regulatory information</li>
+                    <li>Document clinical implementations</li>
+                    <li>Submit updates to existing product data</li>
+                  </ul>
+                  <Button 
+                    variant="outline"
+                    className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5] hover:text-white"
+                    onClick={() => window.open('https://github.com/matteomaspero/dlinrt-products/issues/new?template=product-information.md', '_blank')}
+                  >
+                    Submit Product Information
+                  </Button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Button 
                   variant="default"

@@ -1,14 +1,6 @@
 
 import { Link } from 'react-router-dom';
 import { Package, Building2, Newspaper, Users, LifeBuoy } from 'lucide-react';
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu"
 
 const Header = () => {
   return (
@@ -28,40 +20,40 @@ const Header = () => {
           </Link>
         </div>
         
-        <NavigationMenu className="hidden md:flex">
-          <NavigationMenuList>
-            <NavigationMenuItem>
+        <nav className="hidden md:flex">
+          <ul className="flex space-x-4">
+            <li>
               <Link to="/" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Package className="w-4 h-4 mr-2" />
                 Products
               </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
+            </li>
+            <li>
               <Link to="/companies" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Building2 className="w-4 h-4 mr-2" />
                 Companies
               </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
+            </li>
+            <li>
               <Link to="/news" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Newspaper className="w-4 h-4 mr-2" />
                 News
               </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
+            </li>
+            <li>
               <Link to="/maintenance-team" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Users className="w-4 h-4 mr-2" />
                 About & Team
               </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
+            </li>
+            <li>
               <Link to="/support" className="flex items-center px-4 py-2 hover:text-white/90">
                 <LifeBuoy className="w-4 h-4 mr-2" />
                 Support & Contact
               </Link>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+            </li>
+          </ul>
+        </nav>
       </div>
     </header>
   );

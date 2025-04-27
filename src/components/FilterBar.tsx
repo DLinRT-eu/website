@@ -22,10 +22,17 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
         selectedValues={filters.tasks}
         onValueChange={(value) => handleFilterChange(value, 'tasks')}
       />
+      
+      <FilterSelect
+        placeholder="Select modality"
+        options={getAllOptions('modality')}
+        selectedValues={filters.modalities}
+        onValueChange={(value) => handleFilterChange(value, 'modalities')}
+      />
 
       <FilterSelect
-        placeholder="Select locations"
-        options={[...getAllOptions('anatomicalLocation'), 'Head & Neck']}
+        placeholder="Select anatomy"
+        options={getAllOptions('anatomicalLocation')}
         selectedValues={filters.locations}
         onValueChange={(value) => handleFilterChange(value, 'locations')}
       />
@@ -37,12 +44,6 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
         onValueChange={(value) => handleFilterChange(value, 'certifications')}
       />
 
-      <FilterSelect
-        placeholder="Select modality"
-        options={getAllOptions('modality')}
-        selectedValues={filters.modalities}
-        onValueChange={(value) => handleFilterChange(value, 'modalities')}
-      />
     </div>
   );
 };

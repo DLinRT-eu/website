@@ -10,18 +10,18 @@ export const useFilters = (
 ) => {
   const [filters, setFilters] = useState<FilterState>({
     tasks: [],
+    modalities: [],
     locations: [],
-    certifications: [],
-    modalities: []
+    certifications: []
   });
 
   useEffect(() => {
     const handleReset = () => {
       setFilters({
         tasks: [],
+        modalities: [],
         locations: [],
-        certifications: [],
-        modalities: []
+        certifications: []
       });
     };
 
@@ -31,7 +31,7 @@ export const useFilters = (
 
   useEffect(() => {
     onFiltersChange?.(
-      Boolean(filters.tasks.length || filters.locations.length || filters.certifications.length || filters.modalities.length)
+      Boolean(filters.tasks.length || filters.modalities.length || filters.locations.length || filters.certifications.length )
     );
     onFilterUpdate?.(filters);
   }, [filters, onFiltersChange, onFilterUpdate]);

@@ -5,6 +5,7 @@ import FilterBar from "@/components/FilterBar";
 import { useState } from "react";
 import type { FilterState } from "@/types/filters";
 import SEO from "@/components/SEO";
+import { toast } from "sonner";
 
 const Products = () => {
   const [filtersActive, setFiltersActive] = useState(false);
@@ -40,10 +41,18 @@ const Products = () => {
       modalities: [],
     });
     setSearchQuery("");
+    toast.success("Filters have been reset");
   };
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
+  };
+
+  const handleFilterUpdate = (newFilters: FilterState) => {
+    setCurrentFilters(newFilters);
+    setFiltersActive(
+      Object.values(newFilters).some(filterArray => filterArray.length > 0)
+    );
   };
 
   return (
@@ -62,12 +71,12 @@ const Products = () => {
             onClick={handleResetFilters}
             className="text-sm text-gray-500 hover:text-[#00A6D6] transition-colors cursor-pointer"
           >
-            Showing {filtersActive || searchQuery ? 'filtered' : 'all'} products
+            {filtersActive || searchQuery ? 'Reset filters' : 'Showing all products'}
           </button>
         </div>
         <FilterBar 
           onFiltersChange={setFiltersActive} 
-          onFilterUpdate={setCurrentFilters}
+          onFilterUpdate={handleFilterUpdate}
         />
         <ProductGrid 
           filters={currentFilters} 

@@ -30,28 +30,38 @@ export const useFilters = (
   }, []);
 
   useEffect(() => {
-    onFiltersChange?.(
-      Boolean(filters.tasks.length || filters.modalities.length || filters.locations.length || filters.certifications.length )
+    const hasActiveFilters = Object.values(filters).some(
+      filterArray => filterArray.length > 0
     );
+    
+    onFiltersChange?.(hasActiveFilters);
     onFilterUpdate?.(filters);
   }, [filters, onFiltersChange, onFilterUpdate]);
 
+  // Toggle selection logic - add if not present, remove if present
   const handleFilterChange = (value: string, filterType: keyof FilterState) => {
     setFilters(prev => {
-      const currentValues = prev[filterType];
-      const newValues = currentValues.includes(value)
-        ? currentValues.filter(v => v !== value)
-        : [...currentValues, value];
+      const currentValues = [...prev[filterType]];
+      const valueIndex = currentValues.indexOf(value);
+      
+      if (valueIndex >= 0) {
+        // Remove the value
+        currentValues.splice(valueIndex, 1);
+      } else {
+        // Add the value
+        currentValues.push(value);
+      }
       
       return {
         ...prev,
-        [filterType]: newValues
+        [filterType]: currentValues
       };
     });
   };
 
   return {
     filters,
-    handleFilterChange
+    handleFilterChange,
+    setFilters
   };
 };

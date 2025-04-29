@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/chart";
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import dataService from "@/services/DataService";
-import { FilterCircle, LayoutDashboard } from "lucide-react";
+import { LayoutDashboard, Filter } from "lucide-react"; // Changed FilterCircle to Filter
 import { getAllOptions } from "@/utils/filterOptions";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProductDetails } from '@/types/productDetails';
@@ -120,7 +120,7 @@ const Dashboard = () => {
           <h1 className="text-2xl font-bold">Analytics Dashboard</h1>
         </div>
         <div className="flex items-center gap-2">
-          <FilterCircle className="h-5 w-5 text-gray-500" />
+          <Filter className="h-5 w-5 text-gray-500" /> {/* Changed FilterCircle to Filter */}
           <Select 
             value={selectedTask} 
             onValueChange={setSelectedTask}

@@ -1,10 +1,10 @@
 import React from "react";
-import { ProductDetails } from "@/types/productDetails";
+import type { ProductDetails as ProductDetailsType } from "@/types/productDetails";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink } from "lucide-react";
-import Link from "next/link";
+import { Link } from "react-router-dom"; // Replace next/link with react-router-dom
 import {
   Accordion,
   AccordionContent,
@@ -14,7 +14,7 @@ import {
 import SupportedStructures from "./product/SupportedStructures";
 
 interface ProductDetailsProps {
-  product: ProductDetails;
+  product: ProductDetailsType;
 }
 
 const GeneralInformation = ({ product }: ProductDetailsProps) => (
@@ -180,10 +180,14 @@ const ContactInformation = ({ product }: ProductDetailsProps) => (
     <CardContent className="space-y-2">
       <div>
         <p className="text-sm font-medium">Website:</p>
-        <Link href={product.website || ""} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center gap-1">
-          {product.website || "N/A"}
-          <ExternalLink className="h-4 w-4" />
-        </Link>
+        {product.website ? (
+          <a href={product.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline flex items-center gap-1">
+            {product.website}
+            <ExternalLink className="h-4 w-4" />
+          </a>
+        ) : (
+          <p className="text-gray-500">N/A</p>
+        )}
       </div>
       <div>
         <p className="text-sm font-medium">Support Email:</p>
@@ -207,16 +211,16 @@ const ProductHeaderInfo = ({ product }: ProductDetailsProps) => (
     <div className="flex gap-4">
       {product.productUrl && (
         <Button asChild variant="outline">
-          <Link href={product.productUrl} target="_blank" rel="noopener noreferrer">
+          <a href={product.productUrl} target="_blank" rel="noopener noreferrer">
             Product Website <ExternalLink className="h-4 w-4 ml-2" />
-          </Link>
+          </a>
         </Button>
       )}
       {product.companyUrl && (
         <Button asChild variant="secondary">
-          <Link href={product.companyUrl} target="_blank" rel="noopener noreferrer">
+          <a href={product.companyUrl} target="_blank" rel="noopener noreferrer">
             Visit Company <ExternalLink className="h-4 w-4 ml-2" />
-          </Link>
+          </a>
         </Button>
       )}
     </div>

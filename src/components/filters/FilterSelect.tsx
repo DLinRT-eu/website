@@ -39,20 +39,21 @@ export const FilterSelect = ({
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <Select 
         open={isOpen} 
         onOpenChange={setIsOpen}
       >
         <SelectTrigger 
-          className={`w-full md:w-[180px] cursor-pointer ${selectedValues.length > 0 ? "text-black font-medium" : "text-gray-500"}`}
+          className={`w-full md:w-full cursor-pointer ${selectedValues.length > 0 ? "text-black font-medium" : "text-gray-500"}`}
+          aria-label={placeholder}
         >
           <SelectValue placeholder={displayText} />
         </SelectTrigger>
         <SelectContent 
-          className="bg-white border border-gray-200 shadow-lg w-[220px] z-[100]"
+          className="bg-white border border-gray-200 shadow-lg w-[220px] z-[500]"
           align="start"
-          position={isMobile ? "popper" : "item-aligned"}
+          position="popper"
           sideOffset={8}
         >
           {options.length === 0 ? (

@@ -19,33 +19,41 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
-        <FilterSelect
-          placeholder="Select tasks"
-          options={getAllOptions('category')}
-          selectedValues={filters.tasks}
-          onValueChange={(value) => handleFilterChange(value, 'tasks')}
-        />
+        <div className="w-full">
+          <FilterSelect
+            placeholder="Select tasks"
+            options={getAllOptions('category')}
+            selectedValues={filters.tasks}
+            onValueChange={(value) => handleFilterChange(value, 'tasks')}
+          />
+        </div>
         
-        <FilterSelect
-          placeholder="Select modality"
-          options={getAllOptions('modality')}
-          selectedValues={filters.modalities}
-          onValueChange={(value) => handleFilterChange(value, 'modalities')}
-        />
+        <div className="w-full">
+          <FilterSelect
+            placeholder="Select modality"
+            options={getAllOptions('modality')}
+            selectedValues={filters.modalities}
+            onValueChange={(value) => handleFilterChange(value, 'modalities')}
+          />
+        </div>
 
-        <FilterSelect
-          placeholder="Select anatomy"
-          options={getAllOptions('anatomicalLocation')}
-          selectedValues={filters.locations}
-          onValueChange={(value) => handleFilterChange(value, 'locations')}
-        />
+        <div className="w-full">
+          <FilterSelect
+            placeholder="Select anatomy"
+            options={getAllOptions('anatomicalLocation')}
+            selectedValues={filters.locations}
+            onValueChange={(value) => handleFilterChange(value, 'locations')}
+          />
+        </div>
 
-        <FilterSelect
-          placeholder="Select certifications"
-          options={getAllOptions('certification')}
-          selectedValues={filters.certifications}
-          onValueChange={(value) => handleFilterChange(value, 'certifications')}
-        />
+        <div className="w-full">
+          <FilterSelect
+            placeholder="Select certifications"
+            options={getAllOptions('certification')}
+            selectedValues={filters.certifications}
+            onValueChange={(value) => handleFilterChange(value, 'certifications')}
+          />
+        </div>
       </div>
     </div>
   );

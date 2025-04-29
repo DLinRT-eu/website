@@ -30,6 +30,8 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
+      - name: Copy 404.html for SPA routing
+        run: cp ./dist/index.html ./dist/404.html
       - name: Create CNAME file
         run: echo "dlinrt.eu" > ./dist/CNAME
       - name: Upload artifact

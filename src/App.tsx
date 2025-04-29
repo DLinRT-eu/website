@@ -18,7 +18,15 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Initiatives from "./pages/Initiatives";
 
-const queryClient = new QueryClient();
+// Create a client
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      retry: 1,
+    },
+  },
+});
 
 const App = () => (
   <QueryClientProvider client={queryClient}>

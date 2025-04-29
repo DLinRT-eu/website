@@ -19,7 +19,7 @@ const NotFound = () => {
       <SEO
         title="Page Not Found"
         description="The page you are looking for does not exist or has been moved."
-        canonical="https://dlinrt.eu/404"
+        canonical="/404"
       />
       <div className="text-center">
         <h1 className="text-4xl font-bold mb-4">404</h1>

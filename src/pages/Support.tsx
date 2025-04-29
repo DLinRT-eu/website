@@ -7,7 +7,7 @@ import SEO from '@/components/SEO';
 
 const Support = () => {
   const handleGitHubIssue = () => {
-    window.open('https://github.com/matteomaspero/dlinrt-products/issues/new', '_blank', 'noopener,noreferrer');
+    window.open('https://github.com/DLinRT-eu/website/issues/new', '_blank', 'noopener,noreferrer');
   };
 
   const handleDonate = () => {

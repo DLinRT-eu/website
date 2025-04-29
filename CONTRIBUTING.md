@@ -1,3 +1,4 @@
+
 # Contributing Guidelines
 
 Welcome!  
@@ -13,7 +14,7 @@ Please review the following guidelines carefully before submitting your contribu
 - Clone your fork to your local machine.
 
 ```bash
-git clone https://github.com/matteomaspero/dlinrt-products.git
+git clone https://github.com/DLinRT-eu/website.git
 ```
 
 ### 2. Create a Branch

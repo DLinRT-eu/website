@@ -1,4 +1,5 @@
 
+
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -40,10 +41,10 @@ The only requirement is having Node.js & npm installed - [install with nvm](http
 
 ```sh
 # Clone the repository
-git clone https://github.com/matteomaspero/dlinrt-products.git
+git clone https://github.com/DLinRT-eu/website.git
 
 # Navigate to the project directory
-cd dlinrt-products
+cd website
 
 # Install dependencies
 npm install
@@ -63,14 +64,15 @@ This project is licensed under the GNU AGPL-3.0 License - see the LICENSE file f
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/matteomaspero/dlinrt-products.svg?style=for-the-badge
-[contributors-url]: https://github.com/matteomaspero/dlinrt-products/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/matteomaspero/dlinrt-products.svg?style=for-the-badge
-[forks-url]: https://github.com/matteomaspero/dlinrt-products/network/members
-[stars-shield]: https://img.shields.io/github/stars/matteomaspero/dlinrt-products.svg?style=for-the-badge
-[stars-url]: https://github.com/matteomaspero/dlinrt-products/stargazers
-[issues-shield]: https://img.shields.io/github/issues/matteomaspero/dlinrt-products.svg?style=for-the-badge
-[issues-url]: https://github.com/matteomaspero/dlinrt-products/issues
-[license-shield]: https://img.shields.io/github/license/matteomaspero/dlinrt-products.svg?style=for-the-badge
-[license-url]: https://github.com/matteomaspero/dlinrt-products/blob/master/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/DLinRT-eu/website.svg?style=for-the-badge
+[contributors-url]: https://github.com/DLinRT-eu/website/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/DLinRT-eu/website.svg?style=for-the-badge
+[forks-url]: https://github.com/DLinRT-eu/website/network/members
+[stars-shield]: https://img.shields.io/github/stars/DLinRT-eu/website.svg?style=for-the-badge
+[stars-url]: https://github.com/DLinRT-eu/website/stargazers
+[issues-shield]: https://img.shields.io/github/issues/DLinRT-eu/website.svg?style=for-the-badge
+[issues-url]: https://github.com/DLinRT-eu/website/issues
+[license-shield]: https://img.shields.io/github/license/DLinRT-eu/website.svg?style=for-the-badge
+[license-url]: https://github.com/DLinRT-eu/website/blob/master/LICENSE
+
 

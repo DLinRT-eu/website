@@ -105,7 +105,7 @@ const Donate = () => {
                   <Button 
                     variant="outline"
                     className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5] hover:text-white"
-                    onClick={() => window.open('https://github.com/matteomaspero/dlinrt-products/issues/new', '_blank')}
+                    onClick={() => window.open('https://github.com/DLinRT-eu/website/issues/new', '_blank')}
                   >
                     Submit an Issue
                   </Button>
@@ -125,7 +125,7 @@ const Donate = () => {
                   <Button 
                     variant="outline"
                     className="border-[#9b87f5] text-[#9b87f5] hover:bg-[#9b87f5] hover:text-white"
-                    onClick={() => window.open('https://github.com/matteomaspero/dlinrt-products/issues/new?template=product-information.md', '_blank')}
+                    onClick={() => window.open('https://github.com/DLinRT-eu/website/issues/new?template=product-information.md', '_blank')}
                   >
                     Submit Product Information
                   </Button>

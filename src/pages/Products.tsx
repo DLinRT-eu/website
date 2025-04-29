@@ -14,6 +14,7 @@ const Products = () => {
     certifications: [],
     modalities: [],
   });
+  const [searchQuery, setSearchQuery] = useState("");
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -38,6 +39,11 @@ const Products = () => {
       certifications: [],
       modalities: [],
     });
+    setSearchQuery("");
+  };
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
   };
 
   return (
@@ -48,7 +54,7 @@ const Products = () => {
         canonical="https://dlinrt.eu/products"
         structuredData={structuredData}
       />
-      <SearchHeader />
+      <SearchHeader onSearch={handleSearch} />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-900">Featured Products</h2>
@@ -56,14 +62,17 @@ const Products = () => {
             onClick={handleResetFilters}
             className="text-sm text-gray-500 hover:text-[#00A6D6] transition-colors cursor-pointer"
           >
-            Showing {filtersActive ? 'filtered' : 'all'} products
+            Showing {filtersActive || searchQuery ? 'filtered' : 'all'} products
           </button>
         </div>
         <FilterBar 
           onFiltersChange={setFiltersActive} 
           onFilterUpdate={setCurrentFilters}
         />
-        <ProductGrid filters={currentFilters} />
+        <ProductGrid 
+          filters={currentFilters} 
+          searchQuery={searchQuery}
+        />
       </main>
     </div>
   );

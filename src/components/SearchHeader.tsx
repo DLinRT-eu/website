@@ -1,8 +1,21 @@
 
 import { Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { useState, useEffect } from "react";
 
-const SearchHeader = () => {
+interface SearchHeaderProps {
+  onSearch?: (query: string) => void;
+}
+
+const SearchHeader = ({ onSearch }: SearchHeaderProps = {}) => {
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    onSearch?.(query);
+  };
+
   return (
     <section className="w-full bg-white py-6 px-4 md:px-8">
       <div className="max-w-7xl mx-auto">
@@ -14,6 +27,8 @@ const SearchHeader = () => {
           <Input 
             placeholder="Search for products, companies, or features..." 
             className="pl-10 bg-white border-gray-200"
+            value={searchQuery}
+            onChange={handleSearchInput}
           />
         </div>
       </div>

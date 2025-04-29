@@ -39,8 +39,8 @@ const ProductCard = ({
   // Format date if available
   const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString() : null;
   
-  // Make sure logo URL starts with proper path
-  const logoSrc = logoUrl.startsWith('/') ? logoUrl : `/${logoUrl}`;
+  // Make sure logo URL starts with proper path and remove any spaces
+  const logoSrc = logoUrl ? (logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`) : '/placeholder.svg';
   
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">
@@ -54,6 +54,7 @@ const ProductCard = ({
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.src = "/placeholder.svg";
+                console.error(`Failed to load image: ${logoSrc}`);
               }}
             />
           </AspectRatio>

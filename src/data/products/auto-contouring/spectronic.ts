@@ -13,7 +13,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     features: ["MRI-based contouring", "Synthetic CT generation", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "/logos/spectronic medical.jpg",
+    logoUrl: "/logos/spectronic-medical.jpg", // Corrected logo path with hyphen instead of space
     website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Head & Neck", "Pelvis", "Brain"],
     modality: "MRI",

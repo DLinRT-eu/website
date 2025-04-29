@@ -12,7 +12,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     features: ["MR-only workflow", "Machine-learning based", "Fast processing", "Auto-segmentation"],
     category: "Image Synthesis",
     certification: "CE",
-    logoUrl: "/logos/spectronic medical.jpg",
+    logoUrl: "/logos/spectronic-medical.jpg", // Corrected logo path with hyphen instead of space
     website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
     modality: "MRI",

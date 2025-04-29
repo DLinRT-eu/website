@@ -1,4 +1,3 @@
-
 import { Initiative } from "@/types/initiative";
 
 export const DATASET_INITIATIVES: Initiative[] = [
@@ -116,5 +115,24 @@ export const DATASET_INITIATIVES: Initiative[] = [
     ],
     dataAccess: "Available through TCIA",
     participationInfo: "Open to all researchers"
+  },
+  {
+    id: "mhub-ai",
+    name: "MHub.ai",
+    category: "Open Dataset",
+    description: "MHub.ai is an advanced data hub for radiotherapy and medical imaging, offering curated datasets, tools, and resources for researchers and clinicians. It provides standardized medical imaging data to accelerate AI algorithm development and validation in healthcare.",
+    website: "https://mhub.ai/",
+    organization: "Medical Imaging Research Community",
+    status: "Active",
+    tags: ["Medical Imaging", "Data Curation", "Radiation Oncology", "Machine Learning", "Healthcare"],
+    features: [
+      "Curated medical imaging datasets",
+      "Standardized data formats",
+      "Annotation tools",
+      "Validation frameworks",
+      "Collaborative research platform"
+    ],
+    dataAccess: "Open for research and academic purposes with registration",
+    logoUrl: "/logos/mhub-ai.png"
   }
 ];

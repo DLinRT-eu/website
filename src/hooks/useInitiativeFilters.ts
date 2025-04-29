@@ -55,14 +55,19 @@ export const useInitiativeFilters = (
 };
 
 export const getAllInitiativeOptions = (field: keyof Initiative | 'tags') => {
+  // Filter out Research Projects for options
+  const filteredInitiatives = ALL_INITIATIVES.filter(
+    initiative => initiative.category !== 'Research Project'
+  );
+  
   const allOptions = new Set<string>();
 
   if (field === 'tags') {
-    ALL_INITIATIVES.forEach(initiative => {
+    filteredInitiatives.forEach(initiative => {
       initiative.tags.forEach(tag => allOptions.add(tag));
     });
   } else if (field === 'category' || field === 'status') {
-    ALL_INITIATIVES.forEach(initiative => {
+    filteredInitiatives.forEach(initiative => {
       if (initiative[field]) {
         allOptions.add(initiative[field] as string);
       }

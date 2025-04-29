@@ -98,7 +98,8 @@ class DataService {
   
   // Initiative methods
   getAllInitiatives(): Initiative[] {
-    return ALL_INITIATIVES;
+    // Filter out Research Projects
+    return ALL_INITIATIVES.filter(initiative => initiative.category !== 'Research Project');
   }
   
   getInitiativeById(id: string): Initiative | undefined {
@@ -118,7 +119,11 @@ class DataService {
   }
   
   filterInitiatives(filters: {categories?: string[], status?: string[], tags?: string[]}): Initiative[] {
-    return ALL_INITIATIVES.filter(initiative => {
+    // Start with all initiatives except Research Projects
+    const initiatives = ALL_INITIATIVES.filter(initiative => initiative.category !== 'Research Project');
+    
+    // Then apply filters
+    return initiatives.filter(initiative => {
       if (filters.categories?.length && !filters.categories.includes(initiative.category)) {
         return false;
       }

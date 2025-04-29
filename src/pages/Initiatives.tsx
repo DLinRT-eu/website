@@ -28,17 +28,13 @@ const Initiatives = () => {
     }
   };
   
-  // Group initiatives by category
+  // Group initiatives by category - excluding Research Projects
   const challenges = filteredInitiatives.filter(
     (initiative) => initiative.category === 'Grand Challenge'
   );
   
   const datasets = filteredInitiatives.filter(
     (initiative) => initiative.category === 'Open Dataset'
-  );
-  
-  const researchProjects = filteredInitiatives.filter(
-    (initiative) => initiative.category === 'Research Project'
   );
 
   return (
@@ -73,7 +69,6 @@ const Initiatives = () => {
 
       <CategorySection title="Grand Challenges" initiatives={challenges} />
       <CategorySection title="Open Datasets" initiatives={datasets} />
-      <CategorySection title="Research Projects" initiatives={researchProjects} />
 
       {filteredInitiatives.length === 0 && (
         <div className="text-center py-16">

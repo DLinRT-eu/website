@@ -10,14 +10,18 @@ import {
 } from "@/components/ui/chart";
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import dataService from "@/services/DataService";
-import { LayoutDashboard, Filter } from "lucide-react"; // Changed FilterCircle to Filter
+import { LayoutDashboard, Filter, RefreshCcw } from "lucide-react";
 import { getAllOptions } from "@/utils/filterOptions";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ProductDetails } from '@/types/productDetails';
+import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast";
 
 const Dashboard = () => {
   const [selectedTask, setSelectedTask] = useState<string>("all");
   const [structureData, setStructureData] = useState<{name: string, value: number}[]>([]);
+  const [clickedTask, setClickedTask] = useState<string | null>(null);
+  const { toast } = useToast();
   
   // Get all data needed for charts
   const products = dataService.getAllProducts();
@@ -34,14 +38,20 @@ const Dashboard = () => {
   // Prepare data for task distribution
   const taskData = getAllOptions('category').map(category => ({
     name: category,
-    value: products.filter(p => p.category === category).length
+    value: products.filter(p => p.category === category).length,
+    isSelected: category === clickedTask
   }));
+
+  // Total product count
+  const totalProducts = products.length;
 
   // Prepare data for anatomical location distribution
   const locationData = getAllOptions('anatomicalLocation').map(location => ({
     name: location,
     value: filteredProducts.filter(p => p.anatomicalLocation?.includes(location)).length
   })).filter(item => item.value > 0);
+  
+  const totalLocations = locationData.reduce((sum, item) => sum + item.value, 0);
 
   // Prepare data for modality distribution
   const modalityData = getAllOptions('modality').map(modality => ({
@@ -53,6 +63,8 @@ const Dashboard = () => {
       return p.modality === modality;
     }).length
   })).filter(item => item.value > 0);
+  
+  const totalModalities = modalityData.reduce((sum, item) => sum + item.value, 0);
 
   // Prepare data for company products
   const companyData = companies
@@ -62,6 +74,8 @@ const Dashboard = () => {
     }))
     .filter(item => item.value > 0)
     .sort((a, b) => b.value - a.value);
+  
+  const totalCompanies = companyData.length;
 
   // Update structure data when task changes
   useEffect(() => {
@@ -93,6 +107,35 @@ const Dashboard = () => {
     }
   }, [selectedTask]);
 
+  // Handle task bar click
+  const handleTaskBarClick = (data: any) => {
+    const taskName = data.name;
+    if (taskName === clickedTask) {
+      // If clicking the same task again, reset filter
+      setSelectedTask("all");
+      setClickedTask(null);
+      toast({
+        description: "Filter reset to show all products",
+      });
+    } else {
+      // Update selected task
+      setSelectedTask(taskName);
+      setClickedTask(taskName);
+      toast({
+        description: `Now showing only ${taskName} products`,
+      });
+    }
+  };
+
+  // Handle reset filter button click
+  const handleResetFilter = () => {
+    setSelectedTask("all");
+    setClickedTask(null);
+    toast({
+      description: "Filter reset to show all products",
+    });
+  };
+
   // Custom colors with better contrast and readability
   const COLORS = [
     '#0EA5E9',   // Bright Ocean Blue
@@ -112,6 +155,11 @@ const Dashboard = () => {
     return `${name} (${(percent * 100).toFixed(0)}%)`;
   };
 
+  // Custom bar style for task chart to highlight selected task
+  const getBarFill = (entry: any) => {
+    return entry.isSelected ? '#F43F5E' : '#00A6D6';
+  };
+
   return (
     <div className="container mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
@@ -119,22 +167,34 @@ const Dashboard = () => {
           <LayoutDashboard className="h-6 w-6 text-[#00A6D6]" />
           <h1 className="text-2xl font-bold">Analytics Dashboard</h1>
         </div>
-        <div className="flex items-center gap-2">
-          <Filter className="h-5 w-5 text-gray-500" /> {/* Changed FilterCircle to Filter */}
-          <Select 
-            value={selectedTask} 
-            onValueChange={setSelectedTask}
-          >
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter by task" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Tasks</SelectItem>
-              {allTasks.map(task => (
-                <SelectItem key={task} value={task}>{task}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="flex items-center gap-3">
+          {selectedTask !== "all" && (
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={handleResetFilter}
+              className="flex items-center gap-1"
+            >
+              <RefreshCcw className="h-4 w-4" /> Reset
+            </Button>
+          )}
+          <div className="flex items-center gap-2">
+            <Filter className="h-5 w-5 text-gray-500" />
+            <Select 
+              value={selectedTask} 
+              onValueChange={setSelectedTask}
+            >
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder="Filter by task" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Tasks</SelectItem>
+                {allTasks.map(task => (
+                  <SelectItem key={task} value={task}>{task}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
@@ -142,7 +202,7 @@ const Dashboard = () => {
         {/* Tasks Distribution */}
         <Card>
           <CardHeader>
-            <CardTitle>Products by Task</CardTitle>
+            <CardTitle>Products by Task ({totalProducts} total)</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer className="h-[300px]" config={{}}>
@@ -150,16 +210,26 @@ const Dashboard = () => {
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="value" fill="#00A6D6" />
+                <Bar 
+                  dataKey="value" 
+                  fill="#00A6D6" 
+                  onClick={handleTaskBarClick} 
+                  cursor="pointer"
+                  fillOpacity={0.9}
+                  fillFunction={getBarFill}
+                />
               </BarChart>
             </ChartContainer>
+            <div className="mt-4 text-sm text-muted-foreground text-center">
+              Click on any bar to filter by task
+            </div>
           </CardContent>
         </Card>
 
         {/* Anatomical Location Distribution */}
         <Card>
           <CardHeader>
-            <CardTitle>Products by Location {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
+            <CardTitle>Products by Location ({totalLocations} total) {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer className="h-[400px]" config={{}}>
@@ -204,7 +274,7 @@ const Dashboard = () => {
         {/* Modality Distribution */}
         <Card>
           <CardHeader>
-            <CardTitle>Products by Modality {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
+            <CardTitle>Products by Modality ({totalModalities} total) {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer className="h-[300px]" config={{}}>
@@ -221,7 +291,7 @@ const Dashboard = () => {
         {/* Company Products */}
         <Card>
           <CardHeader>
-            <CardTitle>Products by Company {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
+            <CardTitle>Products by Company ({totalCompanies} companies) {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer className="h-[300px]" config={{}}>
@@ -239,7 +309,7 @@ const Dashboard = () => {
         {selectedTask === "Auto-Contouring" && structureData.length > 0 && (
           <Card className="md:col-span-2">
             <CardHeader>
-              <CardTitle>Supported Structures in Auto-Contouring Products</CardTitle>
+              <CardTitle>Supported Structures in Auto-Contouring Products ({structureData.length} structures)</CardTitle>
             </CardHeader>
             <CardContent>
               <ChartContainer className="h-[400px]" config={{}}>

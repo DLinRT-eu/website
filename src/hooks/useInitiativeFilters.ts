@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { InitiativeFilterState } from "@/types/filters";
 import { ALL_INITIATIVES } from "@/data";
+import { Initiative } from "@/types/initiative";
 
 export const useInitiativeFilters = (
   onFiltersChange?: (active: boolean) => void,

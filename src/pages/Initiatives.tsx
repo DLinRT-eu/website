@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
-import { Flask } from 'lucide-react';
+import { Beaker } from 'lucide-react';
 import dataService from '@/services/DataService';
 import { Initiative } from '@/types/initiative';
 import InitiativeFilters from '@/components/initiatives/InitiativeFilters';
@@ -50,7 +50,7 @@ const Initiatives = () => {
 
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <Flask className="h-8 w-8 text-[#9b87f5]" />
+          <Beaker className="h-8 w-8 text-[#9b87f5]" />
           <h1 className="text-3xl font-bold text-gray-900">Research Initiatives</h1>
         </div>
         <p className="text-lg text-gray-700 max-w-3xl">

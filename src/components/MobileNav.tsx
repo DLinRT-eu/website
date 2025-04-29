@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Menu, X, Flask } from 'lucide-react';
+import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Menu, X, Beaker } from 'lucide-react';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 
@@ -43,7 +43,7 @@ const MobileNav = () => {
             onClick={handleLinkClick}
             className="flex items-center p-2 rounded-md hover:bg-slate-100"
           >
-            <Flask className="w-5 h-5 mr-3" />
+            <Beaker className="w-5 h-5 mr-3" />
             Research & Initiatives
           </Link>
           <Link 

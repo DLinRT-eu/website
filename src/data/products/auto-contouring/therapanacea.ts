@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     features: ["Precise contouring", "Fast processing", "Customizable workflows"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/therapanacea.png",
+    logoUrl: "/logos/therapanacea.png",
     website: "https://www.therapanacea.eu/our-products/annotate/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",
@@ -71,7 +72,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     ],
     category: "Image Synthesis",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/therapanacea.png",
+    logoUrl: "/logos/therapanacea.png",
     website: "https://www.therapanacea.eu/our-products/adaptbox/",
     anatomicalLocation: ["Pelvis"],
     modality: "CBCT",

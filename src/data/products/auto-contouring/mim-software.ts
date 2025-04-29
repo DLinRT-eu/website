@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
@@ -11,10 +12,10 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/mimsoftware.svg",
+    logoUrl: "/logos/mimsoftware.svg",
     website: "https://www.mimsoftware.com/radiation-oncology",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT, MRI",
+    modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-based segmentation", "Integration with MIM platform", "Multiple modality support"],

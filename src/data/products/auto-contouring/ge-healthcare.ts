@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
@@ -11,16 +12,16 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     features: ["Integrated workflow", "Multiple anatomical sites", "Advanced algorithms"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/ge_healthcare.png",
+    logoUrl: "/logos/ge_healthcare.png",
     website: "https://www.gehealthcare.com/products/advanced-visualization/advanced-visualization/auto-segmentation",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: ["CT"],
+    modality: "CT",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Integrated platform", "Workflow efficiency", "Multiple anatomical sites"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: "CT",
+      input: ["CT"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]

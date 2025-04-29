@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     features: ["MRI-based contouring", "Synthetic CT generation", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/spectronic medical.jpg",
+    logoUrl: "/logos/spectronic medical.jpg",
     website: "http://medical.spectronic.se/",
     anatomicalLocation: ["Head & Neck", "Pelvis", "Brain"],
     modality: "MRI",

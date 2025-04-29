@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const MVISION_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     features: ["Cloud-based segmentation", "AI algorithms", "Multiple cancer sites"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/mvision-ai.png",
+    logoUrl: "/logos/mvision-ai.png",
     website: "https://www.mvision.ai/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

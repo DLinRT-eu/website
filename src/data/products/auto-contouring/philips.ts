@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     features: ["Integrated in TPS", "Multiple segmentation methods", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/philips.png",
+    logoUrl: "/logos/philips.png",
     website: "https://www.usa.philips.com/healthcare/product/HCNMRB780/mrcat-prostate-auto-contouring-mr-rt-clinical-application",
     anatomicalLocation: ["Pelvis"],
     modality: "MRI",

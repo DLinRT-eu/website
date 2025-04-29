@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const LIMBUS_PRODUCTS: ProductDetails[] = [
@@ -11,10 +12,10 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     features: ["Automated OAR contouring", "Fast processing", "Deep learning algorithms"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "/dlinrt-products/public/logos/Limbus-ai.png",
+    logoUrl: "/logos/Limbus-ai.png",
     website: "https://limbus.ai/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Breast", "Pelvis"],
-    modality: "CT, MRI, CBCT",
+    modality: ["CT", "MRI", "CBCT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Automated contouring", "Cloud-based", "DICOM compatibility"],

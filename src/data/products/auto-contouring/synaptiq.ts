@@ -12,7 +12,7 @@ export const SYNAPTIQ_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/synaptiq.png",
+    logoUrl: "/logos/synaptiq.png",
     website: "https://synaptiq.io/product/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

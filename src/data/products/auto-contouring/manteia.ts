@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const MANTEIA_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning algorithms", "Multiple anatomical sites", "Rapid processing"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/manteia.png",
+    logoUrl: "/logos/manteia.png",
     website: "https://www.manteiatech.com/index_en.html",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

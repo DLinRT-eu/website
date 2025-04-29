@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -37,16 +38,23 @@ const ProductCard = ({
 }: ProductCardProps) => {
   // Format date if available
   const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString() : null;
-
+  
+  // Use a placeholder image if the logo URL is invalid or missing
+  const logoSrc = logoUrl || "/placeholder.svg";
+  
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">
       <Link to={`/product/${id}`} className="block">
         <div className="mb-6 bg-gray-50 rounded-lg overflow-hidden">
           <AspectRatio ratio={16/9} className="bg-white">
             <img
-              src={logoUrl}
+              src={logoSrc}
               alt={`${name} logo`}
               className="object-contain w-full h-full p-4"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = "/placeholder.svg";
+              }}
             />
           </AspectRatio>
         </div>

@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const CORELINE_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const CORELINE_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning based", "Automated contouring", "Multiple anatomical sites"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/coreline.jpg",
+    logoUrl: "/logos/coreline.jpg",
     website: "https://www.corelinesoft.com/product/acs/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

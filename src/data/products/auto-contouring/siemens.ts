@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const SIEMENS_PRODUCTS: ProductDetails[] = [
@@ -11,10 +12,10 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     features: ["Multi-organ segmentation", "Decision support", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/siemens.png",
+    logoUrl: "/logos/siemens.png",
     website: "https://www.siemens-healthineers.com/medical-imaging/ai-rad-companion",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT, MRI",
+    modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Clinical decision support", "Integration with Siemens ecosystem"],
@@ -65,10 +66,10 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/siemens.png",
+    logoUrl: "/logos/siemens.png",
     website: "https://www.siemens-healthineers.com/radiotherapy/ct-for-rt/somatom-go-sim",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT, MRI",
+    modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Multiple anatomical sites"],

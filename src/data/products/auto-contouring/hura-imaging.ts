@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning contouring", "Multiple anatomical sites", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/huraimaging.png",
+    logoUrl: "/logos/huraimaging.png",
     website: "http://www.huraimaging.com",
     anatomicalLocation: ["Head & Neck", "Thorax", "Breast", "Abdomen", "Pelvis"],
     modality: "CT",

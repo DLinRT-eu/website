@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const CARINA_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning algorithms", "Fast processing", "Multiple anatomical sites"],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/carina.jpg",
+    logoUrl: "/logos/carina.jpg",
     website: "https://carina.ai/products/intcontour",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

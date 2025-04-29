@@ -12,7 +12,7 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
     features: ["Brain tumor segmentation", "Fast processing", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/vysioner.png",
+    logoUrl: "/logos/vysioner.png",
     website: "https://www.vysioneer.com/solutions/vbrain",
     anatomicalLocation: ["Brain"],
     modality: "MRI",

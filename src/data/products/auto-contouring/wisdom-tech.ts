@@ -12,7 +12,7 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Integrated workflow"],
     category: "Auto-Contouring",
     certification: "NMPA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/wisdom-tech.png",
+    logoUrl: "/logos/wisdom-tech.png",
     website: "http://www.wisdom-tech.online/view-16.html",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",

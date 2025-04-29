@@ -1,46 +1,53 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
-} from "@/components/ui/accordion";
 import { ProductDetails } from "@/types/productDetails";
 
 interface TechnicalSpecificationsProps {
   product: ProductDetails;
 }
 
+// Helper function to format array or string fields
+const formatField = (value: any): string => {
+  if (!value || (Array.isArray(value) && value.length === 0)) {
+    return "-";
+  }
+  
+  if (Array.isArray(value)) {
+    return value.join(", ");
+  }
+  
+  return String(value);
+};
+
 const TechnicalSpecificationsDetails = ({ product }: TechnicalSpecificationsProps) => (
   <Card>
     <CardHeader>
       <CardTitle>Technical Specifications</CardTitle>
     </CardHeader>
-    <CardContent className="space-y-2">
-      <Accordion type="single" collapsible>
-        <AccordionItem value="population">
-          <AccordionTrigger>Population</AccordionTrigger>
-          <AccordionContent>{product.technicalSpecifications?.population || "N/A"}</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="input">
-          <AccordionTrigger>Input</AccordionTrigger>
-          <AccordionContent>{product.technicalSpecifications?.input?.join(", ") || "N/A"}</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="inputFormat">
-          <AccordionTrigger>Input Format</AccordionTrigger>
-          <AccordionContent>{product.technicalSpecifications?.inputFormat?.join(", ") || "N/A"}</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="output">
-          <AccordionTrigger>Output</AccordionTrigger>
-          <AccordionContent>{product.technicalSpecifications?.output?.join(", ") || "N/A"}</AccordionContent>
-        </AccordionItem>
-        <AccordionItem value="outputFormat">
-          <AccordionTrigger>Output Format</AccordionTrigger>
-          <AccordionContent>{product.technicalSpecifications?.outputFormat?.join(", ") || "N/A"}</AccordionContent>
-        </AccordionItem>
-      </Accordion>
+    <CardContent className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <p className="text-sm font-medium">Population:</p>
+          <p className="text-gray-500">{formatField(product.technicalSpecifications?.population)}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium">Input:</p>
+          <p className="text-gray-500">{formatField(product.technicalSpecifications?.input)}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium">Input Format:</p>
+          <p className="text-gray-500">{formatField(product.technicalSpecifications?.inputFormat)}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium">Output:</p>
+          <p className="text-gray-500">{formatField(product.technicalSpecifications?.output)}</p>
+        </div>
+        <div>
+          <p className="text-sm font-medium">Output Format:</p>
+          <p className="text-gray-500">{formatField(product.technicalSpecifications?.outputFormat)}</p>
+        </div>
+      </div>
     </CardContent>
   </Card>
 );

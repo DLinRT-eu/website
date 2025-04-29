@@ -6,7 +6,7 @@ export const COMPANIES: CompanyDetails[] = [
     "id": "ai-medical",
     "name": "AI Medical",
     "description": "Developers of AI-powered solutions for medical imaging and radiation oncology.",
-    "website": "https://www.aimedical.io/",
+    "website": "https://www.ai-medical.ch/",
     "productIds": ["ai-medical-jazz"]
   },
   {

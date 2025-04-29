@@ -54,6 +54,7 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     },
     version: "3.0",
     releaseDate: "2023-11-01",
-    lastUpdated: "2024-03-12"
+    lastUpdated: "2024-03-12",
+    lastRevised: "2000-01-01"
   }
 ];

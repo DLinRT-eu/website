@@ -29,8 +29,8 @@ const isRecentUpdate = (date: string | undefined): boolean => {
 };
 
 const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
-  // Set last revised date to 2020-01-01 if not specified
-  const lastRevised = "2020-01-01";
+  // Set last revised date to 2000-01-01 if not specified
+  const lastRevised = product.lastRevised || "2000-01-01";
   
   // Check if an update is recent (less than 6 months)
   const hasRecentUpdate = product.lastUpdated ? isRecentUpdate(product.lastUpdated) : false;

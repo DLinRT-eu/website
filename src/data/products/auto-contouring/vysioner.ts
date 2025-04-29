@@ -65,6 +65,7 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
     },
     version: "2.5",
     releaseDate: "2023-10-05",
-    lastUpdated: "2024-03-10"
+    lastUpdated: "2024-03-10",
+    lastRevised: "2000-01-01"
   }
 ];

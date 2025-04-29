@@ -70,8 +70,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
       "Pelvis: Bladder",
       "Pelvis: Femoral Heads (L)",
       "Pelvis: Femoral Heads (R)"
-    ]
+    ],
+    lastRevised: "2000-01-01"
   }
 ];
-
-// Structure data retrieved on 2024-04-29

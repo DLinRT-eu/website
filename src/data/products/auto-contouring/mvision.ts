@@ -54,6 +54,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     },
     version: "4.0",
     releaseDate: "2023-09-10",
-    lastUpdated: "2024-02-28"
+    lastUpdated: "2024-02-28",
+    lastRevised: "2000-01-01"
   }
 ];

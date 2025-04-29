@@ -89,6 +89,7 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
       "Pelvis: Femoral Head (R)",
       "Pelvis: Prostate",
       "Pelvis: Uterus"
-    ]
+    ],
+    lastRevised: "2000-01-01"
   }
 ];

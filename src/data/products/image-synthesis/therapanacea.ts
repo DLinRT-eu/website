@@ -54,7 +54,8 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2023-04-25",
-    lastUpdated: "2024-02-28"
+    lastUpdated: "2024-02-28",
+    lastRevised: "2000-01-01"
   },
   {
     id: "therapanacea-adaptbox",
@@ -119,6 +120,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     },
     version: "1.0",
     releaseDate: "2023-09-01",
-    lastUpdated: "2024-04-26"
+    lastUpdated: "2024-04-26",
+    lastRevised: "2000-01-01"
   }
 ];

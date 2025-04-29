@@ -54,6 +54,7 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     },
     version: "12.0",
     releaseDate: "2023-12-01",
-    lastUpdated: "2024-03-15"
+    lastUpdated: "2024-03-15",
+    lastRevised: "2000-01-01"
   }
 ];

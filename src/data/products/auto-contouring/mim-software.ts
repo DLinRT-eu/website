@@ -110,6 +110,7 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
       "Pelvis: Ovaries (L)",
       "Pelvis: Ovaries (R)",
       "Pelvis: Vagina"
-    ]
+    ],
+    lastRevised: "2000-01-01"
   }
 ];

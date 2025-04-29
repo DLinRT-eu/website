@@ -65,6 +65,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
       "Pelvis: Femoral Head (R)",
       "Pelvis: Penile Bulb",
       "Pelvis: Urethra"
-    ]
+    ],
+    lastRevised: "2000-01-01"
   }
 ];

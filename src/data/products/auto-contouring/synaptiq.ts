@@ -54,6 +54,7 @@ export const SYNAPTIQ_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2023-08-20",
-    lastUpdated: "2024-03-05"
+    lastUpdated: "2024-03-05",
+    lastRevised: "2000-01-01"
   }
 ];

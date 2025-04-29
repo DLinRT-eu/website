@@ -54,7 +54,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     version: "1.0",
     releaseDate: "2022-06-15",
-    lastUpdated: "2024-02-10"
+    lastUpdated: "2024-02-10",
+    lastRevised: "2000-01-01"
   },
   {
     id: "philips-mrcat-brain",
@@ -108,7 +109,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2020-03-10",
-    lastUpdated: "2024-02-10"
+    lastUpdated: "2024-02-10",
+    lastRevised: "2000-01-01"
   },
   {
     id: "philips-mrcat-pelvis",
@@ -162,6 +164,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     version: "3.5",
     releaseDate: "2016-05-15",
-    lastUpdated: "2024-02-10"
+    lastUpdated: "2024-02-10",
+    lastRevised: "2000-01-01"
   }
 ];

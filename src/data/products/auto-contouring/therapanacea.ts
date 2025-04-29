@@ -134,6 +134,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
       "Abdomen: Duodenum",
       "Abdomen: Small Bowel",
       "Abdomen: Spleen"
-    ]
+    ],
+    lastRevised: "2000-01-01"
   }
 ];

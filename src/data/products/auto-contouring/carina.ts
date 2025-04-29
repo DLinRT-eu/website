@@ -79,6 +79,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
       "Pelvis: Bladder",
       "Pelvis: Rectum",
       "Pelvis: Femoral Heads"
-    ]
+    ],
+    lastRevised: "2000-01-01"
   }
 ];

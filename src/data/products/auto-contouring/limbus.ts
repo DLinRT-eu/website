@@ -61,6 +61,7 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     },
     version: "3.0",
     releaseDate: "2023-06-15",
-    lastUpdated: "2024-03-10"
+    lastUpdated: "2024-03-10",
+    lastRevised: "2000-01-01"
   }
 ];

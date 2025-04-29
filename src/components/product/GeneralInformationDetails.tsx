@@ -32,8 +32,8 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
   // Set last revised date to 2000-01-01 if not specified
   const lastRevised = product.lastRevised || "2000-01-01";
   
-  // Check if an update is recent (less than 6 months)
-  const hasRecentUpdate = product.lastUpdated ? isRecentUpdate(product.lastUpdated) : false;
+  // Check if revision is recent (less than 6 months)
+  const hasRecentRevision = isRecentUpdate(lastRevised);
   
   return (
     <Card>
@@ -68,23 +68,23 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
           </div>
           <div>
             <p className="text-sm font-medium">Last Updated:</p>
+            <p className="text-gray-500">{formatField(product.lastUpdated)}</p>
+          </div>
+          <div>
+            <p className="text-sm font-medium">Last Revised:</p>
             <div className="flex items-center gap-2">
-              <p className="text-gray-500">{formatField(product.lastUpdated)}</p>
+              <p className="text-gray-500">{formatField(lastRevised)}</p>
               <Badge 
-                variant={hasRecentUpdate ? "success" : "outline"} 
+                variant={hasRecentRevision ? "success" : "outline"} 
                 className="flex items-center gap-1"
               >
-                {hasRecentUpdate ? (
+                {hasRecentRevision ? (
                   <CheckCircle className="h-3 w-3" />
                 ) : (
                   <XCircle className="h-3 w-3" />
                 )}
               </Badge>
             </div>
-          </div>
-          <div>
-            <p className="text-sm font-medium">Last Revised:</p>
-            <p className="text-gray-500">{lastRevised}</p>
           </div>
           <div>
             <p className="text-sm font-medium">Clinical Evidence:</p>

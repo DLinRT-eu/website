@@ -24,13 +24,6 @@ export const COMPANIES: CompanyDetails[] = [
     "productIds": ["coreline-aview-rt-acs"]
   },
   {
-    "id": "directorgans",
-    "name": "DirectORGANS",
-    "description": "Specialists in AI-driven organ segmentation solutions.",
-    "website": "https://directorgans.com/",
-    "productIds": ["directorgans"]
-  },
-  {
     "id": "everfortune-ai",
     "name": "Ever Fortune AI",
     "description": "AI company developing advanced solutions for radiation therapy.",
@@ -117,7 +110,7 @@ export const COMPANIES: CompanyDetails[] = [
     "name": "Siemens Healthineers",
     "description": "Pioneer in medical technology and digital health solutions.",
     "website": "https://www.siemens-healthineers.com",
-    "productIds": ["siemens-syngo-ct", "siemens-ai-rad-companion"]
+    "productIds": ["siemens-syngo-ct", "siemens-ai-rad-companion", "directorgans"]
   },
   {
     "id": "spectronic-medical",

@@ -23,6 +23,8 @@ export interface Product {
   compatibleSystems?: string[];
   userRating?: number;
   lastUpdated?: string;
+  lastVerified?: string;
+  clinicalEvidence?: string;
   // Adding supported structures for auto-contouring models
   supportedStructures?: string[];
   // Adding properties needed by exportProducts.ts

@@ -43,4 +43,6 @@ export interface ProductDetails extends Product {
     model?: string[];
     basedOn?: string[];
   };
+  clinicalEvidence?: string;
+  lastVerified?: string;
 }

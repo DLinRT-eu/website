@@ -1,8 +1,9 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, CheckCircle, XCircle } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
+import { Badge } from "@/components/ui/badge";
 
 interface ProductHeaderInfoProps {
   product: ProductDetails;
@@ -11,6 +12,15 @@ interface ProductHeaderInfoProps {
 const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
   // Clean up logo URL to ensure proper formatting
   const logoSrc = product.logoUrl ? (product.logoUrl.startsWith('/') ? product.logoUrl.trim() : `/${product.logoUrl.trim()}`) : '/placeholder.svg';
+  
+  // Check if verification is recent (less than 6 months)
+  const isVerified = !!product.lastVerified;
+  const isRecentlyVerified = isVerified && 
+    new Date().getTime() - new Date(product.lastVerified).getTime() < 6 * 30 * 24 * 60 * 60 * 1000;
+  
+  const formattedVerificationDate = product.lastVerified 
+    ? new Date(product.lastVerified).toLocaleDateString() 
+    : null;
   
   return (
     <div className="mb-6">
@@ -27,9 +37,23 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
             }}
           />
         </div>
-        <div>
+        <div className="flex-1">
           <h1 className="text-3xl font-bold">{product.name}</h1>
           <p className="text-gray-500">{product.description}</p>
+          
+          <div className="mt-2 flex items-center">
+            <Badge 
+              variant={isRecentlyVerified ? "success" : isVerified ? "outline" : "secondary"} 
+              className={`flex items-center gap-1 ${isRecentlyVerified ? 'bg-green-100 text-green-800' : isVerified ? '' : 'bg-gray-100 text-gray-600'}`}
+            >
+              {isRecentlyVerified ? (
+                <CheckCircle className="h-3 w-3" />
+              ) : (
+                <XCircle className="h-3 w-3" />
+              )}
+              {formattedVerificationDate ? `Verified: ${formattedVerificationDate}` : "Not verified"}
+            </Badge>
+          </div>
         </div>
       </div>
       <div className="flex gap-4">

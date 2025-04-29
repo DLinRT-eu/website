@@ -1,8 +1,8 @@
-
-import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS } from "@/data";
+import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS, ALL_INITIATIVES } from "@/data";
 import type { ProductDetails } from "@/types/productDetails";
 import type { CompanyDetails } from "@/types/company";
 import type { NewsItem } from "@/types/news";
+import type { Initiative } from "@/types/initiative";
 import type { FilterState } from "@/types/filters";
 
 /**
@@ -94,6 +94,42 @@ class DataService {
     return [...NEWS_ITEMS]
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
       .slice(0, count);
+  }
+  
+  // Initiative methods
+  getAllInitiatives(): Initiative[] {
+    return ALL_INITIATIVES;
+  }
+  
+  getInitiativeById(id: string): Initiative | undefined {
+    return ALL_INITIATIVES.find(initiative => initiative.id === id);
+  }
+  
+  getInitiativesByCategory(category: string): Initiative[] {
+    return ALL_INITIATIVES.filter(initiative => initiative.category === category);
+  }
+  
+  getInitiativesByStatus(status: string): Initiative[] {
+    return ALL_INITIATIVES.filter(initiative => initiative.status === status);
+  }
+  
+  getInitiativesByTag(tag: string): Initiative[] {
+    return ALL_INITIATIVES.filter(initiative => initiative.tags.includes(tag));
+  }
+  
+  filterInitiatives(filters: {categories?: string[], status?: string[], tags?: string[]}): Initiative[] {
+    return ALL_INITIATIVES.filter(initiative => {
+      if (filters.categories?.length && !filters.categories.includes(initiative.category)) {
+        return false;
+      }
+      if (filters.status?.length && !filters.status.includes(initiative.status)) {
+        return false;
+      }
+      if (filters.tags?.length && !initiative.tags.some(tag => filters.tags?.includes(tag))) {
+        return false;
+      }
+      return true;
+    });
   }
 }
 

@@ -16,6 +16,7 @@ import Support from "./pages/Support";
 import NewsDetail from "./pages/NewsDetail";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
+import Initiatives from "./pages/Initiatives";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="products" element={<Products />} />
+          <Route path="initiatives" element={<Initiatives />} />
           <Route path="maintenance-team" element={<MaintenanceTeam />} />
           <Route path="donate" element={<Donate />} />
           <Route path="product/:id" element={<ProductDetails />} />

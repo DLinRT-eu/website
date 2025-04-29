@@ -39,7 +39,8 @@ const Dashboard = () => {
   const taskData = getAllOptions('category').map(category => ({
     name: category,
     value: products.filter(p => p.category === category).length,
-    isSelected: category === clickedTask
+    isSelected: category === clickedTask,
+    fill: category === clickedTask ? '#F43F5E' : '#00A6D6'  // Directly set the fill based on selection
   }));
 
   // Total product count
@@ -155,11 +156,6 @@ const Dashboard = () => {
     return `${name} (${(percent * 100).toFixed(0)}%)`;
   };
 
-  // Custom bar style for task chart to highlight selected task
-  const getBarFill = (entry: any) => {
-    return entry.isSelected ? '#F43F5E' : '#00A6D6';
-  };
-
   return (
     <div className="container mx-auto p-6">
       <div className="flex items-center justify-between mb-6">
@@ -216,7 +212,7 @@ const Dashboard = () => {
                   onClick={handleTaskBarClick} 
                   cursor="pointer"
                   fillOpacity={0.9}
-                  fillFunction={getBarFill}
+                  // Use the fill property from each data item instead of fillFunction
                 />
               </BarChart>
             </ChartContainer>

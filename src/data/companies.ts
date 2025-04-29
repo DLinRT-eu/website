@@ -27,7 +27,7 @@ export const COMPANIES: CompanyDetails[] = [
     "id": "directorgans",
     "name": "DirectORGANS",
     "description": "Specialists in AI-driven organ segmentation solutions.",
-    "website": "https://www.directorgans.com/",
+    "website": "https://directorgans.com/",
     "productIds": ["directorgans"]
   },
   {

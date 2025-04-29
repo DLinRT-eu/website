@@ -1,19 +1,20 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
   {
     id: "spectronic-mri-planner",
-    name: "MRI Planner",
+    name: "MRIplanner",
     company: "Spectronic Medical",
-    companyUrl: "http://medical.spectronic.se/",
-    productUrl: "http://medical.spectronic.se/page-2/page6/index.html",
+    companyUrl: "https://spectronicmedical.com/",
+    productUrl: "https://spectronicmedical.com/mriplanner",
     description: "MRI-only workflow solution with integrated auto-segmentation capabilities for radiation therapy planning.",
     features: ["MRI-based contouring", "Synthetic CT generation", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/spectronic medical.jpg",
-    website: "http://medical.spectronic.se/",
+    website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Head & Neck", "Pelvis", "Brain"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
@@ -42,7 +43,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
       intendedUseStatement: "For MRI-only radiation therapy planning with automatic segmentation capabilities."
     },
     market: {
-      onMarketSince: "2020",
+      onMarketSince: "2017",
       distributionChannels: ["Direct sales", "Partnerships"],
       countriesPresent: 15,
       payingCustomers: "Multiple clinical sites in Europe",
@@ -52,8 +53,26 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
       model: ["Subscription", "Perpetual license"],
       basedOn: ["Annual license", "Site license"]
     },
-    version: "2.5",
+    version: "3.2",
     releaseDate: "2023-07-10",
-    lastUpdated: "2024-01-20"
+    lastUpdated: "2024-01-25",
+    supportedStructures: [
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerves",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Submandibular (L)",
+      "Head & Neck: Submandibular (R)",
+      "Head & Neck: Mandible",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum", 
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Penile Bulb"
+    ]
   }
 ];

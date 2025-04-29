@@ -20,6 +20,7 @@ import { SPECTRONIC_PRODUCTS } from "./spectronic";
 import { SYNAPTIQ_PRODUCTS } from "./synaptiq";
 import { VYSIONER_PRODUCTS } from "./vysioner";
 import { WISDOM_TECH_PRODUCTS } from "./wisdom-tech";
+import { DIRECTORGANS_PRODUCTS } from "./directorgans";
 
 export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...LIMBUS_PRODUCTS,
@@ -41,5 +42,6 @@ export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...SPECTRONIC_PRODUCTS,
   ...SYNAPTIQ_PRODUCTS,
   ...VYSIONER_PRODUCTS,
-  ...WISDOM_TECH_PRODUCTS
+  ...WISDOM_TECH_PRODUCTS,
+  ...DIRECTORGANS_PRODUCTS
 ];

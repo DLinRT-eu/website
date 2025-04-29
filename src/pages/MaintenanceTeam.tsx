@@ -3,6 +3,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { User } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const TEAM_MEMBERS = [
   {
@@ -14,8 +15,33 @@ const TEAM_MEMBERS = [
 ];
 
 const MaintenanceTeam = () => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "name": "Maintenance Team",
+    "description": "Meet the experts who maintain the DLinRT products finder",
+    "primaryImageOfPage": "https://cig-utrecht.org/img/people/mmasp.jpg",
+    "about": {
+      "@type": "Organization",
+      "name": "DLinRT Maintenance Team",
+      "member": TEAM_MEMBERS.map(member => ({
+        "@type": "Person",
+        "name": member.name,
+        "jobTitle": member.role,
+        "image": member.image,
+        "sameAs": member.bio
+      }))
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white py-12">
+      <SEO
+        title="Maintenance Team"
+        description="Meet the experts who develop and maintain the DLinRT products finder, led by Matteo Maspero."
+        canonical="https://dlinrt.eu/maintenance-team"
+        structuredData={structuredData}
+      />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-bold text-gray-900">Our Maintenance Team</h1>

@@ -2,14 +2,39 @@
 import { HeartHandshake, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
 
 const Donate = () => {
   const handleDonate = () => {
     window.open('https://gofund.me/f775f8ba', '_blank', 'noopener,noreferrer');
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "DonateAction",
+    "name": "Support DLinRT Project",
+    "description": "Help us make a difference in medical device innovation by supporting our project.",
+    "agent": {
+      "@type": "Organization",
+      "name": "DLinRT Project"
+    },
+    "potentialAction": {
+      "@type": "DonateAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://gofund.me/f775f8ba"
+      }
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 py-12">
+      <SEO
+        title="Support Our Project"
+        description="Help us make a difference in medical device innovation by supporting our project through donations or contributions."
+        canonical="https://dlinrt.eu/donate"
+        structuredData={structuredData}
+      />
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <HeartHandshake className="h-16 w-16 mx-auto text-[#9b87f5] mb-4" />

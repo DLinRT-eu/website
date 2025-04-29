@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Github, Heart } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
+import SEO from '@/components/SEO';
 
 const Support = () => {
   const handleGitHubIssue = () => {
@@ -13,8 +14,22 @@ const Support = () => {
     window.open('https://gofund.me/f775f8ba', '_blank', 'noopener,noreferrer');
   };
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Support & Contact",
+    "description": "Get help, submit feedback, or contact the DLinRT team",
+    "url": "https://dlinrt.eu/support"
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title="Support & Contact"
+        description="Get help, submit feedback, report issues, or contact our team about the DLinRT products finder."
+        canonical="https://dlinrt.eu/support"
+        structuredData={structuredData}
+      />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8 space-y-6">
         <h1 className="text-3xl font-bold mb-6">Support & Contact</h1>
         

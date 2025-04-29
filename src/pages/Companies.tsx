@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Search, Building } from 'lucide-react';
 import CompanyCard from '@/components/CompanyCard';
 import dataService from '@/services/DataService';
+import SEO from '@/components/SEO';
 
 const Companies = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -18,6 +19,26 @@ const Companies = () => {
       }))
       .filter(company => company.productCount > 0);
   }, []);
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Radiotherapy AI Companies",
+    "description": "Leading companies developing innovative AI solutions for radiation therapy",
+    "url": "https://dlinrt.eu/companies",
+    "itemListOrder": "Unordered",
+    "numberOfItems": companies.length,
+    "itemListElement": companies.map((company, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Organization",
+        "name": company.name,
+        "description": company.description,
+        "url": company.website
+      }
+    }))
+  };
 
   // Filter companies based on search query
   const filteredCompanies = useMemo(() => {
@@ -36,6 +57,12 @@ const Companies = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO 
+        title="Companies"
+        description="Explore leading companies developing innovative AI solutions for radiation therapy, medical imaging synthesis, and clinical decision support in radiotherapy."
+        canonical="https://dlinrt.eu/companies"
+        structuredData={structuredData}
+      />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex items-center gap-3 mb-6">
           <Building className="h-8 w-8 text-[#00A6D6]" />

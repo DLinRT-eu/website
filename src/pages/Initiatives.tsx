@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Helmet } from 'react-helmet';
+import SEO from '@/components/SEO';
 import { Beaker } from 'lucide-react';
 import dataService from '@/services/DataService';
 import { Initiative } from '@/types/initiative';
@@ -13,6 +13,19 @@ const Initiatives = () => {
   const [filteredInitiatives, setFilteredInitiatives] = useState<Initiative[]>(dataService.getAllInitiatives());
   const [isFiltering, setIsFiltering] = useState(false);
   const { toast } = useToast();
+  
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Research Initiatives in Radiotherapy",
+    "description": "Explore research initiatives, open datasets, and grand challenges in radiotherapy.",
+    "url": "https://dlinrt.eu/initiatives",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Deep Learning in Radiotherapy",
+      "url": "https://dlinrt.eu"
+    }
+  };
   
   const handleFilterUpdate = (filters: InitiativeFilterState) => {
     const filtered = dataService.filterInitiatives(filters);
@@ -39,10 +52,12 @@ const Initiatives = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Helmet>
-        <title>Research Initiatives | DLinRT</title>
-        <meta name="description" content="Explore research initiatives, open datasets, and grand challenges in radiotherapy." />
-      </Helmet>
+      <SEO
+        title="Research Initiatives"
+        description="Explore research initiatives, open datasets, and grand challenges in radiotherapy. Discover resources to accelerate innovation in radiation oncology research."
+        canonical="https://dlinrt.eu/initiatives"
+        structuredData={structuredData}
+      />
 
       <div className="mb-8">
         <div className="flex items-center gap-2 mb-4">

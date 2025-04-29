@@ -2,12 +2,32 @@
 import React from 'react';
 import NewsCard from '@/components/news/NewsCard';
 import dataService from '@/services/DataService';
+import SEO from '@/components/SEO';
 
 const News = () => {
   const newsItems = dataService.getAllNews();
   
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Latest News in Radiotherapy AI",
+    "description": "Stay updated with the latest developments of deep learning in Radiotherapy",
+    "url": "https://dlinrt.eu/news",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Deep Learning in Radiotherapy",
+      "url": "https://dlinrt.eu"
+    }
+  };
+  
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title="Latest News"
+        description="Stay updated with the latest developments and announcements in the field of deep learning in radiotherapy."
+        canonical="https://dlinrt.eu/news"
+        structuredData={structuredData}
+      />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <h1 className="text-3xl font-bold mb-6">Latest News</h1>
         <p className="text-gray-600 mb-8">

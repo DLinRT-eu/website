@@ -4,6 +4,7 @@ import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
 import { useState } from "react";
 import type { FilterState } from "@/types/filters";
+import SEO from "@/components/SEO";
 
 const Products = () => {
   const [filtersActive, setFiltersActive] = useState(false);
@@ -13,6 +14,19 @@ const Products = () => {
     certifications: [],
     modalities: [],
   });
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "AI Radiotherapy Products",
+    "description": "Search and explore deep learning products in Radiotherapy, including auto-contouring, image synthesis, and treatment planning tools",
+    "url": "https://dlinrt.eu/products",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Deep Learning in Radiotherapy",
+      "url": "https://dlinrt.eu"
+    }
+  };
 
   const handleResetFilters = () => {
     const event = new CustomEvent('resetFilters');
@@ -28,6 +42,12 @@ const Products = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title="AI Products in Radiotherapy"
+        description="Search and explore deep learning products in Radiotherapy, including auto-contouring, image synthesis, and treatment planning tools."
+        canonical="https://dlinrt.eu/products"
+        structuredData={structuredData}
+      />
       <SearchHeader />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex justify-between items-center mb-6">

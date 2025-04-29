@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import dataService from '@/services/DataService';
+import SEO from '@/components/SEO';
 
 const NewsDetail = () => {
   const { id } = useParams();
@@ -14,6 +15,11 @@ const NewsDetail = () => {
   if (!newsItem) {
     return (
       <div className="min-h-screen bg-white">
+        <SEO
+          title="News Not Found"
+          description="The requested news article could not be found."
+          canonical={`https://dlinrt.eu/news`}
+        />
         <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
           <h1 className="text-3xl font-bold mb-6">News Article Not Found</h1>
         </main>
@@ -21,8 +27,27 @@ const NewsDetail = () => {
     );
   }
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "headline": newsItem.title,
+    "description": newsItem.summary,
+    "datePublished": newsItem.date,
+    "author": {
+      "@type": "Organization",
+      "name": "DLinRT"
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <SEO
+        title={newsItem.title}
+        description={newsItem.summary}
+        canonical={`https://dlinrt.eu/news/${id}`}
+        ogType="article"
+        structuredData={structuredData}
+      />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <Button
           variant="ghost"

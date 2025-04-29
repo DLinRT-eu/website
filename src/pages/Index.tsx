@@ -3,10 +3,26 @@ import React from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
 import { Link } from "react-router-dom";
+import SEO from "@/components/SEO";
 
 const Index = () => {
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Deep Learning in Radiotherapy",
+    "url": "https://dlinrt.eu",
+    "logo": "https://dlinrt.eu/logo.png",
+    "description": "Search and explore deep learning products in Radiotherapy"
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <SEO 
+        title="Deep Learning in Radiotherapy"
+        description="Search and explore AI products in Radiotherapy - the leading database for deep learning solutions in radiation oncology."
+        canonical="https://dlinrt.eu/"
+        structuredData={structuredData}
+      />
       <IntroSection />
       <NewsSection />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">

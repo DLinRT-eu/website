@@ -1,16 +1,28 @@
 
-import { HeartHandshake } from "lucide-react";
+import { HeartHandshake, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const Donate = () => {
+  const handleDonate = () => {
+    window.open('https://gofund.me/f775f8ba', '_blank', 'noopener,noreferrer');
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 py-12">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <HeartHandshake className="h-16 w-16 mx-auto text-[#9b87f5] mb-4" />
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Support Our Project</h1>
-          <p className="text-lg text-gray-600">Help us make a difference in medical device innovation</p>
+          <p className="text-lg text-gray-600 mb-8">Help us make a difference in medical device innovation</p>
+          
+          <Button 
+            onClick={handleDonate} 
+            className="bg-[#FF6F2F] hover:bg-[#FF5A1F] text-white py-3 px-8 text-lg rounded-lg flex items-center mx-auto"
+          >
+            <Heart className="mr-2 h-5 w-5" />
+            Donate on GoFundMe
+          </Button>
         </div>
 
         <div className="space-y-12">
@@ -46,6 +58,20 @@ const Donate = () => {
               </p>
               
               <div className="space-y-4 mb-6">
+                <div className="bg-purple-50 p-4 rounded-md">
+                  <h3 className="font-medium text-purple-900 mb-2">Make a Financial Contribution</h3>
+                  <p className="text-gray-600 mb-3">
+                    Your donation helps us cover hosting costs, development resources, and enables us to focus on improvement.
+                  </p>
+                  <Button 
+                    onClick={handleDonate}
+                    className="bg-[#FF6F2F] hover:bg-[#FF5A1F] text-white"
+                  >
+                    <Heart className="mr-2 h-4 w-4" />
+                    Donate Now
+                  </Button>
+                </div>
+                
                 <div className="bg-purple-50 p-4 rounded-md">
                   <h3 className="font-medium text-purple-900 mb-2">Submit Issues</h3>
                   <p className="text-gray-600 mb-2">

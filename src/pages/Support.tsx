@@ -1,10 +1,15 @@
+
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { Github } from 'lucide-react';
+import { Github, Heart } from 'lucide-react';
 
 const Support = () => {
   const handleGitHubIssue = () => {
     window.open('https://github.com/matteomaspero/dlinrt-products/issues/new', '_blank', 'noopener,noreferrer');
+  };
+
+  const handleDonate = () => {
+    window.open('https://gofund.me/f775f8ba', '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -18,15 +23,24 @@ const Support = () => {
           </p>
         </div>
 
-        <div className="flex justify-center">
+        <div className="flex flex-col md:flex-row justify-center gap-4 py-4">
           <Button onClick={handleGitHubIssue} variant="outline" className="flex items-center gap-2">
             <Github className="h-5 w-5" />
             Submit an Issue on GitHub
+          </Button>
+          
+          <Button 
+            onClick={handleDonate} 
+            className="bg-[#FF6F2F] hover:bg-[#FF5A1F] text-white flex items-center gap-2"
+          >
+            <Heart className="h-5 w-5" />
+            Donate on GoFundMe
           </Button>
         </div>
 
         <div className="text-center text-gray-600 mt-4">
           <p>Your feedback helps us make the DLinRT products finder better for everyone.</p>
+          
           <section className="bg-white rounded-lg p-8 shadow-sm">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Our Story</h2>
             <p className="text-gray-600 leading-relaxed">

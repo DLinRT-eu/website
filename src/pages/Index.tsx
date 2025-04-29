@@ -42,7 +42,7 @@ const Index = () => {
             </Link>
           </div>
           <div className="text-center mt-6 text-sm text-gray-500">
-            &copy; Matteo Maspero, 2025
+            &copy; <a href="https://github.com/DLinRT-eu" target="_blank" rel="noopener noreferrer" className="hover:underline">DLinRT.eu</a>, 2025
           </div>
         </footer>
       </main>

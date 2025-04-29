@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
   {
     id: "therapanacea-annotate",
@@ -54,7 +55,109 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     },
     version: "2.5",
     releaseDate: "2023-11-15",
-    lastUpdated: "2024-04-01"
+    lastUpdated: "2024-04-01",
+    supportedStructures: [
+      // Head & Neck Model
+      "Head & Neck: Brachial Plexus (L)",
+      "Head & Neck: Brachial Plexus (R)",
+      "Head & Neck: Brainstem",
+      "Head & Neck: Cerebellum",
+      "Head & Neck: Chiasma",
+      "Head & Neck: Cochlea (L)",
+      "Head & Neck: Cochlea (R)",
+      "Head & Neck: Encephalon",
+      "Head & Neck: Esophagus",
+      "Head & Neck: Eye (L)",
+      "Head & Neck: Eye (R)",
+      "Head & Neck: Eye Lens (L)",
+      "Head & Neck: Eye Lens (R)",
+      "Head & Neck: Glottic Larynx",
+      "Head & Neck: Hypophyse",
+      "Head & Neck: Lacrimal gland (L)",
+      "Head & Neck: Lacrimal gland (R)",
+      "Head & Neck: Larynx",
+      "Head & Neck: Lips",
+      "Head & Neck: Mandible",
+      "Head & Neck: Medullar canal",
+      "Head & Neck: Mouth",
+      "Head & Neck: Optical nerve (L)",
+      "Head & Neck: Optical nerve (R)",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Pharyngeal constrictor muscle",
+      "Head & Neck: Sub mandible (L)",
+      "Head & Neck: Sub mandible (R)",
+      "Head & Neck: Supraglottic Larynx",
+      "Head & Neck: Thyroid",
+      "Head & Neck: Temporomandibular joints (L)",
+      "Head & Neck: Temporomandibular joints (R)",
+      "Head & Neck: Trachea",
+      
+      // Lymph Nodes
+      "Lymph Nodes: Cervical IA",
+      "Lymph Nodes: Cervical IB (L)",
+      "Lymph Nodes: Cervical IB (R)",
+      "Lymph Nodes: Cervical II (L)",
+      "Lymph Nodes: Cervical II (R)",
+      "Lymph Nodes: Cervical III (L)",
+      "Lymph Nodes: Cervical III (R)",
+      "Lymph Nodes: Cervical IVA (L)",
+      "Lymph Nodes: Cervical IVA (R)",
+      "Lymph Nodes: Cervical IVB (L)",
+      "Lymph Nodes: Cervical IVB (R)",
+      "Lymph Nodes: Cervical V (L)",
+      "Lymph Nodes: Cervical V (R)",
+      "Lymph Nodes: Cervical VIA",
+      "Lymph Nodes: Cervical VIB",
+      "Lymph Nodes: Cervical VIIA (L)",
+      "Lymph Nodes: Cervical VIIA (R)",
+      "Lymph Nodes: Cervical VIIB (L)",
+      "Lymph Nodes: Cervical VIIB (R)",
+      
+      // Female Thorax / Breast Model
+      "Thorax: Heart",
+      "Thorax: Lungs (L)",
+      "Thorax: Lungs (R)",
+      "Thorax: Breast (L)",
+      "Thorax: Breast (R)",
+      "Thorax: Esophagus",
+      "Thorax: Spinal Cord",
+      
+      // Male Thorax (Added basic structures)
+      "Thorax: Heart",
+      "Thorax: Lungs (L)",
+      "Thorax: Lungs (R)",
+      "Thorax: Esophagus",
+      "Thorax: Spinal Cord",
+      
+      // Heart Sub-Structures (Added common heart substructures)
+      "Heart: Left Ventricle",
+      "Heart: Right Ventricle",
+      "Heart: Left Atrium",
+      "Heart: Right Atrium",
+      
+      // SBRT Lung (Added common structures for SBRT)
+      "SBRT: Lung Tumor",
+      "SBRT: Proximal Bronchial Tree",
+      "SBRT: Great Vessels",
+      
+      // Pelvis Male (Common male pelvis structures)
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      
+      // Pelvis Female (Common female pelvis structures)
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Uterus",
+      "Pelvis: Ovaries (L)",
+      "Pelvis: Ovaries (R)",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)"
+    ]
   },
   {
     id: "therapanacea-adaptbox",
@@ -119,6 +222,14 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     },
     version: "1.0",
     releaseDate: "2023-09-01",
-    lastUpdated: "2024-04-26"
+    lastUpdated: "2024-04-26",
+    supportedStructures: [
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)"
+    ]
   }
 ];

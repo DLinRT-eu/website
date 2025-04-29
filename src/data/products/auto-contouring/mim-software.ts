@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
   {
     id: "mim-contour-protegeai",
@@ -54,6 +55,61 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     },
     version: "7.1",
     releaseDate: "2023-10-15",
-    lastUpdated: "2024-03-20"
+    lastUpdated: "2024-03-20",
+    supportedStructures: [
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerve (L)",
+      "Brain: Optic Nerve (R)",
+      "Brain: Eyes (L)",
+      "Brain: Eyes (R)",
+      "Brain: Lens (L)",
+      "Brain: Lens (R)",
+      "Brain: Cochlea (L)",
+      "Brain: Cochlea (R)",
+      "Brain: Hippocampus (L)",
+      "Brain: Hippocampus (R)",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Submandibular (L)",
+      "Head & Neck: Submandibular (R)",
+      "Head & Neck: Oral Cavity",
+      "Head & Neck: Larynx",
+      "Head & Neck: Thyroid",
+      "Head & Neck: Spinal Cord",
+      "Head & Neck: Brachial Plexus (L)",
+      "Head & Neck: Brachial Plexus (R)",
+      "Thorax: Heart",
+      "Thorax: Heart - Atrium (L)",
+      "Thorax: Heart - Atrium (R)",
+      "Thorax: Heart - Ventricle (L)",
+      "Thorax: Heart - Ventricle (R)",
+      "Thorax: Lungs (L)",
+      "Thorax: Lungs (R)",
+      "Thorax: Esophagus",
+      "Thorax: Trachea",
+      "Thorax: Spinal Cord",
+      "Abdomen: Liver",
+      "Abdomen: Kidneys (L)",
+      "Abdomen: Kidneys (R)",
+      "Abdomen: Spleen",
+      "Abdomen: Stomach",
+      "Abdomen: Duodenum",
+      "Abdomen: Small Bowel",
+      "Abdomen: Pancreas",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Sigmoid",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Penile Bulb",
+      "Pelvis: Uterus",
+      "Pelvis: Ovaries (L)",
+      "Pelvis: Ovaries (R)",
+      "Pelvis: Vagina"
+    ]
   }
 ];

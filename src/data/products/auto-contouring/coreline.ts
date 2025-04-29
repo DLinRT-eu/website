@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const CORELINE_PRODUCTS: ProductDetails[] = [
   {
     id: "coreline-aview-rt-acs",
@@ -54,6 +55,50 @@ export const CORELINE_PRODUCTS: ProductDetails[] = [
     },
     version: "3.0",
     releaseDate: "2023-04-20",
-    lastUpdated: "2024-01-15"
+    lastUpdated: "2024-01-15",
+    supportedStructures: [
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Hippocampus (L)",
+      "Brain: Hippocampus (R)",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerve (L)",
+      "Brain: Optic Nerve (R)",
+      "Brain: Eyes (L)",
+      "Brain: Eyes (R)",
+      "Brain: Lens (L)",
+      "Brain: Lens (R)",
+      "Brain: Cochlea (L)",
+      "Brain: Cochlea (R)",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Submandibular (L)",
+      "Head & Neck: Submandibular (R)",
+      "Head & Neck: Oral Cavity",
+      "Head & Neck: Larynx",
+      "Head & Neck: Thyroid",
+      "Head & Neck: Spinal Cord",
+      "Thorax: Heart",
+      "Thorax: Lungs (L)",
+      "Thorax: Lungs (R)",
+      "Thorax: Esophagus",
+      "Thorax: Trachea",
+      "Thorax: Spinal Cord",
+      "Abdomen: Liver",
+      "Abdomen: Kidneys (L)",
+      "Abdomen: Kidneys (R)",
+      "Abdomen: Spleen",
+      "Abdomen: Stomach",
+      "Abdomen: Duodenum",
+      "Abdomen: Small Bowel",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum", 
+      "Pelvis: Sigmoid",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Penile Bulb"
+    ]
   }
 ];

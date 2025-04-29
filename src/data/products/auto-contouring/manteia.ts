@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const MANTEIA_PRODUCTS: ProductDetails[] = [
   {
     id: "manteia-accucontour",
@@ -54,6 +55,43 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     },
     version: "1.5",
     releaseDate: "2023-06-20",
-    lastUpdated: "2024-02-10"
+    lastUpdated: "2024-02-10",
+    supportedStructures: [
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerve (L)",
+      "Brain: Optic Nerve (R)",
+      "Brain: Eyes (L)",
+      "Brain: Eyes (R)",
+      "Brain: Lens (L)",
+      "Brain: Lens (R)",
+      "Brain: Pituitary Gland",
+      "Brain: Cochlea (L)",
+      "Brain: Cochlea (R)",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Submandibular Glands (L)",
+      "Head & Neck: Submandibular Glands (R)",
+      "Head & Neck: Oral Cavity",
+      "Head & Neck: Larynx",
+      "Head & Neck: Spinal Cord",
+      "Thorax: Heart",
+      "Thorax: Lungs (L)",
+      "Thorax: Lungs (R)",
+      "Thorax: Esophagus",
+      "Thorax: Spinal Cord",
+      "Abdomen: Liver",
+      "Abdomen: Kidneys (L)",
+      "Abdomen: Kidneys (R)",
+      "Abdomen: Stomach",
+      "Abdomen: Duodenum",
+      "Abdomen: Small Bowel",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Bowel Bag"
+    ]
   }
 ];

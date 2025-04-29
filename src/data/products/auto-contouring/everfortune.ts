@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
   {
     id: "everfortune-rt-suite",
@@ -54,6 +55,35 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2023-07-15",
-    lastUpdated: "2024-03-10"
+    lastUpdated: "2024-03-10",
+    supportedStructures: [
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerves",
+      "Brain: Eyes",
+      "Brain: Lens",
+      "Brain: Pituitary",
+      "Head & Neck: Parotid Glands",
+      "Head & Neck: Submandibular Glands",
+      "Head & Neck: Oral Cavity",
+      "Head & Neck: Larynx",
+      "Head & Neck: Thyroid",
+      "Head & Neck: Spinal Cord",
+      "Thorax: Heart",
+      "Thorax: Lungs",
+      "Thorax: Esophagus",
+      "Thorax: Spinal Cord",
+      "Abdomen: Liver",
+      "Abdomen: Kidneys",
+      "Abdomen: Spleen",
+      "Abdomen: Stomach",
+      "Abdomen: Small Bowel",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Femoral Heads",
+      "Pelvis: Prostate",
+      "Pelvis: Uterus"
+    ]
   }
 ];

@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
     id: "philips-auto-contouring",
@@ -54,6 +55,16 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     version: "9.2",
     releaseDate: "2022-10-10",
-    lastUpdated: "2023-11-20"
+    lastUpdated: "2023-11-20",
+    supportedStructures: [
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Penile Bulb",
+      "Pelvis: Urethra"
+    ]
   }
 ];

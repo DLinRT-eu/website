@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
+// Structure data retrieved on 2024-04-29
 export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
   {
     id: "hura-hurart",
@@ -54,6 +55,40 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
     },
     version: "2.5",
     releaseDate: "2023-09-05",
-    lastUpdated: "2024-02-15"
+    lastUpdated: "2024-02-15",
+    supportedStructures: [
+      "Head & Neck: Brain",
+      "Head & Neck: Brainstem",
+      "Head & Neck: Spinal Cord",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Submandibular (L)",
+      "Head & Neck: Submandibular (R)",
+      "Head & Neck: Mandible",
+      "Head & Neck: Larynx",
+      "Head & Neck: Thyroid",
+      "Thorax: Heart",
+      "Thorax: Lungs (L)",
+      "Thorax: Lungs (R)",
+      "Thorax: Esophagus",
+      "Thorax: Trachea",
+      "Breast: Breast (L)",
+      "Breast: Breast (R)",
+      "Breast: Lung (L)",
+      "Breast: Lung (R)",
+      "Breast: Heart",
+      "Abdomen: Liver",
+      "Abdomen: Kidneys (L)",
+      "Abdomen: Kidneys (R)",
+      "Abdomen: Stomach",
+      "Abdomen: Spleen",
+      "Abdomen: Duodenum",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum",
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Prostate",
+      "Pelvis: Uterus"
+    ]
   }
 ];

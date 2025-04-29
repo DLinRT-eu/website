@@ -76,6 +76,12 @@ const Initiatives = () => {
           <p className="text-gray-500 mt-2">Try adjusting your filters to see more results.</p>
         </div>
       )}
+      
+      <footer className="mt-16 border-t border-gray-200 pt-6 pb-8 text-center">
+        <div className="text-sm text-gray-500">
+          &copy; Matteo Maspero, 2025
+        </div>
+      </footer>
     </div>
   );
 };

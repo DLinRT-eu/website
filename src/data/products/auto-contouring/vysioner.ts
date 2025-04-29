@@ -19,6 +19,17 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Brain Tumors", "Metastases"],
     keyFeatures: ["AI-powered brain tumor segmentation", "Fast processing", "Multiple tumor support"],
+    supportedStructures: [
+      "Brain: GTV (Gross Tumor Volume)",
+      "Brain: CTV (Clinical Target Volume)",
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerves",
+      "Brain: Eyes",
+      "Brain: Cochlea",
+      "Brain: Hippocampus",
+      "Brain: Brain Metastases"
+    ],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["CT", "MRI"],

@@ -19,6 +19,16 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered contouring", "Workflow integration", "Multiple anatomical sites"],
+    supportedStructures: [
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerves",
+      "Brain: Eyes",
+      "Brain: Cochlea",
+      "Brain: Hippocampus",
+      "Brain: GTV (Gross Tumor Volume)",
+      "Brain: Whole Brain"
+    ],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["MRI"],

@@ -9,6 +9,7 @@ export interface ProductDetails extends Product {
   diseaseTargeted?: string[];
   keyFeatures?: string[];
   suggestedUse?: string;
+  supportedStructures?: string[];
   technicalSpecifications?: {
     population?: string;
     input?: string[];

@@ -19,6 +19,13 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Automated contouring", "Cloud-based", "DICOM compatibility"],
+    supportedStructures: [
+      "Brain: Brainstem, Optic Chiasm, Optic Nerves, Eyes, Cochlea, Hippocampus",
+      "Head & Neck: Parotid Glands, Submandibular Glands, Mandible, Larynx, Oral Cavity, Pharyngeal Constrictor",
+      "Thorax: Heart, Lungs, Esophagus, Spinal Cord, Trachea",
+      "Breast: Breast Tissue, Chest Wall, Axillary Lymph Nodes",
+      "Pelvis: Bladder, Rectum, Bowel, Femoral Heads, Prostate, Seminal Vesicles"
+    ],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["CT", "MRI","CBCT"],

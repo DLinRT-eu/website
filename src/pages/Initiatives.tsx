@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import SEO from '@/components/SEO';
-import { Beaker } from 'lucide-react';
+import { Beaker, Database, Brain } from 'lucide-react';
 import dataService from '@/services/DataService';
 import { Initiative } from '@/types/initiative';
 import InitiativeFilters from '@/components/initiatives/InitiativeFilters';
@@ -18,7 +18,7 @@ const Initiatives = () => {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": "Research Initiatives in Radiotherapy",
-    "description": "Explore research initiatives, open datasets, and grand challenges in radiotherapy.",
+    "description": "Explore research initiatives, open datasets, model zoos, and grand challenges in radiotherapy.",
     "url": "https://dlinrt.eu/initiatives",
     "isPartOf": {
       "@type": "WebSite",
@@ -50,11 +50,15 @@ const Initiatives = () => {
     (initiative) => initiative.category === 'Open Dataset'
   );
 
+  const modelZoos = filteredInitiatives.filter(
+    (initiative) => initiative.category === 'Model Zoo'
+  );
+
   return (
     <div className="container mx-auto px-4 py-8">
       <SEO
         title="Research Initiatives"
-        description="Explore research initiatives, open datasets, and grand challenges in radiotherapy. Discover resources to accelerate innovation in radiation oncology research."
+        description="Explore research initiatives, open datasets, model zoos, and grand challenges in radiotherapy. Discover resources to accelerate innovation in radiation oncology research."
         canonical="https://dlinrt.eu/initiatives"
         structuredData={structuredData}
       />
@@ -65,7 +69,7 @@ const Initiatives = () => {
           <h1 className="text-3xl font-bold text-gray-900">Research Initiatives</h1>
         </div>
         <p className="text-lg text-gray-700 max-w-3xl">
-          Discover the latest research initiatives, grand challenges, and open datasets in the field of radiotherapy. 
+          Discover the latest research initiatives, grand challenges, open datasets, and model zoos in the field of radiotherapy. 
           These resources aim to accelerate innovation and collaboration in radiation oncology research.
         </p>
       </div>
@@ -84,6 +88,7 @@ const Initiatives = () => {
 
       <CategorySection title="Grand Challenges" initiatives={challenges} />
       <CategorySection title="Open Datasets" initiatives={datasets} />
+      <CategorySection title="Model Zoos" initiatives={modelZoos} icon={<Brain className="h-5 w-5 text-[#00A6D6]" />} />
 
       {filteredInitiatives.length === 0 && (
         <div className="text-center py-16">
@@ -102,3 +107,4 @@ const Initiatives = () => {
 };
 
 export default Initiatives;
+

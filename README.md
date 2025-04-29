@@ -59,7 +59,7 @@ You can also use GitHub Codespaces for development:
 
 ## License
 
-This project is licensed under the GNU GPL-3.0 License - see the LICENSE file for details. You are free to reuse and modify the code, provided you maintain the same license and provide proper attribution to the original authors.
+This project is licensed under the GNU AGPL-3.0 License - see the LICENSE file for details. You are free to reuse and modify the code, provided you maintain the same license and provide proper attribution to the original authors.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

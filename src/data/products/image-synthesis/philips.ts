@@ -12,7 +12,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     features: ["MR-only workflow", "Synthetic CT generation", "Radiation therapy planning", "Head and Neck specific"],
     category: "Image Synthesis",
     certification: "CE & FDA",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/philips.png",
+    logoUrl: "/logos/philips.png",
     website: "https://www.usa.philips.com/healthcare",
     anatomicalLocation: ["Head & Neck"],
     modality: "MRI",

@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
@@ -11,7 +12,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     features: ["MR-only workflow", "Machine-learning based", "Fast processing"],
     category: "Image Synthesis",
     certification: "CE",
-    logoUrl: "https://github.com/matteomaspero/dlinrt-products/public/logos/spectronic medical.jpg",
+    logoUrl: "/logos/spectronic medical.jpg",
     website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
     modality: "MRI",

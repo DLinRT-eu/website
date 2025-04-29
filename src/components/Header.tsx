@@ -1,6 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard } from 'lucide-react';
+import MobileNav from './MobileNav';
 
 const Header = () => {
   return (
@@ -14,6 +15,8 @@ const Header = () => {
             Deep Learning in Radiotherapy
           </Link>
         </div>
+        
+        <MobileNav />
         
         <nav className="hidden md:flex">
           <ul className="flex space-x-4">

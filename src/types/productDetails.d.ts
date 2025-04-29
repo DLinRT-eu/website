@@ -5,7 +5,7 @@ export interface ProductDetails extends Product {
   companyUrl?: string;
   productUrl?: string;
   subspeciality?: string;
-  modality?: string;
+  modality?: string | string[];
   diseaseTargeted?: string[];
   keyFeatures?: string[];
   suggestedUse?: string;

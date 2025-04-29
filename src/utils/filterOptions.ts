@@ -22,7 +22,7 @@ export const getAllOptions = (field: keyof Product): string[] => {
       return [...new Set(ALL_PRODUCTS.map(p => p.certification || '').filter(Boolean))].sort();
     case 'modality': {
       const modalitiesArray = ALL_PRODUCTS.map(p => 
-        typeof p.modality === 'string' ? [p.modality] : (p.modality || [])
+        Array.isArray(p.modality) ? p.modality : (p.modality ? [p.modality] : [])
       ).flat();
       return [...new Set(modalitiesArray)].filter(Boolean).sort();
     }

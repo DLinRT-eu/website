@@ -18,14 +18,13 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
-const BASE_URL = '/dlinrt-products/';
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter basename={BASE_URL}>
+      <BrowserRouter>
         <Header />
         <Routes>
           <Route path="/" element={<Index />} />

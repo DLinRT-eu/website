@@ -5,12 +5,14 @@ import path from "path";
 import { componentTagger } from "lovable-tagger";
 
 export default defineConfig(({ mode }) => ({
-  base: '/dlinrt-products/',
+  base: '/',
   server: {
     host: "::",
     port: 8080,
     allowedHosts: [
-      "7e82abf4-4ab2-47b7-8256-c0abaf5b5420.lovableproject.com"
+      "7e82abf4-4ab2-47b7-8256-c0abaf5b5420.lovableproject.com",
+      "dlinrt.eu",
+      "www.dlinrt.eu"
     ],
   },
   plugins: [

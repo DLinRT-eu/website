@@ -36,27 +36,33 @@ const Initiatives = () => {
   const datasets = filteredInitiatives.filter(
     (initiative) => initiative.category === 'Open Dataset'
   );
-  
-  const researchProjects = filteredInitiatives.filter(
-    (initiative) => initiative.category === 'Research Project'
-  );
 
   return (
     <div className="container mx-auto px-4 py-8">
       <Helmet>
         <title>Research Initiatives | DLinRT</title>
-        <meta name="description" content="Explore research initiatives, open datasets, and grand challenges in radiotherapy." />
+        <meta name="description" content="Explore grand challenges and open datasets in radiotherapy." />
       </Helmet>
 
-      <div className="mb-8">
+      <div className="mb-12">
         <div className="flex items-center gap-2 mb-4">
           <Beaker className="h-8 w-8 text-[#9b87f5]" />
           <h1 className="text-3xl font-bold text-gray-900">Research Initiatives</h1>
         </div>
-        <p className="text-lg text-gray-700 max-w-3xl">
-          Discover the latest research initiatives, grand challenges, and open datasets in the field of radiotherapy. 
-          These resources aim to accelerate innovation and collaboration in radiation oncology research.
-        </p>
+        
+        <div className="bg-gradient-to-r from-[#9b87f5]/10 to-transparent p-6 rounded-lg mb-8 border-l-4 border-[#9b87f5]">
+          <h2 className="text-xl font-semibold mb-3 text-gray-800">Advancing Radiotherapy Research</h2>
+          <p className="text-lg text-gray-700 mb-4 max-w-3xl">
+            Discover the latest grand challenges and open datasets in the field of radiotherapy. 
+            These resources are designed to foster collaboration, drive innovation, and accelerate 
+            progress in radiation oncology research.
+          </p>
+          <p className="text-gray-700 max-w-3xl">
+            By participating in these initiatives, researchers and clinicians can contribute to 
+            the collective effort to improve treatment outcomes, increase efficiency, and enhance 
+            the quality of care for cancer patients worldwide.
+          </p>
+        </div>
       </div>
 
       <InitiativeFilters 
@@ -73,7 +79,6 @@ const Initiatives = () => {
 
       <CategorySection title="Grand Challenges" initiatives={challenges} />
       <CategorySection title="Open Datasets" initiatives={datasets} />
-      <CategorySection title="Research Projects" initiatives={researchProjects} />
 
       {filteredInitiatives.length === 0 && (
         <div className="text-center py-16">

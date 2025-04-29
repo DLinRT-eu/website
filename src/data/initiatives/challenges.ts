@@ -46,7 +46,7 @@ export const CHALLENGE_INITIATIVES: Initiative[] = [
     name: "SynthRAD 2025",
     category: "Grand Challenge",
     description: "Upcoming challenge on advanced MR-to-CT synthesis for radiotherapy planning, building on the success of SynthRAD 2023.",
-    website: "https://synthrad.grand-challenge.org/",
+    website: "https://synthrad2025.grand-challenge.org/",
     organization: "MICCAI Society",
     startDate: "2025-01-01",
     status: "Upcoming",

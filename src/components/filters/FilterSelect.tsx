@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -25,6 +25,7 @@ export const FilterSelect = ({
   onValueChange,
 }: FilterSelectProps) => {
   const isMobile = useIsMobile();
+  const [isOpen, setIsOpen] = useState(false);
   
   // Format the display text to show selections or placeholder
   const displayText = selectedValues.length > 0
@@ -40,14 +41,14 @@ export const FilterSelect = ({
   };
 
   return (
-    <Select>
+    <Select open={isOpen} onOpenChange={setIsOpen}>
       <SelectTrigger 
         className={`w-[180px] ${selectedValues.length > 0 ? "text-black font-medium" : "text-gray-500"}`}
       >
         <SelectValue placeholder={displayText} />
       </SelectTrigger>
       <SelectContent 
-        className="bg-white border border-gray-200 shadow-lg w-[220px]"
+        className="bg-white border border-gray-200 shadow-lg w-[220px] z-50"
         align="start"
         position={isMobile ? "popper" : "item-aligned"}
         sideOffset={8}
@@ -70,7 +71,9 @@ export const FilterSelect = ({
                 <Checkbox 
                   checked={isSelected}
                   className={`h-4 w-4 ${isSelected ? "bg-[#00A6D6] border-[#00A6D6]" : "border-gray-300"}`}
-                  onCheckedChange={() => onValueChange(option)}
+                  onCheckedChange={() => {
+                    onValueChange(option);
+                  }}
                   id={`checkbox-${option}`}
                 />
                 <label 

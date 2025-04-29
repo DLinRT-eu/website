@@ -18,7 +18,7 @@ const FilterBar = ({ onFiltersChange, onFilterUpdate }: FilterBarProps) => {
         <span className="text-sm font-medium text-gray-700">Filters:</span>
       </div>
       
-      <div className={`grid ${isMobile ? 'grid-cols-2' : 'flex flex-wrap'} gap-4 w-full md:w-auto`}>
+      <div className={`grid ${isMobile ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-4'} gap-4 w-full`}>
         <FilterSelect
           placeholder="Select tasks"
           options={getAllOptions('category')}

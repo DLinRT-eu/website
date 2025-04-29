@@ -39,8 +39,8 @@ const ProductCard = ({
   // Format date if available
   const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString() : null;
   
-  // Use a placeholder image if the logo URL is invalid or missing
-  const logoSrc = logoUrl || "/placeholder.svg";
+  // Make sure logo URL starts with proper path
+  const logoSrc = logoUrl.startsWith('/') ? logoUrl : `/${logoUrl}`;
   
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">

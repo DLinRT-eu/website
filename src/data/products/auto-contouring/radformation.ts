@@ -3,27 +3,27 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const RADFORMATION_PRODUCTS: ProductDetails[] = [
   {
-    id: "radformation-autocontour",
-    name: "AutoContour",
-    company: "RadFormation",
+    id: "radformation-econtour",
+    name: "EZContour",
+    company: "Radformation",
     companyUrl: "https://radformation.com/",
-    productUrl: "https://www.radformation.com/autocontour/autocontour",
-    description: "AI-driven auto-contouring solution focused on streamlining the radiation therapy planning workflow with accurate organ segmentation.",
-    features: ["Deep learning algorithms", "Multiple anatomical sites", "Workflow integration"],
+    productUrl: "https://radformation.com/ezcontour",
+    description: "AI-driven contouring solution for radiation therapy planning, offering automated segmentation of organs at risk.",
+    features: ["AI segmentation", "Multiple anatomical sites", "TPS integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/radformation.svg",
-    website: "https://www.radformation.com/autocontour/autocontour",
-    anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis", "Brain"],
+    website: "https://radformation.com/ezcontour",
+    anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: ["AI-powered segmentation", "Clinical workflow integration", "Quality assurance tools"],
+    keyFeatures: ["AI-powered contouring", "Treatment planning integration", "Fast processing"],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["CT", "MRI"],
       inputFormat: ["DICOM"],
-      output: ["Structure sets", "Quality metrics"],
+      output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]
     },
     technology: {
@@ -43,9 +43,9 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2020",
-      distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 25,
-      payingCustomers: "Multiple clinical sites in North America and Europe",
+      distributionChannels: ["Direct sales", "Distribution partners"],
+      countriesPresent: 12,
+      payingCustomers: "Multiple clinical sites globally",
       researchUsers: "Research institutions"
     },
     pricing: {
@@ -53,7 +53,7 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
       basedOn: ["Annual license", "Number of patients"]
     },
     version: "3.0",
-    releaseDate: "2023-11-10",
-    lastUpdated: "2024-03-15"
+    releaseDate: "2023-11-01",
+    lastUpdated: "2024-03-12"
   }
 ];

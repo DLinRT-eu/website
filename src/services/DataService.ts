@@ -1,3 +1,4 @@
+
 import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS } from "@/data";
 import type { ProductDetails } from "@/types/productDetails";
 import type { CompanyDetails } from "@/types/company";
@@ -43,9 +44,15 @@ class DataService {
         product.certification || '')) {
         return false;
       }
-      if (filters.modalities?.length && !filters.modalities.includes(
-        product.modality || '')) {
-        return false;
+      if (filters.modalities?.length) {
+        // Handle both string and array modalities
+        const productModalities = Array.isArray(product.modality) 
+          ? product.modality 
+          : (product.modality ? [product.modality] : []);
+          
+        if (!productModalities.some(m => filters.modalities?.includes(m))) {
+          return false;
+        }
       }
       return true;
     });

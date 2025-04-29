@@ -8,8 +8,8 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     company: "AI Medical",
     companyUrl: "https://www.ai-medical.ch/",
     productUrl: "https://www.ai-medical.ch/jazz",
-    description: "AI-powered auto-contouring solution for radiation therapy planning with focus on enhanced accuracy and workflow efficiency.",
-    features: ["Deep learning contours", "Fast processing", "Multiple anatomical sites"],
+    description: "AI-powered auto-contouring solution for radiation therapy planning with focus on enhanced accuracy and workflow efficiency. Lesion tracking made easy - mark the lesion once, Jazz will remember it forever.",
+    features: ["Deep learning contours", "Fast processing", "Multiple anatomical sites", "Lesion tracking"],
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/ai-medical.png",
@@ -18,7 +18,12 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     modality: "MRI",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: ["AI-powered contouring", "Workflow integration", "Multiple anatomical sites"],
+    keyFeatures: [
+      "AI-powered contouring", 
+      "Workflow integration", 
+      "Multiple anatomical sites", 
+      "Lesion tracking - mark once, remember forever"
+    ],
     supportedStructures: [
       "Brain: Brainstem",
       "Brain: Optic Chiasm",
@@ -64,6 +69,6 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2023-05-15",
-    lastUpdated: "2024-02-20"
+    lastUpdated: "2024-04-29"
   }
 ];

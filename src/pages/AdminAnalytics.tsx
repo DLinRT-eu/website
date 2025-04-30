@@ -10,9 +10,24 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button";
 import { Calendar as CalendarIcon, UserCircle2, Eye, Clock } from "lucide-react";
 import { format } from "date-fns";
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, Line, LineChart } from "recharts";
+import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Legend, Line, LineChart, TooltipProps } from "recharts";
 import analyticsService from '@/services/AnalyticsService';
 import SEO from '@/components/SEO';
+
+// Define a type for our chart data point
+type ChartDataPoint = {
+  date: string;
+  visits: number;
+  uniqueVisitors: number;
+};
+
+// Define a type for the tooltip payload item
+interface ChartTooltipItem {
+  dataKey: string;
+  value: number;
+  color: string;
+  payload: ChartDataPoint;
+}
 
 const AdminAnalytics = () => {
   const navigate = useNavigate();
@@ -229,7 +244,7 @@ const AdminAnalytics = () => {
                         return (
                           <div className="rounded-lg border bg-background p-2 shadow-sm">
                             <div className="font-medium">{format(date, "MMM dd, yyyy")}</div>
-                            {payload.map((item: any) => (
+                            {payload.map((item: ChartTooltipItem) => (
                               <div
                                 key={item.dataKey}
                                 className="flex items-center gap-2"

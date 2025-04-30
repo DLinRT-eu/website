@@ -66,10 +66,10 @@ const TaskTaxonomy = ({ categories, onCategoryClick }: TaskTaxonomyProps) => {
 
   return (
     <div className="mb-10 p-5 bg-white rounded-lg border border-gray-100 shadow-sm">
-      <h3 className="font-medium text-lg text-gray-800 mb-4">Radiotherapy AI Tasks by Workflow Stage</h3>
+      <h3 className="font-medium text-lg text-gray-800 mb-4">Radiotherapy AI Tasks Across the Treatment Workflow</h3>
       
       <div className="mb-6">
-        <div className="flex flex-wrap items-start justify-center gap-2 relative">
+        <div className="flex flex-wrap items-start justify-center gap-4 relative">
           {/* Workflow line connecting the tasks */}
           <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-300 via-[#00A6D6] to-blue-300 hidden md:block" />
           
@@ -103,7 +103,7 @@ const TaskTaxonomy = ({ categories, onCategoryClick }: TaskTaxonomyProps) => {
       </div>
       
       <div className="text-xs text-gray-500 text-center mt-2">
-        Click on a category to filter products
+        Click on a category to explore products
       </div>
     </div>
   );

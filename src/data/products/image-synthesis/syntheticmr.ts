@@ -17,7 +17,7 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
     ],
     category: "Image Synthesis",
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/syntheticMRI.png",
     website: "https://syntheticmr.com/products/symri-neuro/",
     anatomicalLocation: ["Brain"],
     modality: "MRI",

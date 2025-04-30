@@ -3,28 +3,28 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
   {
-    id: "spectronic-mriplus",
+    id: "spectronic-mriplanner",
     name: "MRIplanner",
     company: "Spectronic Medical",
     companyUrl: "https://spectronicmedical.com",
     productUrl: "https://spectronicmedical.com/mriplanner",
-    description: "AI-based software solution that converts standard MR images to synthetic CT for MR-only radiotherapy planning, with integrated auto-segmentation.",
+    description: "AI-based software solution that converts standard MR images to synthetic CT for MR-only radiotherapy planning, with integrated auto-segmentation capabilities.",
     features: ["MR-only workflow", "Machine-learning based", "Fast processing", "Auto-segmentation"],
     category: "Image Synthesis",
     certification: "CE",
-    logoUrl: "/logos/spectronic-medical.jpg", // Corrected logo path with hyphen instead of space
+    logoUrl: "/logos/spectronic-medical.jpg",
     website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Prostate Cancer", "Brain Tumors", "Head and Neck Cancer"],
-    keyFeatures: ["Deep learning algorithms", "Clinical workflow integration", "High anatomical accuracy"],
+    keyFeatures: ["Deep learning algorithms", "Clinical workflow integration", "High anatomical accuracy", "Auto-segmentation capabilities"],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["Standard T1/T2 MRI"],
       inputFormat: ["DICOM"],
-      output: ["Synthetic CT"],
-      outputFormat: ["DICOM"]
+      output: ["Synthetic CT", "Structure sets"],
+      outputFormat: ["DICOM", "DICOM-RT"]
     },
     technology: {
       integration: ["TPS integration", "PACS integration"],
@@ -39,7 +39,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "Under review",
-      intendedUseStatement: "For generating synthetic CT from MRI for radiation therapy planning."
+      intendedUseStatement: "For generating synthetic CT from MRI for radiation therapy planning with auto-segmentation capabilities."
     },
     market: {
       onMarketSince: "2017",
@@ -55,6 +55,24 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     version: "3.2",
     releaseDate: "2023-07-10",
     lastUpdated: "2024-01-25",
+    supportedStructures: [
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerves",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Submandibular (L)",
+      "Head & Neck: Submandibular (R)",
+      "Head & Neck: Mandible",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum", 
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Penile Bulb"
+    ],
     lastRevised: "2000-01-01"
   }
 ];

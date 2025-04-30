@@ -57,6 +57,13 @@ const ProductCard = ({
      certification.toLowerCase().includes('fda') ? 'FDA Cleared' : 
      certification) : null;
   
+  // Handle logo load errors with better logging
+  const handleLogoError = () => {
+    console.error(`Failed to load logo for ${company} - ${name}: ${cleanLogoUrl}`);
+    setImageError(true);
+    setImageLoaded(true);
+  };
+
   // Log missing logos when in development
   useEffect(() => {
     if (imageError && process.env.NODE_ENV === 'development') {
@@ -78,11 +85,7 @@ const ProductCard = ({
               src={logoSrc}
               alt={`${name} logo`}
               className={`object-contain w-full h-full p-4 ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200`}
-              onError={(e) => {
-                console.error(`Failed to load image: ${cleanLogoUrl}`);
-                setImageError(true);
-                setImageLoaded(true);
-              }}
+              onError={handleLogoError}
               onLoad={() => setImageLoaded(true)}
             />
             {imageError && (

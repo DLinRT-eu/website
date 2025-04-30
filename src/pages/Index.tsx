@@ -4,8 +4,14 @@ import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
+import TaskTaxonomy from "@/components/TaskTaxonomy";
+import { getAllOptions } from "@/utils/filterOptions";
+import dataService from "@/services/DataService";
+import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -13,6 +19,20 @@ const Index = () => {
     "url": "https://dlinrt.eu",
     "logo": "https://dlinrt.eu/logo.png",
     "description": "Search and explore deep learning products in Radiotherapy"
+  };
+
+  // Get all products and count by category
+  const allProducts = dataService.getAllProducts();
+  const categories = getAllOptions('category');
+  const categoryCounts = categories.map(category => ({
+    name: category,
+    count: allProducts.filter(p => p.category === category).length
+  }));
+
+  // Handle category click by navigating to products page with filter
+  const handleCategoryClick = (category: string) => {
+    toast.info(`Exploring ${category} products`);
+    navigate(`/products?task=${encodeURIComponent(category)}`);
   };
 
   return (
@@ -24,7 +44,19 @@ const Index = () => {
         structuredData={structuredData}
       />
       <IntroSection />
+      
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+        <h2 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
+          Radiotherapy AI Tasks
+        </h2>
+        <TaskTaxonomy 
+          categories={categoryCounts} 
+          onCategoryClick={handleCategoryClick} 
+        />
+      </div>
+
       <NewsSection />
+      
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <footer className="mt-16 border-t border-gray-200 pt-8 pb-12">
           <div className="flex justify-center space-x-8">

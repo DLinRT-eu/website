@@ -6,9 +6,9 @@ import { useState, useEffect } from "react";
 import type { FilterState } from "@/types/filters";
 import SEO from "@/components/SEO";
 import { toast } from "sonner";
-import TaskTaxonomy from "@/components/TaskTaxonomy";
 import { getAllOptions } from "@/utils/filterOptions";
 import dataService from "@/services/DataService";
+import { useLocation } from "react-router-dom";
 
 const Products = () => {
   const [filtersActive, setFiltersActive] = useState(false);
@@ -19,16 +19,24 @@ const Products = () => {
     modalities: [],
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const location = useLocation();
 
   // Get all products and count by category
   const allProducts = dataService.getAllProducts();
-  const categories = getAllOptions('category');
-  const categoryCounts = categories.map(category => ({
-    name: category,
-    count: allProducts.filter(p => p.category === category).length
-  }));
-
   const totalProductCount = allProducts.length;
+
+  // Check URL parameters for initial filters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(location.search);
+    const taskParam = urlParams.get('task');
+    
+    if (taskParam) {
+      const newFilters = { ...currentFilters, tasks: [taskParam] };
+      setCurrentFilters(newFilters);
+      setFiltersActive(true);
+      toast.info(`Showing ${taskParam} products`);
+    }
+  }, [location.search]);
 
   useEffect(() => {
     // Check if preview is loaded
@@ -109,12 +117,6 @@ const Products = () => {
             {filtersActive || searchQuery ? 'Reset filters' : 'Showing all products'}
           </button>
         </div>
-        
-        <TaskTaxonomy categories={categoryCounts} onCategoryClick={(cat) => {
-          const newFilters = {...currentFilters, tasks: [cat]};
-          handleFilterUpdate(newFilters);
-          toast.info(`Filtering by ${cat} products`);
-        }} />
         
         <FilterBar 
           onFiltersChange={setFiltersActive} 

@@ -110,6 +110,12 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
         onSortChange={handleSortChange}
         onDirectionChange={handleDirectionChange}
       />
+      
+      {/* Product count display */}
+      <div className="mb-4 text-sm text-gray-500">
+        Showing {sortedProducts.length} {sortedProducts.length === 1 ? 'product' : 'products'}
+        {(filters && (filters.tasks.length > 0 || filters.locations.length > 0 || filters.modalities.length > 0 || filters.certifications.length > 0)) || searchQuery ? ' based on your filters' : ''}
+      </div>
 
       {sortedProducts.length === 0 ? (
         <div className="text-center py-12">

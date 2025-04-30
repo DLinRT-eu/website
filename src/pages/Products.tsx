@@ -6,6 +6,9 @@ import { useState, useEffect } from "react";
 import type { FilterState } from "@/types/filters";
 import SEO from "@/components/SEO";
 import { toast } from "sonner";
+import TaskTaxonomy from "@/components/TaskTaxonomy";
+import { getAllOptions } from "@/utils/filterOptions";
+import dataService from "@/services/DataService";
 
 const Products = () => {
   const [filtersActive, setFiltersActive] = useState(false);
@@ -16,6 +19,16 @@ const Products = () => {
     modalities: [],
   });
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Get all products and count by category
+  const allProducts = dataService.getAllProducts();
+  const categories = getAllOptions('category');
+  const categoryCounts = categories.map(category => ({
+    name: category,
+    count: allProducts.filter(p => p.category === category).length
+  }));
+
+  const totalProductCount = allProducts.length;
 
   useEffect(() => {
     // Check if preview is loaded
@@ -83,7 +96,12 @@ const Products = () => {
       <SearchHeader onSearch={handleSearch} />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-semibold text-gray-900">Featured Products</h2>
+          <h2 className="text-xl font-semibold text-gray-900">
+            Featured Products
+            <span className="ml-2 text-sm font-normal text-gray-500">
+              ({totalProductCount} total products)
+            </span>
+          </h2>
           <button 
             onClick={handleResetFilters}
             className="text-sm text-gray-500 hover:text-[#00A6D6] transition-colors cursor-pointer"
@@ -91,6 +109,12 @@ const Products = () => {
             {filtersActive || searchQuery ? 'Reset filters' : 'Showing all products'}
           </button>
         </div>
+        
+        <TaskTaxonomy categories={categoryCounts} onCategoryClick={(cat) => {
+          const newFilters = {...currentFilters, tasks: [cat]};
+          handleFilterUpdate(newFilters);
+        }} />
+        
         <FilterBar 
           onFiltersChange={setFiltersActive} 
           onFilterUpdate={handleFilterUpdate}

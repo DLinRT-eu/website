@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { ExternalLink, Calendar, Tag } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState } from 'react';
 
 interface ProductCardProps {
   id?: string;
@@ -39,8 +40,14 @@ const ProductCard = ({
   // Format date if available
   const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString() : null;
   
+  // Handle image error state
+  const [imageError, setImageError] = useState(false);
+  
   // Make sure logo URL starts with proper path and remove any spaces
-  const logoSrc = logoUrl ? (logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`) : '/placeholder.svg';
+  const cleanLogoUrl = logoUrl ? (logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`) : '/placeholder.svg';
+  
+  // Use placeholder if error or path doesn't exist
+  const logoSrc = imageError ? '/placeholder.svg' : cleanLogoUrl;
   
   // Normalize certification display
   const displayCertification = certification ? 
@@ -58,9 +65,8 @@ const ProductCard = ({
               alt={`${name} logo`}
               className="object-contain w-full h-full p-4"
               onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = "/placeholder.svg";
-                console.error(`Failed to load image: ${logoSrc}`);
+                console.error(`Failed to load image: ${cleanLogoUrl}`);
+                setImageError(true);
               }}
             />
           </AspectRatio>

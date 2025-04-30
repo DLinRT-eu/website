@@ -8,7 +8,6 @@ import { AIRS_MEDICAL_PRODUCTS } from "./airs-medical";
 import { UNITED_IMAGING_PRODUCTS } from "./united-imaging";
 import { SUBTLE_MEDICAL_PRODUCTS } from "./subtle-medical";
 import { ACCURAY_PRODUCTS } from "./accuray";
-import { ELEKTA_PRODUCTS } from "./elekta";
 
 export const IMAGE_ENHANCEMENT_PRODUCTS: ProductDetails[] = [
   ...PHILIPS_PRODUCTS,
@@ -18,6 +17,5 @@ export const IMAGE_ENHANCEMENT_PRODUCTS: ProductDetails[] = [
   ...AIRS_MEDICAL_PRODUCTS,
   ...UNITED_IMAGING_PRODUCTS,
   ...SUBTLE_MEDICAL_PRODUCTS,
-  ...ACCURAY_PRODUCTS,
-  ...ELEKTA_PRODUCTS
+  ...ACCURAY_PRODUCTS
 ];

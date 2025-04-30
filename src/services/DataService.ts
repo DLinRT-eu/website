@@ -1,4 +1,3 @@
-
 import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS, ALL_INITIATIVES } from "@/data";
 import type { ProductDetails } from "@/types/productDetails";
 import type { CompanyDetails } from "@/types/company";
@@ -13,16 +12,16 @@ class DataService {
   // Product methods
   getAllProducts(): ProductDetails[] {
     // Only return products with regulatory approval (CE or FDA)
-    return ALL_PRODUCTS.filter(product => this.hasRegulatoryApproval(product));
+    return ALL_PRODUCTS.filter(product => this.hasRegulatoryApproval(product) && this.containsAIKeywords(product));
   }
 
   getProductById(id: string): ProductDetails | undefined {
-    return ALL_PRODUCTS.find(product => product.id === id && this.hasRegulatoryApproval(product));
+    return ALL_PRODUCTS.find(product => product.id === id && this.hasRegulatoryApproval(product) && this.containsAIKeywords(product));
   }
 
   getProductsByCategory(category: string): ProductDetails[] {
     return ALL_PRODUCTS.filter(product => 
-      product.category === category && this.hasRegulatoryApproval(product)
+      product.category === category && this.hasRegulatoryApproval(product) && this.containsAIKeywords(product)
     );
   }
 
@@ -31,14 +30,14 @@ class DataService {
     if (!company) return [];
     
     return ALL_PRODUCTS.filter(product => 
-      company.productIds.includes(product.id || '') && this.hasRegulatoryApproval(product)
+      company.productIds.includes(product.id || '') && this.hasRegulatoryApproval(product) && this.containsAIKeywords(product)
     );
   }
 
   filterProducts(filters: FilterState): ProductDetails[] {
     return ALL_PRODUCTS.filter((product: ProductDetails) => {
-      // First check regulatory approval
-      if (!this.hasRegulatoryApproval(product)) {
+      // First check regulatory approval and AI keywords
+      if (!this.hasRegulatoryApproval(product) || !this.containsAIKeywords(product)) {
         return false;
       }
       
@@ -100,18 +99,15 @@ class DataService {
                  (product.regulatory?.ce?.status === 'Approved' || 
                   product.regulatory?.ce?.status === 'Certified');
     
-    // Check if product contains AI/deep learning keywords
-    const hasAIKeywords = this.containsAIKeywords(product);
-    
-    return (hasFDA || hasCE) && hasAIKeywords;
+    return hasFDA || hasCE;
   }
   
   // Helper method to check if product description contains AI keywords
-  private containsAIKeywords(product: ProductDetails): boolean {
+  public containsAIKeywords(product: ProductDetails): boolean {
     const descriptionLower = product.description.toLowerCase();
     const featuresLower = product.features.map(f => f.toLowerCase());
     
-    const aiKeywords = ['artificial intelligence', 'deep learning', ' ai ', 'ai-', '-ai ', 'ai.', 'deep neural', 'machine learning'];
+    const aiKeywords = ['artificial intelligence', 'deep learning', ' ai ', 'ai-', '-ai ', 'ai.', 'neural', 'machine learning', 'ai-powered', 'ai powered'];
     
     // Check in description
     if (aiKeywords.some(keyword => descriptionLower.includes(keyword))) {
@@ -129,6 +125,11 @@ class DataService {
     if (product.keyFeatures && product.keyFeatures.some(kf => 
       aiKeywords.some(keyword => kf.toLowerCase().includes(keyword))
     )) {
+      return true;
+    }
+    
+    // Special case for Image Synthesis category - these are all AI-based
+    if (product.category === "Image Synthesis") {
       return true;
     }
     
@@ -154,7 +155,7 @@ class DataService {
       ...company,
       products: ALL_PRODUCTS.filter(product => 
         company.productIds.includes(product.id || '') && 
-        this.hasRegulatoryApproval(product)
+        this.hasRegulatoryApproval(product) && this.containsAIKeywords(product)
       )
     })) as CompanyDetails[];
   }

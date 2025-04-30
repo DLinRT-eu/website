@@ -40,8 +40,28 @@ export const getAllOptions = (field: keyof Product): string[] => {
         return a.localeCompare(b);
       });
     }
-    case 'anatomicalLocation':
-      return [...new Set(ALL_PRODUCTS.flatMap(p => p.anatomicalLocation || []))].sort();
+    case 'anatomicalLocation': {
+      // Get all unique anatomical locations
+      const allLocations = ALL_PRODUCTS.flatMap(p => p.anatomicalLocation || []);
+      
+      // Process and normalize locations
+      const processedLocations = allLocations
+        .map(location => {
+          // Merge "Head" or "Neck" into "Head & Neck"
+          if (location === "Head" || location === "Neck") {
+            return "Head & Neck";
+          }
+          // Filter out "Muscoloskeletal" and "Spine"
+          if (location === "Muscoloskeletal" || location === "Spine") {
+            return null;
+          }
+          return location;
+        })
+        .filter(Boolean); // Remove null values
+      
+      // Get unique locations after processing
+      return [...new Set(processedLocations)].sort();
+    }
     case 'company':
       return [...new Set(ALL_PRODUCTS.map(p => p.company))].sort();
     case 'certification':

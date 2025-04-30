@@ -5,24 +5,24 @@ import { ProductDetails } from "@/types/productDetails";
 export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
   {
     id: "therapanacea-annotate",
-    name: "ANote",
+    name: "Annotate",
     company: "Therapanacea",
     companyUrl: "https://www.therapanacea.eu/",
-    productUrl: "https://www.therapanacea.eu/our-products/anote/",
-    description: "AI-powered auto-segmentation solution for radiation therapy planning with advanced deep learning algorithms.",
-    features: ["Deep learning segmentation", "Multiple anatomical sites", "Fast processing"],
+    productUrl: "https://www.therapanacea.eu/our-products/annotate/",
+    description: "AI-powered auto-segmentation solution for radiation therapy planning with advanced deep learning algorithms for CT, MRI, and CBCT.",
+    features: ["Deep learning segmentation", "Multiple anatomical sites", "Fast processing", "Multi-modality support"],
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/therapanacea.png",
-    website: "https://www.therapanacea.eu/our-products/anote/",
+    website: "https://www.therapanacea.eu/our-products/annotate/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT", "MRI", "CBCT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: ["AI-powered segmentation", "Clinical workflow integration", "Rapid processing"],
+    keyFeatures: ["AI-powered segmentation", "Clinical workflow integration", "Rapid processing", "Multi-modality support"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT"],
+      input: ["CT", "MRI", "CBCT"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]
@@ -135,6 +135,61 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
       "Abdomen: Small Bowel",
       "Abdomen: Spleen"
     ],
-    lastRevised: "2000-01-01"
+    lastRevised: "2024-04-30"
+  },
+  {
+    id: "therapanacea-adaptbox",
+    name: "AdaptBox",
+    company: "Therapanacea",
+    companyUrl: "https://www.therapanacea.eu/",
+    productUrl: "https://www.therapanacea.eu/our-products/adaptbox/",
+    description: "AI-powered adaptive radiation therapy solution that uses CBCT imaging for real-time treatment plan adaptation and dose monitoring.",
+    features: ["CBCT-based", "Adaptive planning", "Dose accumulation", "Deep learning algorithms"],
+    category: "Auto-Contouring",
+    certification: "CE",
+    logoUrl: "/logos/therapanacea.png",
+    website: "https://www.therapanacea.eu/our-products/adaptbox/",
+    anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
+    modality: "CBCT",
+    subspeciality: "Radiation Oncology",
+    diseaseTargeted: ["Multiple Cancer Types"],
+    keyFeatures: ["CBCT image processing", "Daily plan adaptation", "Dose monitoring", "Clinical workflow integration"],
+    technicalSpecifications: {
+      population: "Adult patients",
+      input: ["CBCT", "CT", "Dose distributions"],
+      inputFormat: ["DICOM", "DICOM-RT"],
+      output: ["Structure sets", "Adapted plans", "Accumulated dose"],
+      outputFormat: ["DICOM-RT"]
+    },
+    technology: {
+      integration: ["TPS integration", "R&V integration"],
+      deployment: ["Cloud-based", "On-premises"],
+      triggerForAnalysis: "Daily treatment sessions",
+      processingTime: "5-10 minutes per case"
+    },
+    regulatory: {
+      ce: {
+        status: "Certified",
+        class: "IIa",
+        type: "Medical Device"
+      },
+      fda: "Under review",
+      intendedUseStatement: "For adaptive replanning and dose monitoring during radiation therapy."
+    },
+    market: {
+      onMarketSince: "2022",
+      distributionChannels: ["Direct sales"],
+      countriesPresent: 8,
+      payingCustomers: "Leading cancer centers in Europe",
+      researchUsers: "Research institutions"
+    },
+    pricing: {
+      model: ["Subscription", "Pay-per-use"],
+      basedOn: ["Annual license", "Number of patients"]
+    },
+    version: "1.5",
+    releaseDate: "2023-06-15",
+    lastUpdated: "2024-02-28",
+    lastRevised: "2024-04-30"
   }
 ];

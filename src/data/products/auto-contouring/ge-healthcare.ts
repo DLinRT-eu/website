@@ -14,7 +14,7 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     certification: "CE & FDA",
     logoUrl: "/logos/ge_healthcare.png",
     website: "https://www.gehealthcare.com/products/advanced-visualization/advanced-visualization/auto-segmentation",
-    anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
+    anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
@@ -55,6 +55,6 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     version: "4.0",
     releaseDate: "2023-03-10",
     lastUpdated: "2024-01-20",
-    lastRevised: "2000-01-01"
+    lastRevised: "2024-04-30"
   }
 ];

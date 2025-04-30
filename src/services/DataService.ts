@@ -51,9 +51,14 @@ class DataService {
       if (filters.tasks?.length && !filters.tasks.includes(product.category)) {
         return false;
       }
-      if (filters.locations?.length && !product.anatomicalLocation?.some(loc => 
-        filters.locations?.includes(loc))) {
-        return false;
+      if (filters.locations?.length) {
+        // Normalize anatomical locations: merge Head and Neck into Head & Neck
+        const normalizedLocations = this.normalizeAnatomicalLocations(product.anatomicalLocation || []);
+        
+        if (!normalizedLocations.some(loc => 
+          filters.locations?.includes(loc))) {
+          return false;
+        }
       }
       
       // Standardize certification check - handle both "CE" and "CE Mark" as the same
@@ -77,6 +82,21 @@ class DataService {
       }
       return true;
     });
+  }
+  
+  // Helper method to normalize anatomical locations
+  private normalizeAnatomicalLocations(locations: string[]): string[] {
+    return locations.map(location => {
+      // Merge "Head" or "Neck" into "Head & Neck"
+      if (location === "Head" || location === "Neck") {
+        return "Head & Neck";
+      }
+      // Filter out "Muscoloskeletal" and "Spine"
+      if (location === "Muscoloskeletal" || location === "Spine") {
+        return "";
+      }
+      return location;
+    }).filter(Boolean); // Remove empty strings
   }
   
   // Helper method to standardize certification names

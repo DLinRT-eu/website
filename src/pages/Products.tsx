@@ -113,6 +113,7 @@ const Products = () => {
         <TaskTaxonomy categories={categoryCounts} onCategoryClick={(cat) => {
           const newFilters = {...currentFilters, tasks: [cat]};
           handleFilterUpdate(newFilters);
+          toast.info(`Filtering by ${cat} products`);
         }} />
         
         <FilterBar 

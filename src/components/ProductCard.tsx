@@ -2,9 +2,10 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ExternalLink, Calendar, Tag } from "lucide-react";
+import { ExternalLink, Calendar, Tag, AlertCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { toast } from "sonner";
 
 interface ProductCardProps {
   id?: string;
@@ -42,6 +43,7 @@ const ProductCard = ({
   
   // Handle image error state
   const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   
   // Make sure logo URL starts with proper path and remove any spaces
   const cleanLogoUrl = logoUrl ? (logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`) : '/placeholder.svg';
@@ -55,20 +57,42 @@ const ProductCard = ({
      certification.toLowerCase().includes('fda') ? 'FDA Cleared' : 
      certification) : null;
   
+  // Log missing logos when in development
+  useEffect(() => {
+    if (imageError && process.env.NODE_ENV === 'development') {
+      console.warn(`Logo not found for ${company} - ${name}: ${cleanLogoUrl}`);
+    }
+  }, [imageError, company, name, cleanLogoUrl]);
+
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">
       <Link to={`/product/${id}`} className="block">
         <div className="mb-6 bg-gray-50 rounded-lg overflow-hidden">
-          <AspectRatio ratio={16/9} className="bg-white">
+          <AspectRatio ratio={16/9} className="bg-white relative">
+            {!imageLoaded && !imageError && (
+              <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
+                <div className="w-8 h-8 border-4 border-t-[#00A6D6] border-gray-200 rounded-full animate-spin"></div>
+              </div>
+            )}
             <img
               src={logoSrc}
               alt={`${name} logo`}
-              className="object-contain w-full h-full p-4"
+              className={`object-contain w-full h-full p-4 ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200`}
               onError={(e) => {
                 console.error(`Failed to load image: ${cleanLogoUrl}`);
                 setImageError(true);
+                setImageLoaded(true);
               }}
+              onLoad={() => setImageLoaded(true)}
             />
+            {imageError && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
+                <div className="text-gray-400 text-sm text-center">
+                  <AlertCircle className="w-6 h-6 mx-auto mb-1" />
+                  <div>{company}</div>
+                </div>
+              </div>
+            )}
           </AspectRatio>
         </div>
         

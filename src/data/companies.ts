@@ -35,7 +35,13 @@ export const COMPANIES: CompanyDetails[] = [
     "name": "GE Healthcare",
     "description": "Leading provider of medical imaging and information technologies.",
     "website": "https://www.gehealthcare.com",
-    "productIds": ["ge-auto-segmentation"]
+    "productIds": [
+      "ge-auto-segmentation", 
+      "ge-truefidelity-pro", 
+      "ge-air-recon-dl",
+      "ge-dlip-ct",
+      "ge-air-recon-dl-enhancement"
+    ]
   },
   {
     "id": "hura-imaging",
@@ -88,7 +94,11 @@ export const COMPANIES: CompanyDetails[] = [
       "philips-auto-contouring",
       "philips-mrcat-head-neck",
       "philips-mrcat-brain",
-      "philips-mrcat-pelvis"
+      "philips-mrcat-pelvis",
+      "philips-smartct-ai-reconstruction",
+      "philips-compressed-sense",
+      "philips-intellispace-ai-enhancement",
+      "philips-smartdose-ct-enhancement"
     ]
   },
   {
@@ -110,7 +120,15 @@ export const COMPANIES: CompanyDetails[] = [
     "name": "Siemens Healthineers",
     "description": "Pioneer in medical technology and digital health solutions.",
     "website": "https://www.siemens-healthineers.com",
-    "productIds": ["siemens-syngo-ct", "siemens-ai-rad-companion", "directorgans"]
+    "productIds": [
+      "siemens-syngo-ct", 
+      "siemens-ai-rad-companion", 
+      "directorgans",
+      "siemens-admire",
+      "siemens-deep-resolve",
+      "siemens-dual-energy-optimizer",
+      "siemens-clara-train-image"
+    ]
   },
   {
     "id": "spectronic-medical",
@@ -146,5 +164,68 @@ export const COMPANIES: CompanyDetails[] = [
     "description": "Chinese company specializing in AI solutions for radiation oncology.",
     "website": "http://www.wisdomtech.com.cn/",
     "productIds": ["wisdom-deep-contour"]
+  },
+  {
+    "id": "canon-medical",
+    "name": "Canon Medical Systems",
+    "description": "Global medical equipment manufacturer with focus on AI-powered imaging systems.",
+    "website": "https://global.medical.canon/",
+    "productIds": [
+      "canon-aice-ct", 
+      "canon-aice-mr",
+      "canon-advanced-vis-ai"
+    ]
+  },
+  {
+    "id": "airs-medical",
+    "name": "Airs Medical",
+    "description": "AI company focused on enhancing medical imaging efficiency and quality.",
+    "website": "https://airsmed.com/",
+    "productIds": [
+      "airs-swiftmr", 
+      "airs-ct-clarity"
+    ]
+  },
+  {
+    "id": "united-imaging",
+    "name": "United Imaging",
+    "description": "Global manufacturer of advanced medical imaging equipment with AI solutions.",
+    "website": "https://www.united-imaging.com/",
+    "productIds": [
+      "united-uai-vision-recon", 
+      "united-hd-tof",
+      "united-ucs-ai",
+      "united-uvision-ai"
+    ]
+  },
+  {
+    "id": "subtle-medical",
+    "name": "Subtle Medical",
+    "description": "AI company focused on enhancing medical imaging efficiency and quality.",
+    "website": "https://subtlemedical.com/",
+    "productIds": [
+      "subtle-mr", 
+      "subtle-pet",
+      "subtle-gad"
+    ]
+  },
+  {
+    "id": "elekta",
+    "name": "Elekta",
+    "description": "Provider of precision radiation medicine solutions with AI-enhanced imaging.",
+    "website": "https://www.elekta.com/",
+    "productIds": [
+      "elekta-monaco-hd"
+    ]
+  },
+  {
+    "id": "accuray",
+    "name": "Accuray",
+    "description": "Developer of radiotherapy systems with AI-enhanced imaging capabilities.",
+    "website": "https://www.accuray.com/",
+    "productIds": [
+      "accuray-clearrt", 
+      "accuray-synchrony-image"
+    ]
   }
 ];

@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Beaker, Brain, Cpu, FileImage, FlaskConical, LayoutGrid, Microscope, Waves, ZoomIn } from 'lucide-react';
+import { Brain, FileImage, LayoutGrid, Microscope, Monitor, Waves, ZoomIn } from 'lucide-react';
 
 interface CategoryCount {
   name: string;
@@ -16,33 +16,33 @@ interface TaskTaxonomyProps {
 
 // Map for category icons and descriptions
 const categoryInfo: Record<string, { icon: React.ElementType, description: string, color: string }> = {
-  "Auto-Contouring": { 
-    icon: LayoutGrid, 
-    description: "AI-driven automatic segmentation of organs at risk and target volumes", 
-    color: "bg-blue-100" 
+  "Reconstruction": { 
+    icon: Waves, 
+    description: "Advanced algorithms for reconstructing high-quality images from raw scanner data", 
+    color: "bg-purple-100" 
+  },
+  "Image Enhancement": { 
+    icon: ZoomIn, 
+    description: "DL-powered improvement of image quality, reducing noise and artifacts", 
+    color: "bg-yellow-100" 
   },
   "Image Synthesis": { 
     icon: FileImage, 
     description: "Creation of synthetic images for treatment planning, enabling MR-only workflows", 
     color: "bg-green-100" 
   },
-  "Image Enhancement": { 
-    icon: ZoomIn, 
-    description: "AI-powered improvement of image quality, reducing noise and artifacts", 
-    color: "bg-yellow-100" 
-  },
-  "Reconstruction": { 
-    icon: Waves, 
-    description: "Advanced algorithms for reconstructing high-quality images from raw scanner data", 
-    color: "bg-purple-100" 
+  "Auto-Contouring": { 
+    icon: LayoutGrid, 
+    description: "Deep learning-driven automatic segmentation of organs at risk and target volumes", 
+    color: "bg-blue-100" 
   },
   "Treatment Planning": { 
     icon: Brain, 
-    description: "AI-assisted creation and optimization of radiation treatment plans", 
+    description: "DL-assisted creation and optimization of radiation treatment plans", 
     color: "bg-pink-100" 
   },
   "Clinical Prediction": { 
-    icon: Cpu, 
+    icon: Microscope, 
     description: "Machine learning models that predict treatment outcomes and complications", 
     color: "bg-orange-100" 
   },
@@ -50,23 +50,43 @@ const categoryInfo: Record<string, { icon: React.ElementType, description: strin
     icon: Microscope, 
     description: "Automatic alignment of images from different modalities or timepoints", 
     color: "bg-indigo-100" 
+  },
+  "Performance Monitor": { 
+    icon: Monitor, 
+    description: "Tools for quality assurance and performance monitoring in radiotherapy", 
+    color: "bg-gray-100" 
   }
 };
 
 // Default icon for categories not in our map
 const defaultCategoryInfo = {
-  icon: Beaker,
-  description: "AI technologies for radiotherapy applications",
+  icon: Brain,
+  description: "Technologies for radiotherapy applications",
   color: "bg-gray-100"
 };
 
 const TaskTaxonomy = ({ categories, onCategoryClick }: TaskTaxonomyProps) => {
-  // Sort categories by count (descending)
-  const sortedCategories = [...categories].sort((a, b) => b.count - a.count);
+  // Sort categories based on specified order
+  const categoryOrder = [
+    "Reconstruction",
+    "Image Enhancement",
+    "Image Synthesis",
+    "Auto-Contouring",
+    "Treatment Planning",
+    "Clinical Prediction",
+    "Registration",
+    "Performance Monitor"
+  ];
+  
+  const sortedCategories = [...categories].sort((a, b) => {
+    const indexA = categoryOrder.indexOf(a.name);
+    const indexB = categoryOrder.indexOf(b.name);
+    return indexA - indexB;
+  });
 
   return (
     <div className="mb-10 p-5 bg-white rounded-lg border border-gray-100 shadow-sm">
-      <h3 className="font-medium text-lg text-gray-800 mb-4">Radiotherapy AI Tasks Across the Treatment Workflow</h3>
+      <h3 className="font-medium text-lg text-gray-800 mb-4">Tasks Across the Patient Workflow</h3>
       
       <div className="mb-6">
         <div className="flex flex-wrap items-start justify-center gap-4 relative">

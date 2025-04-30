@@ -8,7 +8,7 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
     company: "SyntheticMR",
     companyUrl: "https://syntheticmr.com/",
     productUrl: "https://syntheticmr.com/products/symri-neuro/",
-    description: "AI-powered MR image synthesis solution that generates multiple contrasts from a single scan, enabling synthetic CT generation for radiation therapy planning in the brain.",
+    description: "Deep learning-powered MR image synthesis solution that generates multiple contrasts from a single scan, enabling synthetic CT generation for radiation therapy planning in the brain.",
     features: [
       "MR image synthesis",
       "Multiple contrasts from single scan",
@@ -24,7 +24,7 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
     subspeciality: "Neuroradiology",
     diseaseTargeted: ["Brain Tumors", "Multiple Sclerosis", "Neurodegenerative Disorders"],
     keyFeatures: [
-      "AI-based synthetic contrast generation",
+      "Deep learning-based synthetic contrast generation",
       "Synthetic CT capabilities",
       "Quantitative tissue mapping",
       "Reduced scan time",
@@ -66,6 +66,6 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
     version: "3.0",
     releaseDate: "2023-09-01",
     lastUpdated: "2024-03-15",
-    lastRevised: "2023-12-10"
+    lastRevised: "2024-04-30"
   }
 ];

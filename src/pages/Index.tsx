@@ -39,16 +39,13 @@ const Index = () => {
     <div className="min-h-screen bg-white">
       <SEO 
         title="Deep Learning in Radiotherapy"
-        description="Search and explore AI products in Radiotherapy - the leading database for deep learning solutions in radiation oncology."
+        description="Search and explore DL products in Radiotherapy - the leading database for deep learning solutions in radiation oncology."
         canonical="https://dlinrt.eu/"
         structuredData={structuredData}
       />
       <IntroSection />
       
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
-        <h2 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-          Radiotherapy AI Tasks
-        </h2>
         <TaskTaxonomy 
           categories={categoryCounts} 
           onCategoryClick={handleCategoryClick} 

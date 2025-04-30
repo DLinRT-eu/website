@@ -1,13 +1,15 @@
 
 import React, { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
-import { Search, Building } from 'lucide-react';
+import { Search, Building, ArrowDownAZ, ArrowDownZA } from 'lucide-react';
 import CompanyCard from '@/components/CompanyCard';
 import dataService from '@/services/DataService';
 import SEO from '@/components/SEO';
+import { Button } from '@/components/ui/button';
 
 const Companies = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [sortAscending, setSortAscending] = useState(true);
 
   // Get companies and their products, filtering out companies with no products
   const companies = useMemo(() => {
@@ -55,6 +57,18 @@ const Companies = () => {
     );
   }, [companies, searchQuery]);
 
+  // Sort companies based on name
+  const sortedCompanies = useMemo(() => {
+    return [...filteredCompanies].sort((a, b) => {
+      const comparison = a.name.localeCompare(b.name);
+      return sortAscending ? comparison : -comparison;
+    });
+  }, [filteredCompanies, sortAscending]);
+
+  const toggleSortDirection = () => {
+    setSortAscending(prev => !prev);
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       <SEO 
@@ -73,27 +87,41 @@ const Companies = () => {
           Explore leading companies developing innovative AI solutions for radiation therapy, medical imaging synthesis, and clinical decision support in radiotherapy.
         </p>
 
-        {/* Search input */}
-        <div className="relative max-w-md mb-8">
-          <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-          <Input 
-            placeholder="Search companies or products..." 
-            className="pl-10 bg-white border-gray-200"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+        <div className="flex flex-col md:flex-row md:items-center gap-4 mb-8">
+          {/* Search input */}
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+            <Input 
+              placeholder="Search companies or products..." 
+              className="pl-10 bg-white border-gray-200"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          
+          {/* Sort button */}
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={toggleSortDirection}
+            title={sortAscending ? "Sort Z-A" : "Sort A-Z"}
+            className="h-10 w-10"
+          >
+            {sortAscending ? <ArrowDownAZ className="h-4 w-4" /> : <ArrowDownZA className="h-4 w-4" />}
+          </Button>
         </div>
 
         {/* Companies count */}
         <div className="mb-6">
           <p className="text-gray-600">
-            Showing {filteredCompanies.length} {filteredCompanies.length === 1 ? 'company' : 'companies'}
+            Showing {sortedCompanies.length} {sortedCompanies.length === 1 ? 'company' : 'companies'}
+            {sortAscending ? ' (A-Z)' : ' (Z-A)'}
           </p>
         </div>
 
         {/* Companies list */}
         <div className="space-y-6">
-          {filteredCompanies.map((company) => (
+          {sortedCompanies.map((company) => (
             <CompanyCard 
               key={company.id} 
               name={company.name}
@@ -103,7 +131,7 @@ const Companies = () => {
             />
           ))}
           
-          {filteredCompanies.length === 0 && (
+          {sortedCompanies.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-500 text-lg">No companies found matching your search criteria.</p>
             </div>

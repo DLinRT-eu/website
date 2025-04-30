@@ -6,7 +6,7 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
     id: "elekta-iris",
     name: "Elekta Iris",
     company: "Elekta",
-    category: "Image Enhancement",
+    category: "Reconstruction",
     description: "AI-powered CBCT reconstruction solution that improves image quality for radiation therapy planning and adaptive radiotherapy.",
     features: ["Deep learning reconstruction", "CBCT imaging", "Radiotherapy"],
     certification: "CE Mark",

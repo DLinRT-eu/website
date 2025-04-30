@@ -1,4 +1,3 @@
-
 import { CompanyDetails } from "@/types/company";
 
 export const COMPANIES: CompanyDetails[] = [
@@ -215,7 +214,7 @@ export const COMPANIES: CompanyDetails[] = [
     "description": "Provider of precision radiation medicine solutions with AI-enhanced imaging.",
     "website": "https://www.elekta.com/",
     "productIds": [
-      "elekta-monaco-hd"
+      "elekta-iris"
     ]
   },
   {

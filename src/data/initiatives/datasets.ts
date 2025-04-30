@@ -105,7 +105,7 @@ export const DATASET_INITIATIVES: Initiative[] = [
     name: "RT-MAC (Radiation Therapy - Medical Archive Collection)",
     category: "Open Dataset",
     description: "Collection of radiotherapy planning data including CT, structure sets, dose distributions, and plan data.",
-    website: "https://www.cancerimagingarchive.net/collection/rt-mac/",
+    website: "https://www.cancerimagingarchive.net/collection/aapm-rt-mac/",
     organization: "University of California, San Francisco",
     status: "Active",
     tags: ["CT", "Radiation Therapy", "Treatment Planning", "Structure Sets", "Dose Distribution"],

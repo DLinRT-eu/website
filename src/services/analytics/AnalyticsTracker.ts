@@ -1,58 +1,38 @@
-import { useEffect } from "react";
+
 import { v4 as uuidv4 } from "uuid";
-import { useCookieConsent } from "@/components/CookieConsent";
+import { PageVisit, DailyVisitData, TopPageData } from "./types";
+import { 
+  STORAGE_KEY, 
+  VISITOR_ID_KEY, 
+  SESSION_ID_KEY,
+  getStoredAnalytics,
+  saveAnalytics,
+  getTodayKey,
+  clearAnalytics
+} from "./storageUtils";
 
-type PageVisit = {
-  path: string;
-  title: string;
-  timestamp: number;
-  duration?: number;
-};
-
-type DailyVisitData = {
-  date: string;
-  totalVisits: number;
-  uniqueVisitors: number;
-  pageVisits: {
-    [path: string]: {
-      count: number;
-      totalDuration: number;
-    }
-  };
-};
-
-class AnalyticsService {
+class AnalyticsTracker {
   private visitId: string | null = null;
   private sessionId: string | null = null;
   private currentPageVisit: PageVisit | null = null;
-  private storageKey = "dlinrt-analytics";
-  private todayKey: string = new Date().toISOString().split('T')[0];
+  private todayKey: string = getTodayKey();
 
   constructor() {
     // Generate visitor ID if not exists
-    const visitorId = localStorage.getItem("visitor-id");
+    const visitorId = localStorage.getItem(VISITOR_ID_KEY);
     if (!visitorId) {
       this.visitId = uuidv4();
-      localStorage.setItem("visitor-id", this.visitId);
+      localStorage.setItem(VISITOR_ID_KEY, this.visitId);
     } else {
       this.visitId = visitorId;
     }
 
     // Generate session ID
-    this.sessionId = sessionStorage.getItem("session-id");
+    this.sessionId = sessionStorage.getItem(SESSION_ID_KEY);
     if (!this.sessionId) {
       this.sessionId = uuidv4();
-      sessionStorage.setItem("session-id", this.sessionId);
+      sessionStorage.setItem(SESSION_ID_KEY, this.sessionId);
     }
-  }
-
-  private getStoredAnalytics(): Record<string, DailyVisitData> {
-    const storedData = localStorage.getItem(this.storageKey);
-    return storedData ? JSON.parse(storedData) : {};
-  }
-
-  private saveAnalytics(data: Record<string, DailyVisitData>): void {
-    localStorage.setItem(this.storageKey, JSON.stringify(data));
   }
 
   trackPageView(path: string, title: string): void {
@@ -67,7 +47,7 @@ class AnalyticsService {
     };
 
     // Update analytics data
-    const analytics = this.getStoredAnalytics();
+    const analytics = getStoredAnalytics();
     
     // Initialize today's entry if it doesn't exist
     if (!analytics[this.todayKey]) {
@@ -102,7 +82,7 @@ class AnalyticsService {
       analytics[this.todayKey].uniqueVisitors++;
     }
 
-    this.saveAnalytics(analytics);
+    saveAnalytics(analytics);
   }
 
   endPageVisit(): void {
@@ -112,12 +92,12 @@ class AnalyticsService {
     
     // Only record if the visit was longer than 1 second
     if (duration > 1) {
-      const analytics = this.getStoredAnalytics();
+      const analytics = getStoredAnalytics();
       const path = this.currentPageVisit.path;
       
       if (analytics[this.todayKey]?.pageVisits[path]) {
         analytics[this.todayKey].pageVisits[path].totalDuration += duration;
-        this.saveAnalytics(analytics);
+        saveAnalytics(analytics);
       }
     }
 
@@ -125,7 +105,7 @@ class AnalyticsService {
   }
 
   getAnalytics(startDate?: string, endDate?: string): Record<string, DailyVisitData> {
-    const analytics = this.getStoredAnalytics();
+    const analytics = getStoredAnalytics();
     
     if (!startDate && !endDate) {
       return analytics;
@@ -146,12 +126,7 @@ class AnalyticsService {
     return filteredAnalytics;
   }
 
-  getTopPages(startDate?: string, endDate?: string, limit: number = 3): { 
-    path: string; 
-    title: string;
-    visits: number; 
-    avgDuration: number;
-  }[] {
+  getTopPages(startDate?: string, endDate?: string, limit: number = 3): TopPageData[] {
     const analytics = this.getAnalytics(startDate, endDate);
     const pageStats: Record<string, { visits: number; duration: number; title?: string }> = {};
     
@@ -181,31 +156,10 @@ class AnalyticsService {
   }
 
   clearAnalytics(): void {
-    localStorage.removeItem(this.storageKey);
+    clearAnalytics();
   }
 }
 
-const analyticsService = new AnalyticsService();
-
-// React hook for page tracking
-export const usePageTracking = () => {
-  const { cookieConsent } = useCookieConsent();
-  
-  useEffect(() => {
-    // Only track if analytics consent is given
-    if (cookieConsent?.analytics) {
-      const path = window.location.pathname;
-      const title = document.title;
-      analyticsService.trackPageView(path, title);
-      
-      // End tracking when component unmounts or page changes
-      return () => {
-        analyticsService.endPageVisit();
-      };
-    }
-  }, [window.location.pathname, cookieConsent]);
-  
-  return analyticsService;
-};
-
-export default analyticsService;
+// Create and export a singleton instance
+const analyticsTracker = new AnalyticsTracker();
+export default analyticsTracker;

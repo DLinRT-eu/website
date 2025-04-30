@@ -2,7 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '@/components/SEO';
-import analyticsService from '@/services/AnalyticsService';
+import analyticsTracker from '@/services/analytics';
+import { TopPageData } from '@/services/analytics/types';
 
 // Import refactored components
 import DateRangeSelector from '@/components/analytics/DateRangeSelector';
@@ -20,8 +21,8 @@ type ChartDataPoint = {
 
 const AdminAnalytics = () => {
   const navigate = useNavigate();
-  const [analyticsData, setAnalyticsData] = useState<any>({});
-  const [topPages, setTopPages] = useState<any[]>([]);
+  const [analyticsData, setAnalyticsData] = useState<Record<string, any>>({});
+  const [topPages, setTopPages] = useState<TopPageData[]>([]);
   const [dateRange, setDateRange] = useState({
     startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
     endDate: new Date()
@@ -30,7 +31,7 @@ const AdminAnalytics = () => {
   
   // Format data for charts
   const formatChartData = () => {
-    const data = analyticsService.getAnalytics(
+    const data = analyticsTracker.getAnalytics(
       dateRange.startDate.toISOString().split('T')[0],
       dateRange.endDate.toISOString().split('T')[0]
     );
@@ -38,7 +39,7 @@ const AdminAnalytics = () => {
     setAnalyticsData(data);
     
     // Get top pages
-    const topPagesData = analyticsService.getTopPages(
+    const topPagesData = analyticsTracker.getTopPages(
       dateRange.startDate.toISOString().split('T')[0],
       dateRange.endDate.toISOString().split('T')[0]
     );
@@ -54,8 +55,8 @@ const AdminAnalytics = () => {
   const getChartData = (): ChartDataPoint[] => {
     const chartData = Object.entries(analyticsData).map(([date, dayData]: [string, any]) => ({
       date,
-      visits: dayData.totalVisits,
-      uniqueVisitors: dayData.uniqueVisitors
+      visits: dayData.totalVisits as number,
+      uniqueVisitors: dayData.uniqueVisitors as number
     }));
     
     // Sort by date
@@ -68,11 +69,11 @@ const AdminAnalytics = () => {
   
   // Calculate totals
   const getTotalVisits = () => {
-    return Object.values(analyticsData).reduce((sum: number, day: any) => sum + day.totalVisits, 0);
+    return Object.values(analyticsData).reduce((sum: number, day: any) => sum + (day.totalVisits as number), 0);
   };
   
   const getTotalUniqueVisitors = () => {
-    return Object.values(analyticsData).reduce((sum: number, day: any) => sum + day.uniqueVisitors, 0);
+    return Object.values(analyticsData).reduce((sum: number, day: any) => sum + (day.uniqueVisitors as number), 0);
   };
 
   return (

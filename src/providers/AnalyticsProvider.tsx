@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useCookieConsent } from "@/components/CookieConsent";
-import analyticsService from "@/services/AnalyticsService";
+import analyticsTracker from "@/services/analytics";
 
 type AnalyticsContextType = {
   trackEvent: (eventName: string, eventData?: Record<string, any>) => void;
@@ -23,11 +23,11 @@ export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     if (cookieConsent?.analytics) {
       const path = location.pathname;
       const title = document.title;
-      analyticsService.trackPageView(path, title);
+      analyticsTracker.trackPageView(path, title);
       
       // Cleanup function - called when component unmounts or location changes
       return () => {
-        analyticsService.endPageVisit();
+        analyticsTracker.endPageVisit();
       };
     }
   }, [location, cookieConsent]);

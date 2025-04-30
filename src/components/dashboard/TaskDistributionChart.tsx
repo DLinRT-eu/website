@@ -31,13 +31,20 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
       </CardHeader>
       <CardContent>
         <ChartContainer className="h-[300px]" config={{}}>
-          <BarChart data={taskData}>
+          <BarChart 
+            data={taskData}
+            margin={{ top: 5, right: 30, left: 5, bottom: 80 }} // Increased bottom margin for more space
+          >
             <XAxis 
               dataKey="name" 
-              angle={-45} 
+              angle={-20} // Changed angle to -20 degrees
               textAnchor="end" 
-              height={70} 
-              tick={{fontSize: 12}}
+              height={90} // Increased height to provide more space for labels
+              tick={{
+                fontSize: 12,
+                dy: 8 // Added dy attribute for vertical adjustment
+              }}
+              tickMargin={15} // Added tickMargin for more space between text and axis
             />
             <YAxis />
             <Tooltip content={<ChartTooltipContent />} />

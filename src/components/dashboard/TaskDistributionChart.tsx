@@ -6,7 +6,7 @@ import {
   ChartTooltipContent, 
   ChartTooltip
 } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
 
 interface TaskDistributionChartProps {
   taskData: {
@@ -34,9 +34,9 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
           <BarChart data={taskData}>
             <XAxis 
               dataKey="name" 
-              angle={-25} 
+              angle={-45} 
               textAnchor="end" 
-              height={60} 
+              height={70} 
               tick={{fontSize: 12}}
             />
             <YAxis />
@@ -46,8 +46,11 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
               onClick={onTaskClick} 
               cursor="pointer"
               fillOpacity={0.9}
-              fill={(entry) => entry.fill}
-            />
+            >
+              {taskData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
+            </Bar>
           </BarChart>
         </ChartContainer>
         <div className="mt-4 text-sm text-muted-foreground text-center">

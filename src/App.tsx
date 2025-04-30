@@ -17,9 +17,6 @@ import NewsDetail from "./pages/NewsDetail";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Initiatives from "./pages/Initiatives";
-import AdminAnalytics from "./pages/AdminAnalytics";
-import CookieConsent from "./components/CookieConsent";
-import { AnalyticsProvider } from "./providers/AnalyticsProvider";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -37,25 +34,21 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <AnalyticsProvider>
-          <CookieConsent />
-          <Header />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="products" element={<Products />} />
-            <Route path="initiatives" element={<Initiatives />} />
-            <Route path="maintenance-team" element={<MaintenanceTeam />} />
-            <Route path="donate" element={<Donate />} />
-            <Route path="product/:id" element={<ProductDetails />} />
-            <Route path="companies" element={<Companies />} />
-            <Route path="news" element={<News />} />
-            <Route path="support" element={<Support />} />
-            <Route path="news/:id" element={<NewsDetail />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="admin-analytics" element={<AdminAnalytics />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </AnalyticsProvider>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="products" element={<Products />} />
+          <Route path="initiatives" element={<Initiatives />} />
+          <Route path="maintenance-team" element={<MaintenanceTeam />} />
+          <Route path="donate" element={<Donate />} />
+          <Route path="product/:id" element={<ProductDetails />} />
+          <Route path="companies" element={<Companies />} />
+          <Route path="news" element={<News />} />
+          <Route path="support" element={<Support />} />
+          <Route path="news/:id" element={<NewsDetail />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -70,7 +70,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     description: "AI-driven image enhancement platform that improves quality and diagnostic value of medical images across modalities.",
     features: ["Deep learning enhancement", "Multi-modality", "Workflow integration"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/unitedimaging.png",
     companyUrl: "https://www.united-imaging.com/",
     productUrl: "https://www.united-imaging.com/en/products/digital-solutions",
     anatomicalLocation: ["Whole body"],

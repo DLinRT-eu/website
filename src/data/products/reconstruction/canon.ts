@@ -70,7 +70,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     description: "Deep learning reconstruction for MRI that accelerates scanning while improving image clarity and detail.",
     features: ["Deep learning reconstruction", "Accelerated MRI", "Enhanced SNR"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/canon.png",
     companyUrl: "https://global.medical.canon/",
     productUrl: "https://global.medical.canon/products/magnetic-resonance/aice",
     anatomicalLocation: ["Whole body"],

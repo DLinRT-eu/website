@@ -70,7 +70,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     description: "AI-powered PET reconstruction technology that enhances time-of-flight imaging for improved resolution and quantitation.",
     features: ["Deep learning reconstruction", "Enhanced TOF", "PET modality"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/unitedimaging.png",
     companyUrl: "https://www.united-imaging.com/",
     productUrl: "https://www.united-imaging.com/en/products/molecular-imaging",
     anatomicalLocation: ["Whole body"],

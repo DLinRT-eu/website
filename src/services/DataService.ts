@@ -165,7 +165,8 @@ class DataService {
       ...company,
       products: ALL_PRODUCTS.filter(product => 
         company.productIds.includes(product.id || '') && 
-        this.hasRegulatoryApproval(product) && this.containsAIKeywords(product)
+        this.hasRegulatoryApproval(product) && 
+        (product.category === "Performance Monitor" || this.containsDeepLearningKeywords(product))
       )
     })) as CompanyDetails[];
   }

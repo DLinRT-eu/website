@@ -34,6 +34,13 @@ const Products = () => {
       const newFilters = { ...currentFilters, tasks: [taskParam] };
       setCurrentFilters(newFilters);
       setFiltersActive(true);
+      
+      // Dispatch an event to notify filter components about the change
+      const event = new CustomEvent('setTaskFilter', { 
+        detail: { task: taskParam }
+      });
+      window.dispatchEvent(event);
+      
       toast.info(`Showing ${taskParam} products`);
     }
   }, [location.search]);

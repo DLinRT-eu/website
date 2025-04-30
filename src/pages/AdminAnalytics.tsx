@@ -229,7 +229,7 @@ const AdminAnalytics = () => {
                         return (
                           <div className="rounded-lg border bg-background p-2 shadow-sm">
                             <div className="font-medium">{format(date, "MMM dd, yyyy")}</div>
-                            {payload.map((item) => (
+                            {payload.map((item: any) => (
                               <div
                                 key={item.dataKey}
                                 className="flex items-center gap-2"

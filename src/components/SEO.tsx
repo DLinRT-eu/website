@@ -9,6 +9,7 @@ interface SEOProps {
   ogType?: string;
   ogImage?: string;
   structuredData?: Record<string, any>;
+  noindex?: boolean;
 }
 
 const SEO = ({
@@ -18,6 +19,7 @@ const SEO = ({
   ogType = 'website',
   ogImage = '/opengraph-image.png', // Using relative path
   structuredData,
+  noindex = false,
 }: SEOProps) => {
   const fullTitle = `${title} | DLinRT`;
   
@@ -35,6 +37,7 @@ const SEO = ({
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
       <link rel="canonical" href={resolvedCanonical} />
+      {noindex && <meta name="robots" content="noindex" />}
       
       {/* Open Graph / Facebook */}
       <meta property="og:type" content={ogType} />

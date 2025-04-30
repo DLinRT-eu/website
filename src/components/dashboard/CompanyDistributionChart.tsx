@@ -45,7 +45,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
                 fontSize: 13, 
                 fontWeight: 500,
                 textAnchor: 'end',
-                lineHeight: '16px'
+                dy: 3 // Using dy instead of lineHeight for proper spacing
               }}
             />
             <Tooltip content={<ChartTooltipContent />} />

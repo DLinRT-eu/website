@@ -49,10 +49,16 @@ class DataService {
         filters.locations?.includes(loc))) {
         return false;
       }
-      if (filters.certifications?.length && !filters.certifications.includes(
-        product.certification || '')) {
-        return false;
+      
+      // Standardize certification check - handle both "CE" and "CE Mark" as the same
+      if (filters.certifications?.length) {
+        const productCert = this.standardizeCertification(product.certification || '');
+        if (!filters.certifications.some(cert => 
+          this.standardizeCertification(cert) === productCert)) {
+          return false;
+        }
       }
+      
       if (filters.modalities?.length) {
         // Handle both string and array modalities
         const productModalities = Array.isArray(product.modality) 
@@ -65,6 +71,19 @@ class DataService {
       }
       return true;
     });
+  }
+  
+  // Helper method to standardize certification names
+  private standardizeCertification(certification: string): string {
+    // Normalize certifications to prevent duplicates like "CE" and "CE Mark"
+    certification = certification.toLowerCase().trim();
+    if (certification.includes('ce')) {
+      return 'ce';
+    }
+    if (certification.includes('fda')) {
+      return 'fda';
+    }
+    return certification;
   }
   
   // Helper method to check if product has FDA or CE approval
@@ -127,10 +146,12 @@ class DataService {
   }
 
   getCompaniesWithProducts(): CompanyDetails[] {
+    // Only include companies with products that pass regulatory approval
     return COMPANIES.map(company => ({
       ...company,
       products: ALL_PRODUCTS.filter(product => 
-        company.productIds.includes(product.id || '')
+        company.productIds.includes(product.id || '') && 
+        this.hasRegulatoryApproval(product)
       )
     })) as CompanyDetails[];
   }

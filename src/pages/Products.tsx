@@ -2,7 +2,7 @@
 import SearchHeader from "@/components/SearchHeader";
 import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import type { FilterState } from "@/types/filters";
 import SEO from "@/components/SEO";
 import { toast } from "sonner";
@@ -16,6 +16,14 @@ const Products = () => {
     modalities: [],
   });
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    // Check if preview is loaded
+    const timer = setTimeout(() => {
+      console.log("Page loaded and rendered");
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -49,6 +57,15 @@ const Products = () => {
   };
 
   const handleFilterUpdate = (newFilters: FilterState) => {
+    // Standardize certification labels to avoid duplicates
+    if (newFilters.certifications) {
+      newFilters.certifications = newFilters.certifications.map(cert => {
+        if (cert.toLowerCase().includes('ce')) return 'CE Mark';
+        if (cert.toLowerCase().includes('fda')) return 'FDA Cleared';
+        return cert;
+      });
+    }
+    
     setCurrentFilters(newFilters);
     setFiltersActive(
       Object.values(newFilters).some(filterArray => filterArray.length > 0)

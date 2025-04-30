@@ -42,6 +42,12 @@ const ProductCard = ({
   // Make sure logo URL starts with proper path and remove any spaces
   const logoSrc = logoUrl ? (logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`) : '/placeholder.svg';
   
+  // Normalize certification display
+  const displayCertification = certification ? 
+    (certification.toLowerCase().includes('ce') ? 'CE Mark' : 
+     certification.toLowerCase().includes('fda') ? 'FDA Cleared' : 
+     certification) : null;
+  
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">
       <Link to={`/product/${id}`} className="block">
@@ -93,9 +99,9 @@ const ProductCard = ({
             <Badge variant="secondary" className="bg-[#00A6D6]/10 text-[#00A6D6] border-none">
               {category}
             </Badge>
-            {certification && (
+            {displayCertification && (
               <Badge variant="outline" className="bg-green-50 text-green-700">
-                {certification}
+                {displayCertification}
               </Badge>
             )}
           </div>

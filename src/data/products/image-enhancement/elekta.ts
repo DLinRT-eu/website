@@ -1,6 +1,5 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
-// No products in this category for Elekta
+// Removed Elekta products from Image Enhancement category since they belong in Reconstruction
 export const ELEKTA_PRODUCTS: ProductDetails[] = [];
-

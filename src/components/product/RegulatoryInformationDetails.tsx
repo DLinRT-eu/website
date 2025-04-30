@@ -36,12 +36,12 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
                 {hasCEApproval ? (
                   <>
                     <CheckCircle className="h-3 w-3" />
-                    <span>Approved</span>
+                    <span>CE Approved</span>
                   </>
                 ) : (
                   <>
                     <XCircle className="h-3 w-3" />
-                    <span>Not Approved</span>
+                    <span>Not CE Approved</span>
                   </>
                 )}
               </Badge>
@@ -65,12 +65,12 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
                 {hasFDAApproval ? (
                   <>
                     <CheckCircle className="h-3 w-3" />
-                    <span>Cleared/Approved</span>
+                    <span>FDA Cleared/Approved</span>
                   </>
                 ) : (
                   <>
                     <XCircle className="h-3 w-3" />
-                    <span>Not Cleared</span>
+                    <span>Not FDA Cleared</span>
                   </>
                 )}
               </Badge>

@@ -5,6 +5,12 @@ import type { CompanyDetails } from "@/types/company";
 import type { NewsItem } from "@/types/news";
 import type { Initiative } from "@/types/initiative";
 import type { FilterState } from "@/types/filters";
+import { 
+  hasRegulatoryApproval, 
+  containsDeepLearningKeywords, 
+  normalizeAnatomicalLocations,
+  standardizeCertification 
+} from "@/utils/productFilters";
 
 /**
  * DataService provides methods to access and manipulate product, company, and news data
@@ -13,20 +19,20 @@ class DataService {
   // Product methods
   getAllProducts(): ProductDetails[] {
     // Only return products with regulatory approval (CE or FDA)
-    return ALL_PRODUCTS.filter(product => this.hasRegulatoryApproval(product) && 
-      (product.category === "Performance Monitor" || this.containsDeepLearningKeywords(product)));
+    return ALL_PRODUCTS.filter(product => hasRegulatoryApproval(product) && 
+      (product.category === "Performance Monitor" || containsDeepLearningKeywords(product)));
   }
 
   getProductById(id: string): ProductDetails | undefined {
     return ALL_PRODUCTS.find(product => product.id === id && 
-      (this.hasRegulatoryApproval(product) && 
-        (product.category === "Performance Monitor" || this.containsDeepLearningKeywords(product))));
+      (hasRegulatoryApproval(product) && 
+        (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))));
   }
 
   getProductsByCategory(category: string): ProductDetails[] {
     return ALL_PRODUCTS.filter(product => 
-      product.category === category && this.hasRegulatoryApproval(product) && 
-      (product.category === "Performance Monitor" || this.containsDeepLearningKeywords(product))
+      product.category === category && hasRegulatoryApproval(product) && 
+      (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))
     );
   }
 
@@ -35,16 +41,16 @@ class DataService {
     if (!company) return [];
     
     return ALL_PRODUCTS.filter(product => 
-      company.productIds.includes(product.id || '') && this.hasRegulatoryApproval(product) && 
-      (product.category === "Performance Monitor" || this.containsDeepLearningKeywords(product))
+      company.productIds.includes(product.id || '') && hasRegulatoryApproval(product) && 
+      (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))
     );
   }
 
   filterProducts(filters: FilterState): ProductDetails[] {
     return ALL_PRODUCTS.filter((product: ProductDetails) => {
       // First check regulatory approval and DL keywords (except for Performance Monitor)
-      if (!this.hasRegulatoryApproval(product) || 
-          (product.category !== "Performance Monitor" && !this.containsDeepLearningKeywords(product))) {
+      if (!hasRegulatoryApproval(product) || 
+          (product.category !== "Performance Monitor" && !containsDeepLearningKeywords(product))) {
         return false;
       }
       
@@ -53,7 +59,7 @@ class DataService {
       }
       if (filters.locations?.length) {
         // Normalize anatomical locations: merge Head and Neck into Head & Neck
-        const normalizedLocations = this.normalizeAnatomicalLocations(product.anatomicalLocation || []);
+        const normalizedLocations = normalizeAnatomicalLocations(product.anatomicalLocation || []);
         
         if (!normalizedLocations.some(loc => 
           filters.locations?.includes(loc))) {
@@ -63,9 +69,9 @@ class DataService {
       
       // Standardize certification check - handle both "CE" and "CE Mark" as the same
       if (filters.certifications?.length) {
-        const productCert = this.standardizeCertification(product.certification || '');
+        const productCert = standardizeCertification(product.certification || '');
         if (!filters.certifications.some(cert => 
-          this.standardizeCertification(cert) === productCert)) {
+          standardizeCertification(cert) === productCert)) {
           return false;
         }
       }
@@ -82,88 +88,6 @@ class DataService {
       }
       return true;
     });
-  }
-  
-  // Helper method to normalize anatomical locations
-  private normalizeAnatomicalLocations(locations: string[]): string[] {
-    return locations.map(location => {
-      // Merge "Head" or "Neck" into "Head & Neck"
-      if (location === "Head" || location === "Neck") {
-        return "Head & Neck";
-      }
-      // Filter out "Muscoloskeletal" and "Spine"
-      if (location === "Muscoloskeletal" || location === "Spine") {
-        return "";
-      }
-      return location;
-    }).filter(Boolean); // Remove empty strings
-  }
-  
-  // Helper method to standardize certification names
-  private standardizeCertification(certification: string): string {
-    // Normalize certifications to prevent duplicates like "CE" and "CE Mark"
-    certification = certification.toLowerCase().trim();
-    if (certification.includes('ce')) {
-      return 'ce';
-    }
-    if (certification.includes('fda')) {
-      return 'fda';
-    }
-    return certification;
-  }
-  
-  // Helper method to check if product has FDA or CE approval
-  private hasRegulatoryApproval(product: ProductDetails): boolean {
-    // Check for FDA clearance/approval
-    const hasFDA = product.certification?.toLowerCase().includes('fda') || 
-                   (product.regulatory?.fda && 
-                    (product.regulatory.fda.includes('510(k)') || 
-                     product.regulatory.fda.includes('Cleared') || 
-                     product.regulatory.fda.includes('Approved')));
-    
-    // Check for CE mark approval
-    const hasCE = product.certification?.toLowerCase().includes('ce') || 
-                 (product.regulatory?.ce?.status === 'Approved' || 
-                  product.regulatory?.ce?.status === 'Certified');
-    
-    return hasFDA || hasCE;
-  }
-  
-  // Helper method to check if product description contains DL keywords
-  public containsDeepLearningKeywords(product: ProductDetails): boolean {
-    const descriptionLower = product.description.toLowerCase();
-    const featuresLower = product.features.map(f => f.toLowerCase());
-    
-    const dlKeywords = [
-      'artificial intelligence', 'deep learning', ' ai ', 'ai-', '-ai ', 'ai.', 'neural', 
-      'machine learning', 'ai-powered', 'ai powered', 'dl ', 'dl-', '-dl ', 'dl.'
-    ];
-    
-    // Check in description
-    if (dlKeywords.some(keyword => descriptionLower.includes(keyword))) {
-      return true;
-    }
-    
-    // Check in features
-    if (featuresLower.some(feature => 
-      dlKeywords.some(keyword => feature.includes(keyword))
-    )) {
-      return true;
-    }
-    
-    // Check in key features
-    if (product.keyFeatures && product.keyFeatures.some(kf => 
-      dlKeywords.some(keyword => kf.toLowerCase().includes(keyword))
-    )) {
-      return true;
-    }
-    
-    // Special case for Image Synthesis category - these are all DL-based
-    if (product.category === "Image Synthesis") {
-      return true;
-    }
-    
-    return false;
   }
 
   // Company methods
@@ -185,8 +109,8 @@ class DataService {
       ...company,
       products: ALL_PRODUCTS.filter(product => 
         company.productIds.includes(product.id || '') && 
-        this.hasRegulatoryApproval(product) && 
-        (product.category === "Performance Monitor" || this.containsDeepLearningKeywords(product))
+        hasRegulatoryApproval(product) && 
+        (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))
       )
     })) as CompanyDetails[];
   }

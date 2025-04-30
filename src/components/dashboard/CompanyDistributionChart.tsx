@@ -34,14 +34,19 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
           <BarChart 
             data={sortedData} 
             layout="vertical"
-            margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
+            margin={{ top: 5, right: 30, left: 120, bottom: 5 }}
           >
             <XAxis type="number" />
             <YAxis 
               dataKey="name" 
               type="category" 
-              width={100}
-              tick={{ fontSize: 12, fontWeight: 500 }}
+              width={120}
+              tick={{ 
+                fontSize: 13, 
+                fontWeight: 500,
+                textAnchor: 'end',
+                lineHeight: '16px'
+              }}
             />
             <Tooltip content={<ChartTooltipContent />} />
             <Bar dataKey="value" fill="#00A6D6" />

@@ -14,7 +14,7 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
     certification: "NMPA",
     logoUrl: "/logos/wisdom-tech.png",
     website: "http://www.wisdom-tech.online/view-16.html",
-    anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
+    anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
@@ -53,6 +53,6 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
     version: "2.0",
     releaseDate: "2023-04-10",
     lastUpdated: "2023-12-15",
-    lastRevised: "2024-04-30"
+    lastRevised: "2000-01-01"
   }
 ];

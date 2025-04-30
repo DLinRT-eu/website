@@ -4,8 +4,12 @@ import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
+import { Button } from '@/components/ui/button';
+import { Cookie } from 'lucide-react';
+import { useCookieConsent } from '@/components/CookieConsent';
 
 const Index = () => {
+  const { updateCookieConsent } = useCookieConsent();
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -13,6 +17,13 @@ const Index = () => {
     "url": "https://dlinrt.eu",
     "logo": "https://dlinrt.eu/logo.png",
     "description": "Search and explore deep learning products in Radiotherapy"
+  };
+
+  const handleOpenCookieSettings = () => {
+    // Reset consent to trigger the cookie consent dialog
+    localStorage.removeItem("cookie-consent");
+    // Force a refresh to show the cookie dialog
+    window.location.reload();
   };
 
   return (
@@ -40,6 +51,14 @@ const Index = () => {
             >
               Support Our Project
             </Link>
+            <Button 
+              variant="ghost"
+              className="text-gray-500 hover:text-gray-700 flex items-center gap-2 p-0 h-auto"
+              onClick={handleOpenCookieSettings}
+            >
+              <Cookie className="w-4 h-4" />
+              Cookie Settings
+            </Button>
           </div>
           <div className="text-center mt-6 text-sm text-gray-500">
             &copy; <a href="https://github.com/DLinRT-eu" target="_blank" rel="noopener noreferrer" className="hover:underline">DLinRT.eu</a>, 2025

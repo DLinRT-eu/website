@@ -70,7 +70,7 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     description: "AI-based CT image enhancement solution that improves image quality and reduces noise in standard and low-dose CT examinations.",
     features: ["Deep learning enhancement", "CT specific", "Noise reduction"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/airs.jpg",
     companyUrl: "https://airsmed.com/",
     productUrl: "https://airsmed.com/ct-clarity/",
     anatomicalLocation: ["Whole body"],

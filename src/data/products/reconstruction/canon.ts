@@ -10,7 +10,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     description: "Advanced intelligent Clear-IQ Engine for CT using deep learning reconstruction to reduce dose and improve image quality.",
     features: ["Deep learning reconstruction", "Low-dose imaging", "CT modality"],
     certification: "FDA Cleared",
-    logoUrl: "/placeholder.svg", 
+    logoUrl: "/logos/canon.png", 
     companyUrl: "https://global.medical.canon/",
     productUrl: "https://global.medical.canon/products/computed-tomography/aice",
     anatomicalLocation: ["Whole body"],

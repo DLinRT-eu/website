@@ -10,7 +10,7 @@ export const ACCURAY_PRODUCTS: ProductDetails[] = [
     description: "AI-enhanced imaging solution that improves image quality and motion management for radiotherapy guidance.",
     features: ["Deep learning enhancement", "Motion management", "Radiotherapy guidance"],
     certification: "FDA Cleared",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/accuray.png",
     companyUrl: "https://www.accuray.com/",
     productUrl: "https://www.accuray.com/treatment-delivery/synchrony/",
     anatomicalLocation: ["Thorax", "Abdomen", "Pelvis"],

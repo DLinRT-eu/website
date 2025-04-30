@@ -10,7 +10,7 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
     description: "AI-powered CBCT reconstruction solution that improves image quality for radiation therapy planning and adaptive radiotherapy using deep learning techniques.",
     features: ["Deep learning reconstruction", "CBCT imaging", "Radiotherapy"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/Elekta.png",
     companyUrl: "https://www.elekta.com/",
     productUrl: "https://www.elekta.com/radiation-oncology/treatment-solutions/imaging/",
     anatomicalLocation: ["Whole body"],

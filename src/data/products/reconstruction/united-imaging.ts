@@ -10,7 +10,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     description: "Deep learning-based CT reconstruction technology that reduces radiation dose while enhancing image quality.",
     features: ["AI-powered", "Low-dose CT", "Deep learning reconstruction"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/unitedimaging.png",
     companyUrl: "https://www.united-imaging.com/",
     productUrl: "https://www.united-imaging.com/en/products/ct",
     anatomicalLocation: ["Whole body"],

@@ -10,7 +10,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     description: "AI-powered CBCT enhancement solution that improves image quality and reduces artifacts for radiotherapy applications.",
     features: ["Deep learning enhancement", "CBCT specific", "Artifact reduction"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/unitedimaging.png",
     companyUrl: "https://www.united-imaging.com/",
     productUrl: "https://www.united-imaging.com/en/products/radiationtherapy",
     anatomicalLocation: ["Whole body"],

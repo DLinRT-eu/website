@@ -10,7 +10,7 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     description: "AI-powered MRI enhancement solution that improves image quality and resolution of accelerated or low-quality MR scans.",
     features: ["Deep learning enhancement", "MRI specific", "Resolution improvement"],
     certification: "CE Mark",
-    logoUrl: "/placeholder.svg",
+    logoUrl: "/logos/airs.jpg",
     companyUrl: "https://airsmed.com/",
     productUrl: "https://airsmed.com/swiftmr/",
     anatomicalLocation: ["Brain", "Spine", "Musculoskeletal"],

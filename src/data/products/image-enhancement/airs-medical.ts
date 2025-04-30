@@ -13,9 +13,9 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/airs.jpg",
     companyUrl: "https://airsmed.com/",
     productUrl: "https://airsmed.com/swiftmr/",
-    anatomicalLocation: ["Brain", "Spine", "Musculoskeletal"],
+    anatomicalLocation: ["Brain", "Spine"],
     modality: "MRI",
-    diseaseTargeted: ["Neurological disorders", "Spine pathologies", "Musculoskeletal conditions"],
+    diseaseTargeted: ["Neurological disorders", "Spine pathologies"],
     releaseDate: "2021-05-15",
     version: "2.1",
     keyFeatures: [

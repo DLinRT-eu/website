@@ -60,7 +60,7 @@ export const containsDeepLearningKeywords = (product: ProductDetails): boolean =
 };
 
 /**
- * Normalizes anatomical locations (standardizes Head/Neck references, removes some locations)
+ * Normalizes anatomical locations (standardizes Head/Neck references, removes problematic locations)
  */
 export const normalizeAnatomicalLocations = (locations: string[]): string[] => {
   return locations.map(location => {
@@ -68,9 +68,9 @@ export const normalizeAnatomicalLocations = (locations: string[]): string[] => {
     if (location === "Head" || location === "Neck") {
       return "Head & Neck";
     }
-    // Filter out "Muscoloskeletal" and "Spine"
-    if (location === "Muscoloskeletal" || location === "Spine") {
-      return "";
+    // Filter out "Musculoskeletal" and "Spine"
+    if (location === "Musculoskeletal") {
+      return ""; // Remove Musculoskeletal
     }
     return location;
   }).filter(Boolean); // Remove empty strings

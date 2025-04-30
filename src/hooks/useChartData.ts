@@ -30,16 +30,23 @@ export const useChartData = (products: ProductDetails[], selectedTask: string, c
   
   const totalLocations = locationData.reduce((sum, item) => sum + item.value, 0);
 
-  // Prepare data for modality distribution
-  const modalityData = getAllOptions('modality').map(modality => ({
-    name: modality || 'Unknown',
-    value: filteredProducts.filter(p => {
-      if (Array.isArray(p.modality)) {
-        return p.modality.includes(modality);
-      }
-      return p.modality === modality;
-    }).length
-  })).filter(item => item.value > 0);
+  // Prepare data for modality distribution - normalize LINAC and MRI-LINAC to CBCT or MRI
+  const modalityData = getAllOptions('modality').map(modality => {
+    // Skip LINAC and MRI-LINAC in the chart data
+    if (modality === 'LINAC' || modality === 'MRI-LINAC') {
+      return { name: modality, value: 0 };
+    }
+    
+    return {
+      name: modality || 'Unknown',
+      value: filteredProducts.filter(p => {
+        if (Array.isArray(p.modality)) {
+          return p.modality.includes(modality);
+        }
+        return p.modality === modality;
+      }).length
+    };
+  }).filter(item => item.value > 0);
   
   const totalModalities = modalityData.reduce((sum, item) => sum + item.value, 0);
 

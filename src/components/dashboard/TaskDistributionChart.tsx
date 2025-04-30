@@ -32,7 +32,13 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
       <CardContent>
         <ChartContainer className="h-[300px]" config={{}}>
           <BarChart data={taskData}>
-            <XAxis dataKey="name" />
+            <XAxis 
+              dataKey="name" 
+              angle={-25} 
+              textAnchor="end" 
+              height={60} 
+              tick={{fontSize: 12}}
+            />
             <YAxis />
             <Tooltip content={<ChartTooltipContent />} />
             <Bar 
@@ -41,7 +47,8 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
               onClick={onTaskClick} 
               cursor="pointer"
               fillOpacity={0.9}
-              // Use the fill property from each data item instead of fillFunction
+              // Use the fill property from each data item
+              fill={(data) => data.fill}
             />
           </BarChart>
         </ChartContainer>

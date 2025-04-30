@@ -75,7 +75,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     productUrl: "https://global.medical.canon/products/magnetic-resonance/aice",
     anatomicalLocation: ["Whole body"],
     modality: "MRI",
-    diseaseTargeted: ["Neurological disorders", "Musculoskeletal conditions", "Abdominal pathologies"],
+    diseaseTargeted: ["Neurological disorders", "Abdominal pathologies"],
     releaseDate: "2022-02-01",
     version: "1.5",
     keyFeatures: [

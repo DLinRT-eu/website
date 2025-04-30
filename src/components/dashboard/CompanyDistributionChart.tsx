@@ -1,13 +1,11 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button"; 
 import { 
   ChartContainer, 
   ChartTooltipContent
 } from "@/components/ui/chart";
 import { BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
-import { ArrowDown, ArrowUp } from "lucide-react";
 
 interface CompanyDistributionChartProps {
   companyData: {
@@ -19,75 +17,32 @@ interface CompanyDistributionChartProps {
 }
 
 const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
-  companyData: initialCompanyData,
+  companyData,
   totalCompanies,
   selectedTask
 }) => {
-  const [sortOrder, setSortOrder] = useState<"valueDesc" | "nameAsc" | "nameDesc">("valueDesc");
-  
-  // Apply sorting
-  const sortedCompanyData = [...initialCompanyData].sort((a, b) => {
-    if (sortOrder === "valueDesc") {
-      return b.value - a.value;
-    } else if (sortOrder === "nameAsc") {
-      return a.name.localeCompare(b.name);
-    } else { // nameDesc
-      return b.name.localeCompare(a.name);
-    }
-  });
-
-  // Toggle sort order
-  const handleToggleSort = () => {
-    if (sortOrder === "valueDesc") {
-      setSortOrder("nameAsc");
-    } else if (sortOrder === "nameAsc") {
-      setSortOrder("nameDesc");
-    } else {
-      setSortOrder("valueDesc");
-    }
-  };
-
-  // Get sort button text and icon
-  const getSortButtonContent = () => {
-    if (sortOrder === "valueDesc") {
-      return (
-        <>
-          Sort Alphabetically <ArrowDown className="h-4 w-4 ml-1" />
-        </>
-      );
-    } else if (sortOrder === "nameAsc") {
-      return (
-        <>
-          A-Z <ArrowDown className="h-4 w-4 ml-1" />
-        </>
-      );
-    } else {
-      return (
-        <>
-          Z-A <ArrowUp className="h-4 w-4 ml-1" />
-        </>
-      );
-    }
-  };
+  // Sort companies by product count, descending
+  const sortedData = [...companyData].sort((a, b) => b.value - a.value);
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle>Products by Company ({totalCompanies} companies) {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
-        <Button 
-          variant="outline" 
-          size="sm" 
-          onClick={handleToggleSort}
-          className="flex items-center text-xs"
-        >
-          {getSortButtonContent()}
-        </Button>
+      <CardHeader>
+        <CardTitle>Products by Company ({totalCompanies} total) {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer className="h-[300px]" config={{}}>
-          <BarChart layout="vertical" data={sortedCompanyData}>
+        <ChartContainer className="h-[400px]" config={{}}>
+          <BarChart 
+            data={sortedData} 
+            layout="vertical"
+            margin={{ top: 5, right: 30, left: 100, bottom: 5 }}
+          >
             <XAxis type="number" />
-            <YAxis dataKey="name" type="category" width={150} />
+            <YAxis 
+              dataKey="name" 
+              type="category" 
+              width={100}
+              tick={{ fontSize: 12, fontWeight: 500 }}
+            />
             <Tooltip content={<ChartTooltipContent />} />
             <Bar dataKey="value" fill="#00A6D6" />
           </BarChart>

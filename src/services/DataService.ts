@@ -89,13 +89,16 @@ class DataService {
   // Helper method to check if product has FDA or CE approval
   private hasRegulatoryApproval(product: ProductDetails): boolean {
     // Check for FDA clearance/approval
-    const hasFDA = product.regulatory?.fda && 
-      (product.regulatory.fda.includes('510(k)') || 
-       product.regulatory.fda.includes('Cleared') || 
-       product.regulatory.fda.includes('Approved'));
+    const hasFDA = product.certification?.toLowerCase().includes('fda') || 
+                   (product.regulatory?.fda && 
+                    (product.regulatory.fda.includes('510(k)') || 
+                     product.regulatory.fda.includes('Cleared') || 
+                     product.regulatory.fda.includes('Approved')));
     
     // Check for CE mark approval
-    const hasCE = product.regulatory?.ce?.status === 'Approved';
+    const hasCE = product.certification?.toLowerCase().includes('ce') || 
+                 (product.regulatory?.ce?.status === 'Approved' || 
+                  product.regulatory?.ce?.status === 'Certified');
     
     // Check if product contains AI/deep learning keywords
     const hasAIKeywords = this.containsAIKeywords(product);

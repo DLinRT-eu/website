@@ -1,3 +1,4 @@
+
 import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS, ALL_INITIATIVES } from "@/data";
 import type { ProductDetails } from "@/types/productDetails";
 import type { CompanyDetails } from "@/types/company";
@@ -11,15 +12,18 @@ import type { FilterState } from "@/types/filters";
 class DataService {
   // Product methods
   getAllProducts(): ProductDetails[] {
-    return ALL_PRODUCTS;
+    // Only return products with regulatory approval (CE or FDA)
+    return ALL_PRODUCTS.filter(product => this.hasRegulatoryApproval(product));
   }
 
   getProductById(id: string): ProductDetails | undefined {
-    return ALL_PRODUCTS.find(product => product.id === id);
+    return ALL_PRODUCTS.find(product => product.id === id && this.hasRegulatoryApproval(product));
   }
 
   getProductsByCategory(category: string): ProductDetails[] {
-    return ALL_PRODUCTS.filter(product => product.category === category);
+    return ALL_PRODUCTS.filter(product => 
+      product.category === category && this.hasRegulatoryApproval(product)
+    );
   }
 
   getProductsByCompany(companyId: string): ProductDetails[] {
@@ -27,12 +31,17 @@ class DataService {
     if (!company) return [];
     
     return ALL_PRODUCTS.filter(product => 
-      company.productIds.includes(product.id || '')
+      company.productIds.includes(product.id || '') && this.hasRegulatoryApproval(product)
     );
   }
 
   filterProducts(filters: FilterState): ProductDetails[] {
     return ALL_PRODUCTS.filter((product: ProductDetails) => {
+      // First check regulatory approval
+      if (!this.hasRegulatoryApproval(product)) {
+        return false;
+      }
+      
       if (filters.tasks?.length && !filters.tasks.includes(product.category)) {
         return false;
       }
@@ -56,6 +65,52 @@ class DataService {
       }
       return true;
     });
+  }
+  
+  // Helper method to check if product has FDA or CE approval
+  private hasRegulatoryApproval(product: ProductDetails): boolean {
+    // Check for FDA clearance/approval
+    const hasFDA = product.regulatory?.fda && 
+      (product.regulatory.fda.includes('510(k)') || 
+       product.regulatory.fda.includes('Cleared') || 
+       product.regulatory.fda.includes('Approved'));
+    
+    // Check for CE mark approval
+    const hasCE = product.regulatory?.ce?.status === 'Approved';
+    
+    // Check if product contains AI/deep learning keywords
+    const hasAIKeywords = this.containsAIKeywords(product);
+    
+    return (hasFDA || hasCE) && hasAIKeywords;
+  }
+  
+  // Helper method to check if product description contains AI keywords
+  private containsAIKeywords(product: ProductDetails): boolean {
+    const descriptionLower = product.description.toLowerCase();
+    const featuresLower = product.features.map(f => f.toLowerCase());
+    
+    const aiKeywords = ['artificial intelligence', 'deep learning', ' ai ', 'ai-', '-ai ', 'ai.', 'deep neural', 'machine learning'];
+    
+    // Check in description
+    if (aiKeywords.some(keyword => descriptionLower.includes(keyword))) {
+      return true;
+    }
+    
+    // Check in features
+    if (featuresLower.some(feature => 
+      aiKeywords.some(keyword => feature.includes(keyword))
+    )) {
+      return true;
+    }
+    
+    // Check in key features
+    if (product.keyFeatures && product.keyFeatures.some(kf => 
+      aiKeywords.some(keyword => kf.toLowerCase().includes(keyword))
+    )) {
+      return true;
+    }
+    
+    return false;
   }
 
   // Company methods

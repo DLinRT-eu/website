@@ -43,12 +43,10 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
             <Tooltip content={<ChartTooltipContent />} />
             <Bar 
               dataKey="value" 
-              fill="#00A6D6" 
               onClick={onTaskClick} 
               cursor="pointer"
               fillOpacity={0.9}
-              // Use the fill property from each data item
-              fill={(data) => data.fill}
+              fill={(entry) => entry.fill}
             />
           </BarChart>
         </ChartContainer>

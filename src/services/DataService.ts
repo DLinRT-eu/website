@@ -18,21 +18,18 @@ import {
 class DataService {
   // Product methods
   getAllProducts(): ProductDetails[] {
-    // Only return products with regulatory approval (CE or FDA)
-    return ALL_PRODUCTS.filter(product => hasRegulatoryApproval(product) && 
-      (product.category === "Performance Monitor" || containsDeepLearningKeywords(product)));
+    // Return all products with regulatory approval
+    return ALL_PRODUCTS.filter(product => hasRegulatoryApproval(product));
   }
 
   getProductById(id: string): ProductDetails | undefined {
     return ALL_PRODUCTS.find(product => product.id === id && 
-      (hasRegulatoryApproval(product) && 
-        (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))));
+      hasRegulatoryApproval(product));
   }
 
   getProductsByCategory(category: string): ProductDetails[] {
     return ALL_PRODUCTS.filter(product => 
-      product.category === category && hasRegulatoryApproval(product) && 
-      (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))
+      product.category === category && hasRegulatoryApproval(product)
     );
   }
 
@@ -41,16 +38,14 @@ class DataService {
     if (!company) return [];
     
     return ALL_PRODUCTS.filter(product => 
-      company.productIds.includes(product.id || '') && hasRegulatoryApproval(product) && 
-      (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))
+      company.productIds.includes(product.id || '') && hasRegulatoryApproval(product)
     );
   }
 
   filterProducts(filters: FilterState): ProductDetails[] {
     return ALL_PRODUCTS.filter((product: ProductDetails) => {
-      // First check regulatory approval and DL keywords (except for Performance Monitor)
-      if (!hasRegulatoryApproval(product) || 
-          (product.category !== "Performance Monitor" && !containsDeepLearningKeywords(product))) {
+      // First check regulatory approval
+      if (!hasRegulatoryApproval(product)) {
         return false;
       }
       
@@ -109,8 +104,7 @@ class DataService {
       ...company,
       products: ALL_PRODUCTS.filter(product => 
         company.productIds.includes(product.id || '') && 
-        hasRegulatoryApproval(product) && 
-        (product.category === "Performance Monitor" || containsDeepLearningKeywords(product))
+        hasRegulatoryApproval(product)
       )
     })) as CompanyDetails[];
   }

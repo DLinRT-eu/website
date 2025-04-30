@@ -10,8 +10,18 @@ interface ProductHeaderInfoProps {
 }
 
 const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
-  // Clean up logo URL to ensure proper formatting
-  const logoSrc = product.logoUrl ? (product.logoUrl.startsWith('/') ? product.logoUrl.trim() : `/${product.logoUrl.trim()}`) : '/placeholder.svg';
+  // Generate logo URL based on company name if needed
+  const generateLogoUrl = () => {
+    if (product.logoUrl && product.logoUrl.trim() !== '') {
+      return product.logoUrl.startsWith('/') ? product.logoUrl.trim() : `/${product.logoUrl.trim()}`;
+    }
+    
+    // Create a standardized company logo filename
+    const standardizedCompany = product.company.toLowerCase().replace(/\s+/g, '-');
+    return `/logos/${standardizedCompany}.png`;
+  };
+  
+  const logoSrc = generateLogoUrl();
   
   // Check if verification is recent (less than 6 months)
   const isVerified = !!product.lastVerified;

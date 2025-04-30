@@ -45,11 +45,19 @@ const ProductCard = ({
   const [imageError, setImageError] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
   
-  // Make sure logo URL starts with proper path and remove any spaces
-  const cleanLogoUrl = logoUrl ? (logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`) : '/placeholder.svg';
+  // Generate company logo filename based on company name if no logoUrl provided
+  const generateLogoUrl = () => {
+    if (logoUrl && logoUrl.trim() !== '') {
+      return logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`;
+    }
+    
+    // Create a standardized company logo filename
+    const standardizedCompany = company.toLowerCase().replace(/\s+/g, '-');
+    return `/logos/${standardizedCompany}.png`;
+  };
   
   // Use placeholder if error or path doesn't exist
-  const logoSrc = imageError ? '/placeholder.svg' : cleanLogoUrl;
+  const logoSrc = imageError ? '/placeholder.svg' : generateLogoUrl();
   
   // Normalize certification display
   const displayCertification = certification ? 
@@ -59,7 +67,7 @@ const ProductCard = ({
   
   // Handle logo load errors with better logging
   const handleLogoError = () => {
-    console.error(`Failed to load logo for ${company} - ${name}: ${cleanLogoUrl}`);
+    console.error(`Failed to load logo for ${company} - ${name}: ${generateLogoUrl()}`);
     setImageError(true);
     setImageLoaded(true);
   };
@@ -67,9 +75,9 @@ const ProductCard = ({
   // Log missing logos when in development
   useEffect(() => {
     if (imageError && process.env.NODE_ENV === 'development') {
-      console.warn(`Logo not found for ${company} - ${name}: ${cleanLogoUrl}`);
+      console.warn(`Logo not found for ${company} - ${name}: ${generateLogoUrl()}`);
     }
-  }, [imageError, company, name, cleanLogoUrl]);
+  }, [imageError, company, name]);
 
   return (
     <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">

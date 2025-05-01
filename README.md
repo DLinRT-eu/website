@@ -1,5 +1,3 @@
-
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -13,18 +11,65 @@
 ## Team
 
 <div align="center">
-  <img src="https://cig-utrecht.org/wp-content/uploads/2020/12/matteo-pic.jpg" width="200" style="border-radius: 50%;" alt="Matteo Maspero"/>
   <p><strong>Matteo Maspero</strong></p>
   <p>Project Lead - Computational Imaging Group Utrecht</p>
 </div>
+
+Feel free to contact the Project Lead in case you would like to be involved!
 
 ## How to Contribute
 
 We welcome contributions to improve the accuracy of product information. If you notice any inaccuracies or have updates about the AI products listed, please:
 
-1. Open an issue describing the update needed
-2. Submit a pull request with your changes
-3. Ensure proper attribution and documentation
+1. Open an issue describing the update needed.
+2. Submit a pull request with your changes.
+3. Ensure proper attribution and documentation.
+
+---
+
+## Reviewing Product Content
+
+If you want to review or update the content of a product, here are the most relevant files and steps to follow:
+
+### Key Files to Review
+1. **`src/data/products.json`**  
+   This file contains the core product data, including details like name, modality, anatomy, and certifications.  
+   - **Action**: Verify the accuracy of product details and ensure consistency in tags (e.g., modality, anatomy, certifications).
+
+2. **`src/components/product/RegulatoryInformationDetails.tsx`**  
+   This component displays detailed product information on the website.  
+   - **Action**: Check if the product details are rendered correctly and match the data in `products.json`.
+
+3. **`src/config/tags.ts`**  
+   This file defines the valid tags for modality, anatomy, and certifications.  
+   - **Action**: Ensure that the tags used in `products.json` are consistent with the definitions here.
+
+4. **`src/utils/validateTags.ts`**  
+   This utility validates product tags against the predefined valid tags.  
+   - **Action**: Confirm that the validation logic is working as expected and catches any inconsistencies.
+
+---
+
+### Suggested Course of Action
+1. **Review Product Data**  
+   Open `src/data/products.json` and verify the accuracy of the product details. Ensure that:
+   - All fields are filled in correctly.
+   - Tags (e.g., modality, anatomy, certifications) match the predefined valid tags in `src/config/tags.ts`.
+
+2. **Test Product Rendering**  
+   Run the development server and navigate to the product details page. Confirm that:
+   - The product details are displayed correctly.
+   - The taxonomy filters (e.g., modality, anatomy) work as expected.
+
+3. **Validate Tags**  
+   Use the validation utility (`src/utils/validateTags.ts`) to check for any invalid tags in the product data. Fix any issues found.
+
+4. **Submit Changes**  
+   After making updates:
+   - Run tests to ensure everything works as expected.
+   - Submit a pull request with a clear description of the changes made.
+
+---
 
 ## Development
 

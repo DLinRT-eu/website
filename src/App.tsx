@@ -1,19 +1,19 @@
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Layout from './components/Layout';
-import HomePage from './pages/HomePage';
-import ProductsPage from './pages/ProductsPage';
-import ProductDetails from './pages/ProductDetails';
-import FDAProductsPage from './pages/FDAProductsPage';
-import CompaniesPage from './pages/CompaniesPage';
-import CompanyDetails from './pages/CompanyDetails';
-import NewsPage from './pages/NewsPage';
-import NewsDetails from './pages/NewsDetails';
-import AboutPage from './pages/AboutPage';
-import NotFound from './pages/NotFound';
-import InitiativesPage from './pages/InitiativesPage';
-import InitiativeDetails from './pages/InitiativeDetails';
-import GuidelinesPage from './pages/GuidelinesPage';
+import Layout from '@/components/Layout';
+import HomePage from '@/pages/Index';
+import ProductsPage from '@/pages/Products';
+import ProductDetails from '@/pages/ProductDetails';
+import FDAProductsPage from '@/pages/FDAProductsPage';
+import CompaniesPage from '@/pages/Companies';
+import CompanyDetails from '@/pages/CompanyDetails';
+import NewsPage from '@/pages/News';
+import NewsDetails from '@/pages/NewsDetail';
+import AboutPage from '@/pages/MaintenanceTeam';
+import NotFound from '@/pages/NotFound';
+import InitiativesPage from '@/pages/Initiatives';
+import InitiativeDetails from '@/pages/InitiativeDetails';
+import GuidelinesPage from '@/pages/GuidelinesPage';
 
 function App() {
   return (

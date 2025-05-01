@@ -16,7 +16,7 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
       return {
         label: "MDR exempt",
         icon: <AlertTriangle className="h-3 w-3" />,
-        variant: "warning",
+        variant: "warning" as const,
         description: "Medical Device Regulation Exempt"
       };
     }
@@ -29,7 +29,7 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
     return {
       label: hasCEApproval ? "CE Approved" : "Not CE Approved",
       icon: hasCEApproval ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
-      variant: hasCEApproval ? "success" : "outline",
+      variant: hasCEApproval ? "success" as const : "outline" as const,
       description: product.regulatory?.ce?.class ? `Class ${product.regulatory.ce.class}` : ""
     };
   };
@@ -45,7 +45,7 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
     return {
       label: hasFDAApproval ? "FDA Cleared/Approved" : "Not FDA Cleared",
       icon: hasFDAApproval ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
-      variant: hasFDAApproval ? "success" : "outline",
+      variant: hasFDAApproval ? "success" as const : "outline" as const,
       description: product.regulatory?.fda || ""
     };
   };
@@ -64,7 +64,7 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
             <p className="text-sm font-medium">CE Status:</p>
             <div className="flex items-center gap-2">
               <Badge 
-                variant={ceStatus.variant as "success" | "outline" | "warning"} 
+                variant={ceStatus.variant}
                 className="flex items-center gap-1"
               >
                 {ceStatus.icon}
@@ -84,7 +84,7 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
             <p className="text-sm font-medium">FDA Status:</p>
             <div className="flex items-center gap-2">
               <Badge 
-                variant={fdaStatus.variant as "success" | "outline"} 
+                variant={fdaStatus.variant}
                 className="flex items-center gap-1"
               >
                 {fdaStatus.icon}

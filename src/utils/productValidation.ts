@@ -1,6 +1,6 @@
 
 import { ProductDetails } from "@/types/productDetails";
-import { MODALITY_TAGS, ANATOMY_TAGS, CERTIFICATION_TAGS, CERTIFICATION_MAPPING } from "@/config/tags";
+import { MODALITY_TAGS, ANATOMY_TAGS, CERTIFICATION_TAGS, COMBINED_CERTIFICATION_TAGS } from "@/config/tags";
 
 export interface ValidationResult {
   isValid: boolean;
@@ -51,7 +51,7 @@ export const validateProduct = (product: ProductDetails): ValidationResult => {
   // Validate certification
   if (product.certification) {
     // For combined certifications
-    if (!COMBINED_CERTIFICATION_TAGS.includes(product.certification)) {
+    if (COMBINED_CERTIFICATION_TAGS && !COMBINED_CERTIFICATION_TAGS.includes(product.certification)) {
       result.isValid = false;
       result.errors.push({
         field: 'certification',

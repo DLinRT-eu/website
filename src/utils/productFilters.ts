@@ -1,4 +1,5 @@
 import { ProductDetails } from "@/types/productDetails";
+import { CERTIFICATION_TAGS, CERTIFICATION_MAPPING } from "@/config/tags";
 
 /**
  * Checks if a product has CE or FDA regulatory approval
@@ -94,4 +95,39 @@ export const standardizeCertification = (certification: string): string => {
     return 'mdr exempt';
   }
   return certification;
+};
+
+/**
+ * Gets standardized certification tags from a product
+ */
+export const getStandardizedCertificationTags = (product: ProductDetails): string[] => {
+  // If using combined certifications like "CE & FDA"
+  if (product.certification && CERTIFICATION_MAPPING[product.certification]) {
+    return CERTIFICATION_MAPPING[product.certification];
+  }
+  
+  // Otherwise extract from both certification field and regulatory details
+  const certTags: string[] = [];
+  
+  if (product.certification) {
+    if (product.certification.toLowerCase().includes('ce')) certTags.push('CE');
+    if (product.certification.toLowerCase().includes('fda')) certTags.push('FDA');
+    if (product.certification === 'MDR exempt') certTags.push('MDR exempt');
+    if (product.certification.toLowerCase().includes('nmpa')) certTags.push('NMPA');
+  }
+  
+  // Check regulatory fields
+  if (product.regulatory?.ce?.status === 'Approved' || 
+      product.regulatory?.ce?.status === 'Certified') {
+    if (!certTags.includes('CE')) certTags.push('CE');
+  }
+  
+  if (product.regulatory?.fda && 
+      (product.regulatory.fda.includes('510(k)') || 
+       product.regulatory.fda.includes('Cleared') || 
+       product.regulatory.fda.includes('Approved'))) {
+    if (!certTags.includes('FDA')) certTags.push('FDA');
+  }
+  
+  return certTags.filter(tag => CERTIFICATION_TAGS.includes(tag));
 };

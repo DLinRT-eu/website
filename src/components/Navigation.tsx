@@ -13,7 +13,6 @@ const Navigation = () => {
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Products", path: "/products" },
-    { name: "FDA AI/ML Products", path: "/fda-products" },
     { name: "Companies", path: "/companies" },
     { name: "News", path: "/news" },
     { name: "Initiatives", path: "/initiatives" },

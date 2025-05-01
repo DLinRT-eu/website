@@ -4,7 +4,6 @@ import Layout from '@/components/Layout';
 import HomePage from '@/pages/Index';
 import ProductsPage from '@/pages/Products';
 import ProductDetails from '@/pages/ProductDetails';
-import FDAProductsPage from '@/pages/FDAProductsPage';
 import CompaniesPage from '@/pages/Companies';
 import CompanyDetails from '@/pages/CompanyDetails';
 import NewsPage from '@/pages/News';
@@ -22,7 +21,6 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="products" element={<ProductsPage />} />
-          <Route path="fda-products" element={<FDAProductsPage />} />
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="companies" element={<CompaniesPage />} />
           <Route path="company/:id" element={<CompanyDetails />} />

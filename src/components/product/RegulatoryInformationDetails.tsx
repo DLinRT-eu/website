@@ -3,7 +3,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
+import { CheckCircle, XCircle, AlertTriangle, ExternalLink } from "lucide-react";
 
 interface RegulatoryInformationProps {
   product: ProductDetails;
@@ -52,6 +52,7 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
   
   const ceStatus = getCertificationStatus();
   const fdaStatus = getFDAStatus();
+  const hasFDASubmissionInfo = product.regulatory?.fdaSubmissionNumber && product.regulatory?.fdaLink;
   
   return (
     <Card>
@@ -96,6 +97,19 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
                 </span>
               )}
             </div>
+            {hasFDASubmissionInfo && (
+              <div className="mt-1">
+                <a 
+                  href={product.regulatory.fdaLink} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center text-sm text-blue-600 hover:text-blue-800"
+                >
+                  FDA Submission {product.regulatory.fdaSubmissionNumber}
+                  <ExternalLink className="ml-1 h-3 w-3" />
+                </a>
+              </div>
+            )}
           </div>
         </div>
         <div>

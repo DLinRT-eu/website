@@ -39,6 +39,8 @@ export const RAYSEARCH_TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
+      fdaSubmissionNumber: "K211929",
+      fdaLink: "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K211929",
       intendedUseStatement: "For use in treatment planning for radiation therapy."
     },
     market: {

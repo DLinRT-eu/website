@@ -50,6 +50,8 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
+      fdaSubmissionNumber: "K203472",
+      fdaLink: "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K203472",
       intendedUseStatement: "For automatic segmentation of brain tumors in radiation therapy planning."
     },
     market: {

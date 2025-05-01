@@ -45,6 +45,8 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) Cleared",
+      fdaSubmissionNumber: "K220177",
+      fdaLink: "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K220177",
       intendedUseStatement: "Intended for enhancing CBCT medical images to improve quality through AI-based reconstruction to support radiotherapy treatment planning and verification."
     },
     market: {

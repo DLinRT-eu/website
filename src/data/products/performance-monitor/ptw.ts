@@ -50,6 +50,8 @@ export const PTW_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
+      fdaSubmissionNumber: "K203609",
+      fdaLink: "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K203609",
       intendedUseStatement: "For quality assurance and performance monitoring of radiotherapy treatments and equipment."
     },
     market: {

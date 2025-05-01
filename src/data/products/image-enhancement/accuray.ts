@@ -45,6 +45,8 @@ export const ACCURAY_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) Cleared",
+      fdaSubmissionNumber: "K213274",
+      fdaLink: "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K213274",
       intendedUseStatement: "Intended for enhancing radiotherapy guidance images to improve motion tracking and target localization during treatment delivery."
     },
     market: {

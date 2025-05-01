@@ -39,6 +39,8 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
+      fdaSubmissionNumber: "K213392",
+      fdaLink: "https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfpmn/pmn.cfm?ID=K213392",
       intendedUseStatement: "For automatic segmentation of organs at risk in radiation therapy planning."
     },
     market: {

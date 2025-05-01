@@ -49,6 +49,8 @@ export interface Product {
       type?: string;
     };
     fda?: string;
+    fdaSubmissionNumber?: string;
+    fdaLink?: string;
     intendedUseStatement?: string;
   };
   market?: {

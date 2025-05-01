@@ -16,8 +16,11 @@ export const hasRegulatoryApproval = (product: ProductDetails): boolean => {
   const hasCE = product.certification?.toLowerCase().includes('ce') || 
                (product.regulatory?.ce?.status === 'Approved' || 
                 product.regulatory?.ce?.status === 'Certified');
+                
+  // Check for MDR exempt status
+  const hasMDRExempt = product.certification === 'MDR exempt';
   
-  return hasFDA || hasCE;
+  return hasFDA || hasCE || hasMDRExempt;
 };
 
 /**
@@ -87,6 +90,9 @@ export const standardizeCertification = (certification: string): string => {
   }
   if (certification.includes('fda')) {
     return 'fda';
+  }
+  if (certification === 'mdr exempt') {
+    return 'mdr exempt';
   }
   return certification;
 };

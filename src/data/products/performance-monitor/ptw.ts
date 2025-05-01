@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const PTW_PRODUCTS: ProductDetails[] = [
   {
     id: "ptw-aqualis",
-    name: "AQualiS",
+    name: "AIQUALIS",
     company: "PTW",
     companyUrl: "https://www.ptwdosimetry.com",
     productUrl: "https://www.ptwdosimetry.com/en/products/aiqualis",
@@ -16,7 +16,7 @@ export const PTW_PRODUCTS: ProductDetails[] = [
       "Treatment verification"
     ],
     category: "Performance Monitor",
-    certification: "CE Mark",
+    certification: "MDR exempt",
     logoUrl: "/logos/ptw.jpg",
     website: "https://www.ptwdosimetry.com/en/products/aiqualis",
     anatomicalLocation: ["Multiple"],

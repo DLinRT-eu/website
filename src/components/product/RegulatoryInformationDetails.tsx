@@ -3,21 +3,55 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle } from "lucide-react";
+import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
 
 interface RegulatoryInformationProps {
   product: ProductDetails;
 }
 
 const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) => {
-  // Helper function to check if CE is approved
-  const hasCEApproval = product.regulatory?.ce?.status === "Approved";
+  // Helper function to check certification type and status
+  const getCertificationStatus = () => {
+    if (product.certification === "MDR exempt") {
+      return {
+        label: "MDR exempt",
+        icon: <AlertTriangle className="h-3 w-3" />,
+        variant: "warning",
+        description: "Medical Device Regulation Exempt"
+      };
+    }
+    
+    // Check for CE approval
+    const hasCEApproval = product.regulatory?.ce?.status === "Approved" || 
+                          product.regulatory?.ce?.status === "Certified" ||
+                          product.certification?.toLowerCase().includes('ce');
+    
+    return {
+      label: hasCEApproval ? "CE Approved" : "Not CE Approved",
+      icon: hasCEApproval ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
+      variant: hasCEApproval ? "success" : "outline",
+      description: product.regulatory?.ce?.class ? `Class ${product.regulatory.ce.class}` : ""
+    };
+  };
   
   // Helper function to check if FDA is approved/cleared
-  const hasFDAApproval = product.regulatory?.fda && 
-    (product.regulatory.fda.includes('510(k)') || 
-     product.regulatory.fda.includes('Cleared') || 
-     product.regulatory.fda.includes('Approved'));
+  const getFDAStatus = () => {
+    const hasFDAApproval = product.certification?.toLowerCase().includes('fda') || 
+                   (product.regulatory?.fda && 
+                    (product.regulatory.fda.includes('510(k)') || 
+                     product.regulatory.fda.includes('Cleared') || 
+                     product.regulatory.fda.includes('Approved')));
+    
+    return {
+      label: hasFDAApproval ? "FDA Cleared/Approved" : "Not FDA Cleared",
+      icon: hasFDAApproval ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
+      variant: hasFDAApproval ? "success" : "outline",
+      description: product.regulatory?.fda || ""
+    };
+  };
+  
+  const ceStatus = getCertificationStatus();
+  const fdaStatus = getFDAStatus();
   
   return (
     <Card>
@@ -30,24 +64,15 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
             <p className="text-sm font-medium">CE Status:</p>
             <div className="flex items-center gap-2">
               <Badge 
-                variant={hasCEApproval ? "success" : "outline"} 
+                variant={ceStatus.variant as "success" | "outline" | "warning"} 
                 className="flex items-center gap-1"
               >
-                {hasCEApproval ? (
-                  <>
-                    <CheckCircle className="h-3 w-3" />
-                    <span>CE Approved</span>
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-3 w-3" />
-                    <span>Not CE Approved</span>
-                  </>
-                )}
+                {ceStatus.icon}
+                <span>{ceStatus.label}</span>
               </Badge>
-              {product.regulatory?.ce?.class && (
+              {ceStatus.description && (
                 <span className="text-sm text-gray-500">
-                  Class {product.regulatory.ce.class}
+                  {ceStatus.description}
                 </span>
               )}
             </div>
@@ -59,24 +84,15 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
             <p className="text-sm font-medium">FDA Status:</p>
             <div className="flex items-center gap-2">
               <Badge 
-                variant={hasFDAApproval ? "success" : "outline"} 
+                variant={fdaStatus.variant as "success" | "outline"} 
                 className="flex items-center gap-1"
               >
-                {hasFDAApproval ? (
-                  <>
-                    <CheckCircle className="h-3 w-3" />
-                    <span>FDA Cleared/Approved</span>
-                  </>
-                ) : (
-                  <>
-                    <XCircle className="h-3 w-3" />
-                    <span>Not FDA Cleared</span>
-                  </>
-                )}
+                {fdaStatus.icon}
+                <span>{fdaStatus.label}</span>
               </Badge>
-              {product.regulatory?.fda && (
+              {fdaStatus.description && (
                 <span className="text-sm text-gray-500">
-                  {product.regulatory.fda}
+                  {fdaStatus.description}
                 </span>
               )}
             </div>

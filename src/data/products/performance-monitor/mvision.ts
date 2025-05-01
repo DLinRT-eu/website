@@ -16,7 +16,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
       "Workflow integration"
     ],
     category: "Performance Monitor",
-    certification: "CE Mark",
+    certification: "MDR exempt",
     logoUrl: "/logos/mvision-ai.png",
     website: "https://mvision.ai/verify/",
     anatomicalLocation: ["Multiple"],

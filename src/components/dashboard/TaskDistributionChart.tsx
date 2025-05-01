@@ -6,7 +6,9 @@ import {
   ChartTooltipContent, 
   ChartTooltip
 } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, Cell, ResponsiveContainer } from "recharts";
+import { useIsMobile } from "@/hooks/use-mobile";
+import ResponsiveChartWrapper from './ResponsiveChartWrapper';
 
 interface TaskDistributionChartProps {
   taskData: {
@@ -24,42 +26,56 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
   totalProducts, 
   onTaskClick 
 }) => {
+  const isMobile = useIsMobile();
+
+  // Responsive settings based on device
+  const chartMargin = isMobile 
+    ? { top: 5, right: 10, left: 0, bottom: 100 }
+    : { top: 5, right: 30, left: 5, bottom: 80 };
+
+  const axisHeight = isMobile ? 100 : 90;
+  const tickFontSize = isMobile ? 10 : 12;
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Products by Task ({totalProducts} total)</CardTitle>
+    <Card className="w-full">
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg md:text-2xl">Products by Task ({totalProducts} total)</CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer className="h-[300px]" config={{}}>
-          <BarChart 
-            data={taskData}
-            margin={{ top: 5, right: 30, left: 5, bottom: 80 }} // Increased bottom margin for more space
-          >
-            <XAxis 
-              dataKey="name" 
-              angle={-20} // Changed angle to -20 degrees
-              textAnchor="end" 
-              height={90} // Increased height to provide more space for labels
-              tick={{
-                fontSize: 12,
-                dy: 8 // Added dy attribute for vertical adjustment
-              }}
-              tickMargin={15} // Added tickMargin for more space between text and axis
-            />
-            <YAxis />
-            <Tooltip content={<ChartTooltipContent />} />
-            <Bar 
-              dataKey="value" 
-              onClick={onTaskClick} 
-              cursor="pointer"
-              fillOpacity={0.9}
-            >
-              {taskData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ChartContainer>
+        <ResponsiveChartWrapper minHeight="300px">
+          <ChartContainer className="h-full" config={{}}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart 
+                data={taskData}
+                margin={chartMargin} 
+              >
+                <XAxis 
+                  dataKey="name" 
+                  angle={-20}
+                  textAnchor="end" 
+                  height={axisHeight}
+                  tick={{
+                    fontSize: tickFontSize,
+                    dy: 8
+                  }}
+                  tickMargin={15}
+                />
+                <YAxis />
+                <Tooltip content={<ChartTooltipContent />} />
+                <Bar 
+                  dataKey="value" 
+                  onClick={onTaskClick} 
+                  cursor="pointer"
+                  fillOpacity={0.9}
+                >
+                  {taskData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </ChartContainer>
+        </ResponsiveChartWrapper>
         <div className="mt-4 text-sm text-muted-foreground text-center">
           Click on any bar to filter by task
         </div>

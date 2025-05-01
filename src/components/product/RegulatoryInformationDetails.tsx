@@ -4,15 +4,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
+import { getStandardizedCertificationTags } from "@/utils/productFilters";
 
 interface RegulatoryInformationProps {
   product: ProductDetails;
 }
 
 const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) => {
-  // Helper function to check certification type and status
-  const getCertificationStatus = () => {
-    if (product.certification === "MDR exempt") {
+  const certificationTags = getStandardizedCertificationTags(product);
+  const hasCE = certificationTags.includes('CE');
+  const hasFDA = certificationTags.includes('FDA');
+  const hasMDRExempt = certificationTags.includes('MDR exempt');
+  
+  // Helper function to check certification type and status for CE
+  const getCEStatus = () => {
+    if (hasMDRExempt) {
       return {
         label: "MDR exempt",
         icon: <AlertTriangle className="h-3 w-3" />,
@@ -21,36 +27,25 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
       };
     }
     
-    // Check for CE approval
-    const hasCEApproval = product.regulatory?.ce?.status === "Approved" || 
-                          product.regulatory?.ce?.status === "Certified" ||
-                          product.certification?.toLowerCase().includes('ce');
-    
     return {
-      label: hasCEApproval ? "CE Approved" : "Not CE Approved",
-      icon: hasCEApproval ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
-      variant: hasCEApproval ? "success" as const : "outline" as const,
+      label: hasCE ? "CE Approved" : "Not CE Approved",
+      icon: hasCE ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
+      variant: hasCE ? "success" as const : "outline" as const,
       description: product.regulatory?.ce?.class ? `Class ${product.regulatory.ce.class}` : ""
     };
   };
   
-  // Helper function to check if FDA is approved/cleared
+  // Helper function for FDA status
   const getFDAStatus = () => {
-    const hasFDAApproval = product.certification?.toLowerCase().includes('fda') || 
-                   (product.regulatory?.fda && 
-                    (product.regulatory.fda.includes('510(k)') || 
-                     product.regulatory.fda.includes('Cleared') || 
-                     product.regulatory.fda.includes('Approved')));
-    
     return {
-      label: hasFDAApproval ? "FDA Cleared/Approved" : "Not FDA Cleared",
-      icon: hasFDAApproval ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
-      variant: hasFDAApproval ? "success" as const : "outline" as const,
+      label: hasFDA ? "FDA Cleared/Approved" : "Not FDA Cleared",
+      icon: hasFDA ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
+      variant: hasFDA ? "success" as const : "outline" as const,
       description: product.regulatory?.fda || ""
     };
   };
   
-  const ceStatus = getCertificationStatus();
+  const ceStatus = getCEStatus();
   const fdaStatus = getFDAStatus();
   
   return (

@@ -1,6 +1,7 @@
 
 import { Product } from "@/types/product";
 import { ALL_PRODUCTS } from "@/data";
+import { MODALITY_TAGS, ANATOMY_TAGS, COMBINED_CERTIFICATION_TAGS } from "@/config/tags";
 
 export const getAllOptions = (field: keyof Product): string[] => {
   switch (field) {
@@ -41,36 +42,55 @@ export const getAllOptions = (field: keyof Product): string[] => {
       });
     }
     case 'anatomicalLocation': {
-      // Get all unique anatomical locations
-      const allLocations = ALL_PRODUCTS.flatMap(p => p.anatomicalLocation || []);
+      // Get only the anatomical locations that are actually used in products
+      const usedLocations = new Set<string>();
       
-      // Process and normalize locations
-      const processedLocations = allLocations
-        .map(location => {
-          // Merge "Head" or "Neck" into "Head & Neck"
-          if (location === "Head" || location === "Neck") {
-            return "Head & Neck";
-          }
-          // Filter out "Muscoloskeletal" and "Spine"
-          if (location === "Muscoloskeletal" || location === "Spine") {
-            return null;
-          }
-          return location;
-        })
-        .filter(Boolean); // Remove null values
+      ALL_PRODUCTS.forEach(product => {
+        if (product.anatomicalLocation && Array.isArray(product.anatomicalLocation)) {
+          product.anatomicalLocation.forEach(location => {
+            // Process locations based on our standard tags
+            if (ANATOMY_TAGS.includes(location)) {
+              usedLocations.add(location);
+            } else if (location === "Head" || location === "Neck") {
+              usedLocations.add("Head & Neck");
+            }
+          });
+        }
+      });
       
-      // Get unique locations after processing
-      return [...new Set(processedLocations)].sort();
+      return Array.from(usedLocations).sort();
     }
     case 'company':
       return [...new Set(ALL_PRODUCTS.map(p => p.company))].sort();
-    case 'certification':
-      return [...new Set(ALL_PRODUCTS.map(p => p.certification || '').filter(Boolean))].sort();
+    case 'certification': {
+      // Return only combined certification tags that are actually used in products
+      const usedCertifications = new Set<string>();
+      
+      ALL_PRODUCTS.forEach(product => {
+        if (product.certification && COMBINED_CERTIFICATION_TAGS.includes(product.certification)) {
+          usedCertifications.add(product.certification);
+        }
+      });
+      
+      return Array.from(usedCertifications).sort();
+    }
     case 'modality': {
-      const modalitiesArray = ALL_PRODUCTS.map(p => 
-        Array.isArray(p.modality) ? p.modality : (p.modality ? [p.modality] : [])
-      ).flat();
-      return [...new Set(modalitiesArray)].filter(Boolean).sort();
+      // Get only the modalities that are actually used in products
+      const usedModalities = new Set<string>();
+      
+      ALL_PRODUCTS.forEach(product => {
+        const modalitiesArray = Array.isArray(product.modality) 
+          ? product.modality 
+          : (product.modality ? [product.modality] : []);
+          
+        modalitiesArray.forEach(modality => {
+          if (MODALITY_TAGS.includes(modality)) {
+            usedModalities.add(modality);
+          }
+        });
+      });
+      
+      return Array.from(usedModalities).sort();
     }
     default:
       return [];

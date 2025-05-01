@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
 /**

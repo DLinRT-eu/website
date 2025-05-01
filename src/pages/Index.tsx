@@ -48,7 +48,8 @@ const Index = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
         <TaskTaxonomy 
           categories={categoryCounts} 
-          onCategoryClick={handleCategoryClick} 
+          onCategoryClick={handleCategoryClick}
+          filterType="task"
         />
       </div>
 

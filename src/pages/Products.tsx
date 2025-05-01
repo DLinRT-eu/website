@@ -29,11 +29,17 @@ const Products = () => {
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
     const taskParam = urlParams.get('task');
+    const modalityParam = urlParams.get('modality');
+    const anatomyParam = urlParams.get('anatomy');
+    const certificationParam = urlParams.get('certification');
     
+    const newFilters = { ...currentFilters };
+    let hasAppliedFilters = false;
+    
+    // Check and apply task filter
     if (taskParam) {
-      const newFilters = { ...currentFilters, tasks: [taskParam] };
-      setCurrentFilters(newFilters);
-      setFiltersActive(true);
+      newFilters.tasks = [taskParam];
+      hasAppliedFilters = true;
       
       // Dispatch an event to notify filter components about the change
       const event = new CustomEvent('setTaskFilter', { 
@@ -42,6 +48,54 @@ const Products = () => {
       window.dispatchEvent(event);
       
       toast.info(`Showing ${taskParam} products`);
+    }
+    
+    // Check and apply modality filter
+    if (modalityParam) {
+      newFilters.modalities = [modalityParam];
+      hasAppliedFilters = true;
+      
+      // Dispatch an event
+      const event = new CustomEvent('setModalityFilter', { 
+        detail: { modality: modalityParam }
+      });
+      window.dispatchEvent(event);
+      
+      if (!taskParam) toast.info(`Showing ${modalityParam} products`);
+    }
+    
+    // Check and apply anatomy filter
+    if (anatomyParam) {
+      newFilters.locations = [anatomyParam];
+      hasAppliedFilters = true;
+      
+      // Dispatch an event
+      const event = new CustomEvent('setAnatomyFilter', { 
+        detail: { anatomy: anatomyParam }
+      });
+      window.dispatchEvent(event);
+      
+      if (!taskParam && !modalityParam) toast.info(`Showing ${anatomyParam} products`);
+    }
+    
+    // Check and apply certification filter
+    if (certificationParam) {
+      newFilters.certifications = [certificationParam];
+      hasAppliedFilters = true;
+      
+      // Dispatch an event
+      const event = new CustomEvent('setCertificationFilter', { 
+        detail: { certification: certificationParam }
+      });
+      window.dispatchEvent(event);
+      
+      if (!taskParam && !modalityParam && !anatomyParam) 
+        toast.info(`Showing products with ${certificationParam}`);
+    }
+    
+    if (hasAppliedFilters) {
+      setCurrentFilters(newFilters);
+      setFiltersActive(true);
     }
   }, [location.search]);
 

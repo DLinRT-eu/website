@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -12,6 +11,7 @@ interface CategoryCount {
 interface TaskTaxonomyProps {
   categories: CategoryCount[];
   onCategoryClick: (category: string) => void;
+  filterType?: 'task' | 'modality' | 'anatomy' | 'certification';
 }
 
 // Map for category icons and descriptions
@@ -65,7 +65,7 @@ const defaultCategoryInfo = {
   color: "bg-gray-100"
 };
 
-const TaskTaxonomy = ({ categories, onCategoryClick }: TaskTaxonomyProps) => {
+const TaskTaxonomy = ({ categories, onCategoryClick, filterType = 'task' }: TaskTaxonomyProps) => {
   // Sort categories based on specified order
   const categoryOrder = [
     "Reconstruction",
@@ -81,17 +81,41 @@ const TaskTaxonomy = ({ categories, onCategoryClick }: TaskTaxonomyProps) => {
   const sortedCategories = [...categories].sort((a, b) => {
     const indexA = categoryOrder.indexOf(a.name);
     const indexB = categoryOrder.indexOf(b.name);
-    return indexA - indexB;
+    
+    // If both are in the order list, sort by that order
+    if (indexA >= 0 && indexB >= 0) {
+      return indexA - indexB;
+    }
+    
+    // If only one is in the list, prioritize it
+    if (indexA >= 0) return -1;
+    if (indexB >= 0) return 1;
+    
+    // Otherwise sort alphabetically
+    return a.name.localeCompare(b.name);
   });
+
+  // Generate the component title based on filter type
+  const getTaxonomyTitle = () => {
+    switch(filterType) {
+      case 'modality': return 'Imaging Modalities';
+      case 'anatomy': return 'Anatomical Locations';
+      case 'certification': return 'Regulatory Approvals';
+      case 'task':
+      default: return 'Tasks Across the Patient Workflow';
+    }
+  };
 
   return (
     <div className="mb-10 p-5 bg-white rounded-lg border border-gray-100 shadow-sm">
-      <h3 className="font-medium text-lg text-gray-800 mb-4">Tasks Across the Patient Workflow</h3>
+      <h3 className="font-medium text-lg text-gray-800 mb-4">{getTaxonomyTitle()}</h3>
       
       <div className="mb-6">
         <div className="flex flex-wrap items-start justify-center gap-4 relative">
           {/* Workflow line connecting the tasks */}
-          <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-300 via-[#00A6D6] to-blue-300 hidden md:block" />
+          {filterType === 'task' && (
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-300 via-[#00A6D6] to-blue-300 hidden md:block" />
+          )}
           
           {sortedCategories.map((category) => {
             const { icon: Icon, description, color } = categoryInfo[category.name] || defaultCategoryInfo;

@@ -9,6 +9,8 @@ import { getAllOptions } from "@/utils/filterOptions";
 import dataService from "@/services/DataService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { FileDown } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -44,6 +46,32 @@ const Index = () => {
         structuredData={structuredData}
       />
       <IntroSection />
+      
+      {/* Black Paper Download Section */}
+      <div className="bg-gradient-to-b from-white to-gray-50 py-8">
+        <div className="max-w-3xl mx-auto px-4 text-center">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-3">DLinRT.eu Intent & Roadmap</h2>
+          <p className="text-gray-600 mb-4">
+            Learn more about our mission, goals and future plans in our official Black Paper document.
+          </p>
+          <Button 
+            variant="outline" 
+            size="lg"
+            className="bg-white hover:bg-gray-100 border border-gray-200 shadow-sm"
+            asChild
+          >
+            <a 
+              href="/DLinRT_eu_Intent_Roadmap_v0_1.pdf" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2"
+            >
+              <FileDown className="h-5 w-5" />
+              <span>Download Black Paper (PDF)</span>
+            </a>
+          </Button>
+        </div>
+      </div>
       
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
         <TaskTaxonomy 

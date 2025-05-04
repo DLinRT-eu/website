@@ -27,7 +27,7 @@ export const CHALLENGE_INITIATIVES: Initiative[] = [
   },
   {
     id: "synthrad-2023",
-    name: "SynthRAD 2023",
+    name: "SynthRAD2023",
     category: "Grand Challenge",
     description: "Challenge on MR-to-CT synthesis for radiotherapy planning, focused on generating synthetic CT images from MRI for radiation therapy planning.",
     website: "https://synthrad2023.grand-challenge.org/",
@@ -43,16 +43,29 @@ export const CHALLENGE_INITIATIVES: Initiative[] = [
   },
   {
     id: "synthrad-2025",
-    name: "SynthRAD 2025",
+    name: "SynthRAD2025",
     category: "Grand Challenge",
-    description: "Upcoming challenge on advanced MR-to-CT synthesis for radiotherapy planning, building on the success of SynthRAD 2023.",
+    description: "Running challenge on advanced MR-to-CT synthesis for radiotherapy planning, building on the success of SynthRAD 2023.",
     website: "https://synthrad2025.grand-challenge.org/",
-    organization: "MICCAI Society",
-    startDate: "2025-01-01",
-    status: "Upcoming",
+    organization: "MICCAI/ESTRO",
+    startDate: "2025-03-01",
+    status: "Active",
     tags: ["MRI", "CT", "Synthetic CT", "Image Synthesis", "Radiation Therapy"],
     features: ["Enhanced dataset", "Multiple anatomical regions", "Advanced evaluation metrics"],
-    participationInfo: "Registration will open in late 2024"
+    participationInfo: "Currently ongoing"
+  },
+  {
+    id: "trackrad-2025",
+    name: "TrackRAD2025",
+    category: "Grand Challenge",
+    description: "Running challenge on tracking from 2D-cine MRI-Linac",
+    website: "https://trackrad2025.grand-challenge.org/",
+    organization: "MICCAI/ESTRO",
+    startDate: "2025-03-15",
+    status: "Active",
+    tags: ["MRI", "Radiation Therapy"],
+    features: ["2D-cine", "Multiple anatomical regions", "Advanced evaluation metrics"],
+    participationInfo: "Currently ongoing"
   },
   {
     id: "autoplanheadneck",

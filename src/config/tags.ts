@@ -5,9 +5,8 @@ export const MODALITY_TAGS = [
   'MRI',
   'CBCT',
   'PET',
-  'X-ray',
-  'LINAC',
-  'MRI-LINAC'
+  'PET/CT',
+  'X-ray'
 ];
 
 // Valid anatomical location options
@@ -20,9 +19,9 @@ export const ANATOMY_TAGS = [
   'Breast',
   'Head & Neck',
   'Pelvis',
-  'Prostate',
-  'Thorax',
-  'Multiple'
+  'Male Pelvis',
+  'Female Pelvis',
+  'Thorax'
 ];
 
 // Valid certification options

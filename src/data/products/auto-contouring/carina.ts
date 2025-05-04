@@ -16,7 +16,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/carina.jpg",
     website: "https://www.carinaai.com/intcontour.html",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Male Pelvis", "Female Pelvis"],
-    modality: "CT",
+    modality: ["CT", "MRI", "PET/CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Cloud platform", "Rapid processing"],
@@ -39,7 +39,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
         class: "IIa",
         type: "Medical Device"
       },
-      fda: "Under review",
+      fda: "FDA",
       intendedUseStatement: "For automatic segmentation of organs at risk in radiation therapy planning."
     },
     market: {
@@ -50,36 +50,19 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
       researchUsers: "Academic institutions"
     },
     pricing: {
-      model: ["Subscription"],
-      basedOn: ["Annual license", "Number of patients"]
+      model: ["-"],
+      basedOn: ["-"]
     },
     version: "2.1",
     releaseDate: "2023-08-10",
     lastUpdated: "2024-03-05",
     supportedStructures: [
-      "Head & Neck: Brainstem",
-      "Head & Neck: Parotid (L)",
-      "Head & Neck: Parotid (R)",
-      "Head & Neck: Spinal Cord",
-      "Head & Neck: Oral Cavity",
-      "Head & Neck: Mandible",
-      "Head & Neck: Submandibular Glands",
-      "Head & Neck: Larynx",
-      "Head & Neck: Thyroid",
-      "Thorax: Heart",
-      "Thorax: Lungs (L)",
-      "Thorax: Lungs (R)",
-      "Thorax: Esophagus",
-      "Thorax: Spinal Cord",
-      "Abdomen: Liver",
-      "Abdomen: Kidneys (L)",
-      "Abdomen: Kidneys (R)",
-      "Abdomen: Stomach",
-      "Abdomen: Bowel",
-      "Pelvis: Bladder",
-      "Pelvis: Rectum",
-      "Pelvis: Femoral Heads"
+      "Head & Neck: Mandible, Left Brachial Plexus, Right Brachial Plexus, Brain, Brainstem, Oval Cavity, Left Cochlea, Right Cochlea, Left Eye, Right Eye, Left Lacrimal Gland, Right Lacrimal Gland, Left Submandibular Gland, Right Submandibular Gland, Left Inner Ear, Right Inner Ear, Left Temporomandibular Joint, Right Temporomandibular Joint, Left Lens, Right Lens, Left Temporal Lobe, Right Temporal Lobe, Left Middle Ear, Right Middle Ear, Optic Chiasm, Left Optic Nerve, Right Optic Nerve, Left Parotid, Right Parotid",
+      "Thorax: Pharynx, Pituitary, Proximal Bronchial Tree, Esophagus, Heart, Left Lung, Right Lung, Spinal Canal, Spinal Cord, Trachea",
+      "Abdomen: Aorta, Lumbar Spine, Left Adrenal Gland, Thoracic Spine, Right Adrenal Gland, Esophagus, Gallbladder, Left Kidney, Right Kidney, Pancreas, Portal Vein, Spleen, Splenic Vein, Stomach, Inferior Vena Cava",
+      "Male Pelvis: Bladder, Bone Marrow, Left Femoral Head, Bowel Bag, Right Femoral Head, Sigmoid Colon, Pencile Bulb",
+      "Female Pelvis: Bladder, Bone Marrow, Bowel Bag, Sigmoid Colon, Small Bowel, Cauda Equina, Duodenum, Left Femoral Head, Right Femoral Head, Pelvic Lymph Node Group, Uterus, Rectum"
     ],
-    lastRevised: "2000-01-01"
+    lastRevised: "2025-05-04"
   }
 ];

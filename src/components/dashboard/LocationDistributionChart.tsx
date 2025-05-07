@@ -5,9 +5,10 @@ import {
   ChartContainer, 
   ChartTooltipContent
 } from "@/components/ui/chart";
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Text } from "recharts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
+import { CircleCheckIcon } from 'lucide-react';
 
 interface LocationDistributionChartProps {
   locationData: {
@@ -40,7 +41,42 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
   };
 
   const pieRadius = isMobile ? 70 : 100;
+  
+  // Single location view
+  if (selectedLocation !== "all" && locationData.length === 1) {
+    // Get the selected location data
+    const location = locationData[0];
+    
+    return (
+      <Card className="w-full">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg md:text-2xl flex items-center gap-2">
+            Products by Location ({totalLocations} total)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col items-center justify-center min-h-[350px]">
+            <div className="rounded-full bg-rose-100 p-6 mb-4">
+              <CircleCheckIcon className="h-12 w-12 text-rose-500" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">{location.name}</h3>
+            <p className="text-muted-foreground mb-2">Selected Location</p>
+            <p className="text-3xl font-bold">{location.value}</p>
+            <p className="text-muted-foreground">Products</p>
+            
+            <button 
+              onClick={() => onLocationClick({ name: location.name })}
+              className="mt-6 text-sm text-rose-500 underline cursor-pointer hover:text-rose-700"
+            >
+              Click to clear filter
+            </button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
 
+  // Multiple locations view (normal pie chart)
   return (
     <Card className="w-full">
       <CardHeader className="pb-2">

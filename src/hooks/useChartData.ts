@@ -57,12 +57,24 @@ export const useChartData = (
   const totalProducts = products.length;
 
   // Prepare data for anatomical location distribution
-  const locationData = getAllOptions('anatomicalLocation').map(location => ({
-    name: location,
-    value: products.filter(p => p.anatomicalLocation?.includes(location)).length,
-    isSelected: location === selectedLocation,
-    fill: location === selectedLocation ? '#F43F5E' : undefined
-  })).filter(item => item.value > 0);
+  const allLocations = getAllOptions('anatomicalLocation');
+  
+  // When a location is selected, we only include that location in the data
+  const locationData = selectedLocation !== "all" 
+    ? [
+        {
+          name: selectedLocation,
+          value: products.filter(p => p.anatomicalLocation?.includes(selectedLocation)).length,
+          isSelected: true,
+          fill: '#F43F5E'
+        }
+      ]
+    : allLocations.map(location => ({
+        name: location,
+        value: products.filter(p => p.anatomicalLocation?.includes(location)).length,
+        isSelected: location === selectedLocation,
+        fill: location === selectedLocation ? '#F43F5E' : undefined
+      })).filter(item => item.value > 0);
   
   const totalLocations = locationData.reduce((sum, item) => sum + item.value, 0);
 

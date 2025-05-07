@@ -171,6 +171,7 @@ const Dashboard = () => {
         <CompanyDistributionChart 
           companyData={companyData}
           totalCompanies={totalCompanies}
+          selectedTask={selectedTask}
         />
         
         {/* Auto-Contouring Structures - Only shown when Auto-Contouring is selected */}

@@ -24,6 +24,7 @@ export interface Product {
   userRating?: number;
   lastUpdated?: string;
   lastVerified?: string;
+  lastRevised?: string;
   clinicalEvidence?: string;
   // Adding supported structures for auto-contouring models
   supportedStructures?: string[];

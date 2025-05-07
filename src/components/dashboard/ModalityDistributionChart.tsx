@@ -5,7 +5,7 @@ import {
   ChartContainer, 
   ChartTooltipContent
 } from "@/components/ui/chart";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
 
@@ -13,22 +13,26 @@ interface ModalityDistributionChartProps {
   modalityData: {
     name: string;
     value: number;
+    isSelected?: boolean;
+    fill?: string;
   }[];
   totalModalities: number;
-  selectedTask: string;
+  selectedModality: string;
+  onModalityClick: (data: any) => void;
 }
 
 const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
   modalityData,
   totalModalities,
-  selectedTask
+  selectedModality,
+  onModalityClick
 }) => {
   const isMobile = useIsMobile();
 
   return (
     <Card className="w-full">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg md:text-2xl">Products by Modality ({totalModalities} total) {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
+        <CardTitle className="text-lg md:text-2xl">Products by Modality ({totalModalities} total)</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveChartWrapper minHeight="300px">
@@ -46,11 +50,26 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
                 />
                 <YAxis />
                 <Tooltip content={<ChartTooltipContent />} />
-                <Bar dataKey="value" fill="#00A6D6" />
+                <Bar 
+                  dataKey="value" 
+                  onClick={onModalityClick}
+                  cursor="pointer"
+                  fillOpacity={0.9}
+                >
+                  {modalityData.map((entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`} 
+                      fill={entry.isSelected ? '#F43F5E' : '#00A6D6'} 
+                    />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </ChartContainer>
         </ResponsiveChartWrapper>
+        <div className="mt-4 text-sm text-muted-foreground text-center">
+          Click on any bar to filter by modality
+        </div>
       </CardContent>
     </Card>
   );

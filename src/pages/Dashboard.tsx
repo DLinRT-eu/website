@@ -21,7 +21,8 @@ const StructuresChart = lazy(() => import("@/components/dashboard/StructuresChar
 
 const Dashboard = () => {
   const [selectedTask, setSelectedTask] = useState<string>("all");
-  const [clickedTask, setClickedTask] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<string>("all");
+  const [selectedModality, setSelectedModality] = useState<string>("all");
   const { toast } = useToast();
   const isMobile = useIsMobile();
   
@@ -29,6 +30,8 @@ const Dashboard = () => {
   const products = dataService.getAllProducts();
   const companies = dataService.getAllCompanies();
   const allTasks = getAllOptions('category');
+  const allLocations = getAllOptions('anatomicalLocation');
+  const allModalities = getAllOptions('modality');
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -53,36 +56,71 @@ const Dashboard = () => {
     totalModalities, 
     structureData,
     filteredProducts 
-  } = useChartData(products, selectedTask, clickedTask);
+  } = useChartData(products, selectedTask, selectedLocation, selectedModality);
 
   const { companyData, totalCompanies } = useCompanyData(companies, filteredProducts);
 
   // Handle task bar click
   const handleTaskBarClick = (data: any) => {
     const taskName = data.name;
-    if (taskName === clickedTask) {
+    if (taskName === selectedTask) {
       // If clicking the same task again, reset filter
       setSelectedTask("all");
-      setClickedTask(null);
       toast({
-        description: "Filter reset to show all products",
+        description: `Filter reset for tasks`,
       });
     } else {
       // Update selected task
       setSelectedTask(taskName);
-      setClickedTask(taskName);
       toast({
-        description: `Now showing only ${taskName} products`,
+        description: `Now filtering by task: ${taskName}`,
+      });
+    }
+  };
+
+  // Handle location slice click
+  const handleLocationSliceClick = (data: any) => {
+    const locationName = data.name;
+    if (locationName === selectedLocation) {
+      // If clicking the same location again, reset filter
+      setSelectedLocation("all");
+      toast({
+        description: `Filter reset for anatomical locations`,
+      });
+    } else {
+      // Update selected location
+      setSelectedLocation(locationName);
+      toast({
+        description: `Now filtering by location: ${locationName}`,
+      });
+    }
+  };
+
+  // Handle modality bar click
+  const handleModalityBarClick = (data: any) => {
+    const modalityName = data.name;
+    if (modalityName === selectedModality) {
+      // If clicking the same modality again, reset filter
+      setSelectedModality("all");
+      toast({
+        description: `Filter reset for modalities`,
+      });
+    } else {
+      // Update selected modality
+      setSelectedModality(modalityName);
+      toast({
+        description: `Now filtering by modality: ${modalityName}`,
       });
     }
   };
 
   // Handle reset filter button click
-  const handleResetFilter = () => {
+  const handleResetAllFilters = () => {
     setSelectedTask("all");
-    setClickedTask(null);
+    setSelectedLocation("all");
+    setSelectedModality("all");
     toast({
-      description: "Filter reset to show all products",
+      description: "All filters reset",
     });
   };
 
@@ -97,8 +135,14 @@ const Dashboard = () => {
       <DashboardHeader 
         selectedTask={selectedTask}
         setSelectedTask={setSelectedTask}
-        handleResetFilter={handleResetFilter}
+        selectedLocation={selectedLocation}
+        setSelectedLocation={setSelectedLocation}
+        selectedModality={selectedModality}
+        setSelectedModality={setSelectedModality}
+        handleResetAllFilters={handleResetAllFilters}
         allTasks={allTasks}
+        allLocations={allLocations}
+        allModalities={allModalities}
       />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
@@ -106,25 +150,27 @@ const Dashboard = () => {
           taskData={taskData}
           totalProducts={totalProducts}
           onTaskClick={handleTaskBarClick}
+          selectedTask={selectedTask}
         />
 
         <LocationDistributionChart 
           locationData={locationData}
           totalLocations={totalLocations}
-          selectedTask={selectedTask}
+          selectedLocation={selectedLocation}
+          onLocationClick={handleLocationSliceClick}
           colors={CHART_COLORS}
         />
 
         <ModalityDistributionChart 
           modalityData={modalityData}
           totalModalities={totalModalities}
-          selectedTask={selectedTask}
+          selectedModality={selectedModality}
+          onModalityClick={handleModalityBarClick}
         />
 
         <CompanyDistributionChart 
           companyData={companyData}
           totalCompanies={totalCompanies}
-          selectedTask={selectedTask}
         />
         
         {/* Auto-Contouring Structures - Only shown when Auto-Contouring is selected */}

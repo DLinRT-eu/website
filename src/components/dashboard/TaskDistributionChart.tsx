@@ -19,12 +19,14 @@ interface TaskDistributionChartProps {
   }[];
   totalProducts: number;
   onTaskClick: (data: any) => void;
+  selectedTask: string;
 }
 
 const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({ 
   taskData, 
   totalProducts, 
-  onTaskClick 
+  onTaskClick,
+  selectedTask 
 }) => {
   const isMobile = useIsMobile();
 

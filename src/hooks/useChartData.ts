@@ -3,20 +3,54 @@ import { useState, useEffect } from 'react';
 import { ProductDetails } from '@/types/productDetails';
 import { getAllOptions } from "@/utils/filterOptions";
 
-export const useChartData = (products: ProductDetails[], selectedTask: string, clickedTask: string | null) => {
+export const useChartData = (
+  products: ProductDetails[], 
+  selectedTask: string, 
+  selectedLocation: string,
+  selectedModality: string
+) => {
   const [structureData, setStructureData] = useState<{name: string, value: number}[]>([]);
   
-  // Get filtered products based on selected task
-  const filteredProducts = selectedTask === "all" 
-    ? products 
-    : products.filter(p => p.category === selectedTask);
+  // Apply all filters simultaneously
+  const filteredProducts = products.filter(product => {
+    // Filter by task if not "all"
+    if (selectedTask !== "all" && product.category !== selectedTask) {
+      return false;
+    }
+    
+    // Filter by location if not "all"
+    if (selectedLocation !== "all") {
+      if (!product.anatomicalLocation || 
+          !product.anatomicalLocation.includes(selectedLocation)) {
+        return false;
+      }
+    }
+    
+    // Filter by modality if not "all"
+    if (selectedModality !== "all") {
+      if (!product.modality) {
+        return false;
+      }
+      
+      if (Array.isArray(product.modality)) {
+        if (!product.modality.includes(selectedModality)) {
+          return false;
+        }
+      } else if (product.modality !== selectedModality) {
+        return false;
+      }
+    }
+    
+    // Product passed all filters
+    return true;
+  });
 
   // Prepare data for task distribution
   const taskData = getAllOptions('category').map(category => ({
     name: category,
     value: products.filter(p => p.category === category).length,
-    isSelected: category === clickedTask,
-    fill: category === clickedTask ? '#F43F5E' : '#00A6D6'  // Directly set the fill based on selection
+    isSelected: category === selectedTask,
+    fill: category === selectedTask ? '#F43F5E' : '#00A6D6'
   }));
 
   // Total product count
@@ -25,7 +59,9 @@ export const useChartData = (products: ProductDetails[], selectedTask: string, c
   // Prepare data for anatomical location distribution
   const locationData = getAllOptions('anatomicalLocation').map(location => ({
     name: location,
-    value: filteredProducts.filter(p => p.anatomicalLocation?.includes(location)).length
+    value: products.filter(p => p.anatomicalLocation?.includes(location)).length,
+    isSelected: location === selectedLocation,
+    fill: location === selectedLocation ? '#F43F5E' : undefined
   })).filter(item => item.value > 0);
   
   const totalLocations = locationData.reduce((sum, item) => sum + item.value, 0);
@@ -34,17 +70,19 @@ export const useChartData = (products: ProductDetails[], selectedTask: string, c
   const modalityData = getAllOptions('modality').map(modality => {
     // Skip LINAC and MRI-LINAC in the chart data
     if (modality === 'LINAC' || modality === 'MRI-LINAC') {
-      return { name: modality, value: 0 };
+      return { name: modality, value: 0, isSelected: false };
     }
     
     return {
       name: modality || 'Unknown',
-      value: filteredProducts.filter(p => {
+      value: products.filter(p => {
         if (Array.isArray(p.modality)) {
           return p.modality.includes(modality);
         }
         return p.modality === modality;
-      }).length
+      }).length,
+      isSelected: modality === selectedModality,
+      fill: modality === selectedModality ? '#F43F5E' : '#00A6D6'
     };
   }).filter(item => item.value > 0);
   
@@ -54,7 +92,7 @@ export const useChartData = (products: ProductDetails[], selectedTask: string, c
   useEffect(() => {
     if (selectedTask === "Auto-Contouring") {
       // Get all auto-contouring products
-      const autoContouringProducts = products.filter(p => p.category === "Auto-Contouring");
+      const autoContouringProducts = filteredProducts.filter(p => p.category === "Auto-Contouring");
       
       // Extract and count all supported structures
       const structureCounts: Record<string, number> = {};
@@ -78,7 +116,7 @@ export const useChartData = (products: ProductDetails[], selectedTask: string, c
     } else {
       setStructureData([]);
     }
-  }, [selectedTask, products]);
+  }, [selectedTask, selectedLocation, selectedModality, filteredProducts]);
 
   return {
     taskData,

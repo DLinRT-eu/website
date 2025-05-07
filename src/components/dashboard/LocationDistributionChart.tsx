@@ -13,16 +13,20 @@ interface LocationDistributionChartProps {
   locationData: {
     name: string;
     value: number;
+    isSelected?: boolean;
+    fill?: string;
   }[];
   totalLocations: number;
-  selectedTask: string;
+  selectedLocation: string;
+  onLocationClick: (data: any) => void;
   colors: string[];
 }
 
 const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
   locationData,
   totalLocations,
-  selectedTask,
+  selectedLocation,
+  onLocationClick,
   colors
 }) => {
   const isMobile = useIsMobile();
@@ -40,7 +44,7 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
   return (
     <Card className="w-full">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg md:text-2xl">Products by Location ({totalLocations} total) {selectedTask !== "all" ? `(${selectedTask})` : ""}</CardTitle>
+        <CardTitle className="text-lg md:text-2xl">Products by Location ({totalLocations} total)</CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveChartWrapper minHeight="350px">
@@ -55,11 +59,13 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
                   cy="50%"
                   outerRadius={pieRadius}
                   label={renderCustomizedLabel}
+                  onClick={onLocationClick}
+                  cursor="pointer"
                 >
                   {locationData.map((entry, index) => (
                     <Cell 
                       key={entry.name} 
-                      fill={colors[index % colors.length]} 
+                      fill={entry.isSelected ? '#F43F5E' : colors[index % colors.length]} 
                       stroke="var(--background)"
                       strokeWidth={2}
                     />
@@ -82,6 +88,9 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
             </ResponsiveContainer>
           </ChartContainer>
         </ResponsiveChartWrapper>
+        <div className="mt-4 text-sm text-muted-foreground text-center">
+          Click on any segment to filter by location
+        </div>
       </CardContent>
     </Card>
   );

@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { ProductDetails } from '@/types/productDetails';
 import { getAllOptions } from "@/utils/filterOptions";
+import { LOCATION_COLORS } from '@/utils/chartColors';
 
 export const useChartData = (
   products: ProductDetails[], 
@@ -78,13 +79,17 @@ export const useChartData = (
       products.filter(p => p.anatomicalLocation?.includes(location)).length :
       value;
     
+    // Assign a fixed color based on the location name
+    const color = LOCATION_COLORS[location] || '#0EA5E9';
+    
     return {
       name: location,
       value,
       originalValue,
       isSelected: location === selectedLocation,
       isFiltered: value < originalValue && value > 0,
-      fill: location === selectedLocation ? '#F43F5E' : undefined
+      color,
+      fill: location === selectedLocation ? '#F43F5E' : color
     };
   }).filter(item => item.value > 0);
   

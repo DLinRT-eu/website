@@ -9,6 +9,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer, Text } from 
 import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
 import { CircleCheckIcon } from 'lucide-react';
+import { LOCATION_COLORS } from '@/utils/chartColors';
 
 interface LocationDistributionChartProps {
   locationData: {
@@ -17,6 +18,7 @@ interface LocationDistributionChartProps {
     isSelected?: boolean;
     isFiltered?: boolean;
     fill?: string;
+    color?: string;
   }[];
   totalLocations: number;
   selectedLocation: string;
@@ -51,6 +53,7 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
   if (selectedLocation !== "all" && locationData.length === 1) {
     // Get the selected location data
     const location = locationData[0];
+    const locationColor = LOCATION_COLORS[location.name] || '#0EA5E9';
     
     return (
       <Card className="w-full">
@@ -107,10 +110,12 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
                   onClick={onLocationClick}
                   cursor="pointer"
                 >
-                  {locationData.map((entry, index) => (
+                  {locationData.map((entry) => (
                     <Cell 
                       key={entry.name} 
-                      fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : colors[index % colors.length])} 
+                      fill={entry.isSelected ? '#F43F5E' : (
+                        entry.isFiltered ? '#FFC107' : LOCATION_COLORS[entry.name] || '#0EA5E9'
+                      )}
                       stroke="var(--background)"
                       strokeWidth={2}
                     />

@@ -1,4 +1,3 @@
-
 import React, { useState, Suspense, lazy } from 'react';
 import dataService from "@/services/DataService";
 import { getAllOptions } from "@/utils/filterOptions";
@@ -169,8 +168,8 @@ const Dashboard = () => {
           modalityData={modalityData}
           totalModalities={totalModalities}
           selectedModality={selectedModality}
-          selectedTask={selectedTask} // Add this prop
-          selectedLocation={selectedLocation} // Add this prop
+          selectedTask={selectedTask}
+          selectedLocation={selectedLocation}
           onModalityClick={handleModalityBarClick}
         />
 

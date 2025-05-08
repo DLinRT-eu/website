@@ -8,6 +8,7 @@ import {
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
+import { CircleCheckIcon } from 'lucide-react';
 
 interface ModalityDistributionChartProps {
   modalityData: {
@@ -29,10 +30,49 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
 }) => {
   const isMobile = useIsMobile();
 
+  // Single modality view
+  if (selectedModality !== "all" && modalityData.length === 1) {
+    // Get the selected modality data
+    const modality = modalityData[0];
+    
+    return (
+      <Card className="w-full">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg md:text-2xl flex items-center gap-2">
+            Products by Modality ({totalModalities} total)
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-col items-center justify-center min-h-[300px]">
+            <div className="rounded-full bg-purple-100 p-6 mb-4">
+              <CircleCheckIcon className="h-12 w-12 text-purple-500" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">{modality.name}</h3>
+            <p className="text-muted-foreground mb-2">Selected Modality</p>
+            <p className="text-3xl font-bold">{modality.value}</p>
+            <p className="text-muted-foreground">Products</p>
+            
+            <button 
+              onClick={() => onModalityClick({ name: modality.name })}
+              className="mt-6 text-sm text-purple-500 underline cursor-pointer hover:text-purple-700"
+            >
+              Click to clear filter
+            </button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Multiple modalities view (normal bar chart)
   return (
     <Card className="w-full">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg md:text-2xl">Products by Modality ({totalModalities} total)</CardTitle>
+        <CardTitle className="text-lg md:text-2xl">
+          Products by Modality ({totalModalities} total)
+          {selectedTask !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by task</span>}
+          {selectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveChartWrapper minHeight="300px">
@@ -59,7 +99,7 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
                   {modalityData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={entry.isSelected ? '#F43F5E' : '#00A6D6'} 
+                      fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : '#00A6D6')} 
                     />
                   ))}
                 </Bar>

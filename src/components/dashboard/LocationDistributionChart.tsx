@@ -15,10 +15,13 @@ interface LocationDistributionChartProps {
     name: string;
     value: number;
     isSelected?: boolean;
+    isFiltered?: boolean;
     fill?: string;
   }[];
   totalLocations: number;
   selectedLocation: string;
+  selectedTask: string;
+  selectedModality: string;
   onLocationClick: (data: any) => void;
   colors: string[];
 }
@@ -27,6 +30,8 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
   locationData,
   totalLocations,
   selectedLocation,
+  selectedTask,
+  selectedModality,
   onLocationClick,
   colors
 }) => {
@@ -80,7 +85,11 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
   return (
     <Card className="w-full">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg md:text-2xl">Products by Location ({totalLocations} total)</CardTitle>
+        <CardTitle className="text-lg md:text-2xl">
+          Products by Location ({totalLocations} total)
+          {selectedTask !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by task</span>}
+          {selectedModality !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by modality</span>}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveChartWrapper minHeight="350px">
@@ -101,7 +110,7 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
                   {locationData.map((entry, index) => (
                     <Cell 
                       key={entry.name} 
-                      fill={entry.isSelected ? '#F43F5E' : colors[index % colors.length]} 
+                      fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : colors[index % colors.length])} 
                       stroke="var(--background)"
                       strokeWidth={2}
                     />

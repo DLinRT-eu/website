@@ -45,60 +45,97 @@ export const useChartData = (
     return true;
   });
 
-  // Prepare data for task distribution
-  const taskData = getAllOptions('category').map(category => ({
-    name: category,
-    value: products.filter(p => p.category === category).length,
-    isSelected: category === selectedTask,
-    fill: category === selectedTask ? '#F43F5E' : '#00A6D6'
-  }));
+  // Prepare data for task distribution - based on filtered products for location/modality
+  const taskData = getAllOptions('category').map(category => {
+    // Count products that match this category (after other filters are applied)
+    const value = filteredProducts.filter(p => p.category === category).length;
+    // Original count before location and modality filters
+    const originalValue = selectedTask === "all" ? 
+      products.filter(p => p.category === category).length : 
+      value;
+    
+    return {
+      name: category,
+      value,
+      originalValue,
+      isSelected: category === selectedTask,
+      isFiltered: value < originalValue && value > 0,
+      fill: category === selectedTask ? '#F43F5E' : undefined
+    };
+  }).filter(item => item.value > 0);
 
-  // Total product count
-  const totalProducts = products.length;
+  // Total product count - use filtered products if any filter is active
+  const totalProducts = filteredProducts.length;
 
-  // Prepare data for anatomical location distribution
+  // Prepare data for anatomical location distribution - based on filtered products for task/modality
   const allLocations = getAllOptions('anatomicalLocation');
   
-  // When a location is selected, we only include that location in the data
-  const locationData = selectedLocation !== "all" 
-    ? [
-        {
-          name: selectedLocation,
-          value: products.filter(p => p.anatomicalLocation?.includes(selectedLocation)).length,
-          isSelected: true,
-          fill: '#F43F5E'
-        }
-      ]
-    : allLocations.map(location => ({
-        name: location,
-        value: products.filter(p => p.anatomicalLocation?.includes(location)).length,
-        isSelected: location === selectedLocation,
-        fill: location === selectedLocation ? '#F43F5E' : undefined
-      })).filter(item => item.value > 0);
+  const locationData = allLocations.map(location => {
+    // Count products that match this location (after other filters are applied)
+    const value = filteredProducts.filter(p => p.anatomicalLocation?.includes(location)).length;
+    // Original count before task and modality filters
+    const originalValue = selectedLocation === "all" ?
+      products.filter(p => p.anatomicalLocation?.includes(location)).length :
+      value;
+    
+    return {
+      name: location,
+      value,
+      originalValue,
+      isSelected: location === selectedLocation,
+      isFiltered: value < originalValue && value > 0,
+      fill: location === selectedLocation ? '#F43F5E' : undefined
+    };
+  }).filter(item => item.value > 0);
   
-  const totalLocations = locationData.reduce((sum, item) => sum + item.value, 0);
+  // If specific location is selected, only include that location
+  const finalLocationData = selectedLocation !== "all" 
+    ? locationData.filter(item => item.name === selectedLocation)
+    : locationData;
+  
+  const totalLocations = finalLocationData.reduce((sum, item) => sum + item.value, 0);
 
-  // Prepare data for modality distribution - normalize LINAC and MRI-LINAC to CBCT or MRI
+  // Prepare data for modality distribution - based on filtered products for task/location
   const modalityData = getAllOptions('modality').map(modality => {
     // Skip LINAC and MRI-LINAC in the chart data
     if (modality === 'LINAC' || modality === 'MRI-LINAC') {
-      return { name: modality, value: 0, isSelected: false };
+      return { name: modality, value: 0, originalValue: 0, isSelected: false };
     }
     
-    return {
-      name: modality || 'Unknown',
-      value: products.filter(p => {
+    // Count products that match this modality (after other filters are applied)
+    const value = filteredProducts.filter(p => {
+      if (Array.isArray(p.modality)) {
+        return p.modality.includes(modality);
+      }
+      return p.modality === modality;
+    }).length;
+
+    // Original count before task and location filters
+    const originalValue = selectedModality === "all" ?
+      products.filter(p => {
         if (Array.isArray(p.modality)) {
           return p.modality.includes(modality);
         }
         return p.modality === modality;
-      }).length,
+      }).length :
+      value;
+    
+    return {
+      name: modality || 'Unknown',
+      value,
+      originalValue,
       isSelected: modality === selectedModality,
+      isFiltered: value < originalValue && value > 0,
       fill: modality === selectedModality ? '#F43F5E' : '#00A6D6'
     };
   }).filter(item => item.value > 0);
   
-  const totalModalities = modalityData.reduce((sum, item) => sum + item.value, 0);
+  // If specific modality is selected, only include that modality
+  const finalModalityData = selectedModality !== "all" 
+    ? modalityData.filter(item => item.name === selectedModality)
+    : modalityData;
+  
+  const totalModalities = finalModalityData.reduce((sum, item) => sum + item.value, 0);
 
   // Update structure data when task changes
   useEffect(() => {
@@ -133,9 +170,9 @@ export const useChartData = (
   return {
     taskData,
     totalProducts,
-    locationData,
+    locationData: finalLocationData,
     totalLocations,
-    modalityData,
+    modalityData: finalModalityData,
     totalModalities,
     structureData,
     filteredProducts

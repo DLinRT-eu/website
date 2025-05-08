@@ -16,12 +16,16 @@ interface CompanyDistributionChartProps {
   }[];
   totalCompanies: number;
   selectedTask: string;
+  selectedLocation?: string;
+  selectedModality?: string;
 }
 
 const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
   companyData,
   totalCompanies,
-  selectedTask
+  selectedTask,
+  selectedLocation = "all",
+  selectedModality = "all"
 }) => {
   const isMobile = useIsMobile();
   
@@ -36,12 +40,22 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
   const leftMargin = isMobile ? 
     Math.min(80, Math.max(60, maxCompanyNameLength * 4)) : 
     Math.min(120, Math.max(80, maxCompanyNameLength * 6));
+    
+  // Get active filters list for title display
+  const activeFilters = [];
+  if (selectedTask !== "all") activeFilters.push(`Task: ${selectedTask}`);
+  if (selectedLocation !== "all") activeFilters.push(`Location: ${selectedLocation}`);
+  if (selectedModality !== "all") activeFilters.push(`Modality: ${selectedModality}`);
+  
+  const filterText = activeFilters.length > 0 
+    ? `(${activeFilters.join(", ")})`
+    : "";
 
   return (
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          Products by Company ({totalCompanies} total) {selectedTask !== "all" ? `(${selectedTask})` : ""}
+          Products by Company ({totalCompanies} total) {filterText}
         </CardTitle>
       </CardHeader>
       <CardContent>

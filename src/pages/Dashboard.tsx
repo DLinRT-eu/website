@@ -151,12 +151,16 @@ const Dashboard = () => {
           totalProducts={totalProducts}
           onTaskClick={handleTaskBarClick}
           selectedTask={selectedTask}
+          selectedLocation={selectedLocation}
+          selectedModality={selectedModality}
         />
 
         <LocationDistributionChart 
           locationData={locationData}
           totalLocations={totalLocations}
           selectedLocation={selectedLocation}
+          selectedTask={selectedTask}
+          selectedModality={selectedModality}
           onLocationClick={handleLocationSliceClick}
           colors={CHART_COLORS}
         />
@@ -172,6 +176,8 @@ const Dashboard = () => {
           companyData={companyData}
           totalCompanies={totalCompanies}
           selectedTask={selectedTask}
+          selectedLocation={selectedLocation}
+          selectedModality={selectedModality}
         />
         
         {/* Auto-Contouring Structures - Only shown when Auto-Contouring is selected */}

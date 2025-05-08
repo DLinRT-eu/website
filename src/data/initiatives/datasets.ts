@@ -116,6 +116,25 @@ export const DATASET_INITIATIVES: Initiative[] = [
     ],
     dataAccess: "Available through TCIA",
     participationInfo: "Open to all researchers"
-  }
+  },
+  {
+    id: "lund-probe",
+    name: "LUND-PROBE: Lund Prostate Radiotherapy Open Benchmarking and Evaluation",
+    category: "Open Dataset",
+    description: "Dataset includes MRI and sCT images, RT structures, and dose distributions for 432 prostate cancer patients undergoing MRI-based radiotherapy planning, plus an extension for 35 patients with DL-generated segmentations, uncertainty maps, and manual adjustments by four radiation oncologists.",
+    website: "https://datahub.aida.scilifelab.se/10.23698/aida/lund-probe",
+    organization: "Skåne University Hospital",
+    status: "Active",
+    tags: ["Cancer", "Synthetic CT", "MRI", "Prostate Cancer", "Target Volumes", "Organs at Risk", "Uncertainty Maps", "Dose Distribution", "Radiotherapy", "Segmentation"],
+    features: [ 
+      "MRI and sCT images", 
+      "3D NIfTI format",
+      "Collections include RT structures, and dose distributions",
+      "Extension includes DL-generated segmentations and uncertainty maps",
+      "Manual adjustments by four radiation oncologists"
+    ],
+    dataAccess: "Freely available after registration",
+    participationInfo: "Open to all researchers"
+  },
 ];
 

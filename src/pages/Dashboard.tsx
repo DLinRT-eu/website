@@ -169,6 +169,8 @@ const Dashboard = () => {
           modalityData={modalityData}
           totalModalities={totalModalities}
           selectedModality={selectedModality}
+          selectedTask={selectedTask} // Add this prop
+          selectedLocation={selectedLocation} // Add this prop
           onModalityClick={handleModalityBarClick}
         />
 

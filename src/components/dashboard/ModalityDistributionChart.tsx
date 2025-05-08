@@ -15,10 +15,13 @@ interface ModalityDistributionChartProps {
     name: string;
     value: number;
     isSelected?: boolean;
+    isFiltered?: boolean;
     fill?: string;
   }[];
   totalModalities: number;
   selectedModality: string;
+  selectedTask: string; // Add this prop
+  selectedLocation: string; // Add this prop
   onModalityClick: (data: any) => void;
 }
 
@@ -26,6 +29,8 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
   modalityData,
   totalModalities,
   selectedModality,
+  selectedTask, // Include this in the destructuring
+  selectedLocation, // Include this in the destructuring
   onModalityClick
 }) => {
   const isMobile = useIsMobile();

@@ -113,11 +113,10 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
                   {locationData.map((entry) => (
                     <Cell 
                       key={entry.name} 
-                      fill={entry.isSelected ? '#F43F5E' : (
-                        entry.isFiltered ? '#FFC107' : LOCATION_COLORS[entry.name] || '#0EA5E9'
-                      )}
-                      stroke="var(--background)"
-                      strokeWidth={2}
+                      fill={entry.isSelected ? '#F43F5E' : LOCATION_COLORS[entry.name] || '#0EA5E9'}
+                      fillOpacity={entry.isFiltered ? 0.7 : 1}
+                      stroke={entry.isFiltered ? "#FFC107" : "var(--background)"}
+                      strokeWidth={entry.isFiltered ? 3 : 2}
                     />
                   ))}
                 </Pie>

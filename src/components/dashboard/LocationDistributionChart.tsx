@@ -119,9 +119,9 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
                         key={entry.name} 
                         fill={entry.isSelected ? '#F43F5E' : locationColor}
                         fillOpacity={entry.isFiltered ? 0.7 : 1}
-                        // Use the location's own color for the stroke when filtered, but slightly darker
-                        stroke={entry.isFiltered ? locationColor : "var(--background)"}
-                        strokeWidth={entry.isFiltered ? 3 : 2}
+                        // Remove stroke for filtered items by setting it to "transparent"
+                        stroke={entry.isFiltered ? "transparent" : "var(--background)"}
+                        strokeWidth={2}
                       />
                     );
                   })}

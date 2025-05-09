@@ -110,15 +110,21 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
                   onClick={onLocationClick}
                   cursor="pointer"
                 >
-                  {locationData.map((entry) => (
-                    <Cell 
-                      key={entry.name} 
-                      fill={entry.isSelected ? '#F43F5E' : LOCATION_COLORS[entry.name] || '#0EA5E9'}
-                      fillOpacity={entry.isFiltered ? 0.7 : 1}
-                      stroke={entry.isFiltered ? "#FFC107" : "var(--background)"}
-                      strokeWidth={entry.isFiltered ? 3 : 2}
-                    />
-                  ))}
+                  {locationData.map((entry) => {
+                    // Get the location's assigned color
+                    const locationColor = LOCATION_COLORS[entry.name] || '#0EA5E9';
+                    
+                    return (
+                      <Cell 
+                        key={entry.name} 
+                        fill={entry.isSelected ? '#F43F5E' : locationColor}
+                        fillOpacity={entry.isFiltered ? 0.7 : 1}
+                        // Use the location's own color for the stroke when filtered, but slightly darker
+                        stroke={entry.isFiltered ? locationColor : "var(--background)"}
+                        strokeWidth={entry.isFiltered ? 3 : 2}
+                      />
+                    );
+                  })}
                 </Pie>
                 <Tooltip content={<ChartTooltipContent />} />
                 <Legend 

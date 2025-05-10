@@ -56,6 +56,7 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     version: "7.1",
     releaseDate: "2023-10-15",
     lastUpdated: "2024-03-20",
+    lastRevised: "2025-05-09",
     supportedStructures: [
       "Brain: Brain",
       "Brain: Brainstem",
@@ -96,8 +97,6 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
       "Pelvis: Uterus",
       "Pelvis: Ovaries (L/R)",
       "Pelvis: Vagina"
-    ],
-    lastRevised: "2025-05-09",
-    source: "Company"
+    ]
   }
 ];

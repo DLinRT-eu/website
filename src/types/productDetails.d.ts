@@ -46,4 +46,5 @@ export interface ProductDetails extends Product {
   clinicalEvidence?: string;
   lastVerified?: string;
   lastRevised?: string;
+  source?: string;
 }

@@ -53,9 +53,9 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
                   tick={{
                     fontSize: isMobile ? 10 : 12,
                   }}
-                  angle={20} // Fixed angle of 20 degrees for better visibility
-                  textAnchor="start" // Adjust text anchor for the new angle
-                  height={isMobile ? 60 : 40} // Increased height to accommodate angled text
+                  angle={-20} // Changed from 20 to -20 degrees as requested
+                  textAnchor="start" // Keeping textAnchor as "start" which works well with negative angles
+                  height={isMobile ? 60 : 40} // Keeping increased height to accommodate angled text
                 />
                 <YAxis />
                 <Tooltip content={<ChartTooltipContent />} />

@@ -57,6 +57,7 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     releaseDate: "2023-10-15",
     lastUpdated: "2024-03-20",
     lastRevised: "2025-05-09",
+    lastVerified: "2025-05-08",
     source: "Company",
     supportedStructures: [
       "Brain: Brain",

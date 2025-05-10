@@ -55,6 +55,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     version: "2.2",
     releaseDate: "2023-05-20",
     lastUpdated: "2024-01-15",
-    lastRevised: "2000-01-01"
+    lastRevised: "2000-01-01",
+    source: "automatically retrieved"
   }
 ];

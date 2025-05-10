@@ -93,6 +93,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
       "Pelvis: Femoral Head (R)",
       "Pelvis: Bowel Bag"
     ],
-    lastRevised: "2000-01-01"
+    lastRevised: "2000-01-01",
+    source: "automatically retrieved"
   }
 ];

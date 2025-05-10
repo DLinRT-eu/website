@@ -103,6 +103,7 @@ export const CORELINE_PRODUCTS: ProductDetails[] = [
 "Pelvis: Spinal cord",
 "Pelvis: Prostate"
     ],
-    lastRevised: "2025-05-04"
+    lastRevised: "2025-05-04",
+    source: "automatically retrieved"
   }
 ];

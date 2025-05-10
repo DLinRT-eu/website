@@ -35,6 +35,9 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
   // Check if revision is recent (less than 6 months)
   const hasRecentRevision = isRecentUpdate(lastRevised);
   
+  // Set default source if not specified
+  const sourceInfo = product.source || "automatically retrieved";
+  
   return (
     <Card>
       <CardHeader>
@@ -89,6 +92,10 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
           <div>
             <p className="text-sm font-medium">Clinical Evidence:</p>
             <p className="text-gray-500">{formatField(product.clinicalEvidence)}</p>
+          </div>
+          <div>
+            <p className="text-sm font-medium">Data Source:</p>
+            <p className="text-gray-500">{formatField(sourceInfo)}</p>
           </div>
         </div>
       </CardContent>

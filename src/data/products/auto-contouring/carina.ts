@@ -131,6 +131,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
 "Female Pelvis: Uterus",
 "Female Pelvis: Rectum"
     ],
-    lastRevised: "2025-05-04"
+    lastRevised: "2025-05-04",
+    source: "automatically retrieved"
   }
 ];

@@ -36,10 +36,11 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
   const displayData = isMobile ? sortedData.slice(0, 10) : sortedData;
 
   // Calculate left margin based on the longest company name
+  // Increase the multipliers to provide more space for company names
   const maxCompanyNameLength = Math.max(...displayData.map(item => item.name.length));
   const leftMargin = isMobile ? 
-    Math.min(80, Math.max(60, maxCompanyNameLength * 4)) : 
-    Math.min(120, Math.max(80, maxCompanyNameLength * 6));
+    Math.min(100, Math.max(80, maxCompanyNameLength * 5)) : // Increased from 4 to 5
+    Math.min(160, Math.max(120, maxCompanyNameLength * 7)); // Increased from 120/6 to 160/7
     
   // Get active filters list for title display
   const activeFilters = [];
@@ -86,7 +87,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
           </ChartContainer>
         </ResponsiveChartWrapper>
         {isMobile && companyData.length > 10 && (
-          <div className="mt-4 text-xs text-center text-muted-foreground">
+          <div className="mt-4 text-sm text-center text-muted-foreground">
             Showing top 10 companies. View on desktop for all {companyData.length} companies.
           </div>
         )}

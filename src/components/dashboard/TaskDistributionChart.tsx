@@ -53,9 +53,9 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
                   tick={{
                     fontSize: isMobile ? 10 : 12,
                   }}
-                  angle={isMobile ? -45 : 0}
-                  textAnchor={isMobile ? "end" : "middle"}
-                  height={isMobile ? 60 : 30}
+                  angle={20} // Fixed angle of 20 degrees for better visibility
+                  textAnchor="start" // Adjust text anchor for the new angle
+                  height={isMobile ? 60 : 40} // Increased height to accommodate angled text
                 />
                 <YAxis />
                 <Tooltip content={<ChartTooltipContent />} />
@@ -68,7 +68,8 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
                   {taskData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : '#00A6D6')}
+                      fill={entry.isSelected ? '#F43F5E' : '#00A6D6'}
+                      fillOpacity={entry.isFiltered ? 0.7 : 1} // Keep bars visible but with reduced opacity when filtered
                     />
                   ))}
                 </Bar>

@@ -1,10 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SEO from '@/components/SEO';
 import { Beaker, Database, Brain } from 'lucide-react';
 import dataService from '@/services/DataService';
 import { Initiative } from '@/types/initiative';
 import InitiativeFilters from '@/components/initiatives/InitiativeFilters';
+import InitiativeSearch from '@/components/initiatives/InitiativeSearch';
 import CategorySection from '@/components/initiatives/CategorySection';
 import { InitiativeFilterState } from '@/types/filters';
 import { useToast } from "@/hooks/use-toast";
@@ -12,6 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 const Initiatives = () => {
   const [filteredInitiatives, setFilteredInitiatives] = useState<Initiative[]>(dataService.getAllInitiatives());
   const [isFiltering, setIsFiltering] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
   
   const structuredData = {
@@ -27,18 +29,59 @@ const Initiatives = () => {
     }
   };
   
+  // Handle search and filtering
+  useEffect(() => {
+    const applyFiltersAndSearch = () => {
+      let results = dataService.getAllInitiatives();
+      
+      // Apply search if there's a query
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        results = results.filter(initiative => 
+          initiative.name.toLowerCase().includes(query) || 
+          initiative.description.toLowerCase().includes(query) ||
+          initiative.tags.some(tag => tag.toLowerCase().includes(query)) ||
+          initiative.institution?.toLowerCase().includes(query) ||
+          initiative.category.toLowerCase().includes(query)
+        );
+      }
+      
+      setFilteredInitiatives(results);
+    };
+    
+    applyFiltersAndSearch();
+  }, [searchQuery]);
+  
   const handleFilterUpdate = (filters: InitiativeFilterState) => {
     const filtered = dataService.filterInitiatives(filters);
-    setFilteredInitiatives(filtered);
+    
+    // If there's a search query, further filter by search
+    let results = filtered;
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      results = filtered.filter(initiative => 
+        initiative.name.toLowerCase().includes(query) || 
+        initiative.description.toLowerCase().includes(query) ||
+        initiative.tags.some(tag => tag.toLowerCase().includes(query)) ||
+        initiative.institution?.toLowerCase().includes(query) ||
+        initiative.category.toLowerCase().includes(query)
+      );
+    }
+    
+    setFilteredInitiatives(results);
     
     // Show a toast if filters are applied but no results
-    if ((filters.categories.length || filters.status.length || filters.tags.length) && filtered.length === 0) {
+    if ((filters.categories.length || filters.status.length || filters.tags.length || searchQuery) && results.length === 0) {
       toast({
         title: "No initiatives found",
-        description: "Try adjusting your filters to see more results.",
+        description: "Try adjusting your filters or search terms to see more results.",
         variant: "destructive",
       });
     }
+  };
+  
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
   };
   
   // Group initiatives by category - excluding Research Projects
@@ -74,6 +117,8 @@ const Initiatives = () => {
         </p>
       </div>
 
+      <InitiativeSearch onSearch={handleSearch} />
+
       <InitiativeFilters 
         onFiltersChange={setIsFiltering}
         onFilterUpdate={handleFilterUpdate}
@@ -82,7 +127,7 @@ const Initiatives = () => {
       <div className="mb-6">
         <p className="text-sm text-gray-500">
           Showing {filteredInitiatives.length} initiatives
-          {isFiltering ? " with the selected filters" : ""}
+          {(isFiltering || searchQuery) ? " with the selected filters" : ""}
         </p>
       </div>
 
@@ -93,7 +138,7 @@ const Initiatives = () => {
       {filteredInitiatives.length === 0 && (
         <div className="text-center py-16">
           <h3 className="text-xl font-semibold text-gray-700">No initiatives found</h3>
-          <p className="text-gray-500 mt-2">Try adjusting your filters to see more results.</p>
+          <p className="text-gray-500 mt-2">Try adjusting your search terms or filters to see more results.</p>
         </div>
       )}
       
@@ -107,4 +152,3 @@ const Initiatives = () => {
 };
 
 export default Initiatives;
-

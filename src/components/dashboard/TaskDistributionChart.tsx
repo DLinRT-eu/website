@@ -44,20 +44,25 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveChartWrapper minHeight="300px">
+        <ResponsiveChartWrapper minHeight="320px">
           <ChartContainer className="h-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={taskData} margin={isMobile ? { top: 5, right: 10, left: 0, bottom: 20 } : { top: 5, right: 30, left: 10, bottom: 5 }}>
+              <BarChart data={taskData} margin={isMobile ? { top: 5, right: 10, left: 5, bottom: 70 } : { top: 5, right: 30, left: 10, bottom: 30 }}>
                 <XAxis 
                   dataKey="name"
                   tick={{
                     fontSize: isMobile ? 10 : 12,
                   }}
-                  angle={-20} // Changed from 20 to -20 degrees as requested
-                  textAnchor="start" // Keeping textAnchor as "start" which works well with negative angles
-                  height={isMobile ? 60 : 40} // Keeping increased height to accommodate angled text
+                  angle={-20}
+                  textAnchor="end"
+                  height={isMobile ? 70 : 50}
+                  tickMargin={8}
                 />
-                <YAxis />
+                <YAxis 
+                  tick={{
+                    fontSize: isMobile ? 10 : 12,
+                  }}
+                />
                 <Tooltip content={<ChartTooltipContent />} />
                 <Bar 
                   dataKey="value" 
@@ -69,7 +74,7 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
                     <Cell 
                       key={`cell-${index}`} 
                       fill={entry.isSelected ? '#F43F5E' : '#00A6D6'}
-                      fillOpacity={entry.isFiltered ? 0.7 : 1} // Keep bars visible but with reduced opacity when filtered
+                      fillOpacity={entry.isFiltered ? 0.7 : 1}
                     />
                   ))}
                 </Bar>

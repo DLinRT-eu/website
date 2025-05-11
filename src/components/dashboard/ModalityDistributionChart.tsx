@@ -20,8 +20,8 @@ interface ModalityDistributionChartProps {
   }[];
   totalModalities: number;
   selectedModality: string;
-  selectedTask: string; // Add this prop
-  selectedLocation: string; // Add this prop
+  selectedTask: string;
+  selectedLocation: string;
   onModalityClick: (data: any) => void;
 }
 
@@ -29,8 +29,8 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
   modalityData,
   totalModalities,
   selectedModality,
-  selectedTask, // Include this in the destructuring
-  selectedLocation, // Include this in the destructuring
+  selectedTask,
+  selectedLocation,
   onModalityClick
 }) => {
   const isMobile = useIsMobile();
@@ -80,20 +80,25 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveChartWrapper minHeight="300px">
+        <ResponsiveChartWrapper minHeight="320px">
           <ChartContainer className="h-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={modalityData} margin={isMobile ? { top: 5, right: 10, left: 0, bottom: 20 } : { top: 5, right: 30, left: 10, bottom: 5 }}>
+              <BarChart data={modalityData} margin={isMobile ? { top: 5, right: 10, left: 5, bottom: 70 } : { top: 5, right: 30, left: 10, bottom: 30 }}>
                 <XAxis 
                   dataKey="name"
                   tick={{
                     fontSize: isMobile ? 10 : 12,
                   }}
-                  angle={isMobile ? -20 : 0}
-                  textAnchor={isMobile ? "end" : "middle"}
-                  height={isMobile ? 60 : 30}
+                  angle={-20}
+                  textAnchor="end"
+                  height={isMobile ? 70 : 50}
+                  tickMargin={8}
                 />
-                <YAxis />
+                <YAxis 
+                  tick={{
+                    fontSize: isMobile ? 10 : 12,
+                  }}
+                />
                 <Tooltip content={<ChartTooltipContent />} />
                 <Bar 
                   dataKey="value" 

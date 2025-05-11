@@ -36,11 +36,10 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
   const displayData = isMobile ? sortedData.slice(0, 10) : sortedData;
 
   // Calculate left margin based on the longest company name
-  // Increase the multipliers to provide more space for company names
   const maxCompanyNameLength = Math.max(...displayData.map(item => item.name.length));
   const leftMargin = isMobile ? 
-    Math.min(100, Math.max(80, maxCompanyNameLength * 5)) : // Increased from 4 to 5
-    Math.min(160, Math.max(120, maxCompanyNameLength * 7)); // Increased from 120/6 to 160/7
+    Math.min(120, Math.max(90, maxCompanyNameLength * 6)) : 
+    Math.min(180, Math.max(140, maxCompanyNameLength * 8));
     
   // Get active filters list for title display
   const activeFilters = [];
@@ -66,19 +65,20 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
               <BarChart 
                 data={displayData} 
                 layout="vertical"
-                margin={{ top: 5, right: 30, left: leftMargin, bottom: 5 }}
+                margin={{ top: 5, right: 20, left: leftMargin, bottom: 5 }}
               >
                 <XAxis type="number" />
                 <YAxis 
                   dataKey="name" 
                   type="category" 
-                  width={leftMargin - 10}
+                  width={leftMargin - 20}
                   tick={{ 
                     fontSize: isMobile ? 11 : 13, 
                     fontWeight: isMobile ? 400 : 500,
                     textAnchor: 'end',
                     dy: 3
                   }}
+                  tickMargin={8}
                 />
                 <Tooltip content={<ChartTooltipContent />} />
                 <Bar dataKey="value" fill="#00A6D6" />

@@ -41,7 +41,7 @@ const Initiatives = () => {
           initiative.name.toLowerCase().includes(query) || 
           initiative.description.toLowerCase().includes(query) ||
           initiative.tags.some(tag => tag.toLowerCase().includes(query)) ||
-          initiative.institution?.toLowerCase().includes(query) ||
+          initiative.organization.toLowerCase().includes(query) ||
           initiative.category.toLowerCase().includes(query)
         );
       }
@@ -63,7 +63,7 @@ const Initiatives = () => {
         initiative.name.toLowerCase().includes(query) || 
         initiative.description.toLowerCase().includes(query) ||
         initiative.tags.some(tag => tag.toLowerCase().includes(query)) ||
-        initiative.institution?.toLowerCase().includes(query) ||
+        initiative.organization.toLowerCase().includes(query) ||
         initiative.category.toLowerCase().includes(query)
       );
     }

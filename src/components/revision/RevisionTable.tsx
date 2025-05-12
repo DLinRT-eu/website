@@ -228,7 +228,7 @@ const RevisionTable: React.FC<RevisionTableProps> = ({
                   className={selectedUrgency === 'high' ? "bg-accent" : ""}
                 >
                   <div className="w-3 h-3 rounded-full bg-red-600 mr-2"></div>
-                  High (>12 months)
+                  High ({`>`}12 months)
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

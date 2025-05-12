@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProductDetails } from '@/types/productDetails';
 import dataService from '@/services/DataService';
-import { calculateRevisionStats } from '@/utils/revisionUtils';
+import { calculateRevisionStats, getDaysSinceRevision } from '@/utils/revisionUtils';
 
 const RevisionStats = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -123,16 +123,6 @@ const RevisionStats = () => {
       </div>
     </div>
   );
-};
-
-// Helper function to calculate days since revision
-export const getDaysSinceRevision = (product: ProductDetails): number => {
-  const lastRevised = product.lastRevised || "2000-01-01";
-  const revisionDate = new Date(lastRevised);
-  const today = new Date();
-  
-  const diffTime = Math.abs(today.getTime() - revisionDate.getTime());
-  return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 };
 
 export default RevisionStats;

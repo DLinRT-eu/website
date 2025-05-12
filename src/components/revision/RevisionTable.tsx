@@ -2,31 +2,15 @@
 import React, { useState } from 'react';
 import { 
   Table, 
-  TableBody, 
-  TableCell, 
-  TableHead, 
   TableHeader, 
   TableRow 
 } from "@/components/ui/table";
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ProductDetails } from '@/types/productDetails';
-import { getDaysSinceRevision, getUrgencyLevel } from '@/utils/revisionUtils';
-import { ArrowDown, ArrowUp, Filter, Search } from 'lucide-react';
+import { getDaysSinceRevision } from '@/utils/revisionUtils';
+import FilterBar from './filters/FilterBar';
+import SortableHeader from './table/SortableHeader';
+import ProductTableBody from './table/ProductTableBody';
 
 interface RevisionTableProps {
   products: ProductDetails[];
@@ -114,223 +98,91 @@ const RevisionTable: React.FC<RevisionTableProps> = ({
     onAssignmentChange(productId, assignee);
   };
 
-  // Get urgency style
-  const getUrgencyStyle = (product: ProductDetails) => {
-    const urgency = getUrgencyLevel(product);
-    
-    switch(urgency) {
-      case 'high':
-        return 'text-red-600 font-semibold';
-      case 'medium':
-        return 'text-orange-500';
-      default:
-        return 'text-yellow-500';
-    }
+  // Handle search query change
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
   };
 
   return (
     <Card className="overflow-hidden">
       <div className="p-4 bg-muted/50 border-b">
-        <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-          <div className="relative w-full md:w-64">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input 
-              placeholder="Search products..." 
-              className="pl-8"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 gap-1">
-                  <Filter className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Category</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem 
-                  onClick={() => onCategoryFilter(null)}
-                  className={selectedCategory === null ? "bg-accent" : ""}
-                >
-                  All Categories
-                </DropdownMenuItem>
-                {categories.map((category) => (
-                  <DropdownMenuItem 
-                    key={category} 
-                    onClick={() => onCategoryFilter(category)}
-                    className={selectedCategory === category ? "bg-accent" : ""}
-                  >
-                    {category}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 gap-1">
-                  <Filter className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Company</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem 
-                  onClick={() => onCompanyFilter(null)}
-                  className={selectedCompany === null ? "bg-accent" : ""}
-                >
-                  All Companies
-                </DropdownMenuItem>
-                {companies.map((company) => (
-                  <DropdownMenuItem 
-                    key={company} 
-                    onClick={() => onCompanyFilter(company)}
-                    className={selectedCompany === company ? "bg-accent" : ""}
-                  >
-                    {company}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-            
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" size="sm" className="h-8 gap-1">
-                  <Filter className="h-3.5 w-3.5" />
-                  <span className="hidden sm:inline">Urgency</span>
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem 
-                  onClick={() => onUrgencyFilter(null)}
-                  className={selectedUrgency === null ? "bg-accent" : ""}
-                >
-                  All Levels
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => onUrgencyFilter('low')}
-                  className={selectedUrgency === 'low' ? "bg-accent" : ""}
-                >
-                  <div className="w-3 h-3 rounded-full bg-yellow-500 mr-2"></div>
-                  Low (6-12 months)
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => onUrgencyFilter('medium')}
-                  className={selectedUrgency === 'medium' ? "bg-accent" : ""}
-                >
-                  <div className="w-3 h-3 rounded-full bg-orange-500 mr-2"></div>
-                  Medium (6-12 months)
-                </DropdownMenuItem>
-                <DropdownMenuItem 
-                  onClick={() => onUrgencyFilter('high')}
-                  className={selectedUrgency === 'high' ? "bg-accent" : ""}
-                >
-                  <div className="w-3 h-3 rounded-full bg-red-600 mr-2"></div>
-                  High ({`>`}12 months)
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          </div>
-        </div>
+        <FilterBar 
+          searchQuery={searchQuery}
+          onSearchChange={handleSearchChange}
+          categories={categories}
+          companies={companies}
+          selectedCategory={selectedCategory}
+          selectedCompany={selectedCompany}
+          selectedUrgency={selectedUrgency}
+          onCategoryFilter={onCategoryFilter}
+          onCompanyFilter={onCompanyFilter}
+          onUrgencyFilter={onUrgencyFilter}
+        />
       </div>
       
       <div className="overflow-x-auto">
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead 
-                className="cursor-pointer"
-                onClick={() => handleSort('name')}
+              <SortableHeader 
+                field="name"
+                sortField={sortField} 
+                sortDirection={sortDirection}
+                onSort={handleSort}
               >
                 Product Name
-                {sortField === 'name' && (
-                  sortDirection === 'asc' ? 
-                  <ArrowUp className="inline ml-1 h-3 w-3" /> : 
-                  <ArrowDown className="inline ml-1 h-3 w-3" />
-                )}
-              </TableHead>
-              <TableHead 
-                className="cursor-pointer"
-                onClick={() => handleSort('company')}
+              </SortableHeader>
+              <SortableHeader 
+                field="company"
+                sortField={sortField} 
+                sortDirection={sortDirection}
+                onSort={handleSort}
               >
                 Company
-                {sortField === 'company' && (
-                  sortDirection === 'asc' ? 
-                  <ArrowUp className="inline ml-1 h-3 w-3" /> : 
-                  <ArrowDown className="inline ml-1 h-3 w-3" />
-                )}
-              </TableHead>
-              <TableHead 
-                className="cursor-pointer"
-                onClick={() => handleSort('category')}
+              </SortableHeader>
+              <SortableHeader 
+                field="category"
+                sortField={sortField} 
+                sortDirection={sortDirection}
+                onSort={handleSort}
               >
                 Category
-                {sortField === 'category' && (
-                  sortDirection === 'asc' ? 
-                  <ArrowUp className="inline ml-1 h-3 w-3" /> : 
-                  <ArrowDown className="inline ml-1 h-3 w-3" />
-                )}
-              </TableHead>
-              <TableHead className="whitespace-nowrap">Last Revised</TableHead>
-              <TableHead 
-                className="cursor-pointer whitespace-nowrap"
-                onClick={() => handleSort('days')}
+              </SortableHeader>
+              <SortableHeader 
+                field="lastRevised"
+                sortField={sortField} 
+                sortDirection={sortDirection}
+                onSort={handleSort}
+                className="whitespace-nowrap"
+              >
+                Last Revised
+              </SortableHeader>
+              <SortableHeader 
+                field="days"
+                sortField={sortField} 
+                sortDirection={sortDirection}
+                onSort={handleSort}
+                className="whitespace-nowrap"
               >
                 Days Since
-                {sortField === 'days' && (
-                  sortDirection === 'asc' ? 
-                  <ArrowUp className="inline ml-1 h-3 w-3" /> : 
-                  <ArrowDown className="inline ml-1 h-3 w-3" />
-                )}
-              </TableHead>
-              <TableHead className="text-right">Assignee</TableHead>
+              </SortableHeader>
+              <SortableHeader 
+                field="assignee"
+                sortField={sortField} 
+                sortDirection={sortDirection}
+                onSort={handleSort}
+                className="text-right"
+              >
+                Assignee
+              </SortableHeader>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {sortedProducts.length > 0 ? (
-              sortedProducts.map((product) => {
-                const daysSinceRevision = getDaysSinceRevision(product);
-                const lastRevised = product.lastRevised || "2000-01-01";
-                
-                return (
-                  <TableRow key={product.id}>
-                    <TableCell className="font-medium">{product.name}</TableCell>
-                    <TableCell>{product.company}</TableCell>
-                    <TableCell>{product.category}</TableCell>
-                    <TableCell>{lastRevised}</TableCell>
-                    <TableCell className={getUrgencyStyle(product)}>
-                      {daysSinceRevision} days
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Select
-                        value={assignments[product.id as string] || "Unassigned"}
-                        onValueChange={(value) => handleAssign(product.id as string, value)}
-                      >
-                        <SelectTrigger className="w-[140px] h-8">
-                          <SelectValue placeholder="Unassigned" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {TEAM_MEMBERS.map((member) => (
-                            <SelectItem key={member} value={member}>
-                              {member}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </TableCell>
-                  </TableRow>
-                );
-              })
-            ) : (
-              <TableRow>
-                <TableCell colSpan={6} className="text-center py-6 text-muted-foreground">
-                  No products found matching the current filters
-                </TableCell>
-              </TableRow>
-            )}
-          </TableBody>
+          <ProductTableBody 
+            products={sortedProducts}
+            assignments={assignments}
+            teamMembers={TEAM_MEMBERS}
+            onAssignmentChange={handleAssign}
+          />
         </Table>
       </div>
       <div className="p-4 border-t text-sm text-muted-foreground">

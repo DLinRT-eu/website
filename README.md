@@ -4,7 +4,7 @@
 [![Issues][issues-shield]][issues-url]
 [![GNU GPL-3.0][license-shield]][license-url]
 
-# Deep Learning in Radiotherapy Products
+# Deep learning in Radiotherapy products
 
 > **Note**: The website is currently under development. We welcome contributions to verify and improve the product information accuracy.
 
@@ -79,6 +79,74 @@ This project is built with:
 - TypeScript
 - React
 - Tailwind CSS
+
+Here is a schematic architecture of the website 
+'''mermaid
+flowchart TD
+    subgraph "User Browser"
+        UB["User"]:::external
+    end
+
+    subgraph "Frontend"
+        HTML["index.html"]:::artifact
+        Main["main.tsx"]:::frontend
+        App["App.tsx"]:::frontend
+        Router["React Router"]:::frontend
+        Pages["Pages"]:::frontend
+        Components["Components"]:::component
+        HooksServices["Hooks & Services"]:::service
+        Provider["Provider"]:::service
+    end
+
+    subgraph "Data Layer"
+        DataService["DataService.ts"]:::service
+        Database["Data Files"]:::database
+        LocalStorage["LocalStorage"]:::database
+    end
+
+    subgraph "Build & Config"
+        Vite["Vite"]:::build
+        Tailwind["Tailwind CSS"]:::build
+        TS["TypeScript"]:::build
+        ESLint["ESLint"]:::build
+    end
+
+    subgraph "CI/CD & Repo"
+        RepoEvents["GitHub Repo"]:::build
+        GHWorkflow["Deploy Workflow"]:::build
+        Docs["Documentation"]:::build
+    end
+
+    UB -->|"loads"| HTML
+    HTML --> Main
+    Main --> App
+    App --> Router
+    Router --> Pages
+    App --> Components
+    Pages --> HooksServices
+    Components --> HooksServices
+    HooksServices --> DataService
+    DataService --> Database
+    App --> Provider
+    Provider --> DataService
+    DataService --> LocalStorage
+
+    Vite -->|uses| TS
+    Vite -->|uses| Tailwind
+    Vite -->|uses| ESLint
+
+    RepoEvents --> GHWorkflow
+    GHWorkflow --> Vite
+    RepoEvents --> Docs
+
+    classDef frontend fill:#89CFF0,stroke:#333,stroke-width:1px
+    classDef component fill:#add8e6,stroke:#333,stroke-width:1px
+    classDef service fill:#f9f871,stroke:#333,stroke-width:1px
+    classDef database fill:#90ee90,stroke:#333,stroke-width:1px
+    classDef build fill:#d3d3d3,stroke:#333,stroke-width:1px
+    classDef external stroke:#f00,stroke-dasharray:5 5
+'''
+
 
 ### Running Locally
 

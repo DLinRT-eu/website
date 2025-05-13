@@ -81,7 +81,7 @@ This project is built with:
 - Tailwind CSS
 
 Here is a schematic architecture of the website 
-'''mermaid
+```mermaid
 flowchart TD
     subgraph "User Browser"
         UB["User"]:::external
@@ -145,7 +145,7 @@ flowchart TD
     classDef database fill:#90ee90,stroke:#333,stroke-width:1px
     classDef build fill:#d3d3d3,stroke:#333,stroke-width:1px
     classDef external stroke:#f00,stroke-dasharray:5 5
-'''
+```
 
 ### Running Locally
 

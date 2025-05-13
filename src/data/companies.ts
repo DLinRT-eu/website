@@ -61,7 +61,10 @@ export const COMPANIES: CompanyDetails[] = [
     "name": "Manteia",
     "description": "Canadian company developing AI solutions for radiation oncology.",
     "website": "https://manteia.ca/",
-    "productIds": ["manteia-accucontour"]
+    "productIds": ["manteia-accucontour",
+      "manteia-acculearning", 
+      "manteia-mozi"
+    ]
   },
   {
     "id": "mim-software",

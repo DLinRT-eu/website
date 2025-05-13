@@ -1,10 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
-export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
- import { ProductDetails } from "@/types/productDetails";
-
-export const MANTEIA_TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
+export const MANTEIA_PLANNING_PRODUCTS: ProductDetails[] = [
   {
     id: "manteia-mozi",
     name: "MOZI TPS",

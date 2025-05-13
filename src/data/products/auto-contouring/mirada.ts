@@ -43,7 +43,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2019",
-      distributionChannels: ["Direct sales", "OEM partnerships"],
+      distributionChannels: ["Not available anymore"],
       countriesPresent: 30,
       payingCustomers: "Multiple clinics worldwide",
       researchUsers: "Research centers globally"
@@ -55,7 +55,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     version: "2.2",
     releaseDate: "2023-05-20",
     lastUpdated: "2024-01-15",
-    lastRevised: "2000-01-01",
+    lastRevised: "2025-05-01",
     source: "automatically retrieved"
   }
 ];

@@ -55,6 +55,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     version: "2.0",
     releaseDate: "2023-04-25",
     lastUpdated: "2024-02-28",
-    lastRevised: "2024-04-30"
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved and revised"
   }
 ];

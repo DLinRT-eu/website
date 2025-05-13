@@ -26,7 +26,11 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     regulatory: {
       ce: { status: "Approved", class: "IIa" },
       fda: "510(k) Cleared"
-    }
+    },
+    releaseDate: "2020-01-20",
+    lastUpdated: "2024-01-25",
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved and revised"
   },
   {
     id: "philips-mrcat-pelvis",
@@ -52,7 +56,11 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     regulatory: {
       ce: { status: "Approved", class: "IIa" },
       fda: "510(k) Cleared"
-    }
+    },
+    releaseDate: "2019-05-21",
+    lastUpdated: "2024-01-25",
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved and revised"
   },
   {
     id: "philips-mrcat-head-and-neck",
@@ -78,6 +86,10 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     regulatory: {
       ce: { status: "Approved", class: "IIa" },
       fda: "510(k) Cleared"
-    }
+    },
+    releaseDate: "2022-10-20",
+    lastUpdated: "2024-01-25",
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved and revised"
   }
 ];

@@ -102,7 +102,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
       "Pelvis: Sacrum",
       "Pelvis: Iliac Crest (L/R)"
     ],
-    lastRevised: "2024-04-29",
+    lastRevised: "2025-05-12",
     source: "Automatically retrieved and revised",
   }
 ];

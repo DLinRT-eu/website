@@ -55,6 +55,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     version: "VB60",
     releaseDate: "2023-09-20",
     lastUpdated: "2024-03-15",
-    lastRevised: "2000-01-01"
+    lastRevised: "2025-05-12"
   }
 ];

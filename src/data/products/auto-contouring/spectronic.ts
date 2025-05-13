@@ -73,7 +73,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
       "Pelvis: Seminal Vesicles",
       "Pelvis: Penile Bulb"
     ],
-    lastRevised: "2024-04-30",
+    lastRevised: "2025-05-12",
     source: "automatically retrieved and revised"
   }
 ];

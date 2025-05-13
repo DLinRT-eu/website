@@ -66,6 +66,7 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
     version: "3.0",
     releaseDate: "2023-09-01",
     lastUpdated: "2024-03-15",
-    lastRevised: "2024-04-30"
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved and revised"
   }
 ];

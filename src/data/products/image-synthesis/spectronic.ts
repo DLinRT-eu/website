@@ -17,7 +17,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
-    diseaseTargeted: ["Prostate Cancer", "Brain Tumors", "Head and Neck Cancer"],
+    diseaseTargeted: ["Pelvis Cancer", "Brain Tumors", "Head and Neck Cancer"],
     keyFeatures: ["Deep learning algorithms", "Clinical workflow integration", "High anatomical accuracy", "Synthetic CT generation"],
     technicalSpecifications: {
       population: "Adult patients",
@@ -38,7 +38,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
         class: "IIa",
         type: "Medical Device"
       },
-      fda: "Under review",
+      fda: "510(k) cleared",
       intendedUseStatement: "For generating synthetic CT from MRI for radiation therapy planning with auto-segmentation capabilities."
     },
     market: {
@@ -55,6 +55,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     version: "3.2",
     releaseDate: "2023-07-10",
     lastUpdated: "2024-01-25",
-    lastRevised: "2024-04-30"
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved and revised"
   }
 ];

@@ -147,7 +147,6 @@ flowchart TD
     classDef external stroke:#f00,stroke-dasharray:5 5
 '''
 
-
 ### Running Locally
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)

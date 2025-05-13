@@ -62,7 +62,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     lastVerified: "2024-12-05",
     lastUpdated: "2025-02-01",
     lastRevised: "2025-05-05"
-
   },
   {
     id: "siemens-clara-train-image",
@@ -122,7 +121,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical evaluations showing improved diagnostic confidence and time efficiency across various imaging applications",
     lastVerified: "2024-11-10",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-05-05",
     lastUpdated: "2025-01-15"
   }
 ];

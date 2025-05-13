@@ -32,7 +32,6 @@ const RevisionStats = () => {
     if (selectedCompany && product.company !== selectedCompany) return false;
     if (selectedUrgency) {
       const daysSinceRevision = getDaysSinceRevision(product);
-      
       if (selectedUrgency === 'low' && daysSinceRevision <= 180) return false;
       if (selectedUrgency === 'medium' && (daysSinceRevision <= 180 || daysSinceRevision > 365)) return false;
       if (selectedUrgency === 'high' && daysSinceRevision <= 365) return false;

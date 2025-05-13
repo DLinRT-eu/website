@@ -14,7 +14,7 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
     "Transfer learning from base models",
     "Model version control"
   ],
-  category: "AI Model Training",
+  category: "Model Training",
   certification: "CE & FDA",
   logoUrl: "/logos/manteia.png",
   website: "https://www.manteiatech.com/",

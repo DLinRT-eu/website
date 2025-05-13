@@ -56,6 +56,11 @@ const categoryInfo: Record<string, { icon: React.ElementType, description: strin
     description: "Tools for quality assurance and performance monitoring in radiotherapy", 
     color: "bg-gray-100" 
   }
+  "Model Training": { 
+    icon: Brain, 
+    description: "Models trainable by the user", 
+    color: "bg-cyan-100" 
+  }
 };
 
 // Default icon for categories not in our map

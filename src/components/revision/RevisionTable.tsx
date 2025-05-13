@@ -25,11 +25,11 @@ interface RevisionTableProps {
 
 const TEAM_MEMBERS = [
   "Unassigned",
-  "Alice Johnson",
-  "Bob Smith",
-  "Carol Martinez",
-  "David Wilson",
-  "Eva Thompson"
+  "Alice",
+  "Bob",
+  "Carol",
+  "David",
+  "Eva"
 ];
 
 const RevisionTable: React.FC<RevisionTableProps> = ({

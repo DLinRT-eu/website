@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const SIEMENS_PRODUCTS: ProductDetails[] = [
   {
     id: "siemens-dual-energy-optimizer",
-    name: "Siemens Dual Energy Optimizer AI",
+    name: "Dual Energy Optimizer AI",
     company: "Siemens Healthineers",
     category: "Image Enhancement",
     description: "AI-powered solution for optimizing dual-energy CT images, enhancing material differentiation and tissue characterization.",
@@ -60,11 +60,13 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies demonstrating improved lesion detection and characterization compared to conventional dual-energy processing",
     lastVerified: "2024-12-05",
-    lastRevised: "2025-02-01"
+    lastUpdated: "2025-02-01",
+    lastRevised: "2025-05-05"
+
   },
   {
     id: "siemens-clara-train-image",
-    name: "Siemens Clara Train Image Processing",
+    name: "Clara Train Image Processing",
     company: "Siemens Healthineers",
     category: "Image Enhancement",
     description: "AI-powered image enhancement platform that improves image quality across modalities using deep learning techniques.",
@@ -120,6 +122,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical evaluations showing improved diagnostic confidence and time efficiency across various imaging applications",
     lastVerified: "2024-11-10",
-    lastRevised: "2025-01-15"
+    lastRevised: "2025-05-05"
+    lastUpdated: "2025-01-15"
   }
 ];

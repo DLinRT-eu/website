@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
     id: "philips-intellispace-ai-enhancement",
-    name: "Philips IntelliSpace AI Image Enhancement",
+    name: "IntelliSpace AI Image Enhancement",
     company: "Philips",
     category: "Image Enhancement",
     description: "AI-powered image enhancement solution that reduces noise and improves clarity in medical images across modalities.",
@@ -60,11 +60,13 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple studies showing improved reader confidence and reduced reading time for enhanced images",
     lastVerified: "2024-12-01",
-    lastRevised: "2025-01-15"
+    lastUpdated: "2025-01-15",
+    lastRevised: "2025-05-05"
+
   },
   {
     id: "philips-smartdose-ct-enhancement",
-    name: "Philips SmartDose CT Enhancement",
+    name: "SmartDose CT Enhancement",
     company: "Philips",
     category: "Image Enhancement",
     description: "AI-driven solution for enhancing low-dose CT images to achieve diagnostic quality comparable to standard dose acquisitions.",
@@ -120,6 +122,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies showing diagnostic equivalence between enhanced low-dose images and standard-dose acquisitions",
     lastVerified: "2024-11-10",
-    lastRevised: "2025-01-05"
+    lastUpdated: "2025-01-05",
+    lastRevised: "2025-05-05"
   }
 ];

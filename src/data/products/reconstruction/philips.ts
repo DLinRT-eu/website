@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
     id: "philips-smartct-ai-reconstruction",
-    name: "Philips SmartCT AI Reconstruction",
+    name: "SmartCT AI Reconstruction",
     company: "Philips",
     category: "Reconstruction",
     description: "AI-powered CT reconstruction technology that achieves high image quality at lower radiation doses.",
@@ -59,11 +59,13 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple peer-reviewed studies showing non-inferiority to standard dose CT with up to 80% dose reduction",
     lastVerified: "2024-12-01",
-    lastRevised: "2025-01-15"
+    lastUpdated: "2025-01-15",
+    lastRevised: "2025-05-05"
+
   },
   {
     id: "philips-compressed-sense",
-    name: "Philips Compressed SENSE",
+    name: "Compressed SENSE",
     company: "Philips",
     category: "Reconstruction",
     description: "AI-driven MRI acceleration technology using deep learning reconstruction algorithms to reduce scan times while maintaining image quality.",
@@ -119,6 +121,9 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical studies showing equivalent diagnostic quality with 30-50% reduced scan times across neurological, musculoskeletal, and body imaging",
     lastVerified: "2024-11-10",
-    lastRevised: "2025-01-05"
+    lastUpdated: "2025-01-05",
+    lastRevised: "2025-05-05",
+    source: "Automatically retrieved"
+
   }
 ];

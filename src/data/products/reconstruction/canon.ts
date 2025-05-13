@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const CANON_PRODUCTS: ProductDetails[] = [
   {
     id: "canon-aice-ct",
-    name: "Canon AiCE CT",
+    name: "AiCE CT",
     company: "Canon Medical Systems",
     category: "Reconstruction",
     description: "Advanced intelligent Clear-IQ Engine for CT using deep learning reconstruction to reduce dose and improve image quality.",
@@ -60,11 +60,12 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical studies demonstrating excellent image quality at ultra-low-dose settings across various clinical applications",
     lastVerified: "2024-11-05",
-    lastRevised: "2025-01-15"
+    lastUpdated: "2025-01-15",
+    lastRevised: "2025-05-05"
   },
   {
     id: "canon-aice-mr",
-    name: "Canon AiCE MR",
+    name: "AiCE MR",
     company: "Canon Medical Systems",
     category: "Reconstruction",
     description: "Deep learning reconstruction for MRI that accelerates scanning while improving image clarity and detail.",
@@ -120,6 +121,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Growing body of clinical evidence showing comparable diagnostic performance with significantly reduced scan times",
     lastVerified: "2024-10-20",
-    lastRevised: "2025-01-10"
+    lastUpdated: "2025-01-10",
+    lastRevised: "2025-05-05"
   }
 ];

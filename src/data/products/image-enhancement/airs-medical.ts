@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
   {
     id: "airs-swiftmr",
-    name: "Airs Medical SwiftMR",
+    name: "Medical SwiftMR",
     company: "Airs Medical",
     category: "Image Enhancement",
     description: "AI-powered MRI enhancement solution that improves image quality and resolution of accelerated or low-quality MR scans.",
@@ -60,7 +60,8 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies showing improved diagnostic confidence and efficiency when interpreting enhanced images",
     lastVerified: "2024-12-01",
-    lastRevised: "2025-02-10"
+    lastUpdated: "2025-02-10",
+    lastRevised: "2025-05-05"
   },
   {
     id: "airs-ct-clarity",
@@ -120,6 +121,7 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Early clinical evaluations showing improved image quality metrics and reader preference compared to standard CT images",
     lastVerified: "2024-11-15",
-    lastRevised: "2025-01-20"
+    lastUpdated: "2025-01-20",
+    lastRevised: "2025-05-05"
   }
 ];

@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const CANON_PRODUCTS: ProductDetails[] = [
   {
     id: "canon-advanced-vis-ai",
-    name: "Canon Advanced Visualization with AI",
+    name: "Advanced Visualization with AI",
     company: "Canon Medical Systems",
     category: "Image Enhancement",
     description: "AI-powered image enhancement solution that improves clarity and detail in medical images across multiple modalities.",
@@ -59,7 +59,8 @@ export const CANON_PRODUCTS: ProductDetails[] = [
       basedOn: ["Annual volume", "Enterprise license"]
     },
     clinicalEvidence: "Multiple reader studies showing improved diagnostic confidence and reduced reading time for enhanced images",
-    lastVerified: "2024-10-20",
-    lastRevised: "2025-01-05"
+    lastVerified: "2025-05-10",
+    lastUpdated: "2025-01-05",
+    lastRevised: "2025-05-05"
   }
 ];

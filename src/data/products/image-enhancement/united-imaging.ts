@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
   {
     id: "united-ucs-ai",
-    name: "United Imaging uCS-AI",
+    name: "uCS-AI",
     company: "United Imaging",
     category: "Image Enhancement",
     description: "AI-powered CBCT enhancement solution that improves image quality and reduces artifacts for radiotherapy applications.",
@@ -60,11 +60,13 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical evaluations showing improved target visualization and reduced contouring variability compared to conventional CBCT",
     lastVerified: "2024-10-15",
-    lastRevised: "2024-12-20"
+    lastUpdated: "2024-12-20",
+    lastRevised: "2025-05-05"
+
   },
   {
     id: "united-uvision-ai",
-    name: "United Imaging uVision AI",
+    name: "uVision AI",
     company: "United Imaging",
     category: "Image Enhancement",
     description: "AI-driven image enhancement platform that improves quality and diagnostic value of medical images across modalities.",
@@ -120,6 +122,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Early clinical evaluations showing improved reading efficiency and diagnostic confidence across multiple imaging applications",
     lastVerified: "2024-09-20",
-    lastRevised: "2024-12-05"
+    lastUpdated: "2025-12-05",
+    lastRevised: "2025-05-05"
   }
 ];

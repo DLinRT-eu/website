@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
   {
     id: "united-uai-vision-recon",
-    name: "United Imaging uAI Vision Reconstruction",
+    name: "uAI Vision Reconstruction",
     company: "United Imaging",
     category: "Reconstruction",
     description: "Deep learning-based CT reconstruction technology that reduces radiation dose while enhancing image quality.",
@@ -60,11 +60,11 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Emerging clinical evidence showing significant dose reduction with maintained diagnostic accuracy",
     lastVerified: "2024-09-20",
-    lastRevised: "2025-01-10"
+    lastRevised: "2025-05-10"
   },
   {
     id: "united-hd-tof",
-    name: "United Imaging HD TOF 2.0",
+    name: "HD TOF 2.0",
     company: "United Imaging",
     category: "Reconstruction",
     description: "AI-powered PET reconstruction technology that enhances time-of-flight imaging for improved resolution and quantitation.",
@@ -120,6 +120,9 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies demonstrating improved lesion detection rates and quantitative accuracy compared to conventional reconstruction techniques",
     lastVerified: "2024-10-15",
-    lastRevised: "2024-12-20"
+    lastUpdated: "2024-12-20",
+    lastRevised: "2025-05-05",
+    source: "Automatically retrieved"
+
   }
 ];

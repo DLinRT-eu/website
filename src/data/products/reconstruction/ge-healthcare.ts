@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const GE_PRODUCTS: ProductDetails[] = [
   {
     id: "ge-truefidelity-pro",
-    name: "GE TrueFidelity Pro",
+    name: "TrueFidelity Pro",
     company: "GE Healthcare",
     category: "Reconstruction",
     description: "Deep learning-based CT image reconstruction technology that improves image quality while reducing radiation dose.",
@@ -120,6 +120,8 @@ export const GE_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Over 30 peer-reviewed publications demonstrating improved image quality and/or reduced scan times across various clinical applications",
     lastVerified: "2024-11-20",
-    lastRevised: "2025-01-15"
+    lastUpdated: "2025-01-15",
+    lastRevised: "2025-05-05"
+
   }
 ];

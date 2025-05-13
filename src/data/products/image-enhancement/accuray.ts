@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const ACCURAY_PRODUCTS: ProductDetails[] = [
   {
     id: "accuray-synchrony-image",
-    name: "Accuray Synchrony Image Enhancement",
+    name: "Synchrony Image Enhancement",
     company: "Accuray",
     category: "Image Enhancement",
     description: "AI-enhanced imaging solution that improves image quality and motion management for radiotherapy guidance.",
@@ -59,7 +59,8 @@ export const ACCURAY_PRODUCTS: ProductDetails[] = [
       basedOn: ["System type", "Support level"]
     },
     clinicalEvidence: "Clinical evaluations showing improved motion tracking accuracy and reduced treatment margins compared to standard imaging approaches",
-    lastVerified: "2024-10-20",
-    lastRevised: "2024-12-15"
+    lastVerified: "2025-05-10",
+    lastUpdated: "2024-12-15",
+    lastRevised: "2025-05-05"
   }
 ];

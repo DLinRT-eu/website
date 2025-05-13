@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const ELEKTA_PRODUCTS: ProductDetails[] = [
   {
     id: "elekta-iris",
-    name: "Elekta Iris",
+    name: "IRIS",
     company: "Elekta",
     category: "Reconstruction",
     description: "AI-powered CBCT reconstruction solution that improves image quality for radiation therapy planning and adaptive radiotherapy using deep learning techniques.",
@@ -13,7 +13,7 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/Elekta.png",
     companyUrl: "https://www.elekta.com/",
     productUrl: "https://www.elekta.com/radiation-oncology/treatment-solutions/imaging/",
-    anatomicalLocation: ["Whole body"],
+    anatomicalLocation: ["Pelvis"],
     modality: ["CBCT"],
     diseaseTargeted: ["Cancer"],
     releaseDate: "2022-06-01",
@@ -59,7 +59,8 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
       basedOn: ["Treatment system model", "Enterprise license"]
     },
     clinicalEvidence: "Clinical studies showing improved target delineation accuracy and reduced inter-observer variability with Iris-enhanced CBCT images",
-    lastVerified: "2024-12-15",
-    lastRevised: "2025-02-10"
+    lastVerified: "2025-05-10",
+    lastUpdated: "2025-02-10",
+    lastRevised: "2025-05-05"
   }
 ];

@@ -60,7 +60,9 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple peer-reviewed studies showing diagnostic equivalence between standard acquisition and accelerated protocols with SubtleMR enhancement",
     lastVerified: "2024-12-05",
-    lastRevised: "2025-01-10"
+    lastUpdated: "2025-01-10",
+    lastRevised: "2025-05-05"
+
   },
   {
     id: "subtle-pet",
@@ -120,6 +122,7 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple peer-reviewed studies showing diagnostic equivalence between standard dose and low-dose/fast-scan protocols with SubtlePET enhancement",
     lastVerified: "2024-11-15",
+    lastUpdated: "2025-01-05"
     lastRevised: "2025-01-05"
   },
   {
@@ -180,6 +183,7 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Early research studies showing promising correlation between synthetic and actual contrast-enhanced images in neurological applications",
     lastVerified: "2024-10-20",
-    lastRevised: "2024-12-15"
+    lastUpdated: "2024-12-15",
+    lastRevised: "2025-05-05"
   }
 ];

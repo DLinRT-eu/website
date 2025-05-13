@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const SIEMENS_PRODUCTS: ProductDetails[] = [
   {
     id: "siemens-admire",
-    name: "Siemens ADMIRE",
+    name: "ADMIRE",
     company: "Siemens Healthineers",
     category: "Reconstruction",
     description: "Advanced Modeled Iterative Reconstruction with deep learning enhancements for CT image quality improvement and dose reduction.",
@@ -60,11 +60,11 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical studies showing diagnostic equivalence at significantly reduced radiation dose across multiple organ systems",
     lastVerified: "2024-10-15",
-    lastRevised: "2025-01-20"
+    lastRevised: "2025-05-10"
   },
   {
     id: "siemens-deep-resolve",
-    name: "Siemens Deep Resolve",
+    name: "Deep Resolve",
     company: "Siemens Healthineers",
     category: "Reconstruction",
     description: "AI-powered MRI reconstruction technology that uses deep neural networks to accelerate scan times and enhance image quality.",
@@ -120,6 +120,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Extensive published research demonstrating improved workflow efficiency and maintained diagnostic confidence with accelerated protocols",
     lastVerified: "2024-12-10",
-    lastRevised: "2025-02-01"
+    lastRevised: "2025-05-01"
   }
 ];

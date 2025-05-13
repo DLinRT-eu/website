@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const GE_PRODUCTS: ProductDetails[] = [
   {
     id: "ge-dlip-ct",
-    name: "GE Deep Learning Image Processing for CT",
+    name: "Deep Learning Image Processing for CT",
     company: "GE Healthcare",
     category: "Image Enhancement",
     description: "AI-powered CT image enhancement technology that improves image quality and reduces noise in standard and low-dose examinations.",
@@ -60,11 +60,12 @@ export const GE_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical evaluations demonstrating improved diagnostic confidence and reduced interpretation time",
     lastVerified: "2024-11-15",
-    lastRevised: "2025-01-20"
+    lastUpdated: "2025-01-20",
+    lastRevised: "2025-05-05"
   },
   {
     id: "ge-air-recon-dl-enhancement",
-    name: "GE AIR Recon DL Enhancement Mode",
+    name: "AIR Recon DL Enhancement Mode",
     company: "GE Healthcare",
     category: "Image Enhancement",
     description: "MR image enhancement solution using deep learning to improve signal-to-noise ratio and image sharpness in existing MR images.",
@@ -120,6 +121,8 @@ export const GE_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Reader studies showing improved diagnostic confidence and lesion conspicuity compared to standard MR images",
     lastVerified: "2024-10-20",
-    lastRevised: "2025-01-10"
+    lastUpdated: "2025-01-10",
+    lastRevised: "2025-05-05"
+
   }
 ];

@@ -8,23 +8,6 @@
 
 > **Note**: The website is currently under development. We welcome contributions to verify and improve the product information accuracy.
 
-## Team
-
-<div align="center">
-  <p><strong>Matteo Maspero</strong></p>
-  <p>Project Lead - Computational Imaging Group Utrecht</p>
-</div>
-
-Feel free to contact the Project Lead in case you would like to be involved!
-
-## How to Contribute
-
-We welcome contributions to improve the accuracy of product information. If you notice any inaccuracies or have updates about the AI products listed, please:
-
-1. Open an issue describing the update needed.
-2. Submit a pull request with your changes.
-3. Ensure proper attribution and documentation.
-
 ---
 
 ## Reviewing Product Content
@@ -173,6 +156,23 @@ You can also use GitHub Codespaces for development:
 ## License
 
 This project is licensed under the GNU AGPL-3.0 License - see the LICENSE file for details. You are free to reuse and modify the code, provided you maintain the same license and provide proper attribution to the original authors.
+
+## Team
+
+<div align="center">
+  <p><strong>Matteo Maspero</strong></p>
+  <p>Project Lead - Computational Imaging Group Utrecht</p>
+</div>
+
+Feel free to contact the Project Lead in case you would like to be involved!
+
+## How to Contribute
+
+We welcome contributions to improve the accuracy of product information. If you notice any inaccuracies or have updates about the AI products listed, please:
+
+1. Open an issue describing the update needed.
+2. Submit a pull request with your changes.
+3. Ensure proper attribution and documentation.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

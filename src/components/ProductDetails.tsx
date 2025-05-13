@@ -10,6 +10,7 @@ import MarketInformationDetails from "./product/MarketInformationDetails";
 import PricingInformationDetails from "./product/PricingInformationDetails";
 import ContactInformation from "./product/ContactInformation";
 import SupportedStructures from "./product/SupportedStructures";
+import ProductRevisionStatus from "./ProductRevisionStatus";
 
 interface ProductDetailsProps {
   product: ProductDetailsType;
@@ -37,6 +38,12 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         
         <div className="space-y-6">
           <ContactInformation product={product} />
+          
+          {/* Add revision status component */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Revision Information</h3>
+            <ProductRevisionStatus product={product} />
+          </div>
         </div>
       </div>
     </div>

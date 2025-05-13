@@ -34,11 +34,11 @@ const UrgencyFilter: React.FC<UrgencyFilterProps> = ({
           All Levels
         </DropdownMenuItem>
         <DropdownMenuItem 
-          onClick={() => onUrgencyFilter(' very low')}
-          className={selectedUrgency === 'low' ? "bg-accent" : ""}
+          onClick={() => onUrgencyFilter('recent')}
+          className={selectedUrgency === 'recent' ? "bg-accent" : ""}
         >
           <div className="w-3 h-3 rounded-full bg-green-500 mr-2"></div>
-          Low (0-3 months)
+          Recent (0-3 months)
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => onUrgencyFilter('low')}

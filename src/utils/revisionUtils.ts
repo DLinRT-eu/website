@@ -33,12 +33,13 @@ export const needsRevision = (product: ProductDetails): boolean => {
 };
 
 // Get urgency level based on days since revision
-export const getUrgencyLevel = (product: ProductDetails): 'low' | 'medium' | 'high' => {
+export const getUrgencyLevel = (product: ProductDetails): 'recent' | 'low' | 'medium' | 'high' => {
   const daysSinceRevision = getDaysSinceRevision(product);
   
   if (daysSinceRevision > 365) return 'high';
   if (daysSinceRevision > 180) return 'medium';
-  return 'low';
+  if (daysSinceRevision > 90) return 'low';
+  return 'recent';
 };
 
 // Calculate all revision statistics from product list

@@ -29,8 +29,10 @@ const ProductTableRow: React.FC<ProductTableRowProps> = ({
         return 'text-red-600 font-semibold';
       case 'medium':
         return 'text-orange-500';
+      case 'low':
+        return 'text-orange-500';  
       default:
-        return 'text-yellow-500';
+        return 'text-green-500';
     }
   };
 

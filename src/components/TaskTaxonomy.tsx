@@ -55,7 +55,7 @@ const categoryInfo: Record<string, { icon: React.ElementType, description: strin
     icon: Monitor, 
     description: "Tools for quality assurance and performance monitoring in radiotherapy", 
     color: "bg-gray-100" 
-  }
+  },
   "Model Training": { 
     icon: Brain, 
     description: "Models trainable by the user", 

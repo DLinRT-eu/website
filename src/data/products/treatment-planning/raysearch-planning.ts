@@ -15,7 +15,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/raystation.jpg",
     website: "https://www.raysearchlabs.com/raystation/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT, MR",
+    modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Deep learning algorithms", "Automatic plan generation", "Dose prediction", "Plan quality estimation"],
@@ -54,6 +54,9 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2023-12-15",
-    lastUpdated: "2024-04-01"
+    lastUpdated: "2024-04-01",
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved and revised",
+    lastVerified: "2024-05-12",
   }
 ];

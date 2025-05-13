@@ -16,7 +16,7 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/ever-fortune.png",
     website: "https://www.everfortuneai.com.tw/en/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Deep learning segmentation", "Treatment planning tools", "Workflow integration"],
@@ -85,7 +85,7 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
       "Pelvis: Prostate",
       "Pelvis: Uterus"
     ],
-    lastRevised: "2000-01-01",
+    lastRevised: "2025-05-10",
     source: "automatically retrieved"
   }
 ];

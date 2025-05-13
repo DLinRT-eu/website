@@ -8,7 +8,7 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     company: "AI Medical",
     companyUrl: "https://www.ai-medical.ch/",
     productUrl: "https://www.ai-medical.ch/jazz",
-    description: "Long-terms leasion tracking and reporting.",
+    description: "Long-terms lesion tracking and reporting.",
     features: ["Deep learning contours", "Fast processing", "Multiple anatomical sites", "Lesion tracking"],
     category: "Auto-Contouring",
     certification: "CE",
@@ -63,9 +63,9 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     version: "2.0",
     releaseDate: "2023-05-15",
     lastUpdated: "2024-04-29",
-    lastVerified: "",
     clinicalEvidence: "Publication in Medical Physics Journal 2023, ESTRO 2022 abstract",
     lastRevised: "2025-05-04",
-    source: "automatically retrieved"
+    source: "Automatically retrieved and revised",
+    lastVerified: "2024-05-12"
   }
 ];

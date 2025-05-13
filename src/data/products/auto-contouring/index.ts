@@ -13,6 +13,7 @@ import { EVERFORTUNE_PRODUCTS } from "./everfortune";
 import { GE_HEALTHCARE_PRODUCTS } from "./ge-healthcare";
 import { HURA_IMAGING_PRODUCTS } from "./hura-imaging";
 import { MANTEIA_PRODUCTS } from "./manteia";
+import { MANTEIA_LEARNING_PRODUCTS } from "./manteia-acculearning"; 
 import { MIM_SOFTWARE_PRODUCTS } from "./mim-software";
 import { RADFORMATION_PRODUCTS } from "./radformation";
 import { SIEMENS_PRODUCTS } from "./siemens";
@@ -36,6 +37,7 @@ export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...GE_HEALTHCARE_PRODUCTS,
   ...HURA_IMAGING_PRODUCTS,
   ...MANTEIA_PRODUCTS,
+  ...MANTEIA_LEARNING_PRODUCTS,
   ...MIM_SOFTWARE_PRODUCTS,
   ...RADFORMATION_PRODUCTS,
   ...SIEMENS_PRODUCTS,

@@ -66,6 +66,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
       "Pelvis: Penile Bulb",
       "Pelvis: Urethra"
     ],
-    lastRevised: "2000-01-01"
+    lastRevised: "2025-05-12",
+    lastVerified: "2025-05-12",
+    source: "automatically retrieved and verified"
   }
 ];

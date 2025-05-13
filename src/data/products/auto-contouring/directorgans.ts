@@ -22,7 +22,7 @@ export const DIRECTORGANS_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Multiple anatomical sites"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT", "MR"],
+      input: ["CT", "MRI"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]
@@ -73,7 +73,7 @@ export const DIRECTORGANS_PRODUCTS: ProductDetails[] = [
       "Pelvis: Rectum",
       "Pelvis: Femoral Heads"
     ],
-    lastRevised: "2000-01-01",
+    lastRevised: "2025-05-12",
     source: "automatically retrieved"
   }
 ];

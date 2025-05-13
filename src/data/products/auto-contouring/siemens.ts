@@ -71,6 +71,8 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
       "Pelvis: Femoral Heads (L)",
       "Pelvis: Femoral Heads (R)"
     ],
-    lastRevised: "2000-01-01"
+    lastRevised: "2025-05-12",
+    lastVerified: "2025-05-12",
+    source: "Automatically retrieved"
   }
 ];

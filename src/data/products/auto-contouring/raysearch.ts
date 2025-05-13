@@ -16,7 +16,7 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/raystation.jpg",
     website: "https://www.raysearchlabs.com/machine-learning-in-raystation/",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Machine learning algorithms", "Multi-atlas fallback", "TPS integration"],
@@ -56,7 +56,10 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     },
     version: "12.0",
     releaseDate: "2023-12-01",
-    lastUpdated: "2024-03-15",
-    lastRevised: "2000-01-01"
+    lastUpdated: "2025-05-01",
+    lastRevised: "2025-05-13",
+    source: "automatically retrieved and verified",
+    lastVerified: "2025-05-12",
+    clinicalEvidence: "Clinical studies demonstrating improved contouring accuracy and efficiency."
   }
 ];

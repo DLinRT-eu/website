@@ -1,7 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
-export const MVISION_TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
+export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
   {
     id: "mvision-ai-dose-plus",
     name: "Dose+",
@@ -27,7 +27,7 @@ export const MVISION_TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
     ],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT images", "Structure sets", "Clinical goals"],
+      input: ["CT", "Structure sets", "Clinical goals"],
       inputFormat: ["DICOM", "DICOM-RT"],
       output: ["Treatment plans", "Dose distributions"],
       outputFormat: ["DICOM-RT"]
@@ -63,6 +63,7 @@ export const MVISION_TREATMENT_PLANNING_PRODUCTS: ProductDetails[] = [
     lastUpdated: "2024-02-10",
     lastVerified: "2024-04-01",
     lastRevised: "2024-04-01",
+    source: "Automatically retrieved and revised",
     clinicalEvidence: "Validated in multiple clinical sites with demonstrated time savings and plan quality comparable to expert planners"
   }
 ];

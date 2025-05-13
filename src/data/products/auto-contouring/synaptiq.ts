@@ -34,7 +34,7 @@ export const SYNAPTIQ_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Certified",
+        status: "Under review",
         class: "IIa",
         type: "Medical Device"
       },
@@ -55,6 +55,7 @@ export const SYNAPTIQ_PRODUCTS: ProductDetails[] = [
     version: "2.0",
     releaseDate: "2023-08-20",
     lastUpdated: "2024-03-05",
-    lastRevised: "2000-01-01"
+    lastRevised: "2025-05-12",
+    source: "Automatically retrieved"
   }
 ];

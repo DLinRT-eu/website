@@ -55,7 +55,7 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     version: "4.0",
     releaseDate: "2023-03-10",
     lastUpdated: "2024-01-20",
-    lastRevised: "2000-01-01",
+    lastRevised: "2025-05-12",
     source: "automatically retrieved"
   }
 ];

@@ -1,20 +1,18 @@
-
 import { ProductDetails } from "@/types/productDetails";
 
-// Structure data retrieved on 2024-04-29
 export const MANTEIA_PRODUCTS: ProductDetails[] = [
   {
     id: "manteia-accucontour",
     name: "AccuContour",
     company: "Manteia",
-    companyUrl: "https://www.manteiatech.com/index_en.html",
-    productUrl: "http://www.manteiatech.com/pd_AccuContour_en.html",
-    description: "Canadian-developed AI solution for rapid and accurate auto-contouring in radiation therapy planning.",
+    companyUrl: "https://www.manteiatech.com/",
+    productUrl: "https://www.manteiatech.com/accucontour",
+    description: "AI solution for rapid and accurate auto-contouring in radiation therapy planning.",
     features: ["Deep learning algorithms", "Multiple anatomical sites", "Rapid processing"],
     category: "Auto-Contouring",
-    certification: "CE",
+    certification: "CE & FDA",
     logoUrl: "/logos/manteia.png",
-    website: "https://www.manteiatech.com/index_en.html",
+    website: "https://www.manteiatech.com/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: "CT",
     subspeciality: "Radiation Oncology",
@@ -39,61 +37,72 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
         class: "IIa",
         type: "Medical Device"
       },
-      fda: "Under review",
+      fda: "510(k) Cleared",
       intendedUseStatement: "For assistance in the delineation of organs at risk in radiation therapy planning."
     },
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 8,
-      payingCustomers: "Multiple clinical sites in North America",
+      countriesPresent: 15,
+      payingCustomers: "Multiple clinical sites in North America/Europe",
       researchUsers: "Research institutions"
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],
       basedOn: ["Annual license", "Number of patients"]
     },
-    version: "1.5",
-    releaseDate: "2023-06-20",
-    lastUpdated: "2024-02-10",
+    version: "2.1",
+    releaseDate: "2024-03-15",
+    lastUpdated: "2024-04-25",
     supportedStructures: [
-      "Brain: Brain",
+      // Brain Structures
       "Brain: Brainstem",
       "Brain: Optic Chiasm",
-      "Brain: Optic Nerve (L)",
-      "Brain: Optic Nerve (R)",
-      "Brain: Eyes (L)",
-      "Brain: Eyes (R)",
-      "Brain: Lens (L)",
-      "Brain: Lens (R)",
-      "Brain: Pituitary Gland",
-      "Brain: Cochlea (L)",
-      "Brain: Cochlea (R)",
-      "Head & Neck: Parotid (L)",
-      "Head & Neck: Parotid (R)",
-      "Head & Neck: Submandibular Glands (L)",
-      "Head & Neck: Submandibular Glands (R)",
+      "Brain: Optic Nerve (L/R)",
+      "Brain: Eye (L/R)",
+      "Brain: Lens (L/R)",
+      "Brain: Pituitary",
+      "Brain: Cochlea (L/R)",
+      
+      // Head & Neck Structures
+      "Head & Neck: Parotid (L/R)",
+      "Head & Neck: Submandibular Gland (L/R)",
       "Head & Neck: Oral Cavity",
       "Head & Neck: Larynx",
+      "Head & Neck: Pharyngeal Constrictor",
       "Head & Neck: Spinal Cord",
+      "Head & Neck: Thyroid",
+      "Head & Neck: Mandible",
+      "Head & Neck: Cervical Vertebrae (C1-C7)",
+      
+      // Thorax Structures
       "Thorax: Heart",
-      "Thorax: Lungs (L)",
-      "Thorax: Lungs (R)",
+      "Thorax: Lung (L/R)",
       "Thorax: Esophagus",
-      "Thorax: Spinal Cord",
+      "Thorax: Trachea",
+      "Thorax: Brachial Plexus (L/R)",
+      "Thorax: Aorta",
+      
+      // Abdomen Structures
       "Abdomen: Liver",
-      "Abdomen: Kidneys (L)",
-      "Abdomen: Kidneys (R)",
+      "Abdomen: Kidney (L/R)",
       "Abdomen: Stomach",
+      "Abdomen: Pancreas",
+      "Abdomen: Spleen",
       "Abdomen: Duodenum",
       "Abdomen: Small Bowel",
+      
+      // Pelvis Structures
       "Pelvis: Bladder",
       "Pelvis: Rectum",
-      "Pelvis: Femoral Head (L)",
-      "Pelvis: Femoral Head (R)",
-      "Pelvis: Bowel Bag"
+      "Pelvis: Femoral Head (L/R)",
+      "Pelvis: Bowel Bag",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Sacrum",
+      "Pelvis: Iliac Crest (L/R)"
     ],
-    lastRevised: "2000-01-01",
-    source: "automatically retrieved"
+    lastRevised: "2024-04-29",
+    source: "Automatically retrieved and revised",
   }
 ];

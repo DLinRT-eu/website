@@ -4,16 +4,16 @@ import { ProductDetails } from "@/types/productDetails";
 export const RADFORMATION_PRODUCTS: ProductDetails[] = [
   {
     id: "radformation-econtour",
-    name: "EZContour",
+    name: "AutoContour",
     company: "Radformation",
     companyUrl: "https://radformation.com/",
-    productUrl: "https://radformation.com/ezcontour",
+    productUrl: "https://radformation.com/autocontour/autocontour",
     description: "AI-driven contouring solution for radiation therapy planning, offering automated segmentation of organs at risk.",
     features: ["AI segmentation", "Multiple anatomical sites", "TPS integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/radformation.svg",
-    website: "https://radformation.com/ezcontour",
+    website: "https://radformation.com/autocontour/autocontour",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: ["CT", "MRI"],
     subspeciality: "Radiation Oncology",
@@ -335,7 +335,9 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     },
     version: "3.0",
     releaseDate: "2023-11-01",
-    lastUpdated: "2024-03-12",
-    lastRevised: "2000-01-01"
+    lastUpdated: "2025-02-01",
+    lastRevised: "2025-05-12",
+    lastVerified: "2025-05-12",   
+    source: "automatically retrieved and verified"
   }
 ];

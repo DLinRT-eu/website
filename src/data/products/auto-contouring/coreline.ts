@@ -8,7 +8,7 @@ const rawProduct: ProductDetails = {
   name: "Aview RT ACS",
   company: "Coreline Soft Co",
   companyUrl: "https://www.corelinesoft.com/en/",
-  productUrl: "https://www.corelinesoft.com/product/acs/",
+  productUrl: "https://www.corelinesoft.com/en/solutions/rt-acs",
   description: "AI-powered automatic contouring server for radiation therapy planning, providing rapid and accurate organ segmentation using deep learning algorithms.",
   features: [
     "Deep learning auto-segmentation", 
@@ -20,7 +20,7 @@ const rawProduct: ProductDetails = {
   category: "Auto-Contouring",
   certification: "CE & FDA",
   logoUrl: "/logos/coreline.jpg",
-  website: "https://www.corelinesoft.com/product/acs/",
+  website: "https://www.corelinesoft.com/en/solutions/rt-acs",
   anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
   modality: ["CT"],
   subspeciality: "Radiation Oncology",
@@ -115,7 +115,7 @@ const rawProduct: ProductDetails = {
     "Pelvis: Spinal cord",
     "Pelvis: Prostate"
   ],
-  source: "automatically retrieved"
+  source: "automatically retrieved and revised",
 };
 
 // Apply all the standardization functions

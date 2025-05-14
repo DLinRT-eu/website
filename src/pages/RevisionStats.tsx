@@ -27,15 +27,29 @@ const RevisionStats = () => {
   } = calculateRevisionStats(allProducts);
 
   // Filter products based on selected filters
-  const filteredProducts = productsNeedingRevision.filter(product => {
+  const filteredProducts = allProducts.filter(product => {
+    // Category filter
     if (selectedCategory && product.category !== selectedCategory) return false;
+    
+    // Company filter
     if (selectedCompany && product.company !== selectedCompany) return false;
+    
+    // Urgency filter - now correctly includes products based on their age
     if (selectedUrgency) {
       const daysSinceRevision = getDaysSinceRevision(product);
-      if (selectedUrgency === 'recent' && daysSinceRevision < 90) return false;
-      if (selectedUrgency === 'low' && (daysSinceRevision <= 90 || daysSinceRevision > 180)) return false;
-      if (selectedUrgency === 'medium' && (daysSinceRevision <= 180 || daysSinceRevision > 365)) return false;
-      if (selectedUrgency === 'high' && daysSinceRevision <= 365) return false;
+      
+      switch (selectedUrgency) {
+        case 'recent':
+          return daysSinceRevision <= 90; // 0-3 months
+        case 'low':
+          return daysSinceRevision > 90 && daysSinceRevision <= 180; // 3-6 months
+        case 'medium':
+          return daysSinceRevision > 180 && daysSinceRevision <= 365; // 6-12 months
+        case 'high':
+          return daysSinceRevision > 365; // >12 months
+        default:
+          return true;
+      }
     }
     
     return true;

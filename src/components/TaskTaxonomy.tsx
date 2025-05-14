@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -111,43 +112,62 @@ const TaskTaxonomy = ({ categories, onCategoryClick, filterType = 'task' }: Task
     }
   };
 
+  // Split categories into two rows for better layout and visibility
+  const midpoint = Math.ceil(sortedCategories.length / 2);
+  const firstRowCategories = sortedCategories.slice(0, midpoint);
+  const secondRowCategories = sortedCategories.slice(midpoint);
+
+  // Function to render a category card
+  const renderCategoryCard = (category: CategoryCount) => {
+    const { icon: Icon, description, color } = categoryInfo[category.name] || defaultCategoryInfo;
+    
+    return (
+      <div 
+        key={category.name}
+        className="flex flex-col items-center max-w-[160px] z-10"
+      >
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={() => onCategoryClick(category.name)}
+          className={`flex flex-col h-auto p-4 ${color} hover:bg-[#00A6D6]/10 border border-gray-200 rounded-lg w-full transition-all duration-200 hover:shadow-md`}
+        >
+          <Icon className="h-8 w-8 mb-2 text-[#00A6D6]" />
+          <span className="text-sm font-medium">{category.name}</span>
+          <Badge variant="secondary" className="mt-1 bg-white">
+            {category.count}
+          </Badge>
+        </Button>
+        <p className="text-xs text-gray-600 mt-2 text-center px-1">
+          {description}
+        </p>
+      </div>
+    );
+  };
+
   return (
     <div className="mb-10 p-5 bg-white rounded-lg border border-gray-100 shadow-sm">
       <h3 className="font-medium text-lg text-gray-800 mb-4">{getTaxonomyTitle()}</h3>
       
-      <div className="mb-6">
+      {/* First row of categories */}
+      <div className="mb-10">
         <div className="flex flex-wrap items-start justify-center gap-4 relative">
-          {/* Workflow line connecting the tasks */}
           {filterType === 'task' && (
             <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-300 via-[#00A6D6] to-blue-300 hidden md:block" />
           )}
           
-          {sortedCategories.map((category) => {
-            const { icon: Icon, description, color } = categoryInfo[category.name] || defaultCategoryInfo;
-            
-            return (
-              <div 
-                key={category.name}
-                className="flex flex-col items-center max-w-[160px] z-10"
-              >
-                <Button
-                  variant="outline"
-                  size="lg"
-                  onClick={() => onCategoryClick(category.name)}
-                  className={`flex flex-col h-auto p-4 ${color} hover:bg-[#00A6D6]/10 border border-gray-200 rounded-lg w-full transition-all duration-200 hover:shadow-md`}
-                >
-                  <Icon className="h-8 w-8 mb-2 text-[#00A6D6]" />
-                  <span className="text-sm font-medium">{category.name}</span>
-                  <Badge variant="secondary" className="mt-1 bg-white">
-                    {category.count}
-                  </Badge>
-                </Button>
-                <p className="text-xs text-gray-600 mt-2 text-center px-1">
-                  {description}
-                </p>
-              </div>
-            );
-          })}
+          {firstRowCategories.map(renderCategoryCard)}
+        </div>
+      </div>
+
+      {/* Second row of categories */}
+      <div className="mb-6">
+        <div className="flex flex-wrap items-start justify-center gap-4 relative">
+          {filterType === 'task' && (
+            <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-300 via-[#00A6D6] to-blue-300 hidden md:block" />
+          )}
+          
+          {secondRowCategories.map(renderCategoryCard)}
         </div>
       </div>
       

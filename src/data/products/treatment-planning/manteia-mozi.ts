@@ -14,7 +14,10 @@ export const MANTEIA_PLANNING_PRODUCTS: ProductDetails[] = [
       "Auto-adaptation to planning protocols",
       "Cross-TPS compatibility",
       "DVH prediction engine",
-      "Priority-driven constraint balancing"
+      "Priority-driven constraint balancing",
+      "Protocol-driven optimization (RTOG/NRG/ESTRO)",
+      "Auto-normalization to clinical objectives",
+      "Adaptive learning from user preferences"
     ],
     category: "Treatment Planning",
     certification: "CE & FDA",
@@ -44,11 +47,6 @@ export const MANTEIA_PLANNING_PRODUCTS: ProductDetails[] = [
       triggerForAnalysis: "Automated planning request",
       processingTime: "8-12 minutes per plan"
     },
-    supportedProtocols: [
-    "Prostate: NRG-GU005",
-    "Breast: ESTRO-ACROP",
-    "Lung: RTOG-0915"
-  ],
     regulatory: {
       ce: {
         status: "Certified",

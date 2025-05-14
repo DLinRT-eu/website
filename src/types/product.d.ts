@@ -28,6 +28,8 @@ export interface Product {
   clinicalEvidence?: string;
   // Adding supported structures for auto-contouring models
   supportedStructures?: string[];
+  // Adding useCases for product use cases
+  useCases?: string[];
   // Adding properties needed by exportProducts.ts
   keyFeatures?: string[];
   technicalSpecifications?: {

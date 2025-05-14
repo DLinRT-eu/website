@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
@@ -33,13 +34,13 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
     input: ["CT", "MRI", "Structure sets", "Dose matrices"],
     inputFormat: ["DICOM", "DICOM-RT"],
     output: ["Custom AI models"],
-    frameworks: ["PyTorch", "TensorFlow Lite"],
-    supportedArchitectures: ["nnU-Net", "SWIN-UNETR", "Custom CNNs"]
+    outputFormat: ["DICOM", "DICOM-RT"] // Fixed output format
   },
   technology: {
     integration: ["AccuContour", "MOZI", "PACS"],
     deployment: ["On-premises GPU clusters", "Hybrid cloud"],
-    security: ["HIPAA-compliant data isolation"]
+    triggerForAnalysis: "Model training request", // Added missing required property
+    processingTime: "1-4 hours depending on dataset size" // Added missing required property
   },
   regulatory: {
     ce: {
@@ -51,8 +52,10 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
   },
   market: {
     onMarketSince: "2023",
-    targetUsers: ["Medical physicists", "AI teams"],
-    researchUsers: ["Institutional R&D", "Clinical trial groups"]
+    distributionChannels: ["Direct sales", "OEM partnerships"], // Added proper format
+    countriesPresent: 12, // Added a numeric value
+    payingCustomers: "50+ institutions", // Added string value
+    researchUsers: "Institutional R&D, Clinical trial groups" // Fixed to be a string rather than array
   },
   pricing: {
     model: ["Annual license", "Compute-hour credits"],

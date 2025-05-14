@@ -60,7 +60,9 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical studies showing diagnostic equivalence at significantly reduced radiation dose across multiple organ systems",
     lastVerified: "2024-10-15",
-    lastRevised: "2025-05-10"
+    lastRevised: "2025-05-10",
+    source: "Automatically retrieved"
+
   },
   {
     id: "siemens-deep-resolve",
@@ -120,6 +122,8 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Extensive published research demonstrating improved workflow efficiency and maintained diagnostic confidence with accelerated protocols",
     lastVerified: "2024-12-10",
-    lastRevised: "2025-05-01"
+    lastRevised: "2025-05-01",
+    source: "Automatically retrieved"
+
   }
 ];

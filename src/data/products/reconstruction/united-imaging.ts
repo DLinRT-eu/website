@@ -60,7 +60,9 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Emerging clinical evidence showing significant dose reduction with maintained diagnostic accuracy",
     lastVerified: "2024-09-20",
-    lastRevised: "2025-05-10"
+    lastRevised: "2025-05-10",
+    source: "Automatically retrieved"
+
   },
   {
     id: "united-hd-tof",

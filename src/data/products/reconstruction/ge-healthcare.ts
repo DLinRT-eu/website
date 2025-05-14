@@ -60,7 +60,9 @@ export const GE_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical studies showing diagnostic equivalence at up to 82% lower dose compared to conventional techniques",
     lastVerified: "2024-12-05",
-    lastRevised: "2025-02-10"
+    lastUpdated: "2025-02-10",
+    lastRevised: "2025-05-14",
+    source: "Automatically retrieved"
   },
   {
     id: "ge-air-recon-dl",
@@ -121,7 +123,7 @@ export const GE_PRODUCTS: ProductDetails[] = [
     clinicalEvidence: "Over 30 peer-reviewed publications demonstrating improved image quality and/or reduced scan times across various clinical applications",
     lastVerified: "2024-11-20",
     lastUpdated: "2025-01-15",
-    lastRevised: "2025-05-05"
-
+    lastRevised: "2025-05-05",
+    source: "Automatically retrieved"
   }
 ];

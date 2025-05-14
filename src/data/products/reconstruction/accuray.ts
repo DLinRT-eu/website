@@ -64,6 +64,8 @@ export const ACCURAY_PRODUCTS: ProductDetails[] = [
     clinicalEvidence: "Clinical studies demonstrating improved target visualization and reduced treatment margins compared to standard megavoltage CT imaging",
     lastVerified: "2025-05-05",
     lastUpdated: "2024-12-10",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-05-05",
+    source: "Automatically retrieved"
+    
   }
 ];

@@ -61,7 +61,9 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     clinicalEvidence: "Multiple clinical studies demonstrating excellent image quality at ultra-low-dose settings across various clinical applications",
     lastVerified: "2024-11-05",
     lastUpdated: "2025-01-15",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-05-05",
+    source: "Automatically retrieved"
+
   },
   {
     id: "canon-aice-mr",
@@ -122,6 +124,8 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     clinicalEvidence: "Growing body of clinical evidence showing comparable diagnostic performance with significantly reduced scan times",
     lastVerified: "2024-10-20",
     lastUpdated: "2025-01-10",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-05-05",
+    source: "Automatically retrieved"
+    
   }
 ];

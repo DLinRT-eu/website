@@ -60,7 +60,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     clinicalEvidence: "Multiple peer-reviewed studies showing non-inferiority to standard dose CT with up to 80% dose reduction",
     lastVerified: "2024-12-01",
     lastUpdated: "2025-01-15",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-05-05",
+    source: "Automatically retrieved"
 
   },
   {

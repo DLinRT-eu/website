@@ -4,13 +4,13 @@ import { ProductDetails } from "@/types/productDetails";
 export const REGISTRATION_PRODUCTS: ProductDetails[] = [
   {
     id: "pymedix-registration",
-    name: "PyMedix Registration",
+    name: "Autofuse",
     company: "PyMedix",
     description: "Advanced medical image registration solution that provides automated alignment of multi-modality images with high precision and efficiency for radiotherapy treatment planning.",
     features: ["Multi-modality registration", "Deformable registration", "GPU acceleration", "Fully automated workflow"],
     category: "Registration",
     certification: "CE Mark",
-    logoUrl: "/logos/placeholder.svg",
+    logoUrl: "/logos/pymedix.png",
     anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis", "Whole Body"],
     modality: ["CT", "MRI", "PET", "CBCT"],
     releaseDate: "2023-06-01",
@@ -60,7 +60,8 @@ export const REGISTRATION_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Validated in multi-center clinical studies demonstrating 99% accuracy with sub-millimeter precision and 40% reduction in registration time compared to manual methods",
     lastVerified: "2024-05-01",
-    lastRevised: "2024-05-01",
-    source: "https://pymedix.com"
+    lastUpdated: "2024-05-01",
+    lastRevised: "2025-05-01",
+    source: "Automatically retrieved"
   }
 ];

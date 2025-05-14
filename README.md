@@ -33,24 +33,93 @@ If you want to review or update the content of a product, here are the most rele
 
 ---
 
-### Suggested Course of Action
-1. **Review Product Data**  
-   Open `src/data/products.json` and verify the accuracy of the product details. Ensure that:
-   - All fields are filled in correctly.
-   - Tags (e.g., modality, anatomy, certifications) match the predefined valid tags in `src/config/tags.ts`.
+## Adding New Products
 
-2. **Test Product Rendering**  
-   Run the development server and navigate to the product details page. Confirm that:
-   - The product details are displayed correctly.
-   - The taxonomy filters (e.g., modality, anatomy) work as expected.
+When adding new products to the database, follow these guidelines to ensure data consistency and completeness:
 
-3. **Validate Tags**  
-   Use the validation utility (`src/utils/validateTags.ts`) to check for any invalid tags in the product data. Fix any issues found.
+### Product Data Structure
+Each product should follow the standardized data format defined in `ProductDetails` interface. See the examples below for properly formatted product data.
 
-4. **Submit Changes**  
-   After making updates:
-   - Run tests to ensure everything works as expected.
-   - Submit a pull request with a clear description of the changes made.
+### Steps to Add a New Product:
+
+1. **Determine the Appropriate Category**
+   - Products are organized by categories in `src/data/products/` directory
+   - Current categories include:
+     - Auto-Contouring
+     - Image Enhancement
+     - Image Synthesis
+     - Registration
+     - Reconstruction
+     - Treatment Planning
+     - Clinical Prediction
+     - Performance Monitor
+
+2. **Create or Update the Company-Specific File**
+   - Each company has its own file in the appropriate category directory
+   - If the company already exists, add your product to its file
+   - If it's a new company, create a new file named `company-name.ts`
+   - Example: `src/data/products/registration/varian.ts`
+
+3. **Follow the Data Format**
+   - Use the standard product format with all required fields
+   - Ensure all dates follow YYYY-MM-DD format
+   - Use array format for modality even for single values
+   - Include regulatory information with proper structure
+
+4. **Update the Category Index**
+   - After adding the product, update the category index file to include your company products
+   - Example: `src/data/products/registration/index.ts`
+
+5. **Add the Company Logo**
+   - Place the company logo in the `/public/logos/` directory
+   - Use a consistent naming scheme: `company-name.png`
+   - Ensure the logo is high-quality and has a transparent background
+
+### Standardization Requirements
+
+- **Product Names**: Should be actual product names, not just company names
+- **Descriptions**: 2-3 sentences clearly explaining what the product does
+- **Features**: 3-5 core features with consistent phrasing
+- **Regulatory Info**: Always include CE and/or FDA status when available
+- **Dates**: Always use YYYY-MM-DD format for all date fields
+- **Verification**: Include lastVerified, lastUpdated, and lastRevised dates
+- **URLs**: Ensure all URLs are valid and accessible
+
+### Example Product Template
+
+See the example product data structure below:
+
+```typescript
+{
+  id: "company-productname",
+  name: "Product Name",
+  company: "Company Name",
+  category: "Category Name",
+  description: "Brief description of the product explaining what it does, its technology, and application.",
+  features: [
+    "Key feature 1",
+    "Key feature 2",
+    "Key feature 3",
+    "Key feature 4"
+  ],
+  certification: "FDA Cleared", // or "CE Mark" or other certification
+  logoUrl: "/logos/company-name.png",
+  companyUrl: "https://www.company-website.com/",
+  productUrl: "https://www.company-website.com/product-page",
+  anatomicalLocation: ["Location1", "Location2"],
+  modality: ["CT", "MRI"], // Always use array format even for single modality
+  diseaseTargeted: ["Cancer", "Other diseases"],
+  // ... other fields as per ProductDetails interface
+  lastVerified: "2023-05-10", // When the data was last verified
+  lastUpdated: "2023-04-15", // When the product data was last updated
+  lastRevised: "2023-05-05"   // When the product entry was last revised
+}
+```
+
+For complete examples, refer to the following template files:
+- Auto-Contouring: `src/data/products/auto-contouring/limbus.ts`
+- Registration: `src/data/products/registration.ts`
+- Reconstruction: `src/data/products/reconstruction/accuray.ts`
 
 ---
 
@@ -186,5 +255,3 @@ We welcome contributions to improve the accuracy of product information. If you 
 [issues-url]: https://github.com/DLinRT-eu/website/issues
 [license-shield]: https://img.shields.io/github/license/DLinRT-eu/website.svg?style=for-the-badge
 [license-url]: https://github.com/DLinRT-eu/website/blob/master/LICENSE
-
-

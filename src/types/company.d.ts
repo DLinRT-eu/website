@@ -5,4 +5,5 @@ export interface CompanyDetails {
   description: string;
   website?: string;
   productIds: string[];
+  category?: string; // Adding an optional category field
 }

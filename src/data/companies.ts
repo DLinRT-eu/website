@@ -94,7 +94,7 @@ export const COMPANIES: CompanyDetails[] = [
     "website": "https://www.philips.com/healthcare",
     "productIds": [
       "philips-auto-contouring",
-      "philips-mrcat-head-neck",
+      "philips-mrcat-head-and-neck",
       "philips-mrcat-brain",
       "philips-mrcat-pelvis",
       "philips-smartct-ai-reconstruction",

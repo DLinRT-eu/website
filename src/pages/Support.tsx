@@ -91,9 +91,6 @@ const Support = () => {
             </section>
           </div>
         </div>
-        <div className="text-center mt-2 text-xs text-gray-400">
-          Content is revised periodically, but the website and its maintainers do not assume any liability on possible incorrect information. Also, no copyright is infringed.
-        </div>
       </main>
       <Footer />
     </div>

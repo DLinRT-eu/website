@@ -1,9 +1,9 @@
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
 import { User } from "lucide-react";
 import SEO from "@/components/SEO";
+import Footer from "@/components/Footer";
 
 const TEAM_MEMBERS = [
   {
@@ -83,6 +83,7 @@ const MaintenanceTeam = () => {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

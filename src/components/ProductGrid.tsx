@@ -14,7 +14,7 @@ interface ProductGridProps {
 const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(50);
-  const [sortBy, setSortBy] = useState<SortOption>("name");
+  const [sortBy, setSortBy] = useState<SortOption>("random");
   const [ascending, setAscending] = useState(true);
 
   // Get filtered products from data service
@@ -52,6 +52,9 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
 
   // Sort products based on current sorting criteria
   const sortedProducts = useMemo(() => {
+    if (sortBy === "random") {
+      return searchFilteredProducts;
+    }
     return [...searchFilteredProducts].sort((a, b) => {
       let comparison = 0;
       

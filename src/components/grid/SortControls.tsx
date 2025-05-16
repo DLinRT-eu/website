@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
 import {
@@ -10,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
-export type SortOption = "name" | "releaseDate" | "lastUpdated";
+export type SortOption = "random" | "name" | "releaseDate" | "lastUpdated";
 
 interface SortControlsProps {
   onSortChange: (option: SortOption) => void;
@@ -44,6 +43,7 @@ const SortControls = ({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="random">Random</SelectItem>
           <SelectItem value="name">Name</SelectItem>
           <SelectItem value="releaseDate">Release Date</SelectItem>
           <SelectItem value="lastUpdated">Last Updated</SelectItem>

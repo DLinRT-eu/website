@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -6,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import ReactMarkdown from 'react-markdown';
 import dataService from '@/services/DataService';
 import SEO from '@/components/SEO';
+import Footer from "@/components/Footer";
 
 const NewsDetail = () => {
   const { id } = useParams();
@@ -23,6 +23,7 @@ const NewsDetail = () => {
         <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
           <h1 className="text-3xl font-bold mb-6">News Article Not Found</h1>
         </main>
+        <Footer />
       </div>
     );
   }
@@ -66,7 +67,11 @@ const NewsDetail = () => {
             <ReactMarkdown>{newsItem.content}</ReactMarkdown>
           </div>
         )}
+        <div className="text-center mt-2 text-xs text-gray-400">
+          Content is revised periodically, but the website and its maintainers do not assume any liability on possible incorrect information. Also, no copyright is infringed.
+        </div>
       </main>
+      <Footer />
     </div>
   );
 };

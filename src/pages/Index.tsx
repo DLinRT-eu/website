@@ -1,4 +1,3 @@
-
 import React from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
@@ -11,6 +10,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FileDown } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -84,25 +84,7 @@ const Index = () => {
       <NewsSection />
       
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <footer className="mt-16 border-t border-gray-200 pt-8 pb-12">
-          <div className="flex justify-center space-x-8">
-            <Link 
-              to="/maintenance-team" 
-              className="text-[#00A6D6] hover:text-[#00A6D6]/80 transition-colors duration-200"
-            >
-              Meet Our Maintenance Team
-            </Link>
-            <Link 
-              to="/donate" 
-              className="text-[#9b87f5] hover:text-[#8b5cf6] transition-colors duration-200"
-            >
-              Support Our Project
-            </Link>
-          </div>
-          <div className="text-center mt-6 text-sm text-gray-500">
-            &copy; <a href="https://github.com/DLinRT-eu" target="_blank" rel="noopener noreferrer" className="hover:underline">DLinRT.eu</a>, 2025
-          </div>
-        </footer>
+        <Footer />
       </main>
     </div>
   );

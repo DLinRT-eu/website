@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import SEO from '@/components/SEO';
 import { Beaker, Database, Brain } from 'lucide-react';
@@ -9,6 +8,7 @@ import InitiativeSearch from '@/components/initiatives/InitiativeSearch';
 import CategorySection from '@/components/initiatives/CategorySection';
 import { InitiativeFilterState } from '@/types/filters';
 import { useToast } from "@/hooks/use-toast";
+import Footer from "@/components/Footer";
 
 const Initiatives = () => {
   const [filteredInitiatives, setFilteredInitiatives] = useState<Initiative[]>(dataService.getAllInitiatives());
@@ -142,11 +142,7 @@ const Initiatives = () => {
         </div>
       )}
       
-      <footer className="mt-16 border-t border-gray-200 pt-6 pb-8 text-center">
-        <div className="text-sm text-gray-500">
-          &copy; Matteo Maspero, 2025
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

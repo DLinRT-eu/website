@@ -222,6 +222,24 @@ You can also use GitHub Codespaces for development:
 2. Click "Code" > "Codespaces"
 3. Create a new codespace to start developing
 
+## Continuous Integration & Security
+
+This project uses GitHub Actions for CI/CD. On every push and pull request to `main`, the following checks are run:
+- Linting (`npm run lint`)
+- Type checking (`npm run type-check` or `tsc --noEmit`)
+- Security audit (`npm audit`)
+- Build (`npm run build`)
+- (Optional) Tests (`npm test`)
+
+See `.github/workflows/ci.yml` for details.
+
+Security best practices:
+- All external links use `rel="noopener noreferrer"` when `target="_blank"`
+- User input is validated and sanitized
+- Dependencies are regularly audited
+- No secrets or credentials are committed
+- See `SECURITY.md` and `SECURITY_CHECKLIST.md` for more
+
 ## License
 
 This project is licensed under the GNU AGPL-3.0 License - see the LICENSE file for details. You are free to reuse and modify the code, provided you maintain the same license and provide proper attribution to the original authors.

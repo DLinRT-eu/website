@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -38,6 +37,11 @@ const ProductCard = ({
   releaseDate,
   version
 }: ProductCardProps) => {
+  // Fallback for missing product data
+  if (!name || !company) {
+    return <div className="text-red-500">Invalid product data.</div>;
+  }
+
   // Format date if available
   const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString() : null;
   
@@ -115,6 +119,7 @@ const ProductCard = ({
                   href={productUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
+                  aria-label={`Visit ${name} website`}
                   className="hover:text-[#00A6D6] flex items-center gap-1"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -128,6 +133,7 @@ const ProductCard = ({
                   href={companyUrl} 
                   target="_blank" 
                   rel="noopener noreferrer" 
+                  aria-label={`Visit ${company} website`}
                   className="hover:text-[#00A6D6]/80 flex items-center gap-1"
                   onClick={(e) => e.stopPropagation()}
                 >
@@ -156,6 +162,7 @@ const ProductCard = ({
               href={website} 
               target="_blank" 
               rel="noopener noreferrer"
+              aria-label={`Visit ${name} website`}
               className="text-sm text-[#00A6D6] flex items-center gap-1 hover:underline"
               onClick={(e) => e.stopPropagation()}
             >

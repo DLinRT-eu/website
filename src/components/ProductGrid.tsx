@@ -30,7 +30,6 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr;
-  // Only shuffle on mount or when filters change
   }, [filteredProducts]);
 
   // Apply search filter if a query exists
@@ -128,17 +127,34 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
       </div>
 
       {sortedProducts.length === 0 ? (
-        <div className="text-center py-12">
+        <div className="text-center py-12" role="status" aria-live="polite">
           <h3 className="text-xl font-medium text-gray-700">No products found</h3>
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-600">
             Try adjusting your search or filter criteria
           </p>
+          {/* UI/UX: Reset Filters button for quick recovery */}
+          <button
+            className="mt-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            onClick={() => window.dispatchEvent(new CustomEvent('resetFilters'))}
+            aria-label="Reset all filters"
+          >
+            Reset Filters
+          </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentProducts.map((product) => (
-            <ProductCard key={product.id} {...product} />
-          ))}
+          {currentProducts.map((product) => {
+            try {
+              return <ProductCard key={product.id} {...product} />;
+            } catch (error) {
+              console.error("Error rendering ProductCard:", error);
+              return (
+                <div className="text-red-500" key={product.id}>
+                  Error loading product details.
+                </div>
+              );
+            }
+          })}
         </div>
       )}
 

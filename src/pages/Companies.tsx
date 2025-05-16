@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 const Companies = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortAscending, setSortAscending] = useState(true);
+  const [sortActive, setSortActive] = useState(false);
 
   // Get companies and their products, filtering out companies with no products
   const companies = useMemo(() => {
@@ -66,15 +67,17 @@ const Companies = () => {
     );
   }, [shuffledCompanies, searchQuery]);
 
-  // Sort companies based on name
+  // Sort companies based on name only if sortActive is true
   const sortedCompanies = useMemo(() => {
+    if (!sortActive) return filteredCompanies;
     return [...filteredCompanies].sort((a, b) => {
       const comparison = a.name.localeCompare(b.name);
       return sortAscending ? comparison : -comparison;
     });
-  }, [filteredCompanies, sortAscending]);
+  }, [filteredCompanies, sortAscending, sortActive]);
 
   const toggleSortDirection = () => {
+    setSortActive(true);
     setSortAscending(prev => !prev);
   };
 
@@ -124,7 +127,7 @@ const Companies = () => {
         <div className="mb-6">
           <p className="text-gray-600">
             Showing {sortedCompanies.length} {sortedCompanies.length === 1 ? 'company' : 'companies'}
-            {sortAscending ? ' (A-Z)' : ' (Z-A)'}
+            {sortActive ? (sortAscending ? ' (A-Z)' : ' (Z-A)') : ' (Random order)'}
           </p>
         </div>
 

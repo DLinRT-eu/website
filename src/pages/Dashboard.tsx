@@ -7,6 +7,7 @@ import { useChartData } from "@/hooks/useChartData";
 import { useCompanyData } from "@/hooks/useCompanyData";
 import { useIsMobile } from "@/hooks/use-mobile";
 import SEO from '@/components/SEO';
+import Footer from "@/components/Footer";
 
 // Import dashboard components
 import TaskDistributionChart from "@/components/dashboard/TaskDistributionChart";
@@ -188,6 +189,8 @@ const Dashboard = () => {
           </Suspense>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 };

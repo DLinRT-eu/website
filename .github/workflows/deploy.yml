@@ -36,6 +36,15 @@ jobs:
         run: echo "dlinrt.eu" > ./dist/CNAME
       - name: Create .nojekyll file
         run: touch ./dist/.nojekyll
+      - name: Ensure _headers is properly copied
+        run: |
+          if [ -f ./public/_headers ]; then
+            cp ./public/_headers ./dist/_headers
+            echo "_headers file copied successfully"
+          else
+            echo "Warning: _headers file not found in public directory"
+            exit 1
+          fi
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

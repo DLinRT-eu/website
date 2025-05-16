@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -18,6 +17,7 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Initiatives from "./pages/Initiatives";
 import RevisionStats from "./pages/RevisionStats";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -49,6 +49,7 @@ const App = () => (
           <Route path="news/:id" element={<NewsDetail />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="revision-stats" element={<RevisionStats />} />
+          <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

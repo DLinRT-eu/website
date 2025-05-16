@@ -54,9 +54,6 @@ const Index = () => {
           <p className="text-gray-600 mb-4">
             Learn more about our mission, goals, and future plans—rooted in our non-profit, independent, open-source, and community-driven ethos—in our official Black Paper document
           </p>
-          <p className="text-gray-600 mb-4">
-            Learn more about our mission, goals and future plans in our official Black Paper document.
-          </p>
           <Button 
             variant="outline" 
             size="lg"

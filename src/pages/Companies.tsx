@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Search, Building, ArrowDownAZ, ArrowDownZA } from 'lucide-react';
@@ -22,15 +21,25 @@ const Companies = () => {
       .filter(company => company.productCount > 0);
   }, []);
 
+  // Shuffle companies randomly on each reload (only once)
+  const shuffledCompanies = useMemo(() => {
+    const arr = [...companies];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }, [companies]);
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "name": "Radiotherapy AI Companies",
-    "description": "Leading companies developing innovative AI solutions for radiation therapy",
+    "name": "Radiotherapy DL Companies",
+    "description": "Leading companies developing innovative DL solutions for radiation therapy",
     "url": "https://dlinrt.eu/companies",
     "itemListOrder": "Unordered",
-    "numberOfItems": companies.length,
-    "itemListElement": companies.map((company, index) => ({
+    "numberOfItems": shuffledCompanies.length,
+    "itemListElement": shuffledCompanies.map((company, index) => ({
       "@type": "ListItem",
       "position": index + 1,
       "item": {
@@ -44,10 +53,10 @@ const Companies = () => {
 
   // Filter companies based on search query
   const filteredCompanies = useMemo(() => {
-    if (!searchQuery) return companies;
+    if (!searchQuery) return shuffledCompanies;
     
     const query = searchQuery.toLowerCase();
-    return companies.filter(company => 
+    return shuffledCompanies.filter(company => 
       company.name.toLowerCase().includes(query) ||
       company.description.toLowerCase().includes(query) ||
       company.products.some(product => 
@@ -55,7 +64,7 @@ const Companies = () => {
         product.description.toLowerCase().includes(query)
       )
     );
-  }, [companies, searchQuery]);
+  }, [shuffledCompanies, searchQuery]);
 
   // Sort companies based on name
   const sortedCompanies = useMemo(() => {
@@ -73,7 +82,7 @@ const Companies = () => {
     <div className="min-h-screen bg-gray-50">
       <SEO 
         title="Companies"
-        description="Explore leading companies developing innovative AI solutions for radiation therapy, medical imaging synthesis, and clinical decision support in radiotherapy."
+        description="Explore leading companies developing innovative DL solutions for radiation therapy, medical imaging synthesis, and clinical decision support in radiotherapy."
         canonical="https://dlinrt.eu/companies"
         structuredData={structuredData}
       />

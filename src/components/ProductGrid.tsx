@@ -1,4 +1,3 @@
-
 import { useState, useMemo, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import ProductGridControls from "./grid/ProductGridControls";
@@ -23,11 +22,22 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
     ? dataService.filterProducts(filters)
     : dataService.getAllProducts();
 
+  // Shuffle products randomly on each reload (only once)
+  const shuffledProducts = useMemo(() => {
+    const arr = [...filteredProducts];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  // Only shuffle on mount or when filters change
+  }, [filteredProducts]);
+
   // Apply search filter if a query exists
   const searchFilteredProducts = useMemo(() => {
-    if (!searchQuery.trim()) return filteredProducts;
+    if (!searchQuery.trim()) return shuffledProducts;
     
-    return filteredProducts.filter(product => {
+    return shuffledProducts.filter(product => {
       const query = searchQuery.toLowerCase();
       const nameMatch = product.name.toLowerCase().includes(query);
       const companyMatch = product.company.toLowerCase().includes(query);
@@ -39,7 +49,7 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
       
       return nameMatch || companyMatch || descriptionMatch || featuresMatch || categoryMatch;
     });
-  }, [filteredProducts, searchQuery]);
+  }, [shuffledProducts, searchQuery]);
 
   // Sort products based on current sorting criteria
   const sortedProducts = useMemo(() => {

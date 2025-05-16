@@ -52,6 +52,9 @@ const Index = () => {
         <div className="max-w-3xl mx-auto px-4 text-center">
           <h2 className="text-2xl font-semibold text-gray-800 mb-3">DLinRT.eu Intent & Roadmap</h2>
           <p className="text-gray-600 mb-4">
+            Learn more about our mission, goals, and future plans—rooted in our non-profit, independent, open-source, and community-driven ethos—in our official Black Paper document
+          </p>
+          <p className="text-gray-600 mb-4">
             Learn more about our mission, goals and future plans in our official Black Paper document.
           </p>
           <Button 

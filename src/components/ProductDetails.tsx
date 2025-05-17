@@ -11,6 +11,7 @@ import PricingInformationDetails from "./product/PricingInformationDetails";
 import ContactInformation from "./product/ContactInformation";
 import SupportedStructures from "./product/SupportedStructures";
 import ProductRevisionStatus from "./ProductRevisionStatus";
+import EvidenceLimitationsDetails from "./product/EvidenceLimitationsDetails";
 
 interface ProductDetailsProps {
   product: ProductDetailsType;
@@ -31,6 +32,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
             <SupportedStructures structures={product.supportedStructures} />
           )}
           
+          <EvidenceLimitationsDetails product={product} />
           <RegulatoryInformationDetails product={product} />
           <MarketInformationDetails product={product} />
           <PricingInformationDetails product={product} />

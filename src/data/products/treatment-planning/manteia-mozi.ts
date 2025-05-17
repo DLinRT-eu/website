@@ -73,6 +73,18 @@ export const MANTEIA_PLANNING_PRODUCTS: ProductDetails[] = [
     lastVerified: "2024-04-28",
     lastRevised: "2025-05-12",
     source: "Automatically retrieved and revised",
-    clinicalEvidence: "Validated in 12-center study showing 89% clinical acceptability rate and 73% reduction in planning time (Int J Radiat Oncol Biol Phys 2023)"
+    clinicalEvidence: "Validated in 12-center study showing 89% clinical acceptability rate and 73% reduction in planning time (Int J Radiat Oncol Biol Phys 2023)",
+    // Adding evidence and limitations
+    evidence: [
+      "10.1016/j.ijrobp.2023.02.014",
+      "10.1016/j.prro.2022.11.008",
+      "10.1088/1361-6560/ac1f8a"
+    ],
+    limitations: [
+      "Limited integration with older versions of some TPS systems",
+      "Protocol adaptation requires initial configuration by vendor",
+      "Complex non-standard plans may require manual refinement",
+      "Advanced beam arrangements require manual setup"
+    ]
   }
 ];

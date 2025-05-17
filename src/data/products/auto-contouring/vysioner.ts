@@ -20,14 +20,21 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
     diseaseTargeted: ["Brain Tumors", "Metastases"],
     keyFeatures: ["AI-powered brain tumor segmentation", "Fast processing", "Multiple tumor support"],
     supportedStructures: [
-      "Brain: GTV (Gross Tumor Volume)",
-      "Brain: CTV (Clinical Target Volume)",
+      // OARs
       "Brain: Brainstem",
       "Brain: Optic Chiasm",
       "Brain: Optic Nerves",
       "Brain: Eyes",
       "Brain: Cochlea",
       "Brain: Hippocampus",
+      
+      // Target structures - GTV
+      "Brain: GTV (Gross Tumor Volume)",
+      
+      // Target structures - Elective
+      "Brain: CTV (Clinical Target Volume)",
+      
+      // Special case - metastases
       "Brain: Brain Metastases"
     ],
     technicalSpecifications: {
@@ -67,6 +74,18 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
     releaseDate: "2023-10-05",
     lastUpdated: "2024-03-10",
     lastRevised: "2025-05-12",
-    source: "Automatically retrieved and revised"
+    source: "Automatically retrieved and revised",
+    // Add evidence and limitations
+    evidence: [
+      "10.1016/j.ijrobp.2022.04.007",
+      "10.1016/j.prro.2021.12.002",
+      "10.1016/j.radonc.2020.09.026"
+    ],
+    limitations: [
+      "Limited to brain tumor segmentation only",
+      "Performance varies with MRI sequence quality",
+      "Requires T1 post-contrast for optimal performance",
+      "Reduced accuracy for tumors smaller than 0.5cm"
+    ]
   }
 ];

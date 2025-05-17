@@ -47,4 +47,7 @@ export interface ProductDetails extends Product {
   lastVerified?: string;
   lastRevised?: string;
   source?: string;
+  // New fields for evidence and limitations
+  evidence?: string[];
+  limitations?: string[];
 }

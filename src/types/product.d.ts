@@ -65,4 +65,7 @@ export interface Product {
     model?: string[];
     basedOn?: string[];
   };
+  // New fields for evidence and limitations
+  evidence?: string[];
+  limitations?: string[];
 }

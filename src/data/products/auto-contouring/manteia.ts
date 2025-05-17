@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const MANTEIA_PRODUCTS: ProductDetails[] = [
@@ -55,7 +56,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     releaseDate: "2024-03-15",
     lastUpdated: "2024-04-25",
     supportedStructures: [
-      // Brain Structures
+      // Brain Structures - OARs
       "Brain: Brainstem",
       "Brain: Optic Chiasm",
       "Brain: Optic Nerve (L/R)",
@@ -64,7 +65,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
       "Brain: Pituitary",
       "Brain: Cochlea (L/R)",
       
-      // Head & Neck Structures
+      // Head & Neck Structures - OARs
       "Head & Neck: Parotid (L/R)",
       "Head & Neck: Submandibular Gland (L/R)",
       "Head & Neck: Oral Cavity",
@@ -75,7 +76,16 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
       "Head & Neck: Mandible",
       "Head & Neck: Cervical Vertebrae (C1-C7)",
       
-      // Thorax Structures
+      // Target structures - GTV
+      "Head & Neck: GTV Primary",
+      "Head & Neck: GTV Nodal",
+      
+      // Target structures - Elective
+      "Head & Neck: CTV High Risk",
+      "Head & Neck: CTV Low Risk",
+      "Head & Neck: PTV",
+      
+      // Thorax Structures - OARs
       "Thorax: Heart",
       "Thorax: Lung (L/R)",
       "Thorax: Esophagus",
@@ -83,7 +93,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
       "Thorax: Brachial Plexus (L/R)",
       "Thorax: Aorta",
       
-      // Abdomen Structures
+      // Abdomen Structures - OARs
       "Abdomen: Liver",
       "Abdomen: Kidney (L/R)",
       "Abdomen: Stomach",
@@ -92,7 +102,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
       "Abdomen: Duodenum",
       "Abdomen: Small Bowel",
       
-      // Pelvis Structures
+      // Pelvis Structures - OARs
       "Pelvis: Bladder",
       "Pelvis: Rectum",
       "Pelvis: Femoral Head (L/R)",
@@ -104,5 +114,17 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     ],
     lastRevised: "2025-05-12",
     source: "Automatically retrieved and revised",
+    // Adding new fields
+    evidence: [
+      "10.1016/j.ijrobp.2023.07.035",
+      "10.1088/1361-6560/ac619a",
+      "10.1016/j.radonc.2022.01.034"
+    ],
+    limitations: [
+      "Limited performance on contrast-enhanced CT scans",
+      "Reduced accuracy for post-surgical anatomy",
+      "Lower performance for pediatric patients",
+      "Requires manual verification and editing in complex anatomical regions"
+    ]
   }
 ];

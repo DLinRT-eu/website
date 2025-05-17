@@ -90,10 +90,6 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
             </div>
           </div>
           <div>
-            <p className="text-sm font-medium">Clinical Evidence:</p>
-            <p className="text-gray-500">{formatField(product.clinicalEvidence)}</p>
-          </div>
-          <div>
             <p className="text-sm font-medium">Data Source:</p>
             <p className="text-gray-500">{formatField(sourceInfo)}</p>
           </div>

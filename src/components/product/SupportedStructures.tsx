@@ -26,6 +26,9 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
 
   // Parse and categorize structures
   const groupedStructures: Record<string, StructureGroup> = {};
+  let hasOARs = false;
+  let hasGTV = false;
+  let hasElective = false;
   
   structures.forEach(structure => {
     const parts = structure.split(":");
@@ -34,10 +37,14 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       const structureName = parts[1].trim();
       
       // Determine if this is a Target or OAR
-      // Default to OAR unless specifically marked as target (contains GTV, CTV, PTV, etc.)
       const isGTV = /GTV|Gross\s+Tumor|Gross\s+Target/i.test(structureName);
-      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective/i.test(structureName);
+      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN\s/i.test(structureName);
       const type = isGTV ? "GTV" : (isElective ? "Elective" : "OAR");
+      
+      // Update global flags
+      if (isGTV) hasGTV = true;
+      else if (isElective) hasElective = true;
+      else hasOARs = true;
       
       // Determine support status (default to supported unless explicitly marked as unsupported)
       const isSupported = !structureName.includes("(unsupported)");
@@ -70,8 +77,13 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       }
       
       const isGTV = /GTV|Gross\s+Tumor|Gross\s+Target/i.test(structure);
-      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective/i.test(structure);
+      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN\s/i.test(structure);
       const type = isGTV ? "GTV" : (isElective ? "Elective" : "OAR");
+      
+      // Update global flags
+      if (isGTV) hasGTV = true;
+      else if (isElective) hasElective = true;
+      else hasOARs = true;
       
       const isSupported = !structure.includes("(unsupported)");
       const cleanName = structure.replace("(unsupported)", "").trim();
@@ -93,12 +105,36 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
     return typeOrder[a.type] - typeOrder[b.type];
   });
 
+  // Function to render the capability badge
+  const renderCapabilityBadge = (supported: boolean, type: string, icon: React.ReactNode) => (
+    <Badge 
+      variant={supported ? "success" : "secondary"}
+      className={`flex items-center gap-1.5 px-3 py-1 text-sm ${supported ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
+    >
+      {supported ? (
+        <Check className="h-4 w-4" />
+      ) : (
+        <X className="h-4 w-4 text-red-600" />
+      )}
+      {type}
+      {icon}
+    </Badge>
+  );
+
   return (
     <Card>
       <CardHeader>
         <CardTitle>Supported Structures</CardTitle>
       </CardHeader>
       <CardContent>
+        {/* Add prominent capability indicators at the top */}
+        <div className="flex flex-wrap gap-3 mb-6">
+          {renderCapabilityBadge(hasOARs, "OARs", <Shield className="h-4 w-4 ml-1" />)}
+          {renderCapabilityBadge(hasElective, "Elective/Lymph Nodes", <Target className="h-4 w-4 ml-1" />)}
+          {renderCapabilityBadge(hasGTV, "Gross Tumor Volume", <Target className="h-4 w-4 ml-1 text-red-600" />)}
+        </div>
+        
+        {/* Detailed structures grouped by region */}
         <div className="space-y-4">
           {sortedGroups.map((group) => (
             <div key={group.name}>

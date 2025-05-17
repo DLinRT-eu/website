@@ -67,13 +67,6 @@ const ProductRevisionStatus: React.FC<ProductRevisionStatusProps> = ({ product }
           <span className="font-medium min-w-[120px]">Last Verified:</span>
           <span className="text-muted-foreground">{formatDate(product.lastVerified)}</span>
         </div>
-
-        {product.source && (
-          <div className="flex items-start gap-2">
-            <span className="font-medium min-w-[120px]">Source:</span>
-            <span className="text-muted-foreground">{product.source}</span>
-          </div>
-        )}
       </div>
     </div>
   );

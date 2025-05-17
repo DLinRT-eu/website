@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, CheckCircle, XCircle } from "lucide-react";
@@ -28,8 +27,9 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
   const isRecentlyVerified = isVerified && 
     new Date().getTime() - new Date(product.lastVerified).getTime() < 6 * 30 * 24 * 60 * 60 * 1000;
   
+  // Format verification date in YYYY-MM-DD format
   const formattedVerificationDate = product.lastVerified 
-    ? new Date(product.lastVerified).toLocaleDateString() 
+    ? new Date(product.lastVerified).toISOString().split('T')[0]
     : null;
   
   return (

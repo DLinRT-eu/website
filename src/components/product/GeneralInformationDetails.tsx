@@ -57,10 +57,6 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
             <p className="text-gray-500">{product.price ? `$${product.price}` : "-"}</p>
           </div>
           <div>
-            <p className="text-sm font-medium">Last Updated:</p>
-            <p className="text-gray-500">{formatDate(product.lastUpdated)}</p>
-          </div>
-          <div>
             <p className="text-sm font-medium">Data Source:</p>
             <p className="text-gray-500">{formatField(sourceInfo)}</p>
           </div>

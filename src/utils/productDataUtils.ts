@@ -1,19 +1,25 @@
 import { ProductDetails } from "@/types/productDetails";
 
+// Helper function to format date to YYYY-MM-DD
+const formatToYYYYMMDD = (dateString: string | undefined): string => {
+  if (!dateString) return "2000-01-01";
+  const date = new Date(dateString);
+  return date.toISOString().split('T')[0];
+};
+
 /**
  * Standardizes version and date information across products
  */
 export const standardizeDates = (product: ProductDetails): ProductDetails => {
-  const today = "2025-05-13"; // Current date
+  const today = new Date().toISOString().split('T')[0]; // Current date in YYYY-MM-DD format
   
   return {
     ...product,
-    // Update placeholder lastRevised dates
-    lastRevised: product.lastRevised === "2000-01-01" ? today : product.lastRevised,
-    // Ensure lastUpdated exists
-    lastUpdated: product.lastUpdated || today,
-    // Ensure lastVerified exists if not already present
-    lastVerified: product.lastVerified || today
+    // Standardize date formats and set defaults
+    lastRevised: formatToYYYYMMDD(product.lastRevised || today),
+    lastUpdated: formatToYYYYMMDD(product.lastUpdated || today),
+    lastVerified: formatToYYYYMMDD(product.lastVerified || today),
+    releaseDate: formatToYYYYMMDD(product.releaseDate)
   };
 };
 

@@ -1,8 +1,7 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, X, Shield, Target } from "lucide-react";
+import { Shield, Target, CircleOff } from "lucide-react";
 
 interface SupportedStructuresProps {
   structures?: string[];
@@ -46,7 +45,7 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       else if (isElective) hasElective = true;
       else hasOARs = true;
       
-      // Determine support status (default to supported unless explicitly marked as unsupported)
+      // Determine support status
       const isSupported = !structureName.includes("(unsupported)");
       const cleanName = structureName.replace("(unsupported)", "").trim();
       
@@ -111,15 +110,22 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       variant={supported ? "success" : "secondary"}
       className={`flex items-center gap-1.5 px-3 py-1 text-sm ${supported ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
     >
-      {supported ? (
-        <Check className="h-4 w-4" />
-      ) : (
-        <X className="h-4 w-4 text-red-600" />
-      )}
       {type}
       {icon}
     </Badge>
   );
+
+  // Function to get the appropriate icon and color for a structure type
+  const getStructureIcon = (type: "OAR" | "GTV" | "Elective") => {
+    switch (type) {
+      case "OAR":
+        return <Shield className="h-4 w-4 text-blue-600" />;
+      case "GTV":
+        return <Target className="h-4 w-4 text-red-600" />;
+      case "Elective":
+        return <CircleOff className="h-4 w-4 text-purple-600" />;
+    }
+  };
 
   return (
     <Card>
@@ -129,8 +135,8 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       <CardContent>
         {/* Add prominent capability indicators at the top */}
         <div className="flex flex-wrap gap-3 mb-6">
-          {renderCapabilityBadge(hasOARs, "OARs", <Shield className="h-4 w-4 ml-1" />)}
-          {renderCapabilityBadge(hasElective, "Elective/Lymph Nodes", <Target className="h-4 w-4 ml-1" />)}
+          {renderCapabilityBadge(hasOARs, "OARs", <Shield className="h-4 w-4 ml-1 text-blue-600" />)}
+          {renderCapabilityBadge(hasElective, "Elective/Lymph Nodes", <CircleOff className="h-4 w-4 ml-1 text-purple-600" />)}
           {renderCapabilityBadge(hasGTV, "Gross Tumor Volume", <Target className="h-4 w-4 ml-1 text-red-600" />)}
         </div>
         
@@ -139,11 +145,7 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
           {sortedGroups.map((group) => (
             <div key={group.name}>
               <h4 className="font-medium text-lg mb-2 flex items-center gap-2">
-                {group.type === "OAR" ? (
-                  <Shield className="h-4 w-4 text-blue-600" />
-                ) : (
-                  <Target className="h-4 w-4 text-red-600" />
-                )}
+                {getStructureIcon(group.type)}
                 {group.name} 
                 <span className="text-sm text-gray-500 font-normal">
                   ({group.type === "OAR" ? "OARs" : (group.type === "GTV" ? "Target GTV" : "Elective")})
@@ -154,13 +156,8 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
                   <Badge 
                     key={index} 
                     variant={structure.supported ? "outline" : "secondary"}
-                    className={`flex items-center gap-1 ${structure.supported ? "bg-blue-50 text-blue-800" : "bg-gray-100 text-gray-600"}`}
+                    className={`${structure.supported ? "bg-blue-50 text-blue-800" : "bg-gray-100 text-gray-600"}`}
                   >
-                    {structure.supported ? (
-                      <Check className="h-3 w-3 text-green-600" />
-                    ) : (
-                      <X className="h-3 w-3 text-red-600" />
-                    )}
                     {structure.name}
                   </Badge>
                 ))}

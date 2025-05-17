@@ -33,6 +33,17 @@ If you want to review or update the content of a product, here are the most rele
 
 ---
 
+## Product Revision & Review Workflow
+
+For detailed instructions on how to revise, add, or remove products, and for the collaborative review process, see:
+
+- [PRODUCTS_REVISION.md](./PRODUCTS_REVISION.md): Step-by-step guide for product data changes and GitHub workflow.
+- [REVIEW_STATUS.md](./REVIEW_STATUS.md): Live checklist for tracking which products have been reviewed and by whom.
+
+When submitting changes, please follow the workflow described in these documents to ensure reviewer alignment and data quality.
+
+---
+
 ## Adding New Products
 
 When adding new products to the database, follow these guidelines to ensure data consistency and completeness:

@@ -105,16 +105,15 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
     return typeOrder[a.type] - typeOrder[b.type];
   });
 
-  // Function to render the capability badge
-  const renderCapabilityBadge = (supported: boolean, type: string, icon: React.ReactNode) => (
-    <Badge 
-      variant={supported ? "success" : "secondary"}
-      className={`flex items-center gap-1.5 px-3 py-1 text-sm ${supported ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-600"}`}
-    >
-      {type}
-      {icon}
-    </Badge>
-  );
+  // Create a combined category label
+  const getCategoryLabel = () => {
+    const categories = [];
+    if (hasOARs) categories.push("OARs");
+    if (hasGTV) categories.push("GTV");
+    if (hasElective) categories.push("Elective");
+    
+    return categories.join(" + ");
+  };
 
   // Function to get the appropriate icon and color for a structure type
   const getStructureIcon = (type: "OAR" | "GTV" | "Elective") => {
@@ -128,19 +127,16 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
     }
   };
 
+  const categoryLabel = getCategoryLabel();
+
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Supported Structures</CardTitle>
+        <CardTitle>
+          Supported Structures {categoryLabel && <span className="text-base font-normal text-gray-500 ml-2">({categoryLabel})</span>}
+        </CardTitle>
       </CardHeader>
       <CardContent>
-        {/* Add prominent capability indicators at the top */}
-        <div className="flex flex-wrap gap-3 mb-6">
-          {renderCapabilityBadge(hasOARs, "OARs", <Shield className="h-4 w-4 ml-1 text-blue-600" />)}
-          {renderCapabilityBadge(hasElective, "Elective/Lymph Nodes", <CircleDot className="h-4 w-4 ml-1 text-purple-600" />)}
-          {renderCapabilityBadge(hasGTV, "Gross Tumor Volume", <Target className="h-4 w-4 ml-1 text-red-600" />)}
-        </div>
-        
         {/* Detailed structures grouped by region */}
         <div className="space-y-4">
           {sortedGroups.map((group) => (

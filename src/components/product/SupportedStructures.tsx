@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -8,10 +7,17 @@ interface SupportedStructuresProps {
   structures?: string[];
 }
 
+interface StructureTypes {
+  hasOAR: boolean;
+  hasGTV: boolean;
+  hasElective: boolean;
+}
+
 interface StructureGroup {
   name: string;
   structures: StructureInfo[];
-  type: "OAR" | "GTV" | "Elective";
+  types: StructureTypes;
+  model?: string;
 }
 
 interface StructureInfo {
@@ -29,6 +35,7 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
   let hasOARs = false;
   let hasGTV = false;
   let hasElective = false;
+  const modelTypes: Record<string, StructureTypes> = {};
   
   structures.forEach(structure => {
     const parts = structure.split(":");
@@ -36,17 +43,28 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       const region = parts[0].trim();
       const structureName = parts[1].trim();
       
-      // Determine if this is a Target or OAR with improved pattern matching for lymph nodes
-      const isGTV = /GTV|Gross\s+Tumor|Gross\s+Target/i.test(structureName);
+      // Extract model name if present (e.g., "Head & Neck-CT", "Pelvis-MRI T2")
+      const modelMatch = region.match(/(.*?(?:-(?:CT|MR(?:I)?(?:\s+T[12])?))?$)/i);
+      const model = modelMatch ? modelMatch[1].trim() : region;
+      
+      // Determine structure types with improved pattern matching
+      const isGTV = /\bGTV\b|Gross\s+Tumor|Gross\s+Target/i.test(structureName);
       const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN[_\s]|Lymph\s*[Nn]ode|Nodal|ESTRO_LN|Ax_|\bIMN\b/i.test(structureName);
-      const type = isGTV ? "GTV" : (isElective ? "Elective" : "OAR");
+      const isOAR = !isGTV && !isElective;
       
       // Update global flags
       if (isGTV) hasGTV = true;
-      else if (isElective) hasElective = true;
-      else hasOARs = true;
+      if (isElective) hasElective = true;
+      if (isOAR) hasOARs = true;
       
-      // Determine support status
+      // Track which types each model supports
+      if (!modelTypes[model]) {
+        modelTypes[model] = { hasOAR: false, hasGTV: false, hasElective: false };
+      }
+      if (isGTV) modelTypes[model].hasGTV = true;
+      if (isElective) modelTypes[model].hasElective = true;
+      if (isOAR) modelTypes[model].hasOAR = true;
+      
       const isSupported = !structureName.includes("(unsupported)");
       const cleanName = structureName.replace("(unsupported)", "").trim();
       
@@ -54,7 +72,8 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
         groupedStructures[region] = {
           name: region,
           structures: [],
-          type: "OAR" // Will be updated if targets are found
+          types: { hasOAR: false, hasGTV: false, hasElective: false },
+          model
         };
       }
       
@@ -63,27 +82,36 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
         supported: isSupported
       });
       
-      if (type === "GTV" || type === "Elective") {
-        groupedStructures[region].type = type;
-      }
+      // Update group types
+      if (isGTV) groupedStructures[region].types.hasGTV = true;
+      if (isElective) groupedStructures[region].types.hasElective = true;
+      if (isOAR) groupedStructures[region].types.hasOAR = true;
     } else {
-      // Handle ungrouped structures
+      // Handle ungrouped structures with the same multi-type support
       if (!groupedStructures["Other"]) {
         groupedStructures["Other"] = {
           name: "Other",
           structures: [],
-          type: "OAR"
+          types: { hasOAR: false, hasGTV: false, hasElective: false }
         };
       }
       
-      const isGTV = /GTV|Gross\s+Tumor|Gross\s+Target/i.test(structure);
+      const isGTV = /\bGTV\b|Gross\s+Tumor|Gross\s+Target/i.test(structure);
       const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN[_\s]|Lymph\s*[Nn]ode|Nodal|ESTRO_LN|Ax_|\bIMN\b/i.test(structure);
-      const type = isGTV ? "GTV" : (isElective ? "Elective" : "OAR");
+      const isOAR = !isGTV && !isElective;
       
       // Update global flags
       if (isGTV) hasGTV = true;
-      else if (isElective) hasElective = true;
-      else hasOARs = true;
+      if (isElective) hasElective = true;
+      if (isOAR) hasOARs = true;
+      
+      // Update model types for "Other" category
+      if (!modelTypes["Other"]) {
+        modelTypes["Other"] = { hasOAR: false, hasGTV: false, hasElective: false };
+      }
+      if (isGTV) modelTypes["Other"].hasGTV = true;
+      if (isElective) modelTypes["Other"].hasElective = true;
+      if (isOAR) modelTypes["Other"].hasOAR = true;
       
       const isSupported = !structure.includes("(unsupported)");
       const cleanName = structure.replace("(unsupported)", "").trim();
@@ -93,48 +121,66 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
         supported: isSupported
       });
       
-      if (type === "GTV" || type === "Elective") {
-        groupedStructures["Other"].type = type;
-      }
+      // Update group types
+      if (isGTV) groupedStructures["Other"].types.hasGTV = true;
+      if (isElective) groupedStructures["Other"].types.hasElective = true;
+      if (isOAR) groupedStructures["Other"].types.hasOAR = true;
     }
   });
 
-  // Sort groups: OARs first, then GTV, then Elective
+  // Sort groups: put groups with multiple types first, then by type presence
   const sortedGroups = Object.values(groupedStructures).sort((a, b) => {
-    const typeOrder = { OAR: 0, GTV: 1, Elective: 2 };
-    return typeOrder[a.type] - typeOrder[b.type];
+    const aTypeCount = Number(a.types.hasOAR) + Number(a.types.hasGTV) + Number(a.types.hasElective);
+    const bTypeCount = Number(b.types.hasOAR) + Number(b.types.hasGTV) + Number(b.types.hasElective);
+    
+    if (bTypeCount !== aTypeCount) return bTypeCount - aTypeCount;
+    if (a.types.hasGTV !== b.types.hasGTV) return b.types.hasGTV ? 1 : -1;
+    if (a.types.hasElective !== b.types.hasElective) return b.types.hasElective ? 1 : -1;
+    return 0;
   });
 
-  // Create a combined category label
-  const getCategoryLabel = () => {
-    const categories = [];
-    if (hasOARs) categories.push("OARs");
-    if (hasGTV) categories.push("GTV");
-    if (hasElective) categories.push("Elective");
+  // Function to render a capability badge with model information
+  const renderCapabilityBadge = (type: "OAR" | "GTV" | "Elective", models: string[]) => {
+    const icon = type === "OAR" ? 
+      <Shield className="h-4 w-4 text-blue-600" /> :
+      type === "GTV" ? 
+        <Target className="h-4 w-4 text-red-600" /> :
+        <CircleDot className="h-4 w-4 text-purple-600" />;
     
-    return categories.join(" + ");
+    return (
+      <Badge 
+        variant="outline"
+        className="flex items-center gap-1.5 px-3 py-1 text-sm bg-white"
+      >
+        {icon}
+        {type === "OAR" ? "OARs" : type}
+        <span className="text-gray-500 font-normal"> ({models.join(", ")})</span>
+      </Badge>
+    );
   };
 
-  // Function to get the appropriate icon and color for a structure type
-  const getStructureIcon = (type: "OAR" | "GTV" | "Elective") => {
-    switch (type) {
-      case "OAR":
-        return <Shield className="h-4 w-4 text-blue-600" />;
-      case "GTV":
-        return <Target className="h-4 w-4 text-red-600" />;
-      case "Elective":
-        return <CircleDot className="h-4 w-4 text-purple-600" />;
-    }
+  // Get the appropriate icons for a structure group based on its types
+  const getStructureIcons = (types: StructureTypes) => {
+    const icons = [];
+    if (types.hasOAR) icons.push(<Shield key="oar" className="h-4 w-4 text-blue-600" />);
+    if (types.hasGTV) icons.push(<Target key="gtv" className="h-4 w-4 text-red-600" />);
+    if (types.hasElective) icons.push(<CircleDot key="elective" className="h-4 w-4 text-purple-600" />);
+    return icons;
   };
 
-  const categoryLabel = getCategoryLabel();
+  // Get type labels for a structure group
+  const getTypeLabels = (types: StructureTypes) => {
+    const labels = [];
+    if (types.hasOAR) labels.push("OARs");
+    if (types.hasGTV) labels.push("GTV");
+    if (types.hasElective) labels.push("Elective");
+    return labels.join(" + ");
+  };
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>
-          Supported Structures {categoryLabel && <span className="text-base font-normal text-gray-500 ml-2">({categoryLabel})</span>}
-        </CardTitle>
+        <CardTitle>Supported Structures</CardTitle>
       </CardHeader>
       <CardContent>
         {/* Detailed structures grouped by region */}
@@ -142,10 +188,12 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
           {sortedGroups.map((group) => (
             <div key={group.name}>
               <h4 className="font-medium text-lg mb-2 flex items-center gap-2">
-                {getStructureIcon(group.type)}
-                {group.name} 
+                <div className="flex gap-1">
+                  {getStructureIcons(group.types)}
+                </div>
+                {group.name}
                 <span className="text-sm text-gray-500 font-normal">
-                  ({group.type === "OAR" ? "OARs" : (group.type === "GTV" ? "Target GTV" : "Elective")})
+                  ({getTypeLabels(group.types)})
                 </span>
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -161,6 +209,30 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Capability badges section */}
+        <div className="flex flex-wrap gap-3 border-t pt-4">
+          {/* Show OARs badge if any model has OARs */}
+          {hasOARs && renderCapabilityBadge("OAR", 
+            Object.entries(modelTypes)
+              .filter(([_, types]) => types.hasOAR)
+              .map(([model]) => model)
+          )}
+          
+          {/* Show GTV badge if any model has GTV */}
+          {hasGTV && renderCapabilityBadge("GTV",
+            Object.entries(modelTypes)
+              .filter(([_, types]) => types.hasGTV)
+              .map(([model]) => model)
+          )}
+          
+          {/* Show Elective badge if any model has Elective */}
+          {hasElective && renderCapabilityBadge("Elective",
+            Object.entries(modelTypes)
+              .filter(([_, types]) => types.hasElective)
+              .map(([model]) => model)
+          )}
         </div>
       </CardContent>
     </Card>

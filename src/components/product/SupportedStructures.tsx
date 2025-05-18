@@ -1,18 +1,12 @@
 /** @jsxImportSource react */
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Shield, Target, CircleDot } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { classifyStructure, StructureTypes } from '@/utils/structureClassification';
 
 interface SupportedStructuresProps {
   structures?: string[];
-}
-
-interface StructureTypes {
-  hasOAR: boolean;
-  hasGTV: boolean;
-  hasElective: boolean;
 }
 
 interface StructureGroup {
@@ -41,7 +35,7 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
   let totalOARs = 0;
   let totalGTV = 0;
   let totalElective = 0;
-  
+
   // Process and group structures
   structures.forEach(structure => {
     const parts = structure.split(":");
@@ -53,9 +47,8 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
       const modelMatch = region.match(/(.*?(?:-(?:CT|MR(?:I)?(?:\s+T[12])?))?$)/i);
       const model = modelMatch ? modelMatch[1].trim() : region;
       
-      // Determine structure types with pattern matching
-      const isGTV = /\bGTV\b|Gross\s+Tumor|Gross\s+Target/i.test(structureName);
-      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN[_\s]|Lymph\s*[Nn]ode|Nodal|ESTRO_LN|Ax_|\bIMN\b/i.test(structureName);
+      // Use shared utility for classification
+      const { isGTV, isElective } = classifyStructure(structure);
       const isOAR = !isGTV && !isElective;
       
       // Update structure counts

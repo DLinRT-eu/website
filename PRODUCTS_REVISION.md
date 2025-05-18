@@ -1,6 +1,11 @@
 # DLinRT.eu Product Revision & Review Instructions
 
-This guide is for contributors and reviewers working on the [DLinRT-eu/website](https://github.com/DLinRT-eu/website) repository.
+> **Essential Documents**:
+> - [Review Process Index](./REVIEW_INDEX.md)
+> - [Review Status Dashboard](./REVIEW_STATUS.md)
+> - [Review Workflow](./REVIEW_WORKFLOW.md)
+> - [Review Checklist](./REVIEW_CHECKLIST.md)
+> - [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md)
 
 ## 1. Product Data Location
 - Product data is stored in `src/data/products/` as TypeScript or JSON files.

@@ -1,13 +1,35 @@
 # DLinRT.eu Product Review Status
 
+> **Quick Links**:
+> - [Review Process Index](./REVIEW_INDEX.md)
+> - [Review Workflow](./REVIEW_WORKFLOW.md)
+> - [Review Checklist](./REVIEW_CHECKLIST.md)
+> - [Review Coordination](./REVIEW_COORDINATION.md)
+
 ## How to Use
 
 This document tracks the review status of all products listed on DLinRT.eu. Please follow these guidelines:
 
-- Update the Reviewer field with your name when starting a review
-- Set Status to ⏳ Pending, ✅ Completed, or ❌ Issue Found
-- Add the review date in YYYY-MM-DD format
-- Include any relevant notes about validation, missing info, or issues
+### Review Status Legend
+- 🆕 New Entry (Not Yet Reviewed)
+- ⏳ Review In Progress
+- ✅ Review Completed
+- ❌ Issues Found
+- 🔄 Updates Needed
+- 📝 Pending Manufacturer Verification
+
+### Required Fields
+1. Reviewer: Your name/GitHub username
+2. Start Date: When you began the review (YYYY-MM-DD)
+3. Completion Date: When review was finished (YYYY-MM-DD)
+4. Status: Use emoji from legend above
+5. Verification Source: How information was verified (e.g., "Official Website", "Manufacturer Contact", "Published Literature")
+6. Notes: Document any issues, pending items, or important context
+
+### Review Priority
+High: Products with most recent updates or new entries
+Medium: Products last reviewed > 6 months ago
+Low: Recently reviewed products with no reported issues
 
 ## Auto-Contouring
 
@@ -86,7 +108,6 @@ This document tracks the review status of all products listed on DLinRT.eu. Plea
 | Product ID | Name | Reviewer | Last Reviewed | Status | Notes |
 |------------|------|----------|---------------|---------|-------|
 | | | | | ⏳ Pending | |
-
 
 ## Reconstruction
 

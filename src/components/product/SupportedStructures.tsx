@@ -1,7 +1,8 @@
+
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Shield, Target, CircleOff } from "lucide-react";
+import { Shield, Target, CircleDot } from "lucide-react";
 
 interface SupportedStructuresProps {
   structures?: string[];
@@ -35,9 +36,9 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       const region = parts[0].trim();
       const structureName = parts[1].trim();
       
-      // Determine if this is a Target or OAR
+      // Determine if this is a Target or OAR with improved pattern matching for lymph nodes
       const isGTV = /GTV|Gross\s+Tumor|Gross\s+Target/i.test(structureName);
-      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN\s/i.test(structureName);
+      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN[_\s]|Lymph\s*[Nn]ode|Nodal|ESTRO_LN|Ax_|\bIMN\b/i.test(structureName);
       const type = isGTV ? "GTV" : (isElective ? "Elective" : "OAR");
       
       // Update global flags
@@ -76,7 +77,7 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       }
       
       const isGTV = /GTV|Gross\s+Tumor|Gross\s+Target/i.test(structure);
-      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN\s/i.test(structure);
+      const isElective = /CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN[_\s]|Lymph\s*[Nn]ode|Nodal|ESTRO_LN|Ax_|\bIMN\b/i.test(structure);
       const type = isGTV ? "GTV" : (isElective ? "Elective" : "OAR");
       
       // Update global flags
@@ -123,7 +124,7 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
       case "GTV":
         return <Target className="h-4 w-4 text-red-600" />;
       case "Elective":
-        return <CircleOff className="h-4 w-4 text-purple-600" />;
+        return <CircleDot className="h-4 w-4 text-purple-600" />;
     }
   };
 
@@ -136,7 +137,7 @@ const SupportedStructures = ({ structures }: SupportedStructuresProps) => {
         {/* Add prominent capability indicators at the top */}
         <div className="flex flex-wrap gap-3 mb-6">
           {renderCapabilityBadge(hasOARs, "OARs", <Shield className="h-4 w-4 ml-1 text-blue-600" />)}
-          {renderCapabilityBadge(hasElective, "Elective/Lymph Nodes", <CircleOff className="h-4 w-4 ml-1 text-purple-600" />)}
+          {renderCapabilityBadge(hasElective, "Elective/Lymph Nodes", <CircleDot className="h-4 w-4 ml-1 text-purple-600" />)}
           {renderCapabilityBadge(hasGTV, "Gross Tumor Volume", <Target className="h-4 w-4 ml-1 text-red-600" />)}
         </div>
         

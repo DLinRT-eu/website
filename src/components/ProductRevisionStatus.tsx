@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";

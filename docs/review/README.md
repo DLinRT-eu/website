@@ -22,6 +22,6 @@ This documentation helps maintain high-quality, accurate product information on 
 ## Related Documentation
 
 For additional context, see:
-- [Documentation Quick Links](../DOCUMENTATION_LINKS.md)
-- [Contributing Guidelines](../CONTRIBUTING.md)
-- [Security Checklist](../SECURITY_CHECKLIST.md)
+- [Documentation Quick Links](../../DOCUMENTATION_LINKS.md)
+- [Contributing Guidelines](../../CONTRIBUTING.md)
+- [Security Checklist](../../SECURITY_CHECKLIST.md)

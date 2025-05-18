@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { ProductDetails } from '@/types/productDetails';
 import { getAllOptions } from "@/utils/filterOptions";
@@ -11,6 +10,13 @@ export const useChartData = (
   selectedModality: string
 ) => {
   const [structureData, setStructureData] = useState<{name: string, value: number}[]>([]);
+  const [structureTypeData, setStructureTypeData] = useState<{
+    productName: string;
+    OARs: number;
+    GTV: number;
+    Elective: number;
+    total: number;
+  }[]>([]);
   
   // Apply all filters simultaneously
   const filteredProducts = products.filter(product => {
@@ -172,6 +178,28 @@ export const useChartData = (
     }
   }, [selectedTask, selectedLocation, selectedModality, filteredProducts]);
 
+  // Process structure type data for auto-contouring products
+  useEffect(() => {
+    if (selectedTask === "Auto-Contouring") {
+      const structureTypeStats = filteredProducts.map(product => {
+        const oars = product.structures?.filter(s => s.type === "OAR").length || 0;
+        const gtv = product.structures?.filter(s => s.type === "GTV").length || 0;
+        const elective = product.structures?.filter(s => s.type === "Elective").length || 0;
+        
+        return {
+          productName: product.name,
+          OARs: oars,
+          GTV: gtv,
+          Elective: elective,
+          total: oars + gtv + elective
+        };
+      });
+      
+      // Sort by total number of structures descending
+      setStructureTypeData(structureTypeStats.sort((a, b) => b.total - a.total));
+    }
+  }, [filteredProducts, selectedTask]);
+
   return {
     taskData,
     totalProducts,
@@ -180,6 +208,7 @@ export const useChartData = (
     modalityData: finalModalityData,
     totalModalities,
     structureData,
+    structureTypeData,
     filteredProducts
   };
 };

@@ -16,8 +16,9 @@ import ModalityDistributionChart from "@/components/dashboard/ModalityDistributi
 import CompanyDistributionChart from "@/components/dashboard/CompanyDistributionChart";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 
-// Lazily load the StructuresChart as it's only shown conditionally
+// Lazily load the charts that are only shown conditionally
 const StructuresChart = lazy(() => import("@/components/dashboard/StructuresChart"));
+const StructureTypeDistributionChart = lazy(() => import("@/components/dashboard/StructureTypeDistributionChart"));
 
 const Dashboard = () => {
   const [selectedTask, setSelectedTask] = useState<string>("all");
@@ -32,12 +33,11 @@ const Dashboard = () => {
   const allTasks = getAllOptions('category');
   const allLocations = getAllOptions('anatomicalLocation');
   const allModalities = getAllOptions('modality');
-
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Dataset",
-    "name": "Radiotherapy AI Analytics Dashboard",
-    "description": "Visualize data about AI products in radiotherapy, including distribution by task, location, modality, and manufacturer.",
+    "name": "Radiotherapy DL Analytics Dashboard",
+    "description": "Visualize data about deep learning products in radiotherapy, including distribution by task, location, modality, and manufacturer.",
     "url": "https://dlinrt.eu/dashboard",
     "creator": {
       "@type": "Person",
@@ -55,6 +55,7 @@ const Dashboard = () => {
     modalityData, 
     totalModalities, 
     structureData,
+    structureTypeData,
     filteredProducts 
   } = useChartData(products, selectedTask, selectedLocation, selectedModality);
 
@@ -183,10 +184,22 @@ const Dashboard = () => {
         />
         
         {/* Auto-Contouring Structures - Only shown when Auto-Contouring is selected */}
-        {selectedTask === "Auto-Contouring" && structureData.length > 0 && (
-          <Suspense fallback={<div className="col-span-full min-h-[400px] flex items-center justify-center">Loading structures data...</div>}>
-            <StructuresChart structureData={structureData} />
-          </Suspense>
+        {selectedTask === "Auto-Contouring" && (
+          <>
+            {/* Structure type distribution chart */}
+            {structureTypeData.length > 0 && (
+              <Suspense fallback={<div className="col-span-full min-h-[400px] flex items-center justify-center">Loading structure type data...</div>}>
+                <StructureTypeDistributionChart structureTypeData={structureTypeData} />
+              </Suspense>
+            )}
+            
+            {/* Overall structure count chart */}
+            {structureData.length > 0 && (
+              <Suspense fallback={<div className="col-span-full min-h-[400px] flex items-center justify-center">Loading structures data...</div>}>
+                <StructuresChart structureData={structureData} />
+              </Suspense>
+            )}
+          </>
         )}
       </div>
 

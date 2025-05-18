@@ -13,11 +13,11 @@
 For a comprehensive guide to reviewing and updating product information, please refer to our review documentation:
 
 - [Documentation Quick Links](./DOCUMENTATION_LINKS.md) - Start here for an overview
-- [Review Process Index](./REVIEW_INDEX.md) - Complete review documentation
-- [Review Status Dashboard](./REVIEW_STATUS.md) - Current review status
-- [Review Workflow](./REVIEW_WORKFLOW.md) - Step-by-step process
-- [Review Checklist](./REVIEW_CHECKLIST.md) - Detailed review items
-- [Products Revision Guide](./PRODUCTS_REVISION.md) - How to update products
+- [Review Process Index](./docs/review/REVIEW_INDEX.md) - Complete review documentation
+- [Review Status Dashboard](./docs/review/REVIEW_STATUS.md) - Current review status
+- [Review Workflow](./docs/review/REVIEW_WORKFLOW.md) - Step-by-step process
+- [Review Checklist](./docs/review/REVIEW_CHECKLIST.md) - Detailed review items
+- [Products Revision Guide](./docs/review/PRODUCTS_REVISION.md) - How to update products
 
 ---
 
@@ -48,7 +48,7 @@ If you want to review or update the content of a product, here are the most rele
 
 For detailed instructions on how to revise, add, or remove products, and for the collaborative review process, see:
 
-- [PRODUCTS_REVISION.md](./PRODUCTS_REVISION.md): Step-by-step guide for product data changes and GitHub workflow.
+- [PRODUCTS_REVISION.md](./docs/review/PRODUCTS_REVISION.md): Step-by-step guide for product data changes and GitHub workflow.
 - [REVIEW_STATUS.md](./REVIEW_STATUS.md): Live checklist for tracking which products have been reviewed and by whom.
 
 When submitting changes, please follow the workflow described in these documents to ensure reviewer alignment and data quality.

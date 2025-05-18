@@ -22,10 +22,19 @@ export function classifyStructure(structure: string): { isGTV: boolean; isElecti
   // Split into region and name if structure has a colon
   const parts = structure.split(":");
   const structureName = parts.length > 1 ? parts[1].trim() : structure;
-
   // Determine structure types with pattern matching
   const isGTV = /\bGTV\b|Gross\s+Tumor|Gross\s+Target/i.test(structureName);
-  const isElective = /\b(CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective|LN[_\s]|Lymph\s*[Nn]ode|Nodal|ESTRO_LN|Ax_|\bIMN\b)\b/i.test(structureName);
+
+  // Enhanced lymph node and elective structure pattern matching
+  const isElective = (
+    /\b(CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective)\b/i.test(structureName) ||
+    // Lymph node patterns - include common prefixes and full words
+    /\b(LN[_\s]|ESTRO_LN|Lymph\s*[Nn]ode|Nodal|Ax_L|IMN)\b/i.test(structureName) ||
+    // Additional lymph node naming patterns from specific vendors
+    /[-_](LN|IMN|Ax|Node)[_\s]?/i.test(structureName) ||
+    // Full region lymph node names
+    /(Axillary|Internal\s+Mammary|Mediastinal|Cervical)\s+Node/i.test(structureName)
+  );
 
   return { isGTV, isElective };
 }

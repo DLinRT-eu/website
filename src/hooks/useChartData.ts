@@ -153,15 +153,12 @@ export const useChartData = (
     if (selectedTask === "Auto-Contouring") {
       // Get all auto-contouring products
       const autoContouringProducts = filteredProducts.filter(p => p.category === "Auto-Contouring");
-      
-      // Extract and count all supported structures
+        // Extract and count all supported structures
       const structureCounts: Record<string, number> = {};
       autoContouringProducts.forEach((product: ProductDetails) => {
-        if (product.supportedStructures && product.supportedStructures.length > 0) {
-          product.supportedStructures.forEach(structure => {
-            // Extract the structure name (after the colon)
-            const structureName = structure.split(":")[1]?.trim() || structure;
-            structureCounts[structureName] = (structureCounts[structureName] || 0) + 1;
+        if (product.structures && product.structures.length > 0) {
+          product.structures.forEach(structure => {
+            structureCounts[structure.name] = (structureCounts[structure.name] || 0) + 1;
           });
         }
       });
@@ -177,26 +174,44 @@ export const useChartData = (
       setStructureData([]);
     }
   }, [selectedTask, selectedLocation, selectedModality, filteredProducts]);
-
   // Process structure type data for auto-contouring products
   useEffect(() => {
     if (selectedTask === "Auto-Contouring") {
       const structureTypeStats = filteredProducts.map(product => {
-        const oars = product.structures?.filter(s => s.type === "OAR").length || 0;
-        const gtv = product.structures?.filter(s => s.type === "GTV").length || 0;
-        const elective = product.structures?.filter(s => s.type === "Elective").length || 0;
+        // Count structures by looking at the structure names in supportedStructures
+        const oars = product.supportedStructures?.filter(s => 
+          !s.toLowerCase().includes('gtv') && 
+          !s.toLowerCase().includes('ctv') &&
+          !s.toLowerCase().includes('target') &&
+          !s.toLowerCase().includes('metastases')
+        ).length || 0;
         
-        return {
+        const gtv = product.supportedStructures?.filter(s => 
+          s.toLowerCase().includes('gtv') ||
+          s.toLowerCase().includes('gross tumor') ||
+          s.toLowerCase().includes('metastases')
+        ).length || 0;
+        
+        const elective = product.supportedStructures?.filter(s => 
+          s.toLowerCase().includes('ctv') ||
+          s.toLowerCase().includes('clinical target') ||
+          s.toLowerCase().includes('elective')
+        ).length || 0;
+          const total = oars + gtv + elective;
+        
+        // Only include products that have at least one structure
+        return total > 0 ? {
           productName: product.name,
           OARs: oars,
           GTV: gtv,
           Elective: elective,
-          total: oars + gtv + elective
-        };
-      });
+          total: total
+        } : null;
+      })
+      .filter(Boolean) // Remove null entries
+      .sort((a, b) => b.total - a.total); // Sort by total number of structures
       
-      // Sort by total number of structures descending
-      setStructureTypeData(structureTypeStats.sort((a, b) => b.total - a.total));
+      setStructureTypeData(structureTypeStats);
     }
   }, [filteredProducts, selectedTask]);
 

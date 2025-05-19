@@ -1,5 +1,6 @@
+
 /** @jsxImportSource react */
-import React from "react";
+import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Target, CircleDot } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -19,6 +20,7 @@ interface StructureGroup {
 interface StructureInfo {
   name: string;
   supported: boolean;
+  type: "OAR" | "GTV" | "Elective";
 }
 
 const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures }) => {
@@ -50,6 +52,8 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
       // Use shared utility for classification
       const { isGTV, isElective } = classifyStructure(structure);
       const isOAR = !isGTV && !isElective;
+      
+      const type = isGTV ? "GTV" : isElective ? "Elective" : "OAR";
       
       // Update structure counts
       if (isGTV) {
@@ -87,7 +91,8 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
       
       groupedStructures[region].structures.push({
         name: cleanName,
-        supported: isSupported
+        supported: isSupported,
+        type
       });
       
       // Update group types
@@ -97,7 +102,19 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
     }
   });
 
-  // Sort groups
+  // Sort structures by type
+  Object.values(groupedStructures).forEach(group => {
+    group.structures.sort((a, b) => {
+      const typeOrder: Record<string, number> = { 
+        GTV: 0, 
+        Elective: 1, 
+        OAR: 2 
+      };
+      return typeOrder[a.type] - typeOrder[b.type];
+    });
+  });
+
+  // Sort groups by importance (GTV > Elective > OAR)
   const sortedGroups = Object.values(groupedStructures).sort((a, b) => {
     const aTypeCount = Number(a.types.hasOAR) + Number(a.types.hasGTV) + Number(a.types.hasElective);
     const bTypeCount = Number(b.types.hasOAR) + Number(b.types.hasGTV) + Number(b.types.hasElective);
@@ -107,28 +124,36 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
     return 0;
   });
 
-  // Get the appropriate icons for a structure group based on its types
-  const getStructureIcons = (types: StructureTypes) => {
-    const icons = [];
-    if (types.hasOAR) icons.push(<Shield key="oar" className="h-4 w-4 text-blue-600" aria-hidden="true" />);
-    if (types.hasGTV) icons.push(<Target key="gtv" className="h-4 w-4 text-red-600" aria-hidden="true" />);
-    if (types.hasElective) icons.push(<CircleDot key="elective" className="h-4 w-4 text-purple-600" aria-hidden="true" />);
-    return icons;
+  // Create a combined category label
+  const getCategoryLabel = () => {
+    const categories = [];
+    if (hasOARs) categories.push("OARs");
+    if (hasGTV) categories.push("GTV");
+    if (hasElective) categories.push("Elective");
+    
+    return categories.join(" + ");
   };
 
-  // Get type labels for a structure group
-  const getTypeLabels = (types: StructureTypes) => {
-    const labels = [];
-    if (types.hasOAR) labels.push("OARs");
-    if (types.hasGTV) labels.push("GTV");
-    if (types.hasElective) labels.push("Elective");
-    return labels.join(" + ");
+  // Function to get the appropriate icon and color for a structure type
+  const getStructureIcon = (type: "OAR" | "GTV" | "Elective") => {
+    switch (type) {
+      case "OAR":
+        return <Shield className="h-4 w-4 text-blue-600" aria-hidden="true" />;
+      case "GTV":
+        return <Target className="h-4 w-4 text-red-600" aria-hidden="true" />;
+      case "Elective":
+        return <CircleDot className="h-4 w-4 text-purple-600" aria-hidden="true" />;
+    }
   };
+
+  const categoryLabel = getCategoryLabel();
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Supported Structures</CardTitle>
+        <CardTitle>
+          Supported Structures {categoryLabel && <span className="text-base font-normal text-gray-500 ml-2">({categoryLabel})</span>}
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {/* Summary badges section */}
@@ -171,11 +196,17 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
             <div key={group.name}>
               <h4 className="font-medium text-lg mb-2 flex items-center gap-2">
                 <div className="flex gap-1">
-                  {getStructureIcons(group.types)}
+                  {group.types.hasOAR && <Shield className="h-4 w-4 text-blue-600" aria-hidden="true" />}
+                  {group.types.hasGTV && <Target className="h-4 w-4 text-red-600" aria-hidden="true" />}
+                  {group.types.hasElective && <CircleDot className="h-4 w-4 text-purple-600" aria-hidden="true" />}
                 </div>
                 {group.name}
                 <span className="text-sm text-gray-500 font-normal">
-                  ({getTypeLabels(group.types)})
+                  ({[
+                    group.types.hasOAR ? "OARs" : null,
+                    group.types.hasGTV ? "GTV" : null,
+                    group.types.hasElective ? "Elective" : null
+                  ].filter(Boolean).join(" + ")})
                 </span>
               </h4>
               <div className="flex flex-wrap gap-2">
@@ -183,12 +214,17 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
                   <div
                     key={index}
                     className={cn(
-                      "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold",
+                      "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold gap-1",
                       structure.supported 
-                        ? "bg-blue-50 text-blue-800 border-blue-200" 
+                        ? structure.type === "OAR"
+                          ? "bg-blue-50 text-blue-800 border-blue-200"
+                          : structure.type === "GTV"
+                            ? "bg-red-50 text-red-800 border-red-200"
+                            : "bg-purple-50 text-purple-800 border-purple-200"
                         : "bg-gray-100 text-gray-600 border-gray-200"
                     )}
                   >
+                    {getStructureIcon(structure.type)}
                     {structure.name}
                   </div>
                 ))}

@@ -1,106 +1,98 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
-import { ColumnDef } from "@tanstack/react-table";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from 'react-router-dom';
 import { getProducts } from '@/data';
 import { validateProduct } from '@/utils/productReviewHelper';
+import { calculateRevisionStats, getUrgencyLevel, getDaysSinceRevision } from '@/utils/revisionUtils';
 import { ProductDetails } from '@/types/productDetails';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Shield, AlertTriangle, Clock } from 'lucide-react';
+import { useToast } from "@/hooks/use-toast";
+import RevisionSummaryCards from '@/components/revision/RevisionSummaryCards';
+import RevisionChart from '@/components/revision/RevisionChart';
+import { ReviewProductsTable } from '@/components/revision/ReviewProductsTable';
+import { ReviewFilters } from '@/components/revision/ReviewFilters';
+
+interface ReviewProduct extends ProductDetails {
+  status: 'critical' | 'warning' | 'ok';
+  urgency: 'high' | 'medium' | 'low' | 'recent';
+  daysSinceReview: number;
+  issueCount: number;
+}
 
 const ReviewDashboard = () => {
-  const navigate = useNavigate();
+  const { toast } = useToast();
   const products = getProducts();
+  
+  // State for filters
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
+  const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
+  const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
 
-  // Process all products to get their review status
+  // Calculate revision stats
+  const { 
+    productsNeedingRevision, 
+    revisionPercentage, 
+    averageDaysSinceRevision,
+    revisionAgeGroups 
+  } = calculateRevisionStats(products);
+
+  // Process products to get their review status
   const productsWithStatus = products.map(product => {
     const checks = validateProduct(product);
     const failures = checks.filter(c => c.status === 'fail').length;
     const warnings = checks.filter(c => c.status === 'warning').length;
-    const lastReviewDate = product.lastVerified || product.lastUpdated || '';
-    
-    // Calculate days since last review
-    const daysSinceReview = lastReviewDate ? 
-      Math.floor((new Date().getTime() - new Date(lastReviewDate).getTime()) / (1000 * 60 * 60 * 24)) : 
-      365; // Default to 365 if no review date
+    const daysSinceReview = getDaysSinceRevision(product);
+    const urgencyLevel = getUrgencyLevel(product);
 
     return {
       ...product,
       status: failures > 0 ? 'critical' : warnings > 0 ? 'warning' : 'ok',
+      urgency: urgencyLevel,
       daysSinceReview,
       issueCount: failures + warnings
-    };
+    } as ReviewProduct;
   });
 
-  const columns: ColumnDef<ProductDetails & { status: string; daysSinceReview: number; issueCount: number; }>[] = [
-    {
-      accessorKey: "name",
-      header: "Product",
-      cell: ({ row }) => (
-        <div>
-          <div className="font-medium">{row.original.name}</div>
-          <div className="text-sm text-muted-foreground">{row.original.company}</div>
-        </div>
-      )
-    },
-    {
-      accessorKey: "category",
-      header: "Category",
-    },
-    {
-      accessorKey: "status",
-      header: "Status",
-      cell: ({ row }) => {
-        const status = row.original.status;
-        return (
-          <Badge variant={
-            status === 'critical' ? 'destructive' : 
-            status === 'warning' ? 'warning' : 
-            'success'
-          }>
-            {status === 'critical' ? (
-              <Shield className="w-3 h-3 mr-1" />
-            ) : status === 'warning' ? (
-              <AlertTriangle className="w-3 h-3 mr-1" />
-            ) : (
-              <Clock className="w-3 h-3 mr-1" />
-            )}
-            {status.charAt(0).toUpperCase() + status.slice(1)}
-          </Badge>
-        );
-      }
-    },
-    {
-      accessorKey: "issueCount",
-      header: "Issues",
-      cell: ({ row }) => row.original.issueCount
-    },
-    {
-      accessorKey: "daysSinceReview",
-      header: "Days Since Review",
-      cell: ({ row }) => `${row.original.daysSinceReview} days`
-    },
-    {
-      id: "actions",
-      cell: ({ row }) => (
-        <Button 
-          variant="outline" 
-          size="sm"
-          onClick={() => navigate(`/review/${row.original.id}`)}
-        >
-          Review
-        </Button>
-      )
-    }
-  ];
+  // Filter products based on selected filters
+  const filteredProducts = productsWithStatus.filter(product => {
+    if (selectedCategory && product.category !== selectedCategory) return false;
+    if (selectedCompany && product.company !== selectedCompany) return false;
+    if (selectedStatus && product.status !== selectedStatus) return false;
+    if (selectedUrgency && product.urgency !== selectedUrgency) return false;
+    return true;
+  });
 
   // Calculate summary stats
-  const criticalCount = productsWithStatus.filter(p => p.status === 'critical').length;
-  const warningCount = productsWithStatus.filter(p => p.status === 'warning').length;
-  const overdueCount = productsWithStatus.filter(p => p.daysSinceReview > 180).length;
+  const criticalCount = filteredProducts.filter(p => p.status === 'critical').length;
+  const warningCount = filteredProducts.filter(p => p.status === 'warning').length;
+  const overdueCount = filteredProducts.filter(p => p.urgency === 'high').length;
+
+  // Handle filter changes
+  const handleFilterChange = (type: string, value: string | null) => {
+    switch(type) {
+      case 'category':
+        setSelectedCategory(value);
+        break;
+      case 'company':
+        setSelectedCompany(value);
+        break;
+      case 'status':
+        setSelectedStatus(value);
+        break;
+      case 'urgency':
+        setSelectedUrgency(value);
+        break;
+    }
+
+    toast({
+      description: value ? 
+        `Filtering by ${type}: ${value}` :
+        `Filter reset for ${type}`,
+    });
+  };
 
   return (
     <div className="container mx-auto py-8 space-y-6">
@@ -119,6 +111,13 @@ const ReviewDashboard = () => {
         </div>
       </div>
 
+      <RevisionSummaryCards
+        totalProducts={products.length}
+        productsNeedingRevision={productsNeedingRevision.length}
+        revisionPercentage={revisionPercentage}
+        averageDaysSinceRevision={averageDaysSinceRevision}
+      />
+
       {criticalCount > 0 && (
         <Alert variant="destructive">
           <AlertTitle>Critical Issues Found</AlertTitle>
@@ -130,25 +129,44 @@ const ReviewDashboard = () => {
 
       {overdueCount > 0 && (
         <Alert>
-          <AlertTitle>Review Status</AlertTitle>
-          <AlertDescription>
-            {overdueCount} products haven't been reviewed in over 180 days.
+          <AlertTitle>Review Status</AlertTitle>          <AlertDescription>
+            {overdueCount} products are overdue for review ({'>'}12 months).
           </AlertDescription>
         </Alert>
       )}
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Products Requiring Review</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <DataTable 
-            columns={columns} 
-            data={productsWithStatus}
-            defaultSort={[{ id: 'issueCount', desc: true }]}
-          />
-        </CardContent>
-      </Card>
+      <Tabs defaultValue="table" className="w-full">
+        <TabsList className="mb-4">
+          <TabsTrigger value="table">Product List</TabsTrigger>
+          <TabsTrigger value="chart">Revision Chart</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="table">
+          <Card>
+            <CardHeader>
+              <CardTitle>Products Requiring Review</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ReviewFilters
+                selectedStatus={selectedStatus}
+                selectedUrgency={selectedUrgency}
+                onFilterChange={handleFilterChange}
+              />
+              <ReviewProductsTable 
+                products={filteredProducts}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="chart">
+          <Card>
+            <CardContent className="pt-6">
+              <RevisionChart revisionAgeGroups={revisionAgeGroups} />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

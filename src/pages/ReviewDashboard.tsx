@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from 'react-router-dom';
-import { getProducts } from '@/data';
+import { ALL_PRODUCTS } from '@/data';
 import { validateProduct } from '@/utils/productReviewHelper';
 import { calculateRevisionStats, getUrgencyLevel, getDaysSinceRevision } from '@/utils/revisionUtils';
 import { ProductDetails } from '@/types/productDetails';
@@ -14,7 +14,11 @@ import RevisionChart from '@/components/revision/RevisionChart';
 import { ReviewProductsTable } from '@/components/revision/ReviewProductsTable';
 import { ReviewFilters } from '@/components/revision/ReviewFilters';
 
-interface ReviewProduct extends ProductDetails {
+interface ReviewProduct {
+  id: string;
+  name: string;
+  company: string;
+  category: string;
   status: 'critical' | 'warning' | 'ok';
   urgency: 'high' | 'medium' | 'low' | 'recent';
   daysSinceReview: number;
@@ -23,24 +27,22 @@ interface ReviewProduct extends ProductDetails {
 
 const ReviewDashboard = () => {
   const { toast } = useToast();
-  const products = getProducts();
   
   // State for filters
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
-
   // Calculate revision stats
   const { 
     productsNeedingRevision, 
     revisionPercentage, 
     averageDaysSinceRevision,
     revisionAgeGroups 
-  } = calculateRevisionStats(products);
+  } = calculateRevisionStats(ALL_PRODUCTS);
 
   // Process products to get their review status
-  const productsWithStatus = products.map(product => {
+  const productsWithStatus = ALL_PRODUCTS.map(product => {
     const checks = validateProduct(product);
     const failures = checks.filter(c => c.status === 'fail').length;
     const warnings = checks.filter(c => c.status === 'warning').length;
@@ -109,10 +111,8 @@ const ReviewDashboard = () => {
             {overdueCount} Overdue
           </Badge>
         </div>
-      </div>
-
-      <RevisionSummaryCards
-        totalProducts={products.length}
+      </div>      <RevisionSummaryCards
+        totalProducts={ALL_PRODUCTS.length}
         productsNeedingRevision={productsNeedingRevision.length}
         revisionPercentage={revisionPercentage}
         averageDaysSinceRevision={averageDaysSinceRevision}

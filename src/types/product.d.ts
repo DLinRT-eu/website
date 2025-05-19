@@ -64,7 +64,7 @@ export interface Product {
   pricing?: {
     model?: string[];
     basedOn?: string[];
-  };
+  } | string;
   // New fields for evidence and limitations
   evidence?: string[];
   limitations?: string[];

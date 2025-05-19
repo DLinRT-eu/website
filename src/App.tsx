@@ -16,7 +16,6 @@ import NewsDetail from "./pages/NewsDetail";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Initiatives from "./pages/Initiatives";
-import RevisionStats from "./pages/RevisionStats";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 // Create a client
@@ -46,9 +45,7 @@ const App = () => (
           <Route path="companies" element={<Companies />} />
           <Route path="news" element={<News />} />
           <Route path="support" element={<Support />} />
-          <Route path="news/:id" element={<NewsDetail />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="revision-stats" element={<RevisionStats />} />
+          <Route path="news/:id" element={<NewsDetail />} />          <Route path="dashboard" element={<Dashboard />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

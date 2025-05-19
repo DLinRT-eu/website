@@ -2,7 +2,7 @@
 // This file is being kept for backwards compatibility
 // The main interface is now in productDetails.d.ts
 import { Product } from './product';
-import type { ProductDetails as ExtendedProductDetails } from './productDetails';
+import type { ProductDetails as ProductDetailsExtended } from './productDetails.d';
 
 export interface Structure {
   name: string;
@@ -11,4 +11,4 @@ export interface Structure {
 }
 
 // Re-export the interface from the .d.ts file
-export type ProductDetails = ExtendedProductDetails;
+export type ProductDetails = ProductDetailsExtended;

@@ -15,7 +15,7 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/ai-medical.png",
     website: "https://www.ai-medical.ch/jazz",
     anatomicalLocation: ["Brain"],
-    modality: ["MRI"], // Fix: changed string to array
+    modality: ["MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: [

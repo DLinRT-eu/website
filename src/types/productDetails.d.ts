@@ -2,15 +2,7 @@
 import { Product } from './product';
 
 export interface ProductDetails extends Product {
-  // All these properties are already inherited from Product
-  // id?: string;
-  // name: string;
-  // company: string; 
-  // description: string;
-  // features: string[];
-  // category: string;
-  // certification?: string;
-  // logoUrl: string;
+  // No need to re-declare properties from Product
   companyUrl?: string;
   productUrl?: string;
   subspeciality?: string;
@@ -51,7 +43,7 @@ export interface ProductDetails extends Product {
   pricing?: {
     model?: string[];
     basedOn?: string[];
-  };
+  } | string;
   clinicalEvidence?: string;
   lastVerified?: string;
   lastRevised?: string;

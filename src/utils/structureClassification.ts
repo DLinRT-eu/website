@@ -29,8 +29,11 @@ export function classifyStructure(structure: string): { isGTV: boolean; isElecti
     // Check for clinical/planning target volumes
     /\b(CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective)\b/i.test(structure) ||
     
+    // Match any LN (Lymph Node) patterns
+    /\bLN[_\s\-]|LN_Pelvics|LN_Breast|LN_B_RTOG|\bLN\b/i.test(structure) ||
+    
     // Common lymph node prefixes and suffixes
-    /\b(LN[_\s\-]|ESTRO_LN|Lymph\s*[Nn]ode|Nodal|Ax_L|IMN)\b/i.test(structure) ||
+    /\b(ESTRO_LN|Lymph\s*[Nn]ode|Nodal|Ax_L|IMN)\b/i.test(structure) ||
     /[-_](LN|IMN|Ax|Node)[s]?(\s|$|\()/i.test(structure) ||
     
     // Additional lymph node naming patterns from specific vendors

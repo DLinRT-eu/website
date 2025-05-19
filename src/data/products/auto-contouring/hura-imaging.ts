@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
@@ -14,7 +15,7 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/huraimaging.png",
     website: "https://huraimaging.com/lung-app",
     anatomicalLocation: ["Thorax"],
-    modality: ["CT"], // Fixed: changed from string to array
+    modality: ["CT"],
     diseaseTargeted: ["Lung Cancer", "Pulmonary Nodules"],
     keyFeatures: [
       "Automated detection and contouring of pulmonary nodules",

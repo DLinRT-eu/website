@@ -14,7 +14,7 @@ const ProductFeaturesDetails = ({ product }: ProductFeaturesProps) => (
     </CardHeader>
     <CardContent>
       <ul className="list-disc pl-4 space-y-2">
-        {product.keyFeatures?.map((feature, index) => (
+        {(product.keyFeatures || product.features)?.map((feature, index) => (
           <li key={index} className="text-gray-500">{feature}</li>
         ))}
       </ul>

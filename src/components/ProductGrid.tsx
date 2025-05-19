@@ -1,3 +1,4 @@
+
 import { useState, useMemo, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import ProductGridControls from "./grid/ProductGridControls";
@@ -5,6 +6,7 @@ import ProductPagination from "./grid/ProductPagination";
 import dataService from "@/services/DataService";
 import { FilterState } from "@/types/filters";
 import { SortOption } from "./grid/SortControls";
+import { ProductDetails } from "@/types/productDetails";
 
 interface ProductGridProps {
   filters?: FilterState;
@@ -148,6 +150,7 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {currentProducts.map((product) => {
             try {
+              // Cast product to correct type to match ProductCard props
               return <ProductCard key={product.id} {...product} />;
             } catch (error) {
               console.error("Error rendering ProductCard:", error);

@@ -2,6 +2,15 @@
 import { Product } from './product';
 
 export interface ProductDetails extends Product {
+  // All these properties are already inherited from Product
+  // id?: string;
+  // name: string;
+  // company: string; 
+  // description: string;
+  // features: string[];
+  // category: string;
+  // certification?: string;
+  // logoUrl: string;
   companyUrl?: string;
   productUrl?: string;
   subspeciality?: string;

@@ -1,12 +1,15 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
-import { DataTable } from "@/components/ui/data-table";
+import { SimpleTable, Column } from "@/components/ui/simple-table";
 import { Badge } from "@/components/ui/badge";
 import { Shield, AlertTriangle, Clock } from 'lucide-react';
-import { ColumnDef } from "@tanstack/react-table";
 import { useNavigate } from 'react-router-dom';
 
-interface ReviewProduct extends ProductDetails {
+interface ReviewProduct {
+  id: string;
+  name: string;
+  company: string;
+  category: string;
   status: 'critical' | 'warning' | 'ok';
   urgency: 'high' | 'medium' | 'low' | 'recent';
   daysSinceReview: number;
@@ -21,73 +24,87 @@ interface ReviewProductsTableProps {
 export const ReviewProductsTable: React.FC<ReviewProductsTableProps> = ({
   products,
   defaultSort = [{ id: 'issueCount', desc: true }]
-}) => {
-  const navigate = useNavigate();
+}) => {  const navigate = useNavigate();
 
-  const columns: ColumnDef<ReviewProduct>[] = [
+  const columns: Column<ReviewProduct>[] = [
     {
-      accessorKey: "name",
+      id: "name",
       header: "Product",
-      cell: ({ row }) => (
+      sortable: true,
+      sortFn: (a, b) => a.name.localeCompare(b.name),
+      cell: (row) => (
         <div>
-          <div className="font-medium">{row.original.name}</div>
-          <div className="text-sm text-muted-foreground">{row.original.company}</div>
+          <div className="font-medium">{row.name}</div>
+          <div className="text-sm text-muted-foreground">{row.company}</div>
         </div>
       )
     },
     {
-      accessorKey: "category",
+      id: "category",
       header: "Category",
+      sortable: true,
+      sortFn: (a, b) => a.category.localeCompare(b.category),
+      cell: (row) => row.category
     },
     {
-      accessorKey: "status",
+      id: "status",
       header: "Status",
-      cell: ({ row }) => (
+      sortable: true,
+      sortFn: (a, b) => a.status.localeCompare(b.status),
+      cell: (row) => (
         <Badge variant={
-          row.original.status === 'critical' ? 'destructive' : 
-          row.original.status === 'warning' ? 'warning' : 
+          row.status === 'critical' ? 'destructive' : 
+          row.status === 'warning' ? 'warning' : 
           'success'
         }>
-          {row.original.status === 'critical' ? (
+          {row.status === 'critical' ? (
             <Shield className="w-3 h-3 mr-1" />
-          ) : row.original.status === 'warning' ? (
+          ) : row.status === 'warning' ? (
             <AlertTriangle className="w-3 h-3 mr-1" />
           ) : (
             <Clock className="w-3 h-3 mr-1" />
           )}
-          {row.original.status.charAt(0).toUpperCase() + row.original.status.slice(1)}
+          {row.status.charAt(0).toUpperCase() + row.status.slice(1)}
         </Badge>
       )
     },
     {
-      accessorKey: "urgency",
+      id: "urgency",
       header: "Urgency",
-      cell: ({ row }) => (
+      sortable: true,
+      sortFn: (a, b) => a.urgency.localeCompare(b.urgency),
+      cell: (row) => (
         <Badge variant={
-          row.original.urgency === 'high' ? 'destructive' : 
-          row.original.urgency === 'medium' ? 'warning' : 
+          row.urgency === 'high' ? 'destructive' : 
+          row.urgency === 'medium' ? 'warning' : 
           'success'
         }>
-          {row.original.urgency.charAt(0).toUpperCase() + row.original.urgency.slice(1)}
+          {row.urgency.charAt(0).toUpperCase() + row.urgency.slice(1)}
         </Badge>
       )
     },
     {
-      accessorKey: "issueCount",
+      id: "issueCount",
       header: "Issues",
+      sortable: true,
+      sortFn: (a, b) => a.issueCount - b.issueCount,
+      cell: (row) => row.issueCount
     },
     {
-      accessorKey: "daysSinceReview",
+      id: "daysSinceReview",
       header: "Days Since Review",
-      cell: ({ row }) => `${row.original.daysSinceReview} days`
+      sortable: true,
+      sortFn: (a, b) => a.daysSinceReview - b.daysSinceReview,
+      cell: (row) => `${row.daysSinceReview} days`
     },
     {
       id: "actions",
-      cell: ({ row }) => (
+      header: "",
+      cell: (row) => (
         <Button 
           variant="outline" 
           size="sm"
-          onClick={() => navigate(`/review/${row.original.id}`)}
+          onClick={() => navigate(`/review/${row.id}`)}
         >
           Review
         </Button>
@@ -96,10 +113,10 @@ export const ReviewProductsTable: React.FC<ReviewProductsTableProps> = ({
   ];
 
   return (
-    <DataTable 
+    <SimpleTable 
       columns={columns} 
       data={products}
-      defaultSort={defaultSort}
+      defaultSort={defaultSort?.[0]}
     />
   );
 };

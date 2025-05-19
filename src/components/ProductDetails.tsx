@@ -1,5 +1,7 @@
-
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ClipboardEdit } from "lucide-react";
 import type { ProductDetails as ProductDetailsType } from "@/types/productDetails";
 import ProductHeaderInfo from "./product/ProductHeaderInfo";
 import GeneralInformationDetails from "./product/GeneralInformationDetails";
@@ -18,9 +20,22 @@ interface ProductDetailsProps {
 }
 
 const ProductDetails = ({ product }: ProductDetailsProps) => {
+  const navigate = useNavigate();
+
   return (
-    <div className="container mx-auto px-4 py-8">
-      <ProductHeaderInfo product={product} />
+    <div className="container mx-auto px-4 py-8 space-y-8">
+      <div className="flex justify-between items-center">
+        <ProductHeaderInfo product={product} />
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="ml-4"
+          onClick={() => navigate(`/review/${product.id}`)}
+        >
+          <ClipboardEdit className="h-4 w-4 mr-2" />
+          Review Mode
+        </Button>
+      </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
         <div className="lg:col-span-2 space-y-6">

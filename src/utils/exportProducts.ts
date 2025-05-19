@@ -80,8 +80,9 @@ export const exportProductsToCSV = (products: Product[]) => {
     escapeValueForCsv(product.market?.countriesPresent),
     escapeValueForCsv(product.market?.payingCustomers),
     escapeValueForCsv(product.market?.researchUsers),
-    escapeValueForCsv(product.pricing?.model),
-    escapeValueForCsv(product.pricing?.basedOn),
+    // Handle pricing properly based on its type
+    escapeValueForCsv(typeof product.pricing === 'string' ? product.pricing : product.pricing?.model),
+    escapeValueForCsv(typeof product.pricing === 'string' ? '' : product.pricing?.basedOn),
     escapeValueForCsv(product.releaseDate),
     escapeValueForCsv(product.version),
     escapeValueForCsv(product.website),

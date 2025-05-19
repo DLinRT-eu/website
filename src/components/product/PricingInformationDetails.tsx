@@ -21,18 +21,26 @@ const PricingInformationDetails = ({ product }: PricingInformationProps) => {
           // If pricing is a string, display it directly
           <div>
             <p className="text-sm font-medium">Pricing:</p>
-            <p className="text-gray-500">{product.pricing}</p>
+            <p className="text-gray-500">{product.pricing as string}</p>
           </div>
         ) : (
           // If pricing is an object, display model and basedOn properties
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-sm font-medium">Model:</p>
-              <p className="text-gray-500">{product.pricing?.model?.join(", ") || "N/A"}</p>
+              <p className="text-gray-500">
+                {typeof product.pricing === 'object' && product.pricing?.model 
+                  ? product.pricing.model.join(", ") 
+                  : "N/A"}
+              </p>
             </div>
             <div>
               <p className="text-sm font-medium">Based On:</p>
-              <p className="text-gray-500">{product.pricing?.basedOn?.join(", ") || "N/A"}</p>
+              <p className="text-gray-500">
+                {typeof product.pricing === 'object' && product.pricing?.basedOn 
+                  ? product.pricing.basedOn.join(", ") 
+                  : "N/A"}
+              </p>
             </div>
           </div>
         )}

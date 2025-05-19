@@ -17,6 +17,7 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Initiatives from "./pages/Initiatives";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import ReviewDashboard from "./pages/ReviewDashboard";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -44,8 +45,9 @@ const App = () => (
           <Route path="product/:id" element={<ProductDetails />} />
           <Route path="companies" element={<Companies />} />
           <Route path="news" element={<News />} />
-          <Route path="support" element={<Support />} />
-          <Route path="news/:id" element={<NewsDetail />} />          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="support" element={<Support />} />          <Route path="news/:id" element={<NewsDetail />} />
+          <Route path="dashboard" element={<Dashboard />} />
+          <Route path="review" element={<ReviewDashboard />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

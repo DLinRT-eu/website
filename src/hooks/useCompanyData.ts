@@ -1,20 +1,20 @@
 
+import { COMPANIES } from '@/data';
+import dataService from '@/services/DataService';
 import { CompanyDetails } from '@/types/company';
-import { ProductDetails } from '@/types/productDetails';
 
-export const useCompanyData = (companies: CompanyDetails[], filteredProducts: ProductDetails[]) => {
-  // Prepare data for company products - no sorting here as it will be done in the component
-  const companyData = companies
-    .map(company => ({
-      name: company.name,
-      value: filteredProducts.filter(p => p.company === company.name).length
-    }))
-    .filter(item => item.value > 0);
-  
-  const totalCompanies = companyData.length;
+export const useCompanyData = (): CompanyDetails[] => {
+  // Get all companies and products
+  const companies = COMPANIES;
+  const products = dataService.getAllProducts();
 
-  return {
-    companyData,
-    totalCompanies
-  };
+  // Prepare data
+  const companyData = companies.map(company => {
+    const companyProducts = products.filter(p => company.productIds.includes(p.id || ''));
+    return {
+      ...company,
+      products: companyProducts
+    };
+  });
+  return companyData.filter(company => company.products.length > 0);
 };

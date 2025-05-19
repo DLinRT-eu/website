@@ -6,14 +6,12 @@ import { useCompanyData } from '@/hooks/useCompanyData';
 import ProductDetails from '@/components/ProductDetails';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { getProducts } from '@/data';
+import { ALL_PRODUCTS } from '@/data';
 
-const ProductReviewPage = () => {
-  const { id } = useParams<{ id: string }>();
-  const products = getProducts();
-  const product = products.find(p => p.id === id);
-  const companies = useCompanyData();
-  const company = product ? companies.find(c => c.name === product.company) : null;
+const ProductReview = () => {  const { id } = useParams<{ id: string }>();
+  const product = ALL_PRODUCTS.find(p => p.id === id);
+  const companyData = useCompanyData();
+  const company = product ? companyData.find(c => c.name === product.company) : null;
 
   if (!product) {
     return (
@@ -73,4 +71,4 @@ const ProductReviewPage = () => {
   );
 };
 
-export default ProductReviewPage;
+export default ProductReview;

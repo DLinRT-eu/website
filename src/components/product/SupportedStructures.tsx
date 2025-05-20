@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield, Target, CircleDot } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { classifyStructure, StructureTypes } from '@/utils/structureClassification';
+import { classifyStructure, StructureTypes, hasLateralityPattern } from '@/utils/structureClassification';
 
 interface SupportedStructuresProps {
   structures?: string[];
@@ -54,18 +54,18 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
       const isOAR = !isGTV && !isElective;
       
       const type = isGTV ? "GTV" : isElective ? "Elective" : "OAR";
-      
-      // Update structure counts
+        // Update structure counts with laterality check
+      const multiplier = hasLateralityPattern(structure) ? 2 : 1;
       if (isGTV) {
-        totalGTV++;
+        totalGTV += multiplier;
         hasGTV = true;
       }
       if (isElective) {
-        totalElective++;
+        totalElective += multiplier;
         hasElective = true;
       }
       if (isOAR) {
-        totalOARs++;
+        totalOARs += multiplier;
         hasOARs = true;
       }
       

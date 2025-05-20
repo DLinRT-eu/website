@@ -1,4 +1,3 @@
-
 import { ProductDetails } from '@/types/productDetails';
 import { countStructureTypes, hasLateralityPattern } from './structureClassification';
 
@@ -252,6 +251,74 @@ export function validateProduct(product: ProductDetails): ReviewCheck[] {
       severity: 'high',
       details: 'A description is essential for understanding what the product does.'
     });
+  }
+
+  // Add additional validation checks
+  
+  // Check for anatomical location
+  if (!product.anatomicalLocation || product.anatomicalLocation.length === 0) {
+    checks.push({
+      field: 'anatomicalLocation',
+      status: 'warning',
+      message: 'No anatomical locations specified',
+      severity: 'medium',
+      details: 'Specify the anatomical regions this product supports.'
+    });
+  } else {
+    checks.push({
+      field: 'anatomicalLocation',
+      status: 'pass',
+      message: `${product.anatomicalLocation.length} anatomical locations specified`,
+      severity: 'medium'
+    });
+  }
+
+  // Check for modalities
+  if (!product.modality || product.modality.length === 0) {
+    checks.push({
+      field: 'modality',
+      status: 'fail',
+      message: 'No modalities specified',
+      severity: 'high',
+      details: 'At least one imaging modality must be specified.'
+    });
+  } else {
+    checks.push({
+      field: 'modality',
+      status: 'pass',
+      message: `${product.modality.length} modalities specified`,
+      severity: 'high'
+    });
+  }
+
+  // Check for regulatory information
+  if (!product.regulatory) {
+    checks.push({
+      field: 'regulatory',
+      status: 'warning',
+      message: 'No regulatory information provided',
+      severity: 'high',
+      details: 'Include information about regulatory status (CE, FDA, etc.)'
+    });
+  } else {
+    if (product.regulatory.ce) {
+      if (!product.regulatory.ce.class) {
+        checks.push({
+          field: 'regulatory.ce.class',
+          status: 'warning',
+          message: 'CE class should be specified if CE marking exists',
+          severity: 'medium',
+          details: 'Specify the CE class (e.g., IIa, IIb) for the product.'
+        });
+      } else {
+        checks.push({
+          field: 'regulatory.ce.class',
+          status: 'pass',
+          message: `CE class ${product.regulatory.ce.class} specified`,
+          severity: 'medium'
+        });
+      }
+    }
   }
 
   return checks;

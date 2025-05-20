@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -8,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { ProductDetails } from '@/types/productDetails';
 import { validateProduct, generateReviewSummary, type ReviewCheck } from '@/utils/productReviewHelper';
-import { Shield, AlertTriangle, CheckCircle, Github, ChevronDown, ChevronRight, Code, FileText } from 'lucide-react';
+import { Shield, AlertTriangle, CheckCircle, Github, ChevronDown, ChevronRight, Code, FileText, GitPullRequest } from 'lucide-react';
 
 interface ProductReviewStatusProps {
   product: ProductDetails;
@@ -235,6 +234,20 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
           }
           return null;
         })}
+
+        {/* Add GitHub PR button */}
+        <div className="mt-4">
+          <Button asChild variant="outline" className="w-full">
+            <a 
+              href={`https://github.com/DLinRT-eu/website/compare/main...review/${product.id}?expand=1&title=Review:%20${encodeURIComponent(product.name)}&labels=review`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <GitPullRequest className="mr-2 h-4 w-4" />
+              Create Pull Request
+            </a>
+          </Button>
+        </div>
       </div>
 
       {/* Detailed Check Results */}

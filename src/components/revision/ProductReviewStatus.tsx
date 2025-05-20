@@ -51,7 +51,7 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
       `<!-- Add any additional information or context here -->`
     );
     
-    return `https://github.com/DLinRT/medical-ai-product-database/issues/new?title=${issueTitle}&body=${issueBody}&labels=review`;
+    return `https://github.com/DLinRT-eu/website/issues/new?title=${issueTitle}&body=${issueBody}&labels=review`;
   };
 
   // Generate GitHub edit URL
@@ -65,7 +65,7 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
       filePath = `src/data/products/${categorySlug}/${companySlug}.ts`;
     }
     
-    return `https://github.com/DLinRT/medical-ai-product-database/edit/main/${filePath}`;
+    return `https://github.com/DLinRT-eu/website/edit/main/${filePath}`;
   };
 
   // Render a check with collapsible details
@@ -139,7 +139,7 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
                 className="gap-1"
                 asChild
               >
-                <a href={`https://github.com/DLinRT/medical-ai-product-database/search?q=${check.field}`} target="_blank" rel="noopener noreferrer">
+                <a href={`https://github.com/DLinRT-eu/website/search?q=${encodeURIComponent(check.field)}`} target="_blank" rel="noopener noreferrer">
                   <Code className="h-3.5 w-3.5" />
                   View Code References
                 </a>
@@ -270,7 +270,7 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
             
             <div className="flex justify-end">
               <Button variant="outline" asChild>
-                <a href="https://github.com/DLinRT/medical-ai-product-database/issues" target="_blank" rel="noopener noreferrer">
+                <a href="https://github.com/DLinRT-eu/website/issues" target="_blank" rel="noopener noreferrer">
                   <Github className="h-4 w-4 mr-2" />
                   View All Issues
                 </a>

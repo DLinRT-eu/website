@@ -1,6 +1,6 @@
 
 import { ProductDetails } from '@/types/productDetails';
-import { countStructureTypes } from './structureClassification';
+import { countStructureTypes, hasLateralityPattern } from './structureClassification';
 
 export interface ReviewCheck {
   field: string;

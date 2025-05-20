@@ -15,6 +15,15 @@ export interface StructureTypeCounts {
 }
 
 /**
+ * Checks if a structure name contains left/right pattern (L/R, R/L)
+ * @param structure Structure name
+ * @returns true if structure contains L/R or R/L pattern
+ */
+export function hasLateralityPattern(structure: string): boolean {
+  return /\(L\/R\)|\(R\/L\)|\sL\/R\s|\sR\/L\s|\s\(L\/R\)|\s\(R\/L\)|\(L\)|\(R\)|\sL\s|\sR\s/.test(structure);
+}
+
+/**
  * Classifies a structure name into OAR, GTV, or Elective
  * @param structure Full structure name (can include region prefix)
  * @returns Object indicating which type the structure is
@@ -79,14 +88,18 @@ export function countStructureTypes(structures: string[]): StructureTypeCounts {
   structures.forEach(structure => {
     const { isGTV, isElective } = classifyStructure(structure);
     
+    // Check if structure has L/R pattern - count as two structures if it does
+    const multiplier = hasLateralityPattern(structure) ? 2 : 1;
+    
     if (isGTV) {
-      counts.GTV++;
+      counts.GTV += multiplier;
     } else if (isElective) {
-      counts.Elective++;
+      counts.Elective += multiplier;
     } else {
-      counts.OARs++;
+      counts.OARs += multiplier;
     }
-    counts.total++;
+    
+    counts.total += multiplier;
   });
 
   return counts;

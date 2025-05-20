@@ -69,7 +69,7 @@ const ProductReview = () => {
           </Button>
           <Button asChild variant="outline">
             <a 
-              href={`https://github.com/DLinRT/medical-ai-product-database/issues/new?title=Review%3A+${encodeURIComponent(product.name)}&template=product-review.md&labels=review`} 
+              href={`https://github.com/DLinRT-eu/website/issues/new?title=Review%3A+${encodeURIComponent(product.name)}&template=product-review.md&labels=review`} 
               target="_blank" 
               rel="noopener noreferrer"
             >

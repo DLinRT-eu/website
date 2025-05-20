@@ -70,10 +70,17 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
       // These categories have all products in a single file
       filePath = `src/data/products/${categorySlug}.ts`;
     } else {
-      // All other categories have company-specific files in subdirectories
-      const companySlug = product.company.toLowerCase()
-        .replace(/ /g, '-')
-        .replace(/[^\w-]/g, '');
+      // Extract full company name from product ID by finding the last component that's not a functional term
+      const functionalTerms = ['contour', 'segmentation', 'enhance', 'suite', 'vision', 'planning', 'dose', 'monitor'];
+      const idParts = product.id.split('-');
+      let companyParts = [];
+      
+      for (const part of idParts) {
+        if (functionalTerms.includes(part.toLowerCase())) break;
+        companyParts.push(part);
+      }
+      
+      const companySlug = companyParts.join('-');
       filePath = `src/data/products/${categorySlug}/${companySlug}.ts`;
     }
     

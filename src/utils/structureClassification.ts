@@ -21,16 +21,23 @@ export interface StructureTypeCounts {
  */
 export function classifyStructure(structure: string): { isGTV: boolean; isElective: boolean } {
   // Determine structure types with pattern matching on the FULL string
-  // GTV pattern - looking for explicit GTV markers
-  const isGTV = /\bGTV\b|Gross\s+Tumor|Gross\s+Target/i.test(structure);
+  // GTV pattern - looking for explicit GTV markers and lesion references
+  const isGTV = (
+    /\bGTV\b|Gross\s+Tumor|Gross\s+Target/i.test(structure) ||
+    /\blesion[s]?\b|\blesional\b/i.test(structure)
+  );
 
   // Enhanced lymph node and elective structure pattern matching
   const isElective = (
     // Check for clinical/planning target volumes
     /\b(CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective)\b/i.test(structure) ||
     
-    // Match any LN (Lymph Node) patterns
+    // Match any LN (Lymph Node) patterns - including ESTRO and ALL LN_ prefixes
     /\bLN[_\s\-]|LN_Pelvics|LN_Breast|LN_B_RTOG|\bLN\b/i.test(structure) ||
+    /\bESTRO_LN/i.test(structure) ||
+    
+    // Match any string starting with LN_ (captures all lymph node structures)
+    /^LN_/i.test(structure) ||
     
     // Common lymph node prefixes and suffixes
     /\b(ESTRO_LN|Lymph\s*[Nn]ode|Nodal|Ax_L|IMN)\b/i.test(structure) ||

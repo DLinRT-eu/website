@@ -3,43 +3,68 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
   {
-    id: "hura-lung-app",
-    name: "Lung App",
+    id: "hura-dvtarget",
+    name: "DV.TARGET",
     company: "Hura Imaging",
     companyUrl: "https://huraimaging.com",
-    productUrl: "https://huraimaging.com/lung-app",
-    description: "Automated pulmonary nodules detection and quantification software.",
-    features: ["AI Detection", "Automatic segmentation", "Nodule quantification"],
+    productUrl: "http://www.huraimaging.com/dvtarget/",
+    description: "AI-powered auto-contouring solution for radiotherapy planning with advanced deep learning segmentation.",
+    features: ["AI-powered segmentation", "Multi-modality support", "Rapid contouring", "PACS integration"],
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/huraimaging.png",
-    website: "https://huraimaging.com/lung-app",
-    anatomicalLocation: ["Thorax"],
-    modality: ["CT"],
-    diseaseTargeted: ["Lung Cancer", "Pulmonary Nodules"],
+    website: "http://www.huraimaging.com/dvtarget/",
+    anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Breast", "Pelvis"],
+    modality: ["CT", "MRI"],
+    diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: [
-      "Automated detection and contouring of pulmonary nodules",
-      "Volumetric analysis and tracking",
-      "Lung-RADS reports generation",
-      "Integration with existing PACS systems"
+      "Fully automated organ and target volume segmentation",
+      "Adaptive algorithms for challenging cases",
+      "Seamless integration with treatment planning systems",
+      "Rapid processing with high accuracy",
+      "User-friendly interface with manual correction tools"
     ],
     supportedStructures: [
-      "Thorax: Lungs (L)",
-      "Thorax: Lungs (R)",
-      "Thorax: Pulmonary Nodules"
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Eyes (L/R)",
+      "Brain: Lens (L/R)",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerve (L/R)",
+      "Brain: Pituitary",
+      
+      "Head & Neck: Larynx",
+      "Head & Neck: Mandible",
+      "Head & Neck: Parotids (L/R)",
+      "Head & Neck: Spinal Cord",
+      "Head & Neck: Submandibular Glands (L/R)",
+      
+      "Thorax: Esophagus",
+      "Thorax: Heart",
+      "Thorax: Lungs (L/R)",
+      "Thorax: Spinal Cord",
+      
+      "Breast: Breast (L/R)",
+      "Breast: Heart",
+      "Breast: Lungs (L/R)",
+      
+      "Pelvis: Bladder",
+      "Pelvis: Femoral Heads (L/R)",
+      "Pelvis: Prostate",
+      "Pelvis: Rectum"
     ],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT"],
+      input: ["CT", "MRI"],
       inputFormat: ["DICOM"],
-      output: ["Structure sets", "Reports"],
-      outputFormat: ["DICOM-RT", "PDF"]
+      output: ["Structure sets"],
+      outputFormat: ["DICOM-RT"]
     },
     technology: {
-      integration: ["PACS", "RIS"],
-      deployment: ["On-premises"],
-      triggerForAnalysis: "Automatic",
-      processingTime: "Seconds"
+      integration: ["PACS", "Treatment Planning Systems"],
+      deployment: ["On-premises", "Cloud-based"],
+      triggerForAnalysis: "Manual or automated workflow",
+      processingTime: "Minutes per patient"
     },
     regulatory: {
       ce: {
@@ -48,22 +73,22 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "Under review",
-      intendedUseStatement: "To assist radiologists in the detection and quantification of pulmonary nodules."
+      intendedUseStatement: "To assist healthcare professionals in the delineation of organs at risk and target volumes for radiotherapy planning."
     },
     market: {
-      onMarketSince: "2017",
-      distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 15,
-      payingCustomers: "50+",
-      researchUsers: "10+"
+      onMarketSince: "2020",
+      distributionChannels: ["Direct sales", "Distribution partners"],
+      countriesPresent: 12,
+      payingCustomers: "30+",
+      researchUsers: "15+"
     },
     pricing: {
-      model: ["Subscription"],
-      basedOn: ["Annual license"]
+      model: ["Subscription", "Pay-per-use"],
+      basedOn: ["Annual license", "Number of patients"]
     },
-    version: "3.0",
-    releaseDate: "2023-01-15",
-    lastUpdated: "2024-02-22",
-    lastRevised: "2025-05-04"
+    version: "2.5",
+    releaseDate: "2023-05-20",
+    lastUpdated: "2024-01-15",
+    lastRevised: "2025-05-10"
   }
 ];

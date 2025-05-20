@@ -50,7 +50,7 @@ const ProductReview = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink>{product.name}</BreadcrumbLink>
+            <span className="text-foreground">{product.name}</span>
           </BreadcrumbItem>
         </Breadcrumb>
       </div>

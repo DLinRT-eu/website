@@ -196,7 +196,7 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
                 <AlertDescription>
                   {reviewSummary.notes
                     .slice(index + 1)
-                    .takeWhile(n => !n.startsWith('\n'))
+                    .filter(n => !n.startsWith('\n'))
                     .map((issue, i) => (
                       <div key={i} className="mt-1">{issue}</div>
                     ))}
@@ -211,7 +211,7 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
                 <AlertDescription>
                   {reviewSummary.notes
                     .slice(index + 1)
-                    .takeWhile(n => !n.startsWith('\n'))
+                    .filter(n => !n.startsWith('\n'))
                     .map((warning, i) => (
                       <div key={i} className="mt-1">{warning}</div>
                     ))}
@@ -282,3 +282,4 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
     </div>
   );
 };
+

@@ -33,6 +33,8 @@ const Dashboard = () => {
   const allTasks = getAllOptions('category');
   const allLocations = getAllOptions('anatomicalLocation');
   const allModalities = getAllOptions('modality');
+  
+  // Structured data for SEO
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Dataset",
@@ -59,9 +61,10 @@ const Dashboard = () => {
     filteredProducts 
   } = useChartData(products, selectedTask, selectedLocation, selectedModality);
 
+  // Get company data using the updated hook with filtered products
   const { companyData, totalCompanies } = useCompanyData(companies, filteredProducts);
 
-  // Handle task bar click
+  // Handler functions
   const handleTaskBarClick = (data: any) => {
     const taskName = data.name;
     if (taskName === selectedTask) {
@@ -79,7 +82,6 @@ const Dashboard = () => {
     }
   };
 
-  // Handle location slice click
   const handleLocationSliceClick = (data: any) => {
     const locationName = data.name;
     if (locationName === selectedLocation) {
@@ -97,7 +99,6 @@ const Dashboard = () => {
     }
   };
 
-  // Handle modality bar click
   const handleModalityBarClick = (data: any) => {
     const modalityName = data.name;
     if (modalityName === selectedModality) {
@@ -115,7 +116,6 @@ const Dashboard = () => {
     }
   };
 
-  // Handle reset filter button click
   const handleResetAllFilters = () => {
     setSelectedTask("all");
     setSelectedLocation("all");

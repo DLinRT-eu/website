@@ -39,6 +39,9 @@ export function classifyStructure(structure: string): { isGTV: boolean; isElecti
     // Match any string starting with LN_ (captures all lymph node structures)
     /^LN_/i.test(structure) ||
     
+    // Add specific pattern for ESTRO LN structures
+    /LN_ESTRO/i.test(structure) ||
+    
     // Common lymph node prefixes and suffixes
     /\b(ESTRO_LN|Lymph\s*[Nn]ode|Nodal|Ax_L|IMN)\b/i.test(structure) ||
     /[-_](LN|IMN|Ax|Node)[s]?(\s|$|\()/i.test(structure) ||

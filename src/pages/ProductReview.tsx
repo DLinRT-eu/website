@@ -15,7 +15,7 @@ import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from 
 const ProductReview = () => {
   const { id } = useParams<{ id: string }>();
   const product = ALL_PRODUCTS.find(p => p.id === id);
-  const companyData = useCompanyData();
+  const { companyData } = useCompanyData();
   const company = product ? companyData.find(c => c.name === product.company) : null;
 
   if (!product) {
@@ -38,11 +38,15 @@ const ProductReview = () => {
       <div className="mb-6">
         <Breadcrumb>
           <BreadcrumbItem>
-            <BreadcrumbLink as={Link} to="/">Home</BreadcrumbLink>
+            <BreadcrumbLink asChild>
+              <Link to="/">Home</Link>
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink as={Link} to="/review">Review</BreadcrumbLink>
+            <BreadcrumbLink asChild>
+              <Link to="/review">Review</Link>
+            </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>

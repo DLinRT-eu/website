@@ -44,12 +44,14 @@ If you want to review or update the content of a product, here are the most rele
 
 ---
 
-## Product Revision & Review Workflow
+## Product Documentation
 
-For detailed instructions on how to revise, add, or remove products, and for the collaborative review process, see:
+For information about working with products on DLinRT.eu:
 
-- [PRODUCTS_REVISION.md](./docs/review/PRODUCTS_REVISION.md): Step-by-step guide for product data changes and GitHub workflow.
-- [REVIEW_STATUS.md](./REVIEW_STATUS.md): Live checklist for tracking which products have been reviewed and by whom.
+- [Review Guide](./docs/review/REVIEW.md): Main documentation for reviewing and updating products
+- [Adding Products](./docs/review/ADDING_PRODUCT.md): Step-by-step guide for adding new products
+- [Example Templates](./src/data/products/examples): Reference implementations for each product category
+- [Review Status](./docs/review/REVIEW_STATUS.md): Current review status dashboard
 
 When submitting changes, please follow the workflow described in these documents to ensure reviewer alignment and data quality.
 

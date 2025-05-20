@@ -14,23 +14,24 @@
 
 ## Common Tasks
 
-1. **Starting a New Review**
-   - Check [Review Status](./docs/review/REVIEW_STATUS.md)
-   - Follow [Review Workflow](./docs/review/REVIEW_WORKFLOW.md)
-   - Use [Review Checklist](./docs/review/REVIEW_CHECKLIST.md)
+1. **Reviewing Products**
+   - Follow the [Product Review Guide](./docs/review/REVIEW.md)
+   - Use the in-site review interface
+   - Reference [Example Templates](./src/data/products/examples)
 
-2. **Coordinating Reviews**
-   - Reference [Review Coordination](./docs/review/REVIEW_COORDINATION.md)
-   - Update [Review Status](./docs/review/REVIEW_STATUS.md)
-   - Follow [Review Workflow](./docs/review/REVIEW_WORKFLOW.md)
+2. **Creating New Products**
+   - Use [Example Templates](./src/data/products/examples)
+   - Follow field documentation in [Review Guide](./docs/review/REVIEW.md)
+   - Submit through the product interface
 
 3. **Contacting Manufacturers**
    - Use [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md)
-   - Document in [Review Status](./docs/review/REVIEW_STATUS.md)
-   - Follow up per [Review Workflow](./docs/review/REVIEW_WORKFLOW.md)
+   - Submit through the in-site forms
+   - Track in the product dashboard
 
-4. **Updating Product Data**
-   - Follow [Products Revision](./docs/review/PRODUCTS_REVISION.md)
+4. **Legacy Documentation**
+   - [Review Process Archive](./docs/review/REVIEW_INDEX.md)
+   - [Manual Update Guide](./docs/review/PRODUCTS_REVISION.md)
    - Update [Review Status](./docs/review/REVIEW_STATUS.md)
    - Use [Review Checklist](./docs/review/REVIEW_CHECKLIST.md)
 

@@ -55,12 +55,25 @@ export const ProductReviewStatus: React.FC<ProductReviewStatusProps> = ({ produc
 
   // Generate GitHub edit URL
   const getGitHubEditUrl = () => {
-    let filePath = '';
+    // Product category is required
+    if (!product.category || !product.company) return '';
     
-    // Determine likely file path based on product category and company
-    if (product.category && product.company) {
-      const categorySlug = product.category.toLowerCase().replace(/ /g, '-');
-      const companySlug = product.company.toLowerCase().replace(/ /g, '-').replace(/[^\w-]/g, '');
+    // Convert category to directory name
+    const categorySlug = product.category.toLowerCase().replace(/ /g, '-');
+    
+    // Single file categories
+    const singleFileCategories = ['registration', 'clinical-prediction'];
+    
+    // Build file path based on category structure
+    let filePath = '';
+    if (singleFileCategories.includes(categorySlug)) {
+      // These categories have all products in a single file
+      filePath = `src/data/products/${categorySlug}.ts`;
+    } else {
+      // All other categories have company-specific files in subdirectories
+      const companySlug = product.company.toLowerCase()
+        .replace(/ /g, '-')
+        .replace(/[^\w-]/g, '');
       filePath = `src/data/products/${categorySlug}/${companySlug}.ts`;
     }
     

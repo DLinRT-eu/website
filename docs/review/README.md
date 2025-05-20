@@ -1,27 +1,27 @@
-# Review Documentation
+# DLinRT.eu Product Documentation
 
-This directory contains all documentation related to the product review process for DLinRT.eu.
+## Quick Start
 
-## Directory Contents
+1. **Reviewing Products**
+   - Open product in web interface
+   - Click "Review" button
+   - Follow guided checklist
+   - Submit changes
 
-- `REVIEW_INDEX.md` - Complete review documentation and overview
-- `REVIEW_STATUS.md` - Current review status dashboard
-- `REVIEW_WORKFLOW.md` - Step-by-step process guide
-- `REVIEW_CHECKLIST.md` - Detailed review items and requirements
-- `REVIEW_COORDINATION.md` - Guidelines for coordinating reviews
-- `PRODUCTS_REVISION.md` - Guide for updating product information
+2. **Adding Products**
+   - Use example template from your category
+   - Fill in required fields
+   - Add company logo
+   - Submit through interface
 
-## Purpose
+See [GUIDE.md](./GUIDE.md) for detailed instructions.
 
-This documentation helps maintain high-quality, accurate product information on DLinRT.eu by:
-- Providing clear guidelines for product reviews
-- Establishing consistent review processes
-- Tracking review status and coordination
-- Ensuring comprehensive product information updates
+## Review Status
 
-## Related Documentation
+See [STATUS.md](./STATUS.md) for current review progress.
 
-For additional context, see:
-- [Documentation Quick Links](../../DOCUMENTATION_LINKS.md)
-- [Contributing Guidelines](../../CONTRIBUTING.md)
-- [Security Checklist](../../SECURITY_CHECKLIST.md)
+## Need Help?
+
+- Reference examples in `src/data/products/examples/`
+- Open an issue on GitHub
+- Join community discussions

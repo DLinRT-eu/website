@@ -1,10 +1,9 @@
+
 # Manufacturer Contact Templates
 
 > **Related Documents**:
-> - [Review Process Index](./REVIEW_INDEX.md)
-> - [Review Workflow](./REVIEW_WORKFLOW.md)
-> - [Review Coordination](./REVIEW_COORDINATION.md)
-> - [Product Revision Guide](./PRODUCTS_REVISION.md)
+> - [Review Guide](./docs/review/GUIDE.md)
+> - [Product Documentation](./docs/review/README.md)
 
 ## Initial Verification Request
 

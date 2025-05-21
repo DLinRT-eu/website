@@ -1,4 +1,3 @@
-
 /** @jsxImportSource react */
 import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,7 +53,8 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
       const isOAR = !isGTV && !isElective;
       
       const type = isGTV ? "GTV" : isElective ? "Elective" : "OAR";
-        // Update structure counts with laterality check
+      
+      // Update structure counts with laterality check
       const multiplier = hasLateralityPattern(structure) ? 2 : 1;
       if (isGTV) {
         totalGTV += multiplier;

@@ -1,48 +1,77 @@
-import { Product } from '../../../types/product';
 
-/**
- * Example of an image synthesis product
- * This template shows the required fields and format for image synthesis products
- */
-const imageSynthesisExample: Product = {
-  id: 'example-image-synthesis',
-  name: 'Example Image Synthesis Product',
-  company: {
-    name: 'Example Company',
-    website: 'https://example.com'
-  },
-  website: 'https://example.com/product',
-  category: 'Image Synthesis',
+import { ProductDetails } from '@/types/productDetails';
+
+export const imageSynthesisExample: ProductDetails = {
+  id: "example-synthesis",
+  name: "Example Synthetic Imaging",
+  company: "Example Company",
+  companyUrl: "https://example.com",
+  category: "Image Synthesis",
+  description: "An example image synthesis product for testing and documentation.",
+  url: "https://example.com/products/synthesis",
+  contactEmail: "info@example.com",
+  contactPhone: "+1 555-123-4567",
+  
+  modality: ["MRI", "CT"],
+  anatomy: ["Brain", "Pelvis", "Whole Body"],
+  
   features: [
-    'MR-to-CT synthesis',
-    'Synthetic CT generation',
-    'Electron density mapping',
-    'Multi-sequence support'
+    "MR-to-CT synthesis",
+    "Multi-contrast MR synthesis",
+    "AI-powered image translation",
+    "Consistent HU values in synthetic CT",
+    "Processing time under 2 minutes"
   ],
-  certifications: {
-    ce: true,
-    fda: true
+  
+  technicalSpecs: {
+    inputFormat: ["DICOM"],
+    outputFormat: ["DICOM"],
+    integrations: ["Major TPS systems", "PACS"],
+    processingTime: "1-2 minutes per volume",
+    accuracy: "Mean absolute HU error < 40 units"
   },
-  supportedModalities: ['MRI'],
-  anatomicalLocations: [
-    'Brain',
-    'Head and Neck',
-    'Pelvis'
-  ],
-  integrations: [
-    'DICOM Import/Export',
-    'PACS Integration',
-    'Treatment Planning System Integration'
-  ],
-  publications: [
+  
+  regulatoryInfo: {
+    ceMark: true,
+    fdaClearance: false,
+    regulatoryClass: "Class II medical device (EU)",
+    approvalDate: "2023-02-20"
+  },
+  
+  marketInfo: {
+    releaseDate: "2022-08-15",
+    countries: ["EU", "UK", "Canada", "Australia", "Japan"],
+    installBase: "20+ institutions"
+  },
+  
+  pricingInfo: {
+    pricingModel: "Per-site license with annual fee",
+    priceRange: "$30,000-$45,000/year",
+    trialAvailability: "Evaluation available for qualified institutions"
+  },
+  
+  evidence: [
     {
-      title: 'Example Publication on Synthetic CT Accuracy',
-      url: 'https://example.com/publication1'
+      type: "Technical Validation",
+      description: "Validation against real CT scans from 100 patients",
+      link: "https://example.com/validation"
+    },
+    {
+      type: "Dosimetric Study",
+      description: "Treatment planning comparison study",
+      link: "https://doi.org/10.xxxx/xxxx.xxxx"
     }
   ],
-  intendedUse: 'Generation of synthetic CT images from MR images for radiation therapy planning.',
-  version: '1.0.0',
-  lastUpdated: '2024-01-01'
+  
+  limitations: [
+    "Reduced accuracy with metal implants",
+    "Requires specific MRI sequences for optimal results",
+    "Not validated for stereotactic applications"
+  ],
+  
+  lastUpdated: "2023-05-28",
+  lastRevised: "2023-05-28",
+  lastVerified: "2023-05-28"
 };
 
 export default imageSynthesisExample;

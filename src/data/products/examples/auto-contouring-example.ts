@@ -1,80 +1,104 @@
-import { ProductDetails } from "@/types/productDetails";
 
-/**
- * Example of an auto-contouring product.
- * Use this as a template for adding new auto-contouring products.
- * Note: This example is not exported in the main products index.
- */
-export const EXAMPLE_AUTO_CONTOURING: ProductDetails = {
-  // Required fields
-  id: "example-auto-contour",                  // Unique identifier, lowercase with hyphens
-  name: "Example Auto-Contouring",             // Product display name
-  company: "Example Medical",                  // Company name (must exist in companies data)
-  category: "Auto-Contouring",                 // Product category
-  modality: ["CT", "MRI"],                    // Supported modalities
+import { ProductDetails } from '@/types/productDetails';
 
-  // Basic information
-  description: "AI-powered auto-contouring solution for radiotherapy planning.",
+export const autoContouringExample: ProductDetails = {
+  id: "example-contour",
+  name: "Example Auto-Contouring",
+  company: "Example Company",
+  companyUrl: "https://example.com",
+  category: "Auto-Contouring",
+  description: "An example auto-contouring product for testing and documentation.",
+  url: "https://example.com/products/contour",
+  contactEmail: "info@example.com",
+  contactPhone: "+1 555-123-4567",
+  
+  modality: ["CT", "MRI"],
+  anatomy: ["Head & Neck", "Brain", "Thorax", "Abdomen", "Pelvis"],
+  
   features: [
-    "AI-powered segmentation",
-    "Multi-modality support",
-    "Rapid contouring",
-    "Clinical workflow integration"
+    "Deep learning based auto-segmentation",
+    "Multi-modal support (CT, MR)",
+    "Batch processing",
+    "Manual editing tools",
+    "DICOM RT-STRUCT export"
   ],
-  anatomicalLocation: ["Brain", "Head & Neck"], // Supported anatomical regions
-  certification: "CE",                          // Regulatory certification
-
-  // URLs and links
-  website: "https://example.com/product",      // Product webpage
-  companyUrl: "https://example.com",           // Company website
-  productUrl: "https://example.com/product",   // Direct product page
-  logoUrl: "/logos/example.png",               // Logo file in public/logos
-
-  // Technical details
-  supportedStructures: [                       // List of supported structures
-    "Brain: Brain",                           // Format: "Region: Structure"
-    "Brain: Brainstem",
-    "Brain: Eyes (L/R)",                      // Use (L/R) for bilateral structures
-    "Head & Neck: Larynx",
-    "Head & Neck: Parotids (L/R)"
-  ],
-  technicalSpecifications: {
-    population: "Adult patients",
-    input: ["CT", "MRI"],
+  
+  technicalSpecs: {
     inputFormat: ["DICOM"],
-    output: ["Structure sets"],
-    outputFormat: ["DICOM-RT"]
+    outputFormat: ["DICOM RT-STRUCT"],
+    integrations: ["Any DICOM compatible TPS"],
+    processingTime: "~1-2 minutes per structure set",
+    accuracy: "85-95% DSC for most structures"
   },
-  technology: {
-    integration: ["PACS", "Treatment Planning Systems"],
-    deployment: ["On-premises", "Cloud-based"],
-    triggerForAnalysis: "Manual or automated workflow",
-    processingTime: "Minutes per patient"
+  
+  regulatoryInfo: {
+    ceMark: true,
+    fdaClearance: true,
+    regulatoryClass: "Class II medical device",
+    approvalDate: "2023-01-15"
   },
-
-  // Regulatory information
-  regulatory: {
-    ce: {
-      status: "Certified",
-      class: "IIa",
-      type: "Medical Device"
+  
+  marketInfo: {
+    releaseDate: "2022-05-01",
+    countries: ["USA", "EU", "Canada", "Australia"],
+    installBase: "50+ institutions worldwide"
+  },
+  
+  pricingInfo: {
+    pricingModel: "Subscription-based",
+    priceRange: "$20,000-$40,000/year",
+    trialAvailability: "30-day free trial available"
+  },
+  
+  supportedStructures: [
+    {
+      name: "Brainstem",
+      type: "OAR",
+      accuracy: "92% DSC",
+      validationDataset: "Internal validation on 150 cases"
     },
-    fda: "Under review",
-    intendedUseStatement: "To assist in the delineation of organs at risk and target volumes for radiotherapy planning."
-  },
-
-  // Market information
-  market: {
-    onMarketSince: "2023",
-    distributionChannels: ["Direct sales"],
-    countriesPresent: 5,
-    payingCustomers: "10+",
-    researchUsers: "5+"
-  },
-
-  // Version and dates
-  version: "1.0",
-  releaseDate: "2023-01-01",
-  lastUpdated: "2023-12-31",      // When product info was last updated
-  lastRevised: "2024-01-01"       // When product info was last reviewed
+    {
+      name: "Parotid (L/R)",
+      type: "OAR",
+      accuracy: "89% DSC",
+      validationDataset: "Public dataset + internal validation"
+    },
+    {
+      name: "Lungs (L/R)",
+      type: "OAR",
+      accuracy: "95% DSC",
+      validationDataset: "Internal validation on 200 cases"
+    },
+    {
+      name: "GTV Primary",
+      type: "GTV",
+      accuracy: "82% DSC",
+      validationDataset: "Internal validation on clinical cases"
+    }
+  ],
+  
+  evidence: [
+    {
+      type: "Clinical Validation",
+      description: "Multi-center validation study with 5 institutions",
+      link: "https://example.com/validation"
+    },
+    {
+      type: "Peer-Reviewed Publication",
+      description: "Published in Medical Physics journal",
+      link: "https://doi.org/10.xxxx/xxxx.xxxx"
+    }
+  ],
+  
+  limitations: [
+    "Performance may vary for unusual anatomy",
+    "Not validated for pediatric patients",
+    "Requires contralateral structures for some segmentations"
+  ],
+  
+  lastUpdated: "2023-06-10",
+  lastRevised: "2023-06-10",
+  lastVerified: "2023-06-10"
 };
+
+export default autoContouringExample;

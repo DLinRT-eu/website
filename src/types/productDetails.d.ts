@@ -10,7 +10,12 @@ export interface ProductDetails extends Product {
   diseaseTargeted?: string[];
   keyFeatures?: string[];
   suggestedUse?: string;
-  supportedStructures?: string[];
+  supportedStructures?: string[] | Array<{
+    name: string;
+    type: string;
+    accuracy?: string;
+    validationDataset?: string;
+  }>;
   technicalSpecifications?: {
     population?: string;
     input?: string[];
@@ -49,6 +54,20 @@ export interface ProductDetails extends Product {
   lastRevised?: string;
   source?: string;
   // New fields for evidence and limitations
-  evidence?: string[];
+  evidence?: string[] | Array<{
+    type: string;
+    description: string;
+    link: string;
+  }>;
   limitations?: string[];
+  
+  // Fields used in productReviewHelper.ts but not defined in the type
+  url?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  anatomy?: string[];
+  technicalSpecs?: any;
+  regulatoryInfo?: any;
+  marketInfo?: any;
+  pricingInfo?: any;
 }

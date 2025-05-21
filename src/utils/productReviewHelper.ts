@@ -1,3 +1,4 @@
+
 import { ProductDetails } from '@/types/productDetails';
 
 // Extend the existing ReviewCheck type to include additional properties
@@ -53,15 +54,15 @@ export function validateProduct(product: ProductDetails): ReviewCheck[] {
     },
     {
       field: 'URL',
-      status: product.url ? 'pass' : 'warning',
+      status: product.productUrl || product.url ? 'pass' : 'warning',
       severity: 'low',
-      message: product.url ? 'URL is valid' : 'URL is missing'
+      message: product.productUrl || product.url ? 'URL is valid' : 'URL is missing'
     },
     {
       field: 'Contact Email',
-      status: product.contactEmail ? 'pass' : 'fail',
+      status: product.supportEmail || product.contactEmail ? 'pass' : 'fail',
       severity: 'medium',
-      message: product.contactEmail ? 'Contact Email is valid' : 'Contact Email is missing'
+      message: product.supportEmail || product.contactEmail ? 'Contact Email is valid' : 'Contact Email is missing'
     },
     {
       field: 'Contact Phone',
@@ -71,15 +72,15 @@ export function validateProduct(product: ProductDetails): ReviewCheck[] {
     },
     {
       field: 'Modality',
-      status: product.modality && product.modality.length > 0 ? 'pass' : 'fail',
+      status: product.modality && (Array.isArray(product.modality) ? product.modality.length > 0 : true) ? 'pass' : 'fail',
       severity: 'high',
-      message: product.modality && product.modality.length > 0 ? 'Modality is valid' : 'Modality is missing'
+      message: product.modality && (Array.isArray(product.modality) ? product.modality.length > 0 : true) ? 'Modality is valid' : 'Modality is missing'
     },
     {
       field: 'Anatomy',
-      status: product.anatomy && product.anatomy.length > 0 ? 'pass' : 'warning',
+      status: product.anatomicalLocation && product.anatomicalLocation.length > 0 ? 'pass' : 'warning',
       severity: 'medium',
-      message: product.anatomy && product.anatomy.length > 0 ? 'Anatomy is valid' : 'Anatomy is missing'
+      message: product.anatomicalLocation && product.anatomicalLocation.length > 0 ? 'Anatomy is valid' : 'Anatomy is missing'
     },
     {
       field: 'Features',
@@ -89,33 +90,33 @@ export function validateProduct(product: ProductDetails): ReviewCheck[] {
     },
     {
       field: 'Technical Specifications',
-      status: product.technicalSpecs ? 'pass' : 'warning',
+      status: product.technicalSpecifications || product.technicalSpecs ? 'pass' : 'warning',
       severity: 'low',
-      message: product.technicalSpecs ? 'Technical Specifications are valid' : 'Technical Specifications are missing'
+      message: product.technicalSpecifications || product.technicalSpecs ? 'Technical Specifications are valid' : 'Technical Specifications are missing'
     },
     {
       field: 'Regulatory Information',
-      status: product.regulatoryInfo ? 'pass' : 'warning',
+      status: product.regulatory || product.regulatoryInfo ? 'pass' : 'warning',
       severity: 'low',
-      message: product.regulatoryInfo ? 'Regulatory Information is valid' : 'Regulatory Information is missing'
+      message: product.regulatory || product.regulatoryInfo ? 'Regulatory Information is valid' : 'Regulatory Information is missing'
     },
     {
       field: 'Market Information',
-      status: product.marketInfo ? 'pass' : 'warning',
+      status: product.market || product.marketInfo ? 'pass' : 'warning',
       severity: 'low',
-      message: product.marketInfo ? 'Market Information is valid' : 'Market Information is missing'
+      message: product.market || product.marketInfo ? 'Market Information is valid' : 'Market Information is missing'
     },
     {
       field: 'Pricing Information',
-      status: product.pricingInfo ? 'pass' : 'warning',
+      status: product.pricing || product.pricingInfo ? 'pass' : 'warning',
       severity: 'low',
-      message: product.pricingInfo ? 'Pricing Information is valid' : 'Pricing Information is missing'
+      message: product.pricing || product.pricingInfo ? 'Pricing Information is valid' : 'Pricing Information is missing'
     },
     {
       field: 'Evidence',
-      status: product.evidence && product.evidence.length > 0 ? 'pass' : 'warning',
+      status: product.evidence && (Array.isArray(product.evidence) ? product.evidence.length > 0 : true) ? 'pass' : 'warning',
       severity: 'low',
-      message: product.evidence && product.evidence.length > 0 ? 'Evidence is valid' : 'Evidence is missing'
+      message: product.evidence && (Array.isArray(product.evidence) ? product.evidence.length > 0 : true) ? 'Evidence is valid' : 'Evidence is missing'
     },
     {
       field: 'Limitations',
@@ -193,7 +194,7 @@ export function generateReviewSummary(product: ProductDetails, checks: ReviewChe
   if (!product.description) {
     notes.push('- Add a description to the product');
   }
-  if (!product.url) {
+  if (!product.productUrl && !product.url) {
     notes.push('- Add a URL to the product');
   }
     if (!product.contactPhone) {
@@ -202,19 +203,19 @@ export function generateReviewSummary(product: ProductDetails, checks: ReviewChe
     if (!product.features || product.features.length === 0) {
         notes.push('- Add features to the product');
     }
-    if (!product.technicalSpecs) {
+    if (!product.technicalSpecifications && !product.technicalSpecs) {
         notes.push('- Add technical specifications to the product');
     }
-    if (!product.regulatoryInfo) {
+    if (!product.regulatory && !product.regulatoryInfo) {
         notes.push('- Add regulatory information to the product');
     }
-    if (!product.marketInfo) {
+    if (!product.market && !product.marketInfo) {
         notes.push('- Add market information to the product');
     }
-    if (!product.pricingInfo) {
+    if (!product.pricing && !product.pricingInfo) {
         notes.push('- Add pricing information to the product');
     }
-    if (!product.evidence || product.evidence.length === 0) {
+    if (!product.evidence) {
         notes.push('- Add evidence to the product');
     }
     if (!product.limitations || product.limitations.length === 0) {

@@ -1,4 +1,5 @@
 
+
 export interface Product {
   id?: string;
   name: string;
@@ -69,7 +70,12 @@ export interface Product {
     model?: string[];
     basedOn?: string[];
   } | string;
-  // New fields for evidence and limitations
-  evidence?: string[];
+  // Updating evidence to match ProductDetails definition
+  evidence?: string[] | Array<{
+    type: string;
+    description: string;
+    link: string;
+  }>;
   limitations?: string[];
 }
+

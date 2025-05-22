@@ -42,8 +42,8 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
       const query = searchQuery.toLowerCase();
       const nameMatch = product.name.toLowerCase().includes(query);
       const companyMatch = product.company.toLowerCase().includes(query);
-      const descriptionMatch = product.description.toLowerCase().includes(query);
-      const featuresMatch = product.features.some(feature => 
+      const descriptionMatch = product.description?.toLowerCase().includes(query);
+      const featuresMatch = product.features?.some(feature => 
         feature.toLowerCase().includes(query)
       );
       const categoryMatch = product.category.toLowerCase().includes(query);
@@ -148,10 +148,10 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentProducts.map((product) => {
+          {currentProducts.map((product: any) => {
             try {
               // Cast product to correct type to match ProductCard props
-              return <ProductCard key={product.id} {...product} />;
+              return <ProductCard key={product.id} {...product as any} />;
             } catch (error) {
               console.error("Error rendering ProductCard:", error);
               return (

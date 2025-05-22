@@ -78,9 +78,11 @@ export function validateProduct(product: ProductDetails): ReviewCheck[] {
     },
     {
       field: 'Anatomy',
-      status: product.anatomicalLocation && product.anatomicalLocation.length > 0 ? 'pass' : 'warning',
+      status: (product.anatomicalLocation && product.anatomicalLocation.length > 0) || 
+              (product.anatomy && product.anatomy.length > 0) ? 'pass' : 'warning',
       severity: 'medium',
-      message: product.anatomicalLocation && product.anatomicalLocation.length > 0 ? 'Anatomy is valid' : 'Anatomy is missing'
+      message: (product.anatomicalLocation && product.anatomicalLocation.length > 0) || 
+               (product.anatomy && product.anatomy.length > 0) ? 'Anatomy is valid' : 'Anatomy is missing'
     },
     {
       field: 'Features',
@@ -130,24 +132,24 @@ export function validateProduct(product: ProductDetails): ReviewCheck[] {
       severity: 'medium',
       message: product.lastUpdated ? 'Last Updated is valid' : 'Last Updated is missing'
     },
-        {
-            field: 'Last Revised',
-            status: product.lastRevised ? 'pass' : 'warning',
-            severity: 'low',
-            message: product.lastRevised ? 'Last Revised is valid' : 'Last Revised is missing'
-        },
-        {
-            field: 'Last Verified',
-            status: product.lastVerified ? 'pass' : 'warning',
-            severity: 'low',
-            message: product.lastVerified ? 'Last Verified is valid' : 'Last Verified is missing'
-        },
-        {
-            field: 'Company URL',
-            status: product.companyUrl ? 'pass' : 'warning',
-            severity: 'low',
-            message: product.companyUrl ? 'Company URL is valid' : 'Company URL is missing'
-        },
+    {
+      field: 'Last Revised',
+      status: product.lastRevised ? 'pass' : 'warning',
+      severity: 'low',
+      message: product.lastRevised ? 'Last Revised is valid' : 'Last Revised is missing'
+    },
+    {
+      field: 'Last Verified',
+      status: product.lastVerified ? 'pass' : 'warning',
+      severity: 'low',
+      message: product.lastVerified ? 'Last Verified is valid' : 'Last Verified is missing'
+    },
+    {
+      field: 'Company URL',
+      status: product.companyUrl ? 'pass' : 'warning',
+      severity: 'low',
+      message: product.companyUrl ? 'Company URL is valid' : 'Company URL is missing'
+    },
   ];
   
   // Add product metadata to each check for GitHub issue creation
@@ -197,39 +199,39 @@ export function generateReviewSummary(product: ProductDetails, checks: ReviewChe
   if (!product.productUrl && !product.url) {
     notes.push('- Add a URL to the product');
   }
-    if (!product.contactPhone) {
-        notes.push('- Add a contact phone to the product');
-    }
-    if (!product.features || product.features.length === 0) {
-        notes.push('- Add features to the product');
-    }
-    if (!product.technicalSpecifications && !product.technicalSpecs) {
-        notes.push('- Add technical specifications to the product');
-    }
-    if (!product.regulatory && !product.regulatoryInfo) {
-        notes.push('- Add regulatory information to the product');
-    }
-    if (!product.market && !product.marketInfo) {
-        notes.push('- Add market information to the product');
-    }
-    if (!product.pricing && !product.pricingInfo) {
-        notes.push('- Add pricing information to the product');
-    }
-    if (!product.evidence) {
-        notes.push('- Add evidence to the product');
-    }
-    if (!product.limitations || product.limitations.length === 0) {
-        notes.push('- Add limitations to the product');
-    }
-    if (!product.lastRevised) {
-        notes.push('- Add last revised date to the product');
-    }
-    if (!product.lastVerified) {
-        notes.push('- Add last verified date to the product');
-    }
-    if (!product.companyUrl) {
-        notes.push('- Add company URL to the product');
-    }
+  if (!product.contactPhone) {
+    notes.push('- Add a contact phone to the product');
+  }
+  if (!product.features || product.features.length === 0) {
+    notes.push('- Add features to the product');
+  }
+  if (!product.technicalSpecifications && !product.technicalSpecs) {
+    notes.push('- Add technical specifications to the product');
+  }
+  if (!product.regulatory && !product.regulatoryInfo) {
+    notes.push('- Add regulatory information to the product');
+  }
+  if (!product.market && !product.marketInfo) {
+    notes.push('- Add market information to the product');
+  }
+  if (!product.pricing && !product.pricingInfo) {
+    notes.push('- Add pricing information to the product');
+  }
+  if (!product.evidence) {
+    notes.push('- Add evidence to the product');
+  }
+  if (!product.limitations || product.limitations.length === 0) {
+    notes.push('- Add limitations to the product');
+  }
+  if (!product.lastRevised) {
+    notes.push('- Add last revised date to the product');
+  }
+  if (!product.lastVerified) {
+    notes.push('- Add last verified date to the product');
+  }
+  if (!product.companyUrl) {
+    notes.push('- Add company URL to the product');
+  }
 
   return {
     progress: {

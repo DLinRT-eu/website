@@ -61,7 +61,7 @@ export interface ProductDetails extends Product {
   }>;
   limitations?: string[];
   
-  // Fields used in productReviewHelper.ts but not defined in the type
+  // Additional compatibility fields
   url?: string;
   contactEmail?: string;
   contactPhone?: string;
@@ -70,4 +70,7 @@ export interface ProductDetails extends Product {
   regulatoryInfo?: any;
   marketInfo?: any;
   pricingInfo?: any;
+  
+  // Make logoUrl optional to work with example files
+  logoUrl?: string;
 }

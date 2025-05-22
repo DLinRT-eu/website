@@ -1,3 +1,4 @@
+
 /** @jsxImportSource react */
 import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,7 +7,12 @@ import { cn } from "@/lib/utils";
 import { classifyStructure, StructureTypes, hasLateralityPattern } from '@/utils/structureClassification';
 
 interface SupportedStructuresProps {
-  structures?: string[];
+  structures?: string[] | Array<{
+    name: string;
+    type: string;
+    accuracy?: string;
+    validationDataset?: string;
+  }>;
 }
 
 interface StructureGroup {
@@ -38,68 +44,109 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
   let totalElective = 0;
 
   // Process and group structures
-  structures.forEach(structure => {
-    const parts = structure.split(":");
-    if (parts.length > 1) {
-      const region = parts[0].trim();
-      const structureName = parts[1].trim();
-      
-      // Extract model name if present
-      const modelMatch = region.match(/(.*?(?:-(?:CT|MR(?:I)?(?:\s+T[12])?))?$)/i);
-      const model = modelMatch ? modelMatch[1].trim() : region;
-      
-      // Use shared utility for classification
-      const { isGTV, isElective } = classifyStructure(structure);
-      const isOAR = !isGTV && !isElective;
-      
-      const type = isGTV ? "GTV" : isElective ? "Elective" : "OAR";
-      
-      // Update structure counts with laterality check
-      const multiplier = hasLateralityPattern(structure) ? 2 : 1;
-      if (isGTV) {
-        totalGTV += multiplier;
-        hasGTV = true;
-      }
-      if (isElective) {
-        totalElective += multiplier;
-        hasElective = true;
-      }
-      if (isOAR) {
-        totalOARs += multiplier;
-        hasOARs = true;
-      }
-      
-      // Track which types each model supports
-      if (!modelTypes[model]) {
-        modelTypes[model] = { hasOAR: false, hasGTV: false, hasElective: false };
-      }
-      if (isGTV) modelTypes[model].hasGTV = true;
-      if (isElective) modelTypes[model].hasElective = true;
-      if (isOAR) modelTypes[model].hasOAR = true;
-      
-      const isSupported = !structureName.includes("(unsupported)");
-      const cleanName = structureName.replace("(unsupported)", "").trim();
-      
-      if (!groupedStructures[region]) {
-        groupedStructures[region] = {
-          name: region,
-          structures: [],
-          types: { hasOAR: false, hasGTV: false, hasElective: false },
-          model
+  const processStructures = structures.map(structure => {
+    // Handle both string and object structures
+    if (typeof structure === 'object' && structure !== null) {
+      return {
+        structureName: structure.name,
+        structureType: structure.type,
+        region: 'Default',
+        model: 'Default',
+        isSupported: true
+      };
+    } else if (typeof structure === 'string') {
+      const parts = structure.split(":");
+      if (parts.length > 1) {
+        const region = parts[0].trim();
+        const structureName = parts[1].trim();
+        
+        // Extract model name if present
+        const modelMatch = region.match(/(.*?(?:-(?:CT|MR(?:I)?(?:\s+T[12])?))?$)/i);
+        const model = modelMatch ? modelMatch[1].trim() : region;
+        
+        const isSupported = !structureName.includes("(unsupported)");
+        const cleanName = structureName.replace("(unsupported)", "").trim();
+        
+        return {
+          structureName: cleanName,
+          region: region,
+          model: model,
+          isSupported: isSupported,
+          structureType: ''  // Will be classified below
         };
       }
-      
-      groupedStructures[region].structures.push({
-        name: cleanName,
-        supported: isSupported,
-        type
-      });
-      
-      // Update group types
-      if (isGTV) groupedStructures[region].types.hasGTV = true;
-      if (isElective) groupedStructures[region].types.hasElective = true;
-      if (isOAR) groupedStructures[region].types.hasOAR = true;
+      return {
+        structureName: structure,
+        region: 'Default',
+        model: 'Default',
+        isSupported: true,
+        structureType: ''
+      };
     }
+    return null;
+  }).filter(Boolean);
+
+  // Process each structure
+  processStructures.forEach(item => {
+    if (!item) return;
+    
+    const { structureName, region, model, isSupported } = item;
+    let structureType = item.structureType;
+    
+    // Use shared utility for classification if type is not already provided
+    if (!structureType) {
+      const structureString = `${region}:${structureName}`;
+      const { isGTV, isElective } = classifyStructure(structureString);
+      structureType = isGTV ? "GTV" : isElective ? "Elective" : "OAR";
+    }
+    
+    const type = structureType === "GTV" ? "GTV" : structureType === "Elective" ? "Elective" : "OAR";
+    const isGTV = type === "GTV";
+    const isElective = type === "Elective";
+    const isOAR = type === "OAR";
+    
+    // Update structure counts with laterality check
+    const multiplier = hasLateralityPattern(structureName) ? 2 : 1;
+    if (isGTV) {
+      totalGTV += multiplier;
+      hasGTV = true;
+    }
+    if (isElective) {
+      totalElective += multiplier;
+      hasElective = true;
+    }
+    if (isOAR) {
+      totalOARs += multiplier;
+      hasOARs = true;
+    }
+    
+    // Track which types each model supports
+    if (!modelTypes[model]) {
+      modelTypes[model] = { hasOAR: false, hasGTV: false, hasElective: false };
+    }
+    if (isGTV) modelTypes[model].hasGTV = true;
+    if (isElective) modelTypes[model].hasElective = true;
+    if (isOAR) modelTypes[model].hasOAR = true;
+    
+    if (!groupedStructures[region]) {
+      groupedStructures[region] = {
+        name: region,
+        structures: [],
+        types: { hasOAR: false, hasGTV: false, hasElective: false },
+        model
+      };
+    }
+    
+    groupedStructures[region].structures.push({
+      name: structureName,
+      supported: isSupported,
+      type: type as "OAR" | "GTV" | "Elective"
+    });
+    
+    // Update group types
+    if (isGTV) groupedStructures[region].types.hasGTV = true;
+    if (isElective) groupedStructures[region].types.hasElective = true;
+    if (isOAR) groupedStructures[region].types.hasOAR = true;
   });
 
   // Sort structures by type

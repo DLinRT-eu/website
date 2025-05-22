@@ -138,7 +138,7 @@ const Companies = () => {
               key={company.id} 
               name={company.name}
               website={company.website}
-              products={company.products}
+              products={company.products as any[]}
               description={company.description}
             />
           ))}

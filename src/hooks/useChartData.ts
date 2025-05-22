@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { ProductDetails } from '@/types/productDetails';
 import { getAllOptions } from "@/utils/filterOptions";
@@ -28,8 +29,8 @@ export const useChartData = (
     
     // Filter by location if not "all"
     if (selectedLocation !== "all") {
-      if (!product.anatomicalLocation || 
-          !product.anatomicalLocation.includes(selectedLocation)) {
+      const anatomyList = product.anatomicalLocation || product.anatomy || [];
+      if (!anatomyList.includes(selectedLocation)) {
         return false;
       }
     }
@@ -80,10 +81,17 @@ export const useChartData = (
   
   const locationData = allLocations.map(location => {
     // Count products that match this location (after other filters are applied)
-    const value = filteredProducts.filter(p => p.anatomicalLocation?.includes(location)).length;
+    const value = filteredProducts.filter(p => {
+      const anatomyList = p.anatomicalLocation || p.anatomy || [];
+      return anatomyList.includes(location);
+    }).length;
+    
     // Original count before task and modality filters
     const originalValue = selectedLocation === "all" ?
-      products.filter(p => p.anatomicalLocation?.includes(location)).length :
+      products.filter(p => {
+        const anatomyList = p.anatomicalLocation || p.anatomy || [];
+        return anatomyList.includes(location);
+      }).length :
       value;
     
     // Assign a fixed color based on the location name
@@ -153,13 +161,20 @@ export const useChartData = (
   useEffect(() => {
     if (selectedTask === "Auto-Contouring") {
       // Get all auto-contouring products
-      const autoContouringProducts = filteredProducts.filter(p => p.category === "Auto-Contouring");      // Extract and count all supported structures
+      const autoContouringProducts = filteredProducts.filter(p => p.category === "Auto-Contouring");
+      
+      // Extract and count all supported structures
       const structureCounts: Record<string, number> = {};
       autoContouringProducts.forEach((product: ProductDetails) => {
         if (product.supportedStructures) {
-          product.supportedStructures.forEach(structure => {
-            structureCounts[structure] = (structureCounts[structure] || 0) + 1;
-          });
+          if (Array.isArray(product.supportedStructures)) {
+            product.supportedStructures.forEach(structure => {
+              // Handle both string and object structures
+              const structureName = typeof structure === 'string' ? 
+                structure : structure.name;
+              structureCounts[structureName] = (structureCounts[structureName] || 0) + 1;
+            });
+          }
         }
       });
       
@@ -174,11 +189,26 @@ export const useChartData = (
       setStructureData([]);
     }
   }, [selectedTask, selectedLocation, selectedModality, filteredProducts]);
+
   // Update structure type counting effect using shared utility
   useEffect(() => {
     if (selectedTask === "Auto-Contouring") {
       const structureTypeStats = filteredProducts.map(product => {
-        const counts = countStructureTypes(product.supportedStructures || []);
+        // Convert complex structures to strings for counting
+        const structureList: string[] = [];
+        if (product.supportedStructures) {
+          if (Array.isArray(product.supportedStructures)) {
+            product.supportedStructures.forEach(structure => {
+              if (typeof structure === 'string') {
+                structureList.push(structure);
+              } else {
+                structureList.push(`Default:${structure.name}`);
+              }
+            });
+          }
+        }
+        
+        const counts = countStructureTypes(structureList);
         return {
           productName: product.name,
           ...counts

@@ -7,7 +7,7 @@ export interface Product {
   features: string[];
   category: string;
   certification?: string;
-  logoUrl: string;
+  logoUrl?: string;  // Changed from required to optional
   companyUrl?: string;
   productUrl?: string;
   anatomicalLocation?: string[];

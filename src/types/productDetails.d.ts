@@ -70,7 +70,4 @@ export interface ProductDetails extends Product {
   regulatoryInfo?: any;
   marketInfo?: any;
   pricingInfo?: any;
-  
-  // Make logoUrl optional to work with example files
-  logoUrl?: string;
 }

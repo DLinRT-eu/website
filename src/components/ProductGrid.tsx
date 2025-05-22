@@ -148,14 +148,18 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {currentProducts.map((product: any) => {
+          {currentProducts.map((product) => {
             try {
-              // Cast product to correct type to match ProductCard props
-              return <ProductCard key={product.id} {...product as any} />;
+              // Ensure product has the required properties for ProductCard
+              const productWithLogoUrl = {
+                ...product,
+                logoUrl: product.logoUrl || '/placeholder.svg' // Provide default if missing
+              };
+              return <ProductCard key={product.id || `product-${Math.random()}`} {...productWithLogoUrl} />;
             } catch (error) {
               console.error("Error rendering ProductCard:", error);
               return (
-                <div className="text-red-500" key={product.id}>
+                <div className="text-red-500" key={product.id || `error-${Math.random()}`}>
                   Error loading product details.
                 </div>
               );

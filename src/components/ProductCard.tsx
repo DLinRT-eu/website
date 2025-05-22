@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -14,7 +15,7 @@ interface ProductCardProps {
   features: string[];
   category: string;
   certification?: string;
-  logoUrl: string;
+  logoUrl?: string;  // Updated to match Product interface
   website?: string;
   productUrl?: string;
   companyUrl?: string;
@@ -30,7 +31,7 @@ const ProductCard = ({
   features, 
   category, 
   certification, 
-  logoUrl,
+  logoUrl = '/placeholder.svg',  // Set default value here
   website,
   productUrl,
   companyUrl,

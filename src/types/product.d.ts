@@ -26,11 +26,15 @@ export interface Product {
   lastVerified?: string;
   lastRevised?: string;
   clinicalEvidence?: string;
-  // Adding supported structures for auto-contouring models
-  supportedStructures?: string[];
-  // Adding useCases for product use cases
-  useCases?: string[];
+  // Updating supported structures to match ProductDetails definition
+  supportedStructures?: string[] | Array<{
+    name: string;
+    type: string;
+    accuracy?: string;
+    validationDataset?: string;
+  }>;
   // Adding properties needed by exportProducts.ts
+  useCases?: string[];
   keyFeatures?: string[];
   technicalSpecifications?: {
     population?: string;

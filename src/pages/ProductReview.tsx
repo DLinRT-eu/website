@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ProductReviewStatus } from '@/components/revision/ProductReviewStatus';
+import { GitHubUrlCard } from '@/components/revision/GitHubUrlCard';
 import { useCompanyData } from '@/hooks/useCompanyData';
 import ProductDetails from '@/components/ProductDetails';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -87,6 +88,8 @@ const ProductReview = () => {
         </TabsList>
 
         <TabsContent value="review" className="space-y-4">
+          <GitHubUrlCard product={product} />
+          
           <ProductReviewStatus product={product} />
           
           <Card>

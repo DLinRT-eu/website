@@ -1,4 +1,3 @@
-
 import { ProductDetails } from '@/types/productDetails';
 
 // Extend the existing ReviewCheck type to include additional properties
@@ -57,6 +56,12 @@ export function validateProduct(product: ProductDetails): ReviewCheck[] {
       status: product.productUrl || product.url ? 'pass' : 'warning',
       severity: 'low',
       message: product.productUrl || product.url ? 'URL is valid' : 'URL is missing'
+    },
+    {
+      field: 'GitHub URL',
+      status: product.githubUrl ? 'pass' : 'warning',
+      severity: 'low',
+      message: product.githubUrl ? 'GitHub URL is specified' : 'GitHub URL is missing - consider adding for easier code access'
     },
     {
       field: 'Contact Email',
@@ -198,6 +203,9 @@ export function generateReviewSummary(product: ProductDetails, checks: ReviewChe
   }
   if (!product.productUrl && !product.url) {
     notes.push('- Add a URL to the product');
+  }
+  if (!product.githubUrl) {
+    notes.push('- Add a GitHub URL for easier code access during reviews');
   }
   if (!product.contactPhone) {
     notes.push('- Add a contact phone to the product');

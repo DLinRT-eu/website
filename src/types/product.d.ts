@@ -11,6 +11,7 @@ export interface Product {
   logoUrl?: string;  // Changed from required to optional
   companyUrl?: string;
   productUrl?: string;
+  githubUrl?: string;  // New field for GitHub repository URL
   anatomicalLocation?: string[];
   modality?: string | string[];
   subspeciality?: string;

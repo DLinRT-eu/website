@@ -1,3 +1,4 @@
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -11,6 +12,12 @@ const TEAM_MEMBERS = [
     role: "Website creator, Lead Developer",
     image: "https://cig-utrecht.org/img/people/mmasp.jpg",
     bio: "https://cig-utrecht.org/members/matteo-maspero",
+  },
+  {
+    name: "Mustafa Khadim",
+    role: "Maintainer & Reviewer",
+    image: "", // No image available, will use fallback
+    bio: "https://www.lunduniversity.lu.se/lucat/user/ef5db84c0cc6a2231d337bb509a243fe",
   }
 ];
 

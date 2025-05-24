@@ -1,5 +1,3 @@
-
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
@@ -18,7 +16,7 @@ const TEAM_MEMBERS = [
     name: "Mustafa Kadhim",
     role: "Maintainer & Reviewer",
     image: "https://media.licdn.com/dms/image/v2/D4E03AQGq6Zvj1IRXLw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677416417272?e=1753315200&v=beta&t=HFi9QRUXVuJ3DJnWgXgIcg0erCWOwzXpzKmgqdlojSk",
-    bio: "https://www.lunduniversity.lu.se/lucat/user/ef5db84c0cc6a2231d337bb509a243fe",
+    bio: "https://portal.research.lu.se/en/persons/mustafa-kadhim",
   }
 ];
 

@@ -15,10 +15,10 @@ const TEAM_MEMBERS = [
     bio: "https://cig-utrecht.org/members/matteo-maspero",
   },
   {
-    name: "Mustafa Khadim",
+    name: "Mustafa Kadhim",
     role: "Maintainer & Reviewer",
-    image: "/people/Musti_suite.png",
-    bio: "https://www.lunduniversity.lu.se/lucat/user/ef5db84c0cc6a2231d337bb509a243fe",
+    image: "https://media.licdn.com/dms/image/v2/D4E03AQGq6Zvj1IRXLw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677416417272?e=1753315200&v=beta&t=HFi9QRUXVuJ3DJnWgXgIcg0erCWOwzXpzKmgqdlojSk",
+    bio: "https://portal.research.lu.se/en/persons/mustafa-kadhim",
   }
 ];
 

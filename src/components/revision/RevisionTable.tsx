@@ -30,7 +30,7 @@ const TEAM_MEMBERS = [
   "Carol",
   "David",
   "Eva",
-  "Mustafa Khadim"
+  "Mustafa Kadhim"
 ];
 
 const RevisionTable: React.FC<RevisionTableProps> = ({

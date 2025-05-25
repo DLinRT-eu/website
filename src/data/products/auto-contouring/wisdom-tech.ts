@@ -8,6 +8,7 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
     company: "Wisdom Tech",
     companyUrl: "http://www.wisdom-tech.online/",
     productUrl: "http://www.wisdom-tech.online/view-16.html",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/wisdom-tech.ts",
     description: "Chinese-developed AI solution for automatic contour segmentation in radiation therapy planning.",
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Integrated workflow"],
     category: "Auto-Contouring",

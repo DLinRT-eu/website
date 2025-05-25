@@ -8,6 +8,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     company: "Manteia",
     companyUrl: "https://www.manteiatech.com/",
     productUrl: "https://www.manteiatech.com/accucontour",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/manteia.ts",
     description: "AI solution for rapid and accurate auto-contouring in radiation therapy planning.",
     features: ["Deep learning algorithms", "Multiple anatomical sites", "Rapid processing"],
     category: "Auto-Contouring",

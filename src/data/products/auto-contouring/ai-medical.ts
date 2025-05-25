@@ -8,6 +8,7 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     company: "AI Medical",
     companyUrl: "https://www.ai-medical.ch/",
     productUrl: "https://www.ai-medical.ch/jazz",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/ai-medical.ts",
     description: "Long-terms lesion tracking and reporting.",
     features: ["Deep learning contours", "Fast processing", "Multiple anatomical sites", "Lesion tracking"],
     category: "Auto-Contouring",

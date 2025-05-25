@@ -6,6 +6,7 @@ export const REGISTRATION_PRODUCTS: ProductDetails[] = [
     id: "pymedix-registration",
     name: "Autofuse",
     company: "PyMedix",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/registration.ts",
     description: "Advanced medical image registration solution that provides automated alignment of multi-modality images with high precision and efficiency for radiotherapy treatment planning.",
     features: ["Multi-modality registration", "Deformable registration", "GPU acceleration", "Fully automated workflow"],
     category: "Registration",

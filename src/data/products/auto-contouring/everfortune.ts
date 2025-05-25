@@ -9,6 +9,7 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
     company: "Ever Fortune AI",
     companyUrl: "https://www.everfortuneai.com.tw/en/",
     productUrl: "https://www.everfortuneai.com.tw/en/2023/11/10/%e6%94%be%e5%b0%84%e6%b2%bb%e7%99%82%e5%99%a8%e5%ae%98%e5%8b%be%e5%8b%92%e7%b3%bb%e7%b5%b1/",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/everfortune.ts",
     description: "Comprehensive AI-powered solution for radiation therapy planning, including auto-segmentation and treatment optimization.",
     features: ["Auto-contouring", "Treatment planning support", "AI optimization"],
     category: "Auto-Contouring",

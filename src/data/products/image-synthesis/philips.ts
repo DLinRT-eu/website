@@ -9,6 +9,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     category: "Image Synthesis",
     description: "AI-powered MR-only simulation solution that generates synthetic CT images from MR scans for radiation therapy planning of brain tumors, avoiding the need for a separate CT scan and improving workflow efficiency.",
     logoUrl: "/logos/philips.png",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/philips.ts",
     features: [
       "MR-only planning",
       "Synthetic CT generation",
@@ -38,7 +39,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     company: "Philips",
     category: "Image Synthesis",
     description: "AI-based MR-only simulation platform that generates synthetic CT images from MR scans for radiation therapy planning of pelvic cancers, streamlining the radiation therapy planning process with deep learning technology.",
-    logoUrl: "/logos/philips.png",
+    logoUrl: "/logos/philips.png",  
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/philips.ts",
     features: [
       "MR-only planning",
       "Synthetic CT generation",
@@ -69,6 +71,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     category: "Image Synthesis",
     description: "AI-powered MR-only simulation solution with deep learning technology that generates synthetic CT images from MR scans for radiation therapy planning of head and neck cancers, enabling simplified workflows and improved soft tissue visualization.",
     logoUrl: "/logos/philips.png",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/philips.ts",
     features: [
       "MR-only planning",
       "Synthetic CT generation", 

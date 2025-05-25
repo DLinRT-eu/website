@@ -13,6 +13,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     category: "Image Synthesis",
     certification: "CE",
     logoUrl: "/logos/spectronic-medical.jpg",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/spectronic.ts",
     website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
     modality: "MRI",

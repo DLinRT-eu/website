@@ -33,23 +33,26 @@ const escapeValueForCsv = (value: any): string => {
 };
 
 export const exportProductsToCSV = (products: Product[]) => {
-  // Define all possible headers to ensure consistent columns
+  // Define comprehensive headers for all product data
   const headers = [
-    "Name", "Company", "Category", "Description", "Features",
+    "ID", "Name", "Company", "Category", "Description", "Features",
     "Subspeciality", "Modality", "Anatomical Location", "Disease Targeted", 
-    "Key Features", "Supported Structures", 
+    "Key Features", "Suggested Use", "Supported Structures", 
     "Technical Population", "Technical Input", "Technical Input Format",
     "Technical Output", "Technical Output Format",
     "Integration Methods", "Deployment Options", "Trigger For Analysis", "Processing Time",
-    "CE Status", "CE Class", "CE Type", "FDA Status", "Intended Use",
+    "CE Status", "CE Class", "CE Type", "FDA Status", "Intended Use Statement",
     "Market Since", "Distribution Channels", "Countries Present", "Paying Customers", "Research Users",
-    "Pricing Model", "Pricing Factors",
-    "Release Date", "Version", "Website", "Company URL", "Product URL", 
-    "Clinical Evidence", "Last Updated", "Last Verified", "Last Revised"
+    "Pricing Model", "Pricing Based On",
+    "Release Date", "Version", "Website", "Company URL", "Product URL", "GitHub URL",
+    "Clinical Evidence", "Evidence", "Limitations",
+    "Compatible Systems", "Training Required", "Support Email", "User Rating",
+    "Last Updated", "Last Verified", "Last Revised", "Source"
   ];
   
   // Map product data to CSV rows
   const data = products.map(product => [
+    escapeValueForCsv(product.id),
     escapeValueForCsv(product.name),
     escapeValueForCsv(product.company),
     escapeValueForCsv(product.category),
@@ -60,6 +63,7 @@ export const exportProductsToCSV = (products: Product[]) => {
     escapeValueForCsv(product.anatomicalLocation),
     escapeValueForCsv(product.diseaseTargeted),
     escapeValueForCsv(product.keyFeatures),
+    escapeValueForCsv(product.suggestedUse),
     escapeValueForCsv(product.supportedStructures),
     escapeValueForCsv(product.technicalSpecifications?.population),
     escapeValueForCsv(product.technicalSpecifications?.input),
@@ -80,7 +84,6 @@ export const exportProductsToCSV = (products: Product[]) => {
     escapeValueForCsv(product.market?.countriesPresent),
     escapeValueForCsv(product.market?.payingCustomers),
     escapeValueForCsv(product.market?.researchUsers),
-    // Handle pricing properly based on its type
     escapeValueForCsv(typeof product.pricing === 'string' ? product.pricing : product.pricing?.model),
     escapeValueForCsv(typeof product.pricing === 'string' ? '' : product.pricing?.basedOn),
     escapeValueForCsv(product.releaseDate),
@@ -88,10 +91,18 @@ export const exportProductsToCSV = (products: Product[]) => {
     escapeValueForCsv(product.website),
     escapeValueForCsv(product.companyUrl),
     escapeValueForCsv(product.productUrl),
+    escapeValueForCsv(product.githubUrl),
     escapeValueForCsv(product.clinicalEvidence),
+    escapeValueForCsv(product.evidence),
+    escapeValueForCsv(product.limitations),
+    escapeValueForCsv(product.compatibleSystems),
+    escapeValueForCsv(product.trainingRequired),
+    escapeValueForCsv(product.supportEmail),
+    escapeValueForCsv(product.userRating),
     escapeValueForCsv(product.lastUpdated),
     escapeValueForCsv(product.lastVerified),
-    escapeValueForCsv(product.lastRevised)
+    escapeValueForCsv(product.lastRevised),
+    escapeValueForCsv(product.source)
   ]);
 
   // Join rows with newlines and create CSV content

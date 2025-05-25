@@ -1,5 +1,5 @@
 
-import { Product } from "@/types/product";
+import { ProductDetails } from "@/types/productDetails";
 
 /**
  * Escapes a value for CSV format according to RFC 4180:
@@ -32,7 +32,7 @@ const escapeValueForCsv = (value: any): string => {
   return needsQuoting ? `"${stringValue}"` : stringValue;
 };
 
-export const exportProductsToCSV = (products: Product[]) => {
+export const exportProductsToCSV = (products: ProductDetails[]) => {
   // Define comprehensive headers for all product data
   const headers = [
     "ID", "Name", "Company", "Category", "Description", "Features",

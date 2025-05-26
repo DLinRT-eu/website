@@ -60,6 +60,7 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     lastRevised: "2025-05-13",
     source: "automatically retrieved and verified",
     lastVerified: "2025-05-12",
-    clinicalEvidence: "Clinical studies demonstrating improved contouring accuracy and efficiency."
+    clinicalEvidence: "Clinical studies demonstrating improved contouring accuracy and efficiency.",
+    evidence: ["10.1016/j.radonc.2016.10.009", "10.1016/j.radonc.2015.07.041", "10.1016/j.radonc.2018.03.011", "10.1016/j.radonc.2014.12.004", "10.1016/j.ijrobp.2008.05.040", "10.1016/j.ijrobp.2010.11.002", "10.1016/j.radonc.2009.09.008", "10.1016/j.prro.2013.07.011", "10.1016/j.radonc.2013.10.018", "10.1016/j.ijrobp.2020.06.019", "10.1016/j.ijrobp.2023.08.019", "10.1016/S0360-3016(02)02854-8", "10.1016/j.radonc.2017.12.013"]
   }
 ];

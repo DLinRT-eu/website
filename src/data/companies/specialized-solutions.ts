@@ -40,5 +40,13 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
       "subtle-gad"
     ],
     "category": "Specialized Solutions"
+  },
+  {
+    "id": "pymedix",
+    "name": "PyMedix",
+    "description": "Specialists in medical imaging registration and analysis solutions.",
+    "website": "https://pymedix.com/",
+    "productIds": ["pymedix-registration"],
+    "category": "Specialized Solutions"
   }
 ];

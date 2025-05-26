@@ -39,7 +39,7 @@ export const AUTO_CONTOURING_COMPANIES: CompanyDetails[] = [
     "name": "Hura Imaging",
     "description": "Specialized in AI-driven segmentation and contouring for radiation therapy.",
     "website": "https://www.huraimaging.com/",
-    "productIds": ["hura-hurart"],
+    "productIds": ["hura-dvtarget"],
     "category": "Auto-Contouring"
   },
   {
@@ -83,7 +83,7 @@ export const AUTO_CONTOURING_COMPANIES: CompanyDetails[] = [
     "name": "MVision AI",
     "description": "Pioneers in cloud-based auto-segmentation solutions for radiation therapy.",
     "website": "https://www.mvision.ai",
-    "productIds": ["mvision-autosegment"],
+    "productIds": ["mvision-ai-contouring"],
     "category": "Auto-Contouring"
   },
   {

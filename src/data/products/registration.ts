@@ -1,43 +1,44 @@
 
 import { ProductDetails } from "@/types/productDetails";
+import { PYMEDIX_PRODUCTS } from "./registration/pymedix";
 
 export const REGISTRATION_PRODUCTS: ProductDetails[] = [
   {
-    id: "pymedix-registration",
-    name: "Autofuse",
-    company: "PyMedix",
+    id: "mirada-rtx",
+    name: "RTx",
+    company: "Mirada Medical",
+    companyUrl: "https://mirada-medical.com",
+    productUrl: "https://mirada-medical.com/rtx/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/registration.ts",
-    description: "Advanced medical image registration solution that provides automated alignment of multi-modality images with high precision and efficiency for radiotherapy treatment planning.",
-    features: ["Multi-modality registration", "Deformable registration", "GPU acceleration", "Fully automated workflow"],
+    description: "Advanced image registration and fusion platform for radiation therapy with automated registration algorithms.",
+    features: ["Automated registration", "Multi-modality fusion", "Deformable registration", "Quality assurance tools"],
     category: "Registration",
-    certification: "CE Mark",
-    logoUrl: "/logos/pymedix.png",
-    anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis", "Whole Body"],
-    modality: ["CT", "MRI", "PET", "CBCT"],
-    releaseDate: "2023-06-01",
-    version: "2.0",
-    companyUrl: "https://pymedix.com/",
-    productUrl: "https://pymedix.com/products/registration",
+    certification: "CE & FDA",
+    logoUrl: "/logos/mirada-medical.png",
+    website: "https://mirada-medical.com/rtx/",
+    anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
+    modality: ["CT", "MRI", "PET", "SPECT"],
     subspeciality: "Radiation Oncology",
+    diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: [
-      "Fully automated rigid and deformable registration",
-      "Advanced multi-modality support",
-      "Deep learning-based registration algorithms",
-      "Seamless DICOM integration",
-      "Real-time visual verification tools"
+      "Automated rigid and deformable registration",
+      "Multi-modality image fusion",
+      "Advanced visualization tools",
+      "Quality metrics and validation",
+      "Seamless workflow integration"
     ],
     technicalSpecifications: {
-      population: "Adult and pediatric",
-      input: ["CT", "MRI", "PET-CT", "CBCT"],
+      population: "Adult and pediatric patients",
+      input: ["CT", "MRI", "PET", "SPECT"],
       inputFormat: ["DICOM"],
-      output: ["Registered images", "Transformation matrices", "Deformation vector fields"],
+      output: ["Registered image sets", "Deformation vector fields"],
       outputFormat: ["DICOM", "DICOM-RT"]
     },
     technology: {
-      integration: ["Treatment planning systems", "PACS", "Oncology information systems"],
-      deployment: ["On-premises", "Cloud-based", "Hybrid"],
-      triggerForAnalysis: "Automated with manual override capability",
-      processingTime: "Under 30 seconds for rigid, 1-2 minutes for deformable registration"
+      integration: ["Treatment Planning Systems", "PACS", "Image viewers"],
+      deployment: ["On-premises", "Cloud-based"],
+      triggerForAnalysis: "Manual or automated",
+      processingTime: "Minutes per registration"
     },
     regulatory: {
       ce: {
@@ -46,23 +47,24 @@ export const REGISTRATION_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
-      intendedUseStatement: "For use in radiation therapy planning to register and align multi-modality medical images to support treatment planning and adaptive therapy workflows."
+      intendedUseStatement: "For registration and fusion of medical images in radiation therapy planning."
     },
     market: {
-      onMarketSince: "2022",
-      distributionChannels: ["Direct sales", "Value-added resellers", "OEM partnerships"],
+      onMarketSince: "2015",
+      distributionChannels: ["Direct sales", "Distribution partners"],
       countriesPresent: 25,
-      payingCustomers: "100+",
-      researchUsers: "30+"
+      payingCustomers: "50+",
+      researchUsers: "25+"
     },
     pricing: {
-      model: ["Perpetual license", "Subscription", "Pay-per-use"],
-      basedOn: ["Per installation", "Per clinical site", "Annual volume"]
+      model: ["Subscription", "Perpetual license"],
+      basedOn: ["Annual license", "Number of workstations"]
     },
-    clinicalEvidence: "Validated in multi-center clinical studies demonstrating 99% accuracy with sub-millimeter precision and 40% reduction in registration time compared to manual methods",
-    lastVerified: "2024-05-01",
-    lastUpdated: "2024-05-01",
-    lastRevised: "2025-05-01",
-    source: "Automatically retrieved"
-  }
+    version: "4.2",
+    releaseDate: "2023-06-01",
+    lastUpdated: "2024-02-01",
+    lastRevised: "2025-05-10",
+    source: "Company provided information"
+  },
+  ...PYMEDIX_PRODUCTS
 ];

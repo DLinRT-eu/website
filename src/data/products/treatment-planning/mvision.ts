@@ -13,8 +13,9 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
     category: "Treatment Planning",
     certification: "CE",
     logoUrl: "/logos/mvision-ai.png",
+    githubUrl: "https://github.com/DLinRT-eu/website/blob/main/src/data/products/treatment-planning/mvision.ts",
     website: "https://mvision.ai/dose/",
-    anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis", "Prostate"],
+    anatomicalLocation: ["Pelvis", "MAle Pelvis"],
     modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
@@ -62,7 +63,7 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
     releaseDate: "2023-01-15",
     lastUpdated: "2024-02-10",
     lastVerified: "2024-05-12",
-    lastRevised: "2025-05-10",
+    lastRevised: "2025-05-26",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Validated in multiple clinical sites with demonstrated time savings and plan quality comparable to expert planners"
   }

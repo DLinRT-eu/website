@@ -19,10 +19,10 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     modality: ["RT planning"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: ["AI-driven plan optimization", "Quality metrics", "Automated planning"],
+    keyFeatures: ["DL-driven plan optimization", "Quality metrics", "Automated planning"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["Treatment plans", "CT images", "Structure sets"],
+      input: ["Treatment plans", "CT", "Structure sets"],
       inputFormat: ["DICOM-RT"],
       output: ["Optimized plans", "Quality reports"],
       outputFormat: ["DICOM-RT"]

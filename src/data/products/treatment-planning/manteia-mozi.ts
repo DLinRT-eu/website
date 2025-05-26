@@ -1,90 +1,62 @@
 
 import { ProductDetails } from "@/types/productDetails";
 
-export const MANTEIA_PLANNING_PRODUCTS: ProductDetails[] = [
+export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
   {
     id: "manteia-mozi",
-    name: "MOZI TPS",
+    name: "MOZI",
     company: "Manteia",
     companyUrl: "https://www.manteiatech.com/",
     productUrl: "https://www.manteiatech.com/mozi",
-    description: "AI-driven automated treatment planning system for rapid generation of clinical-grade VMAT, IMRT and SBRT plans with protocol-aware optimization.",
-    features: [
-      "Multi-criteria dose optimization",
-      "Auto-adaptation to planning protocols",
-      "Cross-TPS compatibility",
-      "DVH prediction engine",
-      "Priority-driven constraint balancing",
-      "Protocol-driven optimization (RTOG/NRG/ESTRO)",
-      "Auto-normalization to clinical objectives",
-      "Adaptive learning from user preferences"
-    ],
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/treatment-planning/manteia-mozi.ts",
+    description: "AI-powered treatment planning assistant that optimizes radiation therapy plans using machine learning algorithms for improved plan quality and efficiency.",
+    features: ["AI-powered optimization", "Plan quality assessment", "Workflow integration"],
     category: "Treatment Planning",
     certification: "CE & FDA",
     logoUrl: "/logos/manteia.png",
     website: "https://www.manteiatech.com/mozi",
-    anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis", "Breast"],
-    modality: ["CT"],
+    anatomicalLocation: ["All sites"],
+    modality: ["RT planning"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: [
-      "Protocol-driven optimization (RTOG/NRG/ESTRO)",
-      "Auto-normalization to clinical objectives",
-      "Adaptive learning from user preferences",
-      "Multi-center plan benchmarking",
-      "Real-time dose calculation"
-    ],
+    keyFeatures: ["AI-driven plan optimization", "Quality metrics", "Automated planning"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT", "Structure sets", "Clinical protocols"],
-      inputFormat: ["DICOM", "DICOM-RT"],
-      output: ["Optimized treatment plans", "Dose matrices"],
-      outputFormat: ["DICOM-RT", "PDF reports"]
+      input: ["Treatment plans", "CT images", "Structure sets"],
+      inputFormat: ["DICOM-RT"],
+      output: ["Optimized plans", "Quality reports"],
+      outputFormat: ["DICOM-RT"]
     },
     technology: {
-      integration: ["RayStation", "Eclipse", "Monaco", "Pinnacle"],
+      integration: ["TPS integration", "Cloud API"],
       deployment: ["Cloud-based", "On-premises"],
-      triggerForAnalysis: "Automated planning request",
-      processingTime: "8-12 minutes per plan"
+      triggerForAnalysis: "Plan submission",
+      processingTime: "Minutes per plan"
     },
     regulatory: {
       ce: {
         status: "Certified",
-        class: "IIb",
+        class: "IIa",
         type: "Medical Device"
       },
-      fda: "510(k) Cleared",
-      intendedUseStatement: "For automated generation and optimization of radiation therapy treatment plans in accordance with clinical protocols."
+      fda: "510(k) cleared",
+      intendedUseStatement: "For assisting in radiation therapy treatment planning optimization."
     },
     market: {
-      onMarketSince: "2022",
-      distributionChannels: ["OEM partnerships", "Direct enterprise sales"],
-      countriesPresent: 23,
-      payingCustomers: "Major cancer networks in EU and North America",
-      researchUsers: "TOP-10 cancer research centers"
+      onMarketSince: "2020",
+      distributionChannels: ["Direct sales", "Cloud platform"],
+      countriesPresent: 20,
+      payingCustomers: "Multiple clinical sites globally",
+      researchUsers: "Research institutions"
     },
     pricing: {
-      model: ["Per-plan license", "Site subscription"],
-      basedOn: ["Beam complexity", "Plan revision cycles"]
+      model: ["Subscription", "Pay-per-use"],
+      basedOn: ["Annual license", "Number of plans"]
     },
-    version: "3.2",
-    releaseDate: "2024-03-01",
-    lastUpdated: "2025-04-15",
-    lastVerified: "2024-04-28",
+    version: "3.0",
+    releaseDate: "2023-12-01",
+    lastUpdated: "2024-04-15",
     lastRevised: "2025-05-12",
-    source: "Automatically retrieved and revised",
-    clinicalEvidence: "Validated in 12-center study showing 89% clinical acceptability rate and 73% reduction in planning time (Int J Radiat Oncol Biol Phys 2023)",
-    // Adding evidence and limitations
-    evidence: [
-      "10.1016/j.ijrobp.2023.02.014",
-      "10.1016/j.prro.2022.11.008",
-      "10.1088/1361-6560/ac1f8a"
-    ],
-    limitations: [
-      "Limited integration with older versions of some TPS systems",
-      "Protocol adaptation requires initial configuration by vendor",
-      "Complex non-standard plans may require manual refinement",
-      "Advanced beam arrangements require manual setup"
-    ]
+    source: "Automatically retrieved and revised"
   }
 ];

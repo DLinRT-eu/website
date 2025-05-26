@@ -4,6 +4,7 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { GitPullRequest } from 'lucide-react';
 import { ProductDetails } from '@/types/productDetails';
+import { createPullRequestUrl } from '@/utils/githubUrlHelper';
 
 interface ReviewNotesProps {
   notes: string[];
@@ -80,7 +81,7 @@ const ReviewNotes: React.FC<ReviewNotesProps> = ({ notes, product }) => {
       <div className="mt-4">
         <Button asChild variant="outline" className="w-full">
           <a 
-            href={`https://github.com/DLinRT-eu/website/compare/main...review/${product.id}?expand=1&title=Review:%20${encodeURIComponent(product.name)}&labels=review`}
+            href={createPullRequestUrl(product)}
             target="_blank"
             rel="noopener noreferrer"
           >

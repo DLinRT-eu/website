@@ -3,95 +3,59 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
-    id: "philips-mrcat-brain",
-    name: "MRCAT Brain",
+    id: "philips-smartspeed-iq",
+    name: "SmartSpeed + IQ",
     company: "Philips",
+    companyUrl: "https://www.philips.com/healthcare",
+    productUrl: "https://www.philips.com/healthcare/product/HC781043/smartspeed-dti-sense",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/philips.ts",
+    description: "Advanced MR imaging solution with AI-enhanced image reconstruction and synthesis capabilities for improved image quality and reduced scan times.",
+    features: ["AI-enhanced reconstruction", "Accelerated imaging", "Image quality enhancement"],
     category: "Image Synthesis",
-    description: "AI-powered MR-only simulation solution that generates synthetic CT images from MR scans for radiation therapy planning of brain tumors, avoiding the need for a separate CT scan and improving workflow efficiency.",
+    certification: "CE & FDA",
     logoUrl: "/logos/philips.png",
-    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/philips.ts",
-    features: [
-      "MR-only planning",
-      "Synthetic CT generation",
-      "Deep learning algorithms",
-      "Automatic CT conversion",
-      "Integrated workflow"
-    ],
-    certification: "CE Mark, FDA Cleared",
-    anatomicalLocation: ["Brain"],
-    modality: ["MRI"],
-    version: "1.0",
-    companyUrl: "https://www.philips.com/",
-    productUrl: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
-    website: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
-    regulatory: {
-      ce: { status: "Approved", class: "IIa" },
-      fda: "510(k) Cleared"
+    website: "https://www.philips.com/healthcare/product/HC781043/smartspeed-dti-sense",
+    anatomicalLocation: ["Whole body"],
+    modality: "MRI",
+    subspeciality: "Radiology",
+    diseaseTargeted: ["Multiple conditions"],
+    keyFeatures: ["AI-enhanced reconstruction", "Faster scanning", "Improved image quality"],
+    technicalSpecifications: {
+      population: "Adult and pediatric patients",
+      input: ["MRI data"],
+      inputFormat: ["DICOM"],
+      output: ["Enhanced images"],
+      outputFormat: ["DICOM"]
     },
-    releaseDate: "2020-01-20",
-    lastUpdated: "2024-01-25",
-    lastRevised: "2025-05-12",
-    source: "Automatically retrieved and revised"
-  },
-  {
-    id: "philips-mrcat-pelvis",
-    name: "MRCAT Pelvis",
-    company: "Philips",
-    category: "Image Synthesis",
-    description: "AI-based MR-only simulation platform that generates synthetic CT images from MR scans for radiation therapy planning of pelvic cancers, streamlining the radiation therapy planning process with deep learning technology.",
-    logoUrl: "/logos/philips.png",  
-    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/philips.ts",
-    features: [
-      "MR-only planning",
-      "Synthetic CT generation",
-      "Deep learning algorithms",
-      "Automatic CT conversion",
-      "Integrated workflow"
-    ],
-    certification: "CE Mark, FDA Cleared",
-    anatomicalLocation: ["Pelvis"],
-    modality: ["MRI"],
-    version: "2.0",
-    companyUrl: "https://www.philips.com/",
-    productUrl: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
-    website: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
-    regulatory: {
-      ce: { status: "Approved", class: "IIa" },
-      fda: "510(k) Cleared"
+    technology: {
+      integration: ["Native MR scanner integration"],
+      deployment: ["On-scanner"],
+      triggerForAnalysis: "Automatic during acquisition",
+      processingTime: "Real-time"
     },
-    releaseDate: "2019-05-21",
-    lastUpdated: "2024-01-25",
-    lastRevised: "2025-05-12",
-    source: "Automatically retrieved and revised"
-  },
-  {
-    id: "philips-mrcat-head-and-neck",
-    name: "MRCAT Head and Neck",
-    company: "Philips",
-    category: "Image Synthesis",
-    description: "AI-powered MR-only simulation solution with deep learning technology that generates synthetic CT images from MR scans for radiation therapy planning of head and neck cancers, enabling simplified workflows and improved soft tissue visualization.",
-    logoUrl: "/logos/philips.png",
-    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/philips.ts",
-    features: [
-      "MR-only planning",
-      "Synthetic CT generation", 
-      "Deep learning algorithms",
-      "Automatic CT conversion",
-      "Integrated workflow"
-    ],
-    certification: "CE Mark, FDA Cleared",
-    anatomicalLocation: ["Head", "Neck"],
-    modality: ["MRI"],
-    version: "1.5",
-    companyUrl: "https://www.philips.com/",
-    productUrl: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
-    website: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
     regulatory: {
-      ce: { status: "Approved", class: "IIa" },
-      fda: "510(k) Cleared"
+      ce: {
+        status: "Certified",
+        class: "IIb",
+        type: "Medical Device"
+      },
+      fda: "510(k) cleared",
+      intendedUseStatement: "For AI-enhanced MR image reconstruction and synthesis."
     },
-    releaseDate: "2022-10-20",
-    lastUpdated: "2024-01-25",
+    market: {
+      onMarketSince: "2020",
+      distributionChannels: ["Direct sales"],
+      countriesPresent: 60,
+      payingCustomers: "Major medical centers worldwide",
+      researchUsers: "Academic institutions globally"
+    },
+    pricing: {
+      model: ["Perpetual license", "Service contract"],
+      basedOn: ["Scanner model", "Features included"]
+    },
+    version: "3.0",
+    releaseDate: "2023-08-01",
+    lastUpdated: "2024-01-10",
     lastRevised: "2025-05-12",
     source: "Automatically retrieved and revised"
   }

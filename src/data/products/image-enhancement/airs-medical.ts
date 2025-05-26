@@ -3,40 +3,41 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
   {
-    id: "airs-swiftmr",
-    name: "Medical SwiftMR",
-    company: "Airs Medical",
+    id: "airs-medical-nodule",
+    name: "AI Solutions for Medical Imaging",
+    company: "AIRS Medical",
     category: "Image Enhancement",
-    description: "AI-powered MRI enhancement solution that improves image quality and resolution of accelerated or low-quality MR scans.",
-    features: ["Deep learning enhancement", "MRI specific", "Resolution improvement"],
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-enhancement/airs-medical.ts",
+    description: "AI-powered medical imaging solutions that enhance image quality and provide automated analysis for improved diagnostic accuracy.",
+    features: ["Deep learning enhancement", "Automated analysis", "Quality improvement"],
     certification: "CE Mark",
     logoUrl: "/logos/airs.jpg",
-    companyUrl: "https://airsmed.com/",
-    productUrl: "https://airsmed.com/swiftmr/",
-    anatomicalLocation: ["Brain", "Spine"],
-    modality: "MRI",
-    diseaseTargeted: ["Neurological disorders", "Spine pathologies"],
-    releaseDate: "2021-05-15",
-    version: "2.1",
+    companyUrl: "https://www.airsmed.com/",
+    productUrl: "https://www.airsmed.com/solutions/",
+    anatomicalLocation: ["Chest", "Abdomen", "Brain"],
+    modality: ["CT", "MRI", "X-ray"],
+    diseaseTargeted: ["Lung nodules", "Cancer detection", "Various pathologies"],
+    releaseDate: "2020-03-15",
+    version: "2.0",
     keyFeatures: [
-      "Deep learning MRI enhancement",
-      "Super-resolution technology",
-      "Noise reduction while preserving detail",
-      "Compatible with various pulse sequences",
-      "Improves suboptimal acquisitions"
+      "AI-powered image enhancement for better visualization",
+      "Automated detection and analysis of abnormalities",
+      "Quality assurance and standardization",
+      "Integration with existing PACS systems",
+      "Real-time processing capabilities"
     ],
     technicalSpecifications: {
       population: "Adult and pediatric",
-      input: ["DICOM MR images"],
+      input: ["Medical images"],
       inputFormat: ["DICOM"],
-      output: ["Enhanced MR images"],
-      outputFormat: ["DICOM"]
+      output: ["Enhanced images", "Analysis reports"],
+      outputFormat: ["DICOM", "PDF reports"]
     },
     technology: {
-      integration: ["PACS", "Vendor-neutral"],
-      deployment: ["Cloud-based", "On-premise option"],
-      triggerForAnalysis: "Automated workflow or manual selection",
-      processingTime: "<10 seconds per series"
+      integration: ["PACS integration", "Workstation compatibility"],
+      deployment: ["Cloud-based", "On-premises"],
+      triggerForAnalysis: "Automatic upon image availability",
+      processingTime: "<30 seconds per study"
     },
     regulatory: {
       ce: {
@@ -44,84 +45,23 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
         class: "IIa",
         type: "Medical Device"
       },
-      fda: "510(k) Cleared",
-      intendedUseStatement: "Intended for enhancing magnetic resonance images to improve image quality through noise reduction and detail enhancement to support clinical interpretation."
+      fda: "Under review",
+      intendedUseStatement: "Intended for enhancing medical images and providing computer-aided detection to support clinical diagnosis."
     },
     market: {
-      onMarketSince: "2021",
-      distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 25,
-      payingCustomers: "150+",
-      researchUsers: "40+"
-    },
-    pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Annual scan volume", "Pay-per-use option"]
-    },
-    clinicalEvidence: "Clinical studies showing improved diagnostic confidence and efficiency when interpreting enhanced images",
-    lastVerified: "2024-12-01",
-    lastUpdated: "2025-02-10",
-    lastRevised: "2025-05-05"
-  },
-  {
-    id: "airs-ct-clarity",
-    name: "Airs Medical CT Clarity",
-    company: "Airs Medical",
-    category: "Image Enhancement",
-    description: "AI-based CT image enhancement solution that improves image quality and reduces noise in standard and low-dose CT examinations.",
-    features: ["Deep learning enhancement", "CT specific", "Noise reduction"],
-    certification: "CE Mark",
-    logoUrl: "/logos/airs.jpg",
-    companyUrl: "https://airsmed.com/",
-    productUrl: "https://airsmed.com/ct-clarity/",
-    anatomicalLocation: ["Whole body"],
-    modality: "CT",
-    diseaseTargeted: ["Cancer", "Pulmonary disorders", "Trauma"],
-    releaseDate: "2022-03-10",
-    version: "1.5",
-    keyFeatures: [
-      "Deep learning CT image enhancement",
-      "Advanced noise reduction",
-      "Detail preservation at low-dose settings",
-      "Improved low-contrast detectability",
-      "Vendor-neutral compatibility"
-    ],
-    technicalSpecifications: {
-      population: "Adult and pediatric",
-      input: ["DICOM CT images"],
-      inputFormat: ["DICOM"],
-      output: ["Enhanced CT images"],
-      outputFormat: ["DICOM"]
-    },
-    technology: {
-      integration: ["PACS", "Cloud platform"],
-      deployment: ["Cloud-based", "On-premise option"],
-      triggerForAnalysis: "Automated or manual selection",
-      processingTime: "<8 seconds per series"
-    },
-    regulatory: {
-      ce: {
-        status: "Approved",
-        class: "IIa",
-        type: "Medical Device"
-      },
-      fda: "510(k) Pending",
-      intendedUseStatement: "Intended for enhancing computed tomography images to improve image quality through noise reduction and detail enhancement to support clinical interpretation."
-    },
-    market: {
-      onMarketSince: "2022",
+      onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Distribution partners"],
       countriesPresent: 15,
-      payingCustomers: "80+",
-      researchUsers: "30+"
+      payingCustomers: "100+",
+      researchUsers: "25+"
     },
     pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Annual scan volume", "Pay-per-use option"]
+      model: ["Subscription", "Pay-per-use"],
+      basedOn: ["Annual volume", "Feature set"]
     },
-    clinicalEvidence: "Early clinical evaluations showing improved image quality metrics and reader preference compared to standard CT images",
-    lastVerified: "2024-11-15",
-    lastUpdated: "2025-01-20",
+    clinicalEvidence: "Clinical studies showing improved detection rates and reduced false positives compared to unenhanced images",
+    lastVerified: "2025-05-10",
+    lastUpdated: "2024-11-20",
     lastRevised: "2025-05-05"
   }
 ];

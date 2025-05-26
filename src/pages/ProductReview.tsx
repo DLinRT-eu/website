@@ -12,6 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { ArrowLeft, Clipboard } from 'lucide-react';
 import { ALL_PRODUCTS } from '@/data';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { createIssueUrl } from '@/utils/githubUrlHelper';
 
 const ProductReview = () => {
   const { id } = useParams<{ id: string }>();
@@ -70,7 +71,7 @@ const ProductReview = () => {
           </Button>
           <Button asChild variant="outline">
             <a 
-              href={`https://github.com/DLinRT-eu/website/issues/new?title=Review%3A+${encodeURIComponent(product.name)}&template=product-review.md&labels=review`} 
+              href={createIssueUrl(product)} 
               target="_blank" 
               rel="noopener noreferrer"
             >

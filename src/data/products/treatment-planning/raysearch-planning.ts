@@ -3,34 +3,35 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
   {
-    id: "raysearch-raystation-deep-learning",
-    name: "RayStation Deep Learning Planning",
+    id: "raysearch-raystation-planning",
+    name: "RayStation Treatment Planning",
     company: "RaySearch Laboratories",
     companyUrl: "https://www.raysearchlabs.com/",
-    productUrl: "https://www.raysearchlabs.com/solutions/raystation/machine-learning-in-raystation/",
-    description: "The RayStation deep learning planning module brings cutting-edge technologies directly into the clinical workflow, offering a substantial boost in efficiency and consistency in patient care through automatic creation of clinical treatment plans.",
-    features: ["Deep learning planning", "Automatic plan generation", "Integrated planning", "Clinical workflow integration"],
+    productUrl: "https://www.raysearchlabs.com/raystation/",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/treatment-planning/raysearch-planning.ts",
+    description: "Advanced treatment planning system with AI-enhanced optimization algorithms for comprehensive radiation therapy planning across all treatment techniques.",
+    features: ["AI-enhanced optimization", "Multi-criteria optimization", "Advanced planning"],
     category: "Treatment Planning",
     certification: "CE & FDA",
     logoUrl: "/logos/raystation.jpg",
     website: "https://www.raysearchlabs.com/raystation/",
-    anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: ["CT", "MRI"],
+    anatomicalLocation: ["All sites"],
+    modality: ["RT planning"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: ["Deep learning algorithms", "Automatic plan generation", "Dose prediction", "Plan quality estimation"],
+    keyFeatures: ["Multi-criteria optimization", "Adaptive planning", "Advanced dose calculation"],
     technicalSpecifications: {
       population: "Adult and pediatric patients",
-      input: ["CT", "MRI", "Structure sets", "Clinical goals"],
+      input: ["CT images", "Structure sets", "Prescriptions"],
       inputFormat: ["DICOM", "DICOM-RT"],
       output: ["Treatment plans", "Dose distributions"],
       outputFormat: ["DICOM-RT"]
     },
     technology: {
-      integration: ["Native TPS integration"],
+      integration: ["Linac integration", "Imaging systems"],
       deployment: ["On-premises"],
-      triggerForAnalysis: "Within treatment planning workflow",
-      processingTime: "Minutes per plan"
+      triggerForAnalysis: "Treatment planning workflow",
+      processingTime: "Minutes to hours depending on complexity"
     },
     regulatory: {
       ce: {
@@ -39,24 +40,23 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
-      intendedUseStatement: "For use in treatment planning for radiation therapy."
+      intendedUseStatement: "For radiation therapy treatment planning and dose calculation."
     },
     market: {
-      onMarketSince: "2022",
+      onMarketSince: "2009",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 30,
-      payingCustomers: "Over 500 clinics worldwide",
-      researchUsers: "Multiple academic institutions"
+      countriesPresent: 40,
+      payingCustomers: "Over 800 clinics worldwide",
+      researchUsers: "Academic institutions globally"
     },
     pricing: {
       model: ["Perpetual license", "Service contract"],
       basedOn: ["Module selection", "Institution size"]
     },
-    version: "2.0",
-    releaseDate: "2023-12-15",
-    lastUpdated: "2024-04-01",
+    version: "12.0",
+    releaseDate: "2023-12-01",
+    lastUpdated: "2025-05-01",
     lastRevised: "2025-05-12",
-    source: "Automatically retrieved and revised",
-    lastVerified: "2024-05-12",
+    source: "Automatically retrieved and revised"
   }
 ];

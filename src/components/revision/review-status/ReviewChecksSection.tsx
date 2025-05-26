@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, AlertTriangle, Shield, ChevronDown, ChevronRight, Code, FileText, Github } from 'lucide-react';
 import { ReviewCheck } from '@/utils/productReviewHelper';
+import { createEditUrl } from '@/utils/githubUrlHelper';
 
 interface ReviewChecksSectionProps {
   check: ReviewCheck;
@@ -30,40 +31,6 @@ const ReviewChecksSection: React.FC<ReviewChecksSectionProps> = ({ check }) => {
     );
     
     return `https://github.com/DLinRT-eu/website/issues/new?title=${issueTitle}&body=${issueBody}&labels=review`;
-  };
-
-  // Generate GitHub edit URL
-  const getGitHubEditUrl = (check: ReviewCheck) => {
-    // Product category is required
-    if (!check.category || !check.company) return '';
-    
-    // Convert category to directory name
-    const categorySlug = check.category.toLowerCase().replace(/ /g, '-');
-    
-    // Single file categories
-    const singleFileCategories = ['registration', 'clinical-prediction'];
-    
-    // Build file path based on category structure
-    let filePath = '';
-    if (singleFileCategories.includes(categorySlug)) {
-      // These categories have all products in a single file
-      filePath = `src/data/products/${categorySlug}.ts`;
-    } else {
-      // Extract full company name from product ID by finding the last component that's not a functional term
-      const functionalTerms = ['contour', 'segmentation', 'enhance', 'suite', 'vision', 'planning', 'dose', 'monitor'];
-      const idParts = check.productId ? check.productId.split('-') : [];
-      let companyParts = [];
-      
-      for (const part of idParts) {
-        if (functionalTerms.includes(part.toLowerCase())) break;
-        companyParts.push(part);
-      }
-      
-      const companySlug = companyParts.join('-');
-      filePath = `src/data/products/${categorySlug}/${companySlug}.ts`;
-    }
-    
-    return `https://github.com/DLinRT-eu/website/edit/main/${filePath}`;
   };
 
   return (
@@ -121,7 +88,7 @@ const ReviewChecksSection: React.FC<ReviewChecksSectionProps> = ({ check }) => {
               className="gap-1"
               asChild
             >
-              <a href={getGitHubEditUrl(check)} target="_blank" rel="noopener noreferrer">
+              <a href={createEditUrl({ id: check.productId, category: check.category, company: check.company })} target="_blank" rel="noopener noreferrer">
                 <FileText className="h-3.5 w-3.5" />
                 Edit Product
               </a>

@@ -31,6 +31,38 @@ export function parseGitHubUrl(githubUrl: string): GitHubInfo | null {
   return null;
 }
 
+export function createEditUrl(product: any): string {
+  if (product.githubUrl) {
+    // Convert tree URL to edit URL
+    return product.githubUrl.replace('/tree/', '/edit/');
+  }
+  
+  // Fallback to default file structure if no githubUrl
+  if (!product.category || !product.company) return '';
+  
+  const categorySlug = product.category.toLowerCase().replace(/ /g, '-');
+  const singleFileCategories = ['registration', 'clinical-prediction'];
+  
+  let filePath = '';
+  if (singleFileCategories.includes(categorySlug)) {
+    filePath = `src/data/products/${categorySlug}.ts`;
+  } else {
+    const functionalTerms = ['contour', 'segmentation', 'enhance', 'suite', 'vision', 'planning', 'dose', 'monitor'];
+    const idParts = product.id ? product.id.split('-') : [];
+    let companyParts = [];
+    
+    for (const part of idParts) {
+      if (functionalTerms.includes(part.toLowerCase())) break;
+      companyParts.push(part);
+    }
+    
+    const companySlug = companyParts.join('-');
+    filePath = `src/data/products/${categorySlug}/${companySlug}.ts`;
+  }
+  
+  return `https://github.com/DLinRT-eu/website/edit/main/${filePath}`;
+}
+
 export function createIssueUrl(product: any): string {
   const githubInfo = parseGitHubUrl(product.githubUrl);
   

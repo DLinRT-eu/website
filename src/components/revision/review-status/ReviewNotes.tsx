@@ -2,9 +2,9 @@
 import React from 'react';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { GitPullRequest } from 'lucide-react';
+import { GitPullRequest, FileText } from 'lucide-react';
 import { ProductDetails } from '@/types/productDetails';
-import { createPullRequestUrl } from '@/utils/githubUrlHelper';
+import { createPullRequestUrl, createEditUrl } from '@/utils/githubUrlHelper';
 
 interface ReviewNotesProps {
   notes: string[];
@@ -77,9 +77,19 @@ const ReviewNotes: React.FC<ReviewNotesProps> = ({ notes, product }) => {
         </Alert>
       )}
 
-      {/* GitHub PR button */}
-      <div className="mt-4">
-        <Button asChild variant="outline" className="w-full">
+      {/* GitHub buttons */}
+      <div className="mt-4 flex gap-2">
+        <Button asChild variant="outline" className="flex-1">
+          <a 
+            href={createEditUrl(product)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FileText className="mr-2 h-4 w-4" />
+            View/Edit Product code
+          </a>
+        </Button>
+        <Button asChild variant="outline" className="flex-1">
           <a 
             href={createPullRequestUrl(product)}
             target="_blank"

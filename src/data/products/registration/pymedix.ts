@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const PYMEDIX_PRODUCTS: ProductDetails[] = [
   {
     id: "pymedix-registration",
-    name: "PyMedix Registration Suite",
+    name: "Autofuse",
     company: "PyMedix",
     companyUrl: "https://pymedix.com/",
     productUrl: "https://pymedix.com/registration/",
@@ -14,7 +14,7 @@ export const PYMEDIX_PRODUCTS: ProductDetails[] = [
     category: "Registration",
     certification: "CE",
     logoUrl: "/logos/pymedix.png",
-    website: "https://pymedix.com/registration/",
+    website: "https://pymedix.com//",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
     modality: ["CT", "MRI", "PET"],
     subspeciality: "Radiation Oncology",

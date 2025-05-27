@@ -4,17 +4,17 @@ import { NewsItem } from "@/types/news";
 export const communicationFeaturesLaunch: NewsItem = {
   id: "communication-features-launch",
   date: "2025-05-27",
-  title: "Enhanced Communication: Newsletter and Contact Form Now Live",
-  summary: "We've launched newsletter subscription and contact form features with a privacy-first approach, enabling better community engagement while ensuring full GDPR compliance.",
+  title: "Enhanced Communication: Mailing List and Contact Form Now Live",
+  summary: "We've launched mailing list subscription and contact form features with a privacy-first approach, enabling better community engagement while ensuring full GDPR compliance.",
   content: `
-# Enhanced Communication: Newsletter and Contact Form Now Live
+# Enhanced Communication: Mailing List and Contact Form Now Live
 
 We're excited to announce the launch of two new communication features that will help strengthen our community and improve how we connect with users interested in deep learning solutions for radiotherapy.
 
 ## What's New
 
-### Newsletter Subscription
-Stay updated with the latest developments in deep learning for radiotherapy through our new newsletter service. Subscribers will receive:
+### Mailing List Subscription
+Stay updated with the latest developments in deep learning for radiotherapy through our new mailing list service. Subscribers will receive:
 
 - Updates on new products and companies in the DLinRT database
 - Industry news and developments in AI-powered radiotherapy
@@ -34,14 +34,14 @@ We've introduced a direct contact form that makes it easier for users to:
 Both features are built with privacy at their core:
 
 - **Explicit Consent Required**: We only collect personal data when you explicitly provide it and consent to its collection
-- **Minimal Data Collection**: We collect only the information necessary to provide these services (name, email, and message content)
+- **Minimal Data Collection**: We collect only the information necessary to provide these services (email address and message content)
 - **GDPR Compliant**: Full compliance with European data protection regulations
 - **User Rights**: Easy unsubscribe options and the ability to request data deletion at any time
 - **Transparent Processing**: Clear information about how we use your data, available in our updated privacy policy
 
 ## How to Access These Features
 
-Both the newsletter subscription and contact form are available on our **Support & Contact** page. You can access them by:
+Both the mailing list subscription and contact form are available on our **Support & Contact** page. You can access them by:
 
 1. Navigating to the Support page from the footer links
 2. Scrolling to the respective sections
@@ -70,7 +70,7 @@ These communication features represent our commitment to building a stronger, mo
 
 We encourage all users interested in staying connected with the DLinRT community to:
 
-- Subscribe to our newsletter for regular updates
+- Subscribe to our mailing list for regular updates
 - Use the contact form to share feedback or ask questions
 - Review our updated privacy policy
 - Help us spread the word about these new communication options

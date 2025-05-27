@@ -3,7 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Github, Heart } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
-import NewsletterSignup from '@/components/NewsletterSignup';
+import MailingListSignup from '@/components/MailingListSignup';
 import SEO from '@/components/SEO';
 import Footer from "@/components/Footer";
 
@@ -93,12 +93,12 @@ const Support = () => {
             </section>
 
             <section className="bg-white rounded-lg p-8 shadow-sm">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Join Our Newsletter</h2>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Join Our Mailing List</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
                 Stay informed about the latest deep learning solutions in radiotherapy. Get updates on new products, 
                 industry news, and community announcements delivered to your inbox.
               </p>
-              <NewsletterSignup />
+              <MailingListSignup />
             </section>
           </div>
         </div>

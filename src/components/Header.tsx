@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker } from 'lucide-react';
+import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker, Clock } from 'lucide-react';
 import MobileNav from './MobileNav';
 
 const Header = () => {
@@ -42,6 +42,12 @@ const Header = () => {
               <Link to="/dashboard" className="flex items-center px-4 py-2 hover:text-white/90">
                 <LayoutDashboard className="w-4 h-4 mr-2" />
                 Dashboard
+              </Link>
+            </li>
+            <li>
+              <Link to="/timeline" className="flex items-center px-4 py-2 hover:text-white/90">
+                <Clock className="w-4 h-4 mr-2" />
+                Timeline
               </Link>
             </li>
             <li>

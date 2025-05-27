@@ -1,7 +1,6 @@
 
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { ProductDetails } from "@/types/productDetails";
 
 interface GeneralInformationProps {
@@ -43,15 +42,9 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
             <p className="text-gray-500">{formatField(product.category)}</p>
           </div>
           {product.secondaryCategories && product.secondaryCategories.length > 0 && (
-            <div className="md:col-span-2">
-              <p className="text-sm font-medium mb-2">Secondary Categories:</p>
-              <div className="flex flex-wrap gap-2">
-                {product.secondaryCategories.map((category, index) => (
-                  <Badge key={index} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                    {category}
-                  </Badge>
-                ))}
-              </div>
+            <div>
+              <p className="text-sm font-medium">Secondary Categories:</p>
+              <p className="text-gray-500">{product.secondaryCategories.join(", ")}</p>
             </div>
           )}
           <div>

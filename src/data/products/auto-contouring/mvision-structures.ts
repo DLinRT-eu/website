@@ -1,7 +1,6 @@
 
 export const MVISION_ALL_STRUCTURES = [
   // Brain CT
-  "Brain CT",
   "Brain-CT: Brainstem",
   "Brain-CT: Eye_L",
   "Brain-CT: Eye_R",
@@ -32,7 +31,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Brain-CT: SpinalCord",
 
   // Brain MR
-  "Brain MR",
   "Brain-MR: Amygdala_L",
   "Brain-MR: Amygdala_R",
   "Brain-MR: Brain",
@@ -64,7 +62,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Brain-MR: OpticTract_R",
 
   // Head & Neck CT
-  "Head & Neck CT",
   "Head & Neck-CT: Body",
   "Head & Neck-CT: Bone_Hyoid",
   "Head & Neck-CT: Bone_Mandible",
@@ -116,7 +113,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Head & Neck-CT: SpinalCord",
 
   // Breast CT
-  "Breast CT",
   "Breast-CT: Breast_RTOG_L",
   "Breast-CT: Breast_RTOG_R",
   "Breast-CT: LN_B_RTOG_L1_L",
@@ -163,7 +159,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Abdomen & Lung-CT: A_LAD",
 
   // Mediastinum CT with Lymph Nodes
-  "Mediastinum CT with Lymph Nodes",
   "Mediastinum CT with Lymph Nodes-CT: LN_Lung_01_L",
   "Mediastinum CT with Lymph Nodes-CT: LN_Lung_01_R",
   "Mediastinum CT with Lymph Nodes-CT: LN_Lung_02_L",
@@ -183,7 +178,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Mediastinum CT with Lymph Nodes-CT: LN_Lung_11_s_R",
 
   // Female Pelvis CT
-  "Female Pelvis CT",
   "Female Pelvis-CT: Bladder",
   "Female Pelvis-CT: Femur_L",
   "Female Pelvis-CT: Femur_R",
@@ -211,7 +205,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Female Pelvis-CT: Sacrum",
 
   // Brachy Cervix CT
-  "Brachy Cervix CT",
   "Brachy Cervix-CT: Bladder",
   "Brachy Cervix-CT: Femur_L",
   "Brachy Cervix-CT: Femur_R",
@@ -224,7 +217,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Brachy Cervix-CT: App_Ring",
 
   // Male Pelvis CT
-  "Male Pelvis CT",
   "Male Pelvis-CT: Bladder",
   "Male Pelvis-CT: Bowel_Large",
   "Male Pelvis-CT: Bowel_Small",
@@ -245,7 +237,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Male Pelvis-CT: Sacrum",
 
   // Rectum CT with Lymph Nodes
-  "Rectum CT with Lymph Nodes",
   "Rectum CT with Lymph Nodes-CT: Mesorectum",
   "Rectum CT with Lymph Nodes-CT: Canal_Anal",
   "Rectum CT with Lymph Nodes-CT: LN_Rectum_EIN_L",
@@ -257,7 +248,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Rectum CT with Lymph Nodes-CT: SphincterComplex",
 
   // Male Pelvis MR Dixon
-  "Male Pelvis MR Dixon",
   "Male Pelvis MR Dixon-MR: Prostate",
   "Male Pelvis MR Dixon-MR: Rectum",
   "Male Pelvis MR Dixon-MR: SeminalVes",
@@ -268,7 +258,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Male Pelvis MR Dixon-MR: Markers",
 
   // Male Pelvis MR T2
-  "Male Pelvis MR T2",
   "Male Pelvis MR T2-MR: Prostate",
   "Male Pelvis MR T2-MR: Rectum",
   "Male Pelvis MR T2-MR: Bladder",
@@ -277,7 +266,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Male Pelvis MR T2-MR: Spacer",
 
   // Whole Body CT
-  "Whole Body CT",
   "Whole Body-CT: A_Carotid_L",
   "Whole Body-CT: A_Carotid_R",
   "Whole Body-CT: Bone_Mandible",
@@ -316,7 +304,6 @@ export const MVISION_ALL_STRUCTURES = [
   "Whole Body-CT: Trachea_Prox",
 
   // Bones CT
-  "Bones CT",
   "Bones-CT: C01",
   "Bones-CT: C02",
   "Bones-CT: C03",

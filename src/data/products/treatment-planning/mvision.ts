@@ -15,7 +15,7 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
     certification: "CE",
     logoUrl: "/logos/mvision-ai.png",
     website: "https://mvision.ai/dose/",
-    anatomicalLocation: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis", "Prostate"],
+    anatomicalLocation: ["Male Pelvis", "Prostate"],
     modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],

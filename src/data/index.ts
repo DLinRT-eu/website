@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 import { CompanyDetails } from "@/types/company";
 import { NewsItem } from "@/types/news";
@@ -7,7 +6,7 @@ import { NEWS_ITEMS } from "./news";
 import { COMPANIES } from "./companies/index";
 import { AUTO_CONTOURING_PRODUCTS } from "./products/auto-contouring/index";
 import { IMAGE_SYNTHESIS_PRODUCTS } from "./products/image-synthesis/index";
-import { REGISTRATION_PRODUCTS } from "./products/registration";
+import { REGISTRATION_PRODUCTS } from "./products/registration/index";
 import { TREATMENT_PLANNING_PRODUCTS } from "./products/treatment-planning";
 import { CLINICAL_PREDICTION_PRODUCTS } from "./products/clinical-prediction";
 import { RECONSTRUCTION_PRODUCTS } from "./products/reconstruction";

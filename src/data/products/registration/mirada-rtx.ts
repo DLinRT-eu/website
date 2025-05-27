@@ -1,15 +1,14 @@
 
 import { ProductDetails } from "@/types/productDetails";
-import { PYMEDIX_PRODUCTS } from "./registration/pymedix";
 
-export const REGISTRATION_PRODUCTS: ProductDetails[] = [
+export const MIRADA_RTX_PRODUCTS: ProductDetails[] = [
   {
     id: "mirada-rtx",
     name: "RTx",
     company: "Mirada Medical",
     companyUrl: "https://mirada-medical.com",
     productUrl: "https://mirada-medical.com/rtx/",
-    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/registration.ts",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/registration/mirada-rtx.ts",
     description: "Advanced image registration and fusion platform for radiation therapy with automated registration algorithms.",
     features: ["Automated registration", "Multi-modality fusion", "Deformable registration", "Quality assurance tools"],
     category: "Registration",
@@ -65,6 +64,5 @@ export const REGISTRATION_PRODUCTS: ProductDetails[] = [
     lastUpdated: "2024-02-01",
     lastRevised: "2025-05-10",
     source: "Company provided information"
-  },
-  ...PYMEDIX_PRODUCTS
+  }
 ];

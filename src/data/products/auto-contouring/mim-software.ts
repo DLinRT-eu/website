@@ -5,7 +5,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
   {
     id: "mim-contour-protegeai",
-    name: "Contour ProtégéAI+ Auto-Contouring",
+    name: "Contour ProtégéAI+",
     company: "MIM Software",
     companyUrl: "https://www.mimsoftware.com/",
     productUrl: "https://www.mimsoftware.com/radiation-oncology/contour-protegeai-plus",

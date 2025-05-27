@@ -1,10 +1,11 @@
 
 import { ProductDetails } from "@/types/productDetails";
+import { MVISION_ALL_STRUCTURES } from "./mvision-structures";
 
 export const MVISION_PRODUCTS: ProductDetails[] = [
   {
     id: "mvision-ai-contouring",
-    name: "MVision AI Contouring",
+    name: "Contour+",
     company: "MVision AI",
     companyUrl: "https://www.mvision.ai/",
     productUrl: "https://www.mvision.ai/ai-contouring/",
@@ -20,6 +21,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Clinical workflow integration"],
+    supportedStructures: MVISION_ALL_STRUCTURES,
     technicalSpecifications: {
       population: "Adult patients",
       input: ["CT"],

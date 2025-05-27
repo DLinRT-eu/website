@@ -1,9 +1,17 @@
-
 import { useState, useEffect } from 'react';
 import { ProductDetails } from '@/types/productDetails';
 import { getAllOptions } from "@/utils/filterOptions";
 import { LOCATION_COLORS } from '@/utils/chartColors';
 import { countStructureTypes } from '@/utils/structureClassification';
+
+/**
+ * Helper function to check if a product matches a task/category
+ */
+const matchesTask = (product: ProductDetails, task: string): boolean => {
+  if (product.category === task) return true;
+  if (product.secondaryCategories?.includes(task)) return true;
+  return false;
+};
 
 export const useChartData = (
   products: ProductDetails[], 
@@ -22,8 +30,8 @@ export const useChartData = (
   
   // Apply all filters simultaneously
   const filteredProducts = products.filter(product => {
-    // Filter by task if not "all"
-    if (selectedTask !== "all" && product.category !== selectedTask) {
+    // Filter by task if not "all" - now includes secondary categories
+    if (selectedTask !== "all" && !matchesTask(product, selectedTask)) {
       return false;
     }
     
@@ -56,11 +64,11 @@ export const useChartData = (
 
   // Prepare data for task distribution - based on filtered products for location/modality
   const taskData = getAllOptions('category').map(category => {
-    // Count products that match this category (after other filters are applied)
-    const value = filteredProducts.filter(p => p.category === category).length;
-    // Original count before location and modality filters
+    // Count products that match this category (after other filters are applied) - includes secondary categories
+    const value = filteredProducts.filter(p => matchesTask(p, category)).length;
+    // Original count before location and modality filters - includes secondary categories
     const originalValue = selectedTask === "all" ? 
-      products.filter(p => p.category === category).length : 
+      products.filter(p => matchesTask(p, category)).length : 
       value;
     
     return {
@@ -160,8 +168,8 @@ export const useChartData = (
   // Update structure data when task changes
   useEffect(() => {
     if (selectedTask === "Auto-Contouring") {
-      // Get all auto-contouring products
-      const autoContouringProducts = filteredProducts.filter(p => p.category === "Auto-Contouring");
+      // Get all auto-contouring products - includes secondary categories
+      const autoContouringProducts = filteredProducts.filter(p => matchesTask(p, "Auto-Contouring"));
       
       // Extract and count all supported structures
       const structureCounts: Record<string, number> = {};

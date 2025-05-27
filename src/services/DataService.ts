@@ -13,6 +13,15 @@ import {
 } from "@/utils/productFilters";
 
 /**
+ * Helper function to check if a product matches a task/category
+ */
+const matchesTask = (product: ProductDetails, task: string): boolean => {
+  if (product.category === task) return true;
+  if (product.secondaryCategories?.includes(task)) return true;
+  return false;
+};
+
+/**
  * DataService provides methods to access and manipulate product, company, and news data
  */
 class DataService {
@@ -29,7 +38,7 @@ class DataService {
 
   getProductsByCategory(category: string): ProductDetails[] {
     return ALL_PRODUCTS.filter(product => 
-      product.category === category && hasRegulatoryApproval(product)
+      matchesTask(product, category) && hasRegulatoryApproval(product)
     );
   }
 
@@ -49,7 +58,7 @@ class DataService {
         return false;
       }
       
-      if (filters.tasks?.length && !filters.tasks.includes(product.category)) {
+      if (filters.tasks?.length && !filters.tasks.some(task => matchesTask(product, task))) {
         return false;
       }
       if (filters.locations?.length) {

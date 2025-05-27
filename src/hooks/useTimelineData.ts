@@ -1,4 +1,3 @@
-
 import { useMemo } from 'react';
 import { ALL_PRODUCTS } from '@/data';
 import { ProductDetails } from '@/types/productDetails';
@@ -19,6 +18,15 @@ interface TimelineDataPoint {
   [key: string]: any; // For category-specific counts
 }
 
+/**
+ * Helper function to check if a product matches a task/category
+ */
+const matchesTask = (product: ProductDetails, task: string): boolean => {
+  if (product.category === task) return true;
+  if (product.secondaryCategories?.includes(task)) return true;
+  return false;
+};
+
 export const useTimelineData = (filters: TimelineFilters) => {
   const productsWithApproval = useMemo(
     () => ALL_PRODUCTS.filter(hasRegulatoryApproval),
@@ -29,7 +37,7 @@ export const useTimelineData = (filters: TimelineFilters) => {
   const filteredProducts = useMemo(() => {
     return productsWithApproval.filter((product) => {
       // Task filter
-      if (filters.selectedTask !== "all" && product.category !== filters.selectedTask) {
+      if (filters.selectedTask !== "all" && !matchesTask(product, filters.selectedTask)) {
         return false;
       }
 
@@ -59,7 +67,7 @@ export const useTimelineData = (filters: TimelineFilters) => {
   // Generate timeline data
   const timelineData = useMemo(() => {
     const dataMap = new Map<string, TimelineDataPoint>();
-    const categories = [...new Set(filteredProducts.map(p => p.category))];
+    const categories = [...new Set(productsWithApproval.map(p => p.category))];
 
     filteredProducts.forEach((product) => {
       if (!product.releaseDate) return;
@@ -105,12 +113,19 @@ export const useTimelineData = (filters: TimelineFilters) => {
     return Array.from(dataMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
   }, [filteredProducts, filters.timeGranularity]);
 
-  // Get all unique values for filters
-  const allTasks = useMemo(
-    () => [...new Set(productsWithApproval.map(p => p.category))].sort(),
-    [productsWithApproval]
-  );
+  // Get all unique values for filters - include secondary categories in task options
+  const allTasks = useMemo(() => {
+    const taskSet = new Set<string>();
+    productsWithApproval.forEach(product => {
+      taskSet.add(product.category);
+      if (product.secondaryCategories) {
+        product.secondaryCategories.forEach(cat => taskSet.add(cat));
+      }
+    });
+    return Array.from(taskSet).sort();
+  }, [productsWithApproval]);
 
+  // Get all unique values for filters
   const allLocations = useMemo(() => {
     const locations = new Set<string>();
     productsWithApproval.forEach(product => {
@@ -133,7 +148,7 @@ export const useTimelineData = (filters: TimelineFilters) => {
     return Array.from(modalities).sort();
   }, [productsWithApproval]);
 
-  // Calculate stats
+  // Calculate stats - update to include secondary categories
   const stats = useMemo(() => {
     const totalProducts = filteredProducts.length;
     const firstRelease = filteredProducts.reduce((earliest, product) => {

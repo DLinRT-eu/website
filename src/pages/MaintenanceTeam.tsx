@@ -1,7 +1,8 @@
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "react-router-dom";
-import { User } from "lucide-react";
+import { User, Mail } from "lucide-react";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 
@@ -11,12 +12,14 @@ const TEAM_MEMBERS = [
     role: "Website creator, Lead Developer & Reviewer",
     image: "https://cig-utrecht.org/img/people/mmasp.jpg",
     bio: "https://cig-utrecht.org/members/matteo-maspero",
+    email: "matteo.maspero@dlinrt.eu",
   },
   {
     name: "Mustafa Kadhim",
     role: "Maintainer & Reviewer",
     image: "https://media.licdn.com/dms/image/v2/D4E03AQGq6Zvj1IRXLw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677416417272?e=1753315200&v=beta&t=HFi9QRUXVuJ3DJnWgXgIcg0erCWOwzXpzKmgqdlojSk",
     bio: "https://portal.research.lu.se/en/persons/mustafa-kadhim",
+    email: "mustafa.kadhim@dlinrt.eu",
   }
 ];
 
@@ -70,6 +73,18 @@ const MaintenanceTeam = () => {
               <CardContent className="text-center pt-4">
                 <CardTitle className="text-xl mb-2">{member.name}</CardTitle>
                 <p className="text-gray-600 mb-4">{member.role}</p>
+                
+                <div className="flex justify-center mb-4">
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="text-[#00A6D6] hover:text-[#00A6D6]/80 transition-colors duration-200 flex items-center gap-1"
+                    aria-label={`Contact ${member.name} by email`}
+                  >
+                    <Mail className="h-5 w-5" />
+                    <span className="text-sm">Contact</span>
+                  </a>
+                </div>
+                
                 <Link
                   to={member.bio}
                   className="text-[#00A6D6] hover:text-[#00A6D6]/80 transition-colors duration-200"

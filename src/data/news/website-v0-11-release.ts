@@ -48,7 +48,7 @@ This first month has laid a solid foundation with robust infrastructure, compreh
 
 - **Review Products**: Visit our [review dashboard](https://dlinrt.eu/review) to help verify product information
 - **Explore Data**: Check out the [timeline visualization](https://dlinrt.eu/timeline) to see industry trends
-- **Read Documentation**: Learn more in our [comprehensive review guide](https://github.com/DLinRT-eu/website/tree/main/docs/review)
+- **Read Documentation**: Learn more in our [comprehensive review guide](https://github.com/DLinRT-eu/website/blob/main/docs/review/GUIDE.md)
 
 Thank you to everyone who has contributed to making DLinRT.eu a valuable resource for the radiotherapy community!`
 };

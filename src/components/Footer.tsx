@@ -11,11 +11,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-6 text-sm">
-            <Link to="/privacy" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
+            <Link to="/privacy-policy" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
               Privacy Policy
-            </Link>
-            <Link to="/terms" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
-              Terms of Service
             </Link>
             <a href="https://github.com/DLinRT-eu/website" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
               GitHub

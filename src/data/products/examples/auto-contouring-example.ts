@@ -7,10 +7,17 @@ export const autoContouringExample: ProductDetails = {
   company: "Example Company",
   companyUrl: "https://example.com",
   category: "Auto-Contouring",
-  description: "An example auto-contouring product for testing and documentation.",
+  // Example of multi-category product - this auto-contouring tool also has planning features
+  secondaryCategories: ["Treatment Planning"],
+  description: "An example auto-contouring product for testing and documentation with integrated planning capabilities.",
   url: "https://example.com/products/contour",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
+  logoUrl: "/placeholder.svg",
+  
+  // Version tracking - this represents version 2.1.0 released in 2023
+  version: "2.1.0",
+  releaseDate: "2023-06-15",
   
   modality: ["CT", "MRI"],
   anatomy: ["Head & Neck", "Brain", "Thorax", "Abdomen", "Pelvis"],
@@ -20,12 +27,13 @@ export const autoContouringExample: ProductDetails = {
     "Multi-modal support (CT, MR)",
     "Batch processing",
     "Manual editing tools",
-    "DICOM RT-STRUCT export"
+    "DICOM RT-STRUCT export",
+    "Integrated dose planning tools" // Feature from secondary category
   ],
   
   technicalSpecs: {
     inputFormat: ["DICOM"],
-    outputFormat: ["DICOM RT-STRUCT"],
+    outputFormat: ["DICOM RT-STRUCT", "DICOM RT-PLAN"], // Planning output
     integrations: ["Any DICOM compatible TPS"],
     processingTime: "~1-2 minutes per structure set",
     accuracy: "85-95% DSC for most structures"
@@ -39,7 +47,7 @@ export const autoContouringExample: ProductDetails = {
   },
   
   marketInfo: {
-    releaseDate: "2022-05-01",
+    // Note: This could be different from releaseDate for major versions
     countries: ["USA", "EU", "Canada", "Australia"],
     installBase: "50+ institutions worldwide"
   },
@@ -96,9 +104,9 @@ export const autoContouringExample: ProductDetails = {
     "Requires contralateral structures for some segmentations"
   ],
   
-  lastUpdated: "2023-06-10",
-  lastRevised: "2023-06-10",
-  lastVerified: "2023-06-10"
+  lastUpdated: "2023-06-15",
+  lastRevised: "2023-06-15",
+  lastVerified: "2023-06-15"
 };
 
 export default autoContouringExample;

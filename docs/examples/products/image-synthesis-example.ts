@@ -7,11 +7,17 @@ export const imageSynthesisExample: ProductDetails = {
   company: "Example Company",
   companyUrl: "https://example.com",
   category: "Image Synthesis",
-  description: "An example image synthesis product for testing and documentation.",
+  // Example: Image synthesis product with registration capabilities
+  secondaryCategories: ["Registration"],
+  description: "An example image synthesis product for testing and documentation with advanced registration features.",
   url: "https://example.com/products/synthesis",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
-  logoUrl: "/placeholder.svg", // Add logoUrl
+  logoUrl: "/placeholder.svg",
+  
+  // Version tracking example
+  version: "1.5.2",
+  releaseDate: "2023-05-28",
   
   modality: ["MRI", "CT"],
   anatomy: ["Brain", "Pelvis", "Whole Body"],
@@ -21,7 +27,8 @@ export const imageSynthesisExample: ProductDetails = {
     "Multi-contrast MR synthesis",
     "AI-powered image translation",
     "Consistent HU values in synthetic CT",
-    "Processing time under 2 minutes"
+    "Processing time under 2 minutes",
+    "Automatic image registration" // Feature from secondary category
   ],
   
   technicalSpecs: {
@@ -40,7 +47,6 @@ export const imageSynthesisExample: ProductDetails = {
   },
   
   marketInfo: {
-    releaseDate: "2022-08-15",
     countries: ["EU", "UK", "Canada", "Australia", "Japan"],
     installBase: "20+ institutions"
   },

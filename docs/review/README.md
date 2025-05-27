@@ -1,4 +1,3 @@
-
 # DLinRT.eu Product Documentation
 
 ## Quick Start
@@ -12,6 +11,7 @@
 2. **Adding Products**
    - Use example template from your category
    - Fill in required fields
+   - Add secondary categories if applicable
    - Add company logo
    - Submit through interface
 
@@ -20,6 +20,33 @@ See [GUIDE.md](./GUIDE.md) for detailed instructions.
 ## Review Status
 
 See [STATUS.md](./STATUS.md) for current review progress.
+
+## Product Structure
+
+### Multi-Category Support
+
+Products can belong to multiple categories using the `secondaryCategories` field:
+
+```typescript
+const product: ProductDetails = {
+  category: 'Auto-Contouring',        // Primary category
+  secondaryCategories: [               // Additional categories
+    'Treatment Planning',
+    'Performance Monitor'
+  ],
+  // ... other fields
+};
+```
+
+This allows products with multiple functionalities to be discovered through different category filters.
+
+### Versioning Support
+
+Products support multiple versions through:
+- Separate entries for major versions
+- `version` field for semantic versioning
+- `releaseDate` field for version tracking
+- Historical data preservation
 
 ## Structure Classification
 
@@ -37,8 +64,19 @@ Structures with laterality patterns (L/R, R/L) are counted as two distinct struc
 
 This counting is handled by the `hasLateralityPattern` function in `structureClassification.ts`.
 
+## Hidden Administrative Pages
+
+Advanced functionality is available through hidden pages:
+
+- **Review Dashboard** (`/review`) - Product review management interface
+- **Timeline Visualization** (`/timeline`) - Interactive data analysis and trends
+- **Individual Product Review** (`/review/:id`) - Detailed product verification
+
+These pages are accessible but not included in main navigation to maintain clean user experience.
+
 ## Need Help?
 
 - Reference examples in `src/data/products/examples/`
 - Open an issue on GitHub
 - Join community discussions
+- Use admin pages for advanced review features

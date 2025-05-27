@@ -7,8 +7,10 @@ This guide covers all aspects of working with products on DLinRT.eu, including r
 1. [Reviewing Products](#reviewing-products)
 2. [Adding New Products](#adding-new-products)
 3. [Product Categories](#product-categories)
-4. [Field Requirements](#field-requirements)
-5. [Example Templates](#example-templates)
+4. [Multi-Category Products](#multi-category-products)
+5. [Product Versioning](#product-versioning)
+6. [Field Requirements](#field-requirements)
+7. [Example Templates](#example-templates)
 
 ## Reviewing Products
 
@@ -20,6 +22,7 @@ This guide covers all aspects of working with products on DLinRT.eu, including r
 2. **Check Information**
    - Basic details (name, company, website)
    - Features and capabilities
+   - Primary and secondary categories
    - Integrations and certifications
    - Category-specific fields
 
@@ -30,38 +33,43 @@ This guide covers all aspects of working with products on DLinRT.eu, including r
 
 ## Adding New Products
 
-1. **Choose Category**
+1. **Choose Primary Category**
    - Auto-Contouring
    - Image Synthesis
    - Registration
    - Treatment Planning
    - Performance Monitor
 
-2. **Create Product File**
+2. **Consider Secondary Categories**
+   - Products can span multiple categories
+   - Use `secondaryCategories` array for additional classifications
+   - Example: Auto-contouring product with treatment planning features
+
+3. **Create Product File**
    ```typescript
    // src/data/products/[category]/[company]-[product].ts
-   const product: Product = {
+   const product: ProductDetails = {
      id: 'company-productname',
      name: 'Product Name',
-     company: {
-       name: 'Company Name',
-       website: 'https://company.com'
-     },
+     company: 'Company Name',
      website: 'https://company.com/product',
      category: 'Auto-Contouring',
+     secondaryCategories: ['Treatment Planning'], // Optional multi-category support
      features: ['Feature 1', 'Feature 2'],
-     certifications: { ce: true, fda: false },
+     version: '2.1.0',
+     releaseDate: '2023-06-15',
+     certification: 'CE Mark',
      // Category-specific fields...
    };
    ```
 
-3. **Add Logo**
+4. **Add Logo**
    - Save to `public/logos/`
    - PNG/SVG format
    - 200x200px minimum
    - Filename: `company.png`
 
-4. **Test & Submit**
+5. **Test & Submit**
    - Run locally: `bun run dev`
    - Verify display
    - Submit through interface
@@ -71,42 +79,119 @@ This guide covers all aspects of working with products on DLinRT.eu, including r
 Each category has specific field requirements:
 
 ### Auto-Contouring
-- supportedStructures (OAR/GTV/Elective)
-- anatomicalLocations
-- integrations
+- `supportedStructures` (OAR/GTV/Elective classification)
+- `anatomicalLocation` (treatment sites)
+- `modality` (imaging modalities)
 
 ### Image Synthesis
-- supportedModalities
-- anatomicalLocations
-- integrations
+- `modality` (input/output modalities)
+- `anatomicalLocation` (supported anatomy)
+- Technology integration details
 
 ### Registration
-- supportedModalities
-- anatomicalLocations
-- integrations
+- `modality` (supported image types)
+- `anatomicalLocation` (registration sites)
+- Integration specifications
 
 ### Treatment Planning
-- supportedModalities
-- anatomicalLocations
-- integrations
+- `modality` (planning modalities)
+- `anatomicalLocation` (planning sites)
+- Planning system integrations
 
 ### Performance Monitor
-- supportedModalities
-- integrations
+- `modality` (monitored modalities)
+- Quality assurance capabilities
+
+## Multi-Category Products
+
+Products can belong to multiple categories using the `secondaryCategories` field:
+
+```typescript
+const multiCategoryProduct: ProductDetails = {
+  id: 'example-multi',
+  name: 'Multi-Purpose AI Suite',
+  category: 'Auto-Contouring',           // Primary category
+  secondaryCategories: [                 // Additional categories
+    'Treatment Planning',
+    'Performance Monitor'
+  ],
+  // ... other fields
+};
+```
+
+**Benefits:**
+- Products appear in filters for all relevant categories
+- Better discoverability for users
+- Accurate representation of product capabilities
+
+**Usage Guidelines:**
+- Use primary category for main functionality
+- Add secondary categories for significant additional features
+- Avoid over-categorization
+
+## Product Versioning
+
+Multiple versions of products can be tracked:
+
+### Approach 1: Separate Entries
+```typescript
+// Version 1.0
+const productV1: ProductDetails = {
+  id: 'company-product-v1',
+  name: 'Product Name',
+  version: '1.0.0',
+  releaseDate: '2022-01-15',
+  // ... version 1 specifications
+};
+
+// Version 2.0
+const productV2: ProductDetails = {
+  id: 'company-product-v2',
+  name: 'Product Name',
+  version: '2.0.0',
+  releaseDate: '2023-06-15',
+  // ... version 2 specifications
+};
+```
+
+### Approach 2: Current Version Only
+```typescript
+const currentProduct: ProductDetails = {
+  id: 'company-product',
+  name: 'Product Name',
+  version: '2.1.0',
+  releaseDate: '2023-06-15',
+  // ... current version specifications
+};
+```
+
+**Guidelines:**
+- Use separate entries for major version differences
+- Track evolution through `version` and `releaseDate` fields
+- Include version history in evidence/documentation
+- Maintain regulatory approval dates per version
 
 ## Field Requirements
 
 ### Required for All Products
-- `id`: Unique identifier
+- `id`: Unique identifier (use consistent patterns for versions)
 - `name`: Full product name
-- `company`: Company details
+- `company`: Company name
 - `website`: Product webpage
-- `category`: Product category
-- `features`: Key features
-- `certifications`: Regulatory status
-- `intendedUse`: Usage description
+- `category`: Primary category
+- `features`: Key features array
+- `certification`: Regulatory status
 - `version`: Current version
+- `releaseDate`: Release date (YYYY-MM-DD format)
 - `lastUpdated`: Last verified date
+
+### Optional Multi-Category Fields
+- `secondaryCategories`: Array of additional categories
+
+### Version-Specific Fields
+- `version`: Semantic versioning (e.g., "2.1.0")
+- `releaseDate`: Version release date
+- Consider separate entries for major versions
 
 ## Example Templates
 
@@ -117,8 +202,14 @@ See example implementations in `src/data/products/examples/`:
 - treatment-planning-example.ts
 - performance-monitor-example.ts
 
+All examples include:
+- Multi-category support examples
+- Versioning best practices
+- Complete field documentation
+
 ## Need Help?
 
 - Check example templates
 - Open GitHub issue
 - Join discussions
+- Review hidden admin pages at `/review` and `/timeline`

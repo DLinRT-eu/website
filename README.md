@@ -21,6 +21,18 @@ For a comprehensive guide to reviewing and updating product information:
 
 ---
 
+## Hidden/Admin Pages
+
+The following pages are accessible but not listed in the main navigation:
+
+- **Review Dashboard** (`/review`) - Administrative interface for product review management and status tracking
+- **Product Review** (`/review/:id`) - Individual product review interface for detailed verification
+- **Timeline** (`/timeline`) - Interactive data visualization showing product release timeline and trends
+
+These pages provide advanced functionality for maintainers and data analysis but are intentionally kept separate from the main user navigation.
+
+---
+
 ## Reviewing Product Content
 
 If you want to review or update the content of a product, follow the instructions in the [Review Guide](./docs/review/GUIDE.md).
@@ -42,27 +54,43 @@ If you want to review or update the content of a product, follow the instruction
 
 ## Adding New Products
 
+### Product Structure Overview
+
+Products in DLinRT.eu support:
+- **Multiple Categories**: Products can belong to multiple categories using the `secondaryCategories` field
+- **Multiple Versions**: Different versions of the same product can be tracked with separate `version` and `releaseDate` fields
+- **Comprehensive Data**: Each product includes regulatory, technical, market, and evidence information
+
 ### Steps to Add a New Product:
 
 1. **Determine the Appropriate Category**
-   - Products are organized by categories in `src/data/products/` directory
+   - Products are organized by primary category in `src/data/products/` directory
+   - Use `secondaryCategories` field for products that span multiple categories
    - See the [Review Guide](./docs/review/GUIDE.md) for current categories
 
 2. **Create or Update the Company-Specific File**
    - Each company has its own file in the appropriate category directory
    - If the company already exists, add your product to its file
    - If it's a new company, create a new file named `company-name.ts`
-   - Example: `src/data/products/registration/varian.ts`
+   - Example: `src/data/products/auto-contouring/varian.ts`
 
 3. **Follow the Data Format**
    - See [example templates](./src/data/products/examples) for properly formatted data
+   - Include `secondaryCategories` array for multi-category products
+   - Use separate entries for different product versions with distinct `version` and `releaseDate` fields
    - Ensure all dates follow YYYY-MM-DD format
    - Include regulatory information with proper structure
 
-4. **Update the Category Index**
+4. **Multiple Versions Support**
+   - Create separate product entries for major version releases
+   - Use consistent `id` patterns (e.g., `product-v1`, `product-v2`)
+   - Track evolution through `version` and `releaseDate` fields
+   - Maintain backward compatibility in data structure
+
+5. **Update the Category Index**
    - After adding the product, update the category index file to include your new products
 
-5. **Add the Company Logo**
+6. **Add the Company Logo**
    - Place the company logo in the `/public/logos/` directory
    - Use a consistent naming scheme: `company-name.png`
 

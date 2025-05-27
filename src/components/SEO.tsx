@@ -28,7 +28,14 @@ const SEO = ({
   
   // Adjust paths for development vs production
   const resolvedOgImage = isDev ? ogImage : `https://dlinrt.eu${ogImage}`;
-  const resolvedCanonical = isDev && canonical.startsWith('https://dlinrt.eu') 
+  const resolvedCanonical = isDev && (() => {
+    try {
+      const parsedUrl = new URL(canonical);
+      return parsedUrl.host === 'dlinrt.eu';
+    } catch {
+      return false;
+    }
+  })()
     ? canonical.replace('https://dlinrt.eu', '') 
     : canonical;
 

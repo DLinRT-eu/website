@@ -3,35 +3,46 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const PTW_PRODUCTS: ProductDetails[] = [
   {
-    id: "ptw-octavius-4d",
-    name: "OCTAVIUS 4D",
+    id: "ptw-aqualis",
+    name: "AIQUALIS",
     company: "PTW",
-    companyUrl: "https://www.ptwdosimetry.com/",
-    productUrl: "https://www.ptwdosimetry.com/products-solutions/products/octavius-4d/",
+    companyUrl: "https://www.ptwdosimetry.com",
+    productUrl: "https://www.ptwdosimetry.com/en/products/aiqualis",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/performance-monitor/ptw.ts",
-    description: "Advanced 4D dosimetry system for comprehensive quality assurance of modern radiation therapy techniques including IMRT, VMAT, and stereotactic treatments.",
-    features: ["4D dosimetry", "Real-time monitoring", "Comprehensive QA"],
+    description: "Automated quality assurance software for radiotherapy performance monitoring and patient treatment verification.",
+    features: [
+      "Automated QA", 
+      "Comprehensive workflow", 
+      "Real-time monitoring", 
+      "Treatment verification"
+    ],
     category: "Performance Monitor",
-    certification: "CE & FDA",
+    certification: "MDR exempt",
     logoUrl: "/logos/ptw.jpg",
-    website: "https://www.ptwdosimetry.com/products-solutions/products/octavius-4d/",
-    anatomicalLocation: ["Treatment delivery systems"],
-    modality: ["Linear accelerators"],
+    website: "https://www.ptwdosimetry.com/en/products/aiqualis",
+    anatomicalLocation: ["Multiple"],
+    modality: ["LINAC", "MRI-LINAC"],
     subspeciality: "Medical Physics",
-    diseaseTargeted: ["Quality Assurance"],
-    keyFeatures: ["4D dose reconstruction", "Real-time beam monitoring", "Comprehensive treatment verification"],
+    diseaseTargeted: ["Cancer"],
+    keyFeatures: [
+      "Multi-vendor compatibility",
+      "Automated data acquisition",
+      "Comprehensive analysis",
+      "Clear reporting",
+      "Decision support"
+    ],
     technicalSpecifications: {
-      population: "Treatment systems",
-      input: ["Dose measurements", "Treatment plans"],
-      inputFormat: ["DICOM-RT", "Proprietary"],
-      output: ["QA reports", "Dose distributions"],
-      outputFormat: ["PDF", "DICOM"]
+      population: "All patients",
+      input: ["Treatment logs", "Machine QA data", "Patient QA measurements"],
+      inputFormat: ["DICOM", "Custom formats"],
+      output: ["QA reports", "Performance trend analysis"],
+      outputFormat: ["PDF", "CSV", "DICOM"]
     },
     technology: {
-      integration: ["TPS integration", "Linac integration"],
+      integration: ["TPS integration", "R&V integration", "LINAC connectivity"],
       deployment: ["On-premises"],
-      triggerForAnalysis: "Pre-treatment and during delivery",
-      processingTime: "Real-time to minutes"
+      triggerForAnalysis: "Automatic or manual",
+      processingTime: "Minutes per analysis"
     },
     regulatory: {
       ce: {
@@ -40,23 +51,23 @@ export const PTW_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
-      intendedUseStatement: "For quality assurance and dosimetric verification of radiation therapy treatments."
+      intendedUseStatement: "For quality assurance and performance monitoring of radiotherapy treatments and equipment."
     },
     market: {
-      onMarketSince: "2015",
+      onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 60,
-      payingCustomers: "Major cancer centers worldwide",
-      researchUsers: "Academic medical physics programs"
+      countriesPresent: 30,
+      payingCustomers: "Hospitals and radiotherapy centers worldwide",
+      researchUsers: "Research institutions internationally"
     },
     pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["System configuration", "Support level"]
+      model: ["Perpetual license", "Support contract"],
+      basedOn: ["Number of treatment machines", "Features"]
     },
-    version: "7.0",
-    releaseDate: "2023-10-01",
-    lastUpdated: "2024-03-15",
-    lastRevised: "2025-05-12",
-    source: "Automatically retrieved and revised"
+    version: "2.4",
+    releaseDate: "2023-06-01",
+    lastUpdated: "2024-02-15",
+    lastRevised: "2025-05-06",
+    source: "Automatically retrieved and revised by company"
   }
 ];

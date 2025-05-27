@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
   {
     id: "raysearch-raystation-planning",
-    name: "RayStation Treatment Planning",
+    name: "Treatment Planning",
     company: "RaySearch Laboratories",
     companyUrl: "https://www.raysearchlabs.com/",
     productUrl: "https://www.raysearchlabs.com/media/publications/deep-learning-planning-model-catalogue-flip-pdf/",

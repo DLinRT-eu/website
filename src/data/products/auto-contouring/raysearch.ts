@@ -5,7 +5,7 @@ import { RAYSTATION_SUPPORTED_STRUCTURES } from "./raysearch-structures";
 export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
   {
     id: "raysearch-raystation",
-    name: "RayStation Deep Learning Segmentation",
+    name: "Deep Learning Segmentation",
     company: "RaySearch Laboratories",
     companyUrl: "https://www.raysearchlabs.com/",
     productUrl: "https://www.raysearchlabs.com/media/publications/deep-learning-segmentation-model-catalogue/",

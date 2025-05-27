@@ -42,7 +42,7 @@ As we continue after **ESTRO 2025**, we aim to gain momentum collecting a large 
 
 ## 🚀 Looking Forward
 
-This first month has laid a solid foundation with robust infrastructure, comprehensive documentation, and user-friendly interfaces. We're now ready to scale our community efforts and continue building the most trusted resource for AI in radiotherapy.
+This first month has laid a solid foundation with robust infrastructure, comprehensive documentation, and user-friendly interfaces. We're now ready to scale our community efforts and continue building the most trusted resource for DL in radiotherapy.
 
 ## Get Involved
 

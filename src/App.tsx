@@ -19,6 +19,7 @@ import Dashboard from "./pages/Dashboard";
 import Timeline from "./pages/Timeline";
 import Initiatives from "./pages/Initiatives";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
 
@@ -55,6 +56,7 @@ const App = () => (
           <Route path="review" element={<ReviewDashboard />} />
           <Route path="review/:id" element={<ProductReview />} />
           <Route path="privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="terms-of-use" element={<TermsOfUse />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import MailingListSignupCompact from './MailingListSignupCompact';
 import RSSIcon from './RSSIcon';
 
 const Footer = () => {
@@ -9,12 +8,6 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-50 border-t">
-      <div className="bg-white py-6">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <MailingListSignupCompact />
-        </div>
-      </div>
-      
       <div className="max-w-7xl mx-auto px-4 md:px-8 py-6">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-6 text-sm">

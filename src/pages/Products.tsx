@@ -1,4 +1,3 @@
-
 import SearchHeader from "@/components/SearchHeader";
 import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
@@ -9,6 +8,7 @@ import { toast } from "sonner";
 import { getAllOptions } from "@/utils/filterOptions";
 import dataService from "@/services/DataService";
 import { useLocation } from "react-router-dom";
+import Footer from "@/components/Footer";
 
 const Products = () => {
   const [filtersActive, setFiltersActive] = useState(false);
@@ -188,6 +188,7 @@ const Products = () => {
           searchQuery={searchQuery}
         />
       </main>
+      <Footer />
     </div>
   );
 };

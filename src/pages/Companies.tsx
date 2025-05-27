@@ -5,6 +5,7 @@ import CompanyCard from '@/components/CompanyCard';
 import dataService from '@/services/DataService';
 import SEO from '@/components/SEO';
 import { Button } from '@/components/ui/button';
+import Footer from '@/components/Footer';
 
 const Companies = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -150,6 +151,7 @@ const Companies = () => {
           )}
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

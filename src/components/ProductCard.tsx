@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -21,6 +20,7 @@ interface ProductCardProps {
   companyUrl?: string;
   releaseDate?: string;
   version?: string;
+  secondaryCategories?: string[];
 }
 
 const ProductCard = ({ 
@@ -36,7 +36,8 @@ const ProductCard = ({
   productUrl,
   companyUrl,
   releaseDate,
-  version
+  version,
+  secondaryCategories
 }: ProductCardProps) => {
   // Fallback for missing product data
   if (!name || !company) {
@@ -191,6 +192,18 @@ const ProductCard = ({
         )}
         
         <div className="flex flex-wrap gap-2">
+          {/* Secondary categories */}
+          {secondaryCategories && secondaryCategories.length > 0 && (
+            <>
+              {secondaryCategories.map((category, index) => (
+                <Badge key={`secondary-${index}`} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                  {category}
+                </Badge>
+              ))}
+            </>
+          )}
+          
+          {/* Features */}
           {features.map((feature, index) => (
             <Badge key={index} variant="outline" className="bg-gray-50">
               {feature}

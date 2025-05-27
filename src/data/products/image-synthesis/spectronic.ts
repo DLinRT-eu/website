@@ -3,23 +3,42 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
   {
-    id: "spectronic-mriplanner-synthesis",
+    id: "spectronic-mriplanner",
     name: "MRIplanner",
     company: "Spectronic Medical",
     companyUrl: "https://spectronicmedical.com",
     productUrl: "https://spectronicmedical.com/mriplanner",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/spectronic.ts",
     description: "AI-based software solution that converts standard MR images to synthetic CT for MR-only radiotherapy planning, with integrated auto-segmentation capabilities.",
-    features: ["MR-only workflow", "Deep learning based", "Fast processing", "Synthetic CT generation"],
+    features: ["MR-only workflow", "Deep learning based", "Fast processing", "Synthetic CT generation", "Auto-segmentation"],
     category: "Image Synthesis",
+    secondaryCategories: ["Auto-Contouring"],
     certification: "CE",
     logoUrl: "/logos/spectronic-medical.jpg",
-    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/spectronic.ts",
     website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
-    diseaseTargeted: ["Pelvis Cancer", "Brain Tumors", "Head and Neck Cancer"],
-    keyFeatures: ["Deep learning algorithms", "Clinical workflow integration", "High anatomical accuracy", "Synthetic CT generation"],
+    diseaseTargeted: ["Prostate Cancer", "Brain Tumors", "Head and Neck Cancer"],
+    keyFeatures: ["Deep learning algorithms", "Clinical workflow integration", "High anatomical accuracy", "Synthetic CT generation", "Auto-segmentation capabilities"],
+    supportedStructures: [
+      "Brain: Brain",
+      "Brain: Brainstem",
+      "Brain: Optic Chiasm",
+      "Brain: Optic Nerves",
+      "Head & Neck: Parotid (L)",
+      "Head & Neck: Parotid (R)",
+      "Head & Neck: Submandibular (L)",
+      "Head & Neck: Submandibular (R)",
+      "Head & Neck: Mandible",
+      "Pelvis: Bladder",
+      "Pelvis: Rectum", 
+      "Pelvis: Femoral Head (L)",
+      "Pelvis: Femoral Head (R)",
+      "Pelvis: Prostate",
+      "Pelvis: Seminal Vesicles",
+      "Pelvis: Penile Bulb"
+    ],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["Standard T1/T2 MRI"],
@@ -40,7 +59,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
-      intendedUseStatement: "For generating synthetic CT from MRI for radiation therapy planning with auto-segmentation capabilities."
+      intendedUseStatement: "For generating synthetic CT and structure sets from MRI for radiation therapy planning."
     },
     market: {
       onMarketSince: "2017",

@@ -17,7 +17,6 @@ import { MANTEIA_LEARNING_PRODUCTS } from "./manteia-acculearning";
 import { MIM_SOFTWARE_PRODUCTS } from "./mim-software";
 import { RADFORMATION_PRODUCTS } from "./radformation";
 import { SIEMENS_PRODUCTS } from "./siemens";
-import { SPECTRONIC_PRODUCTS } from "./spectronic";
 import { SYNAPTIQ_PRODUCTS } from "./synaptiq";
 import { VYSIONER_PRODUCTS } from "./vysioner";
 import { WISDOM_TECH_PRODUCTS } from "./wisdom-tech";
@@ -41,7 +40,6 @@ export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...MIM_SOFTWARE_PRODUCTS,
   ...RADFORMATION_PRODUCTS,
   ...SIEMENS_PRODUCTS,
-  ...SPECTRONIC_PRODUCTS,
   ...SYNAPTIQ_PRODUCTS,
   ...VYSIONER_PRODUCTS,
   ...WISDOM_TECH_PRODUCTS,

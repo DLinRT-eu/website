@@ -53,6 +53,8 @@ export interface ProductDetails extends Product {
   lastVerified?: string;
   lastRevised?: string;
   source?: string;
+  // New field for multi-category support
+  secondaryCategories?: string[];
   // New fields for evidence and limitations
   evidence?: string[] | Array<{
     type: string;

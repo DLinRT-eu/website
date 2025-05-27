@@ -9,74 +9,7 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      product_snapshots: {
-        Row: {
-          created_at: string
-          id: string
-          product_data: Json
-          quarter: number
-          snapshot_date: string
-          updated_at: string
-          year: number
-        }
-        Insert: {
-          created_at?: string
-          id?: string
-          product_data: Json
-          quarter: number
-          snapshot_date: string
-          updated_at?: string
-          year: number
-        }
-        Update: {
-          created_at?: string
-          id?: string
-          product_data?: Json
-          quarter?: number
-          snapshot_date?: string
-          updated_at?: string
-          year?: number
-        }
-        Relationships: []
-      }
-      snapshot_metadata: {
-        Row: {
-          categories: Json
-          companies: Json
-          created_at: string
-          data_version: string
-          id: string
-          snapshot_id: string | null
-          total_products: number
-        }
-        Insert: {
-          categories?: Json
-          companies?: Json
-          created_at?: string
-          data_version?: string
-          id?: string
-          snapshot_id?: string | null
-          total_products?: number
-        }
-        Update: {
-          categories?: Json
-          companies?: Json
-          created_at?: string
-          data_version?: string
-          id?: string
-          snapshot_id?: string | null
-          total_products?: number
-        }
-        Relationships: [
-          {
-            foreignKeyName: "snapshot_metadata_snapshot_id_fkey"
-            columns: ["snapshot_id"]
-            isOneToOne: false
-            referencedRelation: "product_snapshots"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Views: {
       [_ in never]: never

@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/form';
 import { useToast } from '@/hooks/use-toast';
 import { Mail } from 'lucide-react';
+import { supabase } from '@/integrations/supabase/client';
 
 // Define form schema with Zod
 const formSchema = z.object({
@@ -45,27 +46,35 @@ const ContactForm = () => {
     setIsSubmitting(true);
     
     try {
-      // In a real-world scenario, you would send this data to a backend
-      // For now, we'll just show a success message
-      console.log('Form submitted:', data);
+      console.log('Submitting contact form:', data);
       
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const { data: response, error } = await supabase.functions.invoke('send-contact-email', {
+        body: data
+      });
+
+      if (error) {
+        console.error('Supabase function error:', error);
+        throw new Error(error.message || 'Failed to send email');
+      }
+
+      console.log('Email sent successfully:', response);
       
       // Success notification
       toast({
-        title: "Message sent",
-        description: "Thank you for contacting us! We will get back to you soon.",
+        title: "Message sent successfully!",
+        description: "Thank you for contacting us! We will get back to you soon at info@dlinrt.eu.",
       });
       
       // Reset the form
       form.reset();
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Contact form submission error:', error);
+      
       // Error notification
       toast({
         variant: "destructive",
-        title: "Error",
-        description: "There was a problem sending your message. Please try again.",
+        title: "Failed to send message",
+        description: error.message || "There was a problem sending your message. Please try again or contact us directly at info@dlinrt.eu.",
       });
     } finally {
       setIsSubmitting(false);

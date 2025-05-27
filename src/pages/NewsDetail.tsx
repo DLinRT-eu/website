@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
@@ -59,7 +60,6 @@ const NewsDetail = () => {
           Back
         </Button>
         <time className="text-sm text-blue-600 mb-2 block">{newsItem.date}</time>
-        <h1 className="text-3xl font-bold mb-6">{newsItem.title}</h1>
         <p className="text-gray-600 text-lg leading-relaxed mb-8">{newsItem.summary}</p>
         
         {newsItem.content && (

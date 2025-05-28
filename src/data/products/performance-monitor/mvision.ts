@@ -1,13 +1,14 @@
 
+
 import { ProductDetails } from "@/types/productDetails";
 
 export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
   {
-    id: "mvision-ai-qa-monitor",
-    name: "QA Monitor",
+    id: "mvision-ai-verify",
+    name: "Verify",
     company: "MVision AI",
     companyUrl: "https://www.mvision.ai/",
-    productUrl: "https://www.mvision.ai/qa-monitor/",
+    productUrl: "https://mvision.ai/verify/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/performance-monitor/mvision.ts",
     description: "AI-powered quality assurance and performance monitoring system for radiotherapy treatment verification and dose delivery monitoring.",
     features: [
@@ -20,7 +21,7 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
     category: "Performance Monitor",
     certification: "CE & FDA",
     logoUrl: "/logos/mvision-ai.png",
-    website: "https://www.mvision.ai/qa-monitor/",
+    website: "https://mvision.ai/verify/",
     anatomicalLocation: ["Multiple"],
     modality: ["LINAC", "EPID"],
     subspeciality: "Medical Physics",
@@ -72,3 +73,4 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
     source: "Automatically retrieved and revised"
   }
 ];
+

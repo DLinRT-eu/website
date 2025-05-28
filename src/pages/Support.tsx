@@ -2,7 +2,6 @@
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Github, Heart } from 'lucide-react';
-import ContactForm from '@/components/ContactForm';
 import MailingListSignup from '@/components/MailingListSignup';
 import SEO from '@/components/SEO';
 import Footer from "@/components/Footer";
@@ -86,10 +85,16 @@ const Support = () => {
             <section className="bg-white rounded-lg p-8 shadow-sm mb-6">
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Contact Us</h2>
               <p className="text-gray-600 leading-relaxed mb-6">
-                Have questions or feedback? Reach out to our team at <span className="font-medium">info at dlinrt dot eu</span> 
-                or use the form below:
+                Have questions or feedback? We'd love to hear from you! Reach out to our team directly via email:
               </p>
-              <ContactForm />
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-4">
+                <p className="text-lg font-medium text-gray-900 text-center">
+                  info [at] dlinrt [dot] eu
+                </p>
+                <p className="text-sm text-gray-500 text-center mt-2">
+                  Replace [at] with @ and [dot] with .
+                </p>
+              </div>
             </section>
 
             <section className="bg-white rounded-lg p-8 shadow-sm">

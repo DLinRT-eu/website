@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
   {
     id: "mvision-verify",
-    name: "MVision Verify",
+    name: "Verify",
     company: "MVision AI",
     companyUrl: "https://www.mvision.ai/",
     productUrl: "https://mvision.ai/verify/",
@@ -46,7 +46,7 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Certified",
+        status: "",
         class: "IIa",
         type: "Medical Device"
       },

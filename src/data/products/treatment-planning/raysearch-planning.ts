@@ -16,7 +16,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/raystation.jpg",
     website: "https://www.raysearchlabs.com/raystation/",
     anatomicalLocation: ["Brain", "Head & Neck", "Breast", "Pelvis", "Male Pelvis" ],
-    modality: ["RT planning"],
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Multi-criteria optimization", "Adaptive planning", "Advanced dose calculation"],
@@ -56,7 +56,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     version: "12.0",
     releaseDate: "2023-12-01",
     lastUpdated: "2025-05-01",
-    lastRevised: "2025-05-12",
+    lastRevised: "2025-05-29",
     source: "Automatically retrieved and revised"
   }
 ];

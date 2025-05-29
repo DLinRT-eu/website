@@ -24,7 +24,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
       population: "Adult and pediatric patients",
       input: ["CT", "Structure sets", "Prescriptions"],
       inputFormat: ["DICOM", "DICOM-RT"],
-      output: ["Treatment plans", "Dose distributions"],
+      output: ["RT plan", "RT dose"],
       outputFormat: ["DICOM-RT"]
     },
     technology: {

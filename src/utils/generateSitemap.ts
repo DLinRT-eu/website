@@ -115,8 +115,8 @@ function generateSitemapUrls(): SitemapUrl[] {
   );
   
   // Category landing pages
-  const categories = [...new Set(ALL_PRODUCTS.map(p => p.category))];
-  categories.forEach(category => {
+  const categories = [...new Set(ALL_PRODUCTS.map((p: ProductDetails) => p.category))];
+  categories.forEach((category: string) => {
     const slug = category.toLowerCase().replace(/\s+/g, '-');
     urls.push({
       loc: `${baseUrl}/products?task=${encodeURIComponent(category)}`,
@@ -127,7 +127,7 @@ function generateSitemapUrls(): SitemapUrl[] {
   });
   
   // Product detail pages
-  ALL_PRODUCTS.forEach(product => {
+  ALL_PRODUCTS.forEach((product: ProductDetails) => {
     if (!product.id) return;
     
     const images: Array<{ loc: string; caption?: string; title?: string }> = [];
@@ -151,7 +151,7 @@ function generateSitemapUrls(): SitemapUrl[] {
   });
   
   // Company pages
-  COMPANIES.forEach(company => {
+  COMPANIES.forEach((company: CompanyDetails) => {
     urls.push({
       loc: `${baseUrl}/company/${company.id}`,
       lastmod: formatSitemapDate(new Date()),
@@ -161,7 +161,7 @@ function generateSitemapUrls(): SitemapUrl[] {
   });
   
   // News pages
-  NEWS_ITEMS.forEach(news => {
+  NEWS_ITEMS.forEach((news: NewsItem) => {
     urls.push({
       loc: `${baseUrl}/news/${news.id}`,
       lastmod: formatSitemapDate(news.date),

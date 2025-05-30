@@ -1,9 +1,9 @@
 
 import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS, ALL_INITIATIVES } from '@/data/index';
-import { ProductDetails } from '@/types/productDetails';
-import { CompanyDetails } from '@/types/company';
-import { NewsItem } from '@/types/news';
-import { Initiative } from '@/types/initiative';
+import { ProductDetails } from '@/types/productDetails.d';
+import { CompanyDetails } from '@/types/company.d';
+import { NewsItem } from '@/types/news.d';
+import { Initiative } from '@/types/initiative.d';
 
 interface SitemapUrl {
   loc: string;
@@ -115,7 +115,7 @@ function generateSitemapUrls(): SitemapUrl[] {
   );
   
   // Category landing pages
-  const categories: string[] = [...new Set(ALL_PRODUCTS.map((p: ProductDetails) => p.category))];
+  const categories: string[] = [...new Set(ALL_PRODUCTS.map((p: ProductDetails) => p.category).filter((cat): cat is string => typeof cat === 'string'))];
   categories.forEach((category: string) => {
     const slug = category.toLowerCase().replace(/\s+/g, '-');
     urls.push({

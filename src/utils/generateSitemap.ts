@@ -1,5 +1,5 @@
 
-import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS, ALL_INITIATIVES } from '@/data';
+import { ALL_PRODUCTS, COMPANIES, NEWS_ITEMS, ALL_INITIATIVES } from '@/data/index';
 import { ProductDetails } from '@/types/productDetails';
 import { CompanyDetails } from '@/types/company';
 import { NewsItem } from '@/types/news';
@@ -115,7 +115,7 @@ function generateSitemapUrls(): SitemapUrl[] {
   );
   
   // Category landing pages
-  const categories = [...new Set(ALL_PRODUCTS.map((p: ProductDetails) => p.category))];
+  const categories: string[] = [...new Set(ALL_PRODUCTS.map((p: ProductDetails) => p.category))];
   categories.forEach((category: string) => {
     const slug = category.toLowerCase().replace(/\s+/g, '-');
     urls.push({

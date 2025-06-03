@@ -6,6 +6,7 @@ import { Initiative } from '@/types/initiative';
 import InitiativeFilters from '@/components/initiatives/InitiativeFilters';
 import InitiativeSearch from '@/components/initiatives/InitiativeSearch';
 import CategorySection from '@/components/initiatives/CategorySection';
+import InitiativeSortControls, { InitiativeSortOption } from '@/components/initiatives/InitiativeSortControls';
 import { InitiativeFilterState } from '@/types/filters';
 import { useToast } from "@/hooks/use-toast";
 import Footer from "@/components/Footer";
@@ -14,6 +15,8 @@ const Initiatives = () => {
   const [filteredInitiatives, setFilteredInitiatives] = useState<Initiative[]>(dataService.getAllInitiatives());
   const [isFiltering, setIsFiltering] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<InitiativeSortOption>("random");
+  const [ascending, setAscending] = useState(true);
   const { toast } = useToast();
   
   const structuredData = {
@@ -27,6 +30,46 @@ const Initiatives = () => {
       "name": "Deep Learning in Radiotherapy",
       "url": "https://dlinrt.eu"
     }
+  };
+
+  // Function to shuffle array randomly
+  const shuffleArray = <T,>(array: T[]): T[] => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  };
+
+  // Function to sort initiatives
+  const sortInitiatives = (initiatives: Initiative[]): Initiative[] => {
+    if (sortBy === "random") {
+      return shuffleArray(initiatives);
+    }
+
+    const sorted = [...initiatives].sort((a, b) => {
+      let comparison = 0;
+      
+      switch (sortBy) {
+        case "name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case "organization":
+          comparison = a.organization.localeCompare(b.organization);
+          break;
+        case "status":
+          const statusOrder = { "Active": 0, "Completed": 1, "Upcoming": 2 };
+          comparison = statusOrder[a.status] - statusOrder[b.status];
+          break;
+        default:
+          return 0;
+      }
+      
+      return ascending ? comparison : -comparison;
+    });
+
+    return sorted;
   };
   
   // Handle search and filtering
@@ -83,19 +126,27 @@ const Initiatives = () => {
   const handleSearch = (query: string) => {
     setSearchQuery(query);
   };
-  
-  // Group initiatives by category - excluding Research Projects
-  const challenges = filteredInitiatives.filter(
-    (initiative) => initiative.category === 'Grand Challenge'
-  );
-  
-  const datasets = filteredInitiatives.filter(
-    (initiative) => initiative.category === 'Open Dataset'
-  );
 
-  const modelZoos = filteredInitiatives.filter(
+  const handleSortChange = (option: InitiativeSortOption) => {
+    setSortBy(option);
+  };
+
+  const handleDirectionChange = (isAscending: boolean) => {
+    setAscending(isAscending);
+  };
+  
+  // Group initiatives by category and apply sorting to each category separately
+  const challenges = sortInitiatives(filteredInitiatives.filter(
+    (initiative) => initiative.category === 'Grand Challenge'
+  ));
+  
+  const datasets = sortInitiatives(filteredInitiatives.filter(
+    (initiative) => initiative.category === 'Open Dataset'
+  ));
+
+  const modelZoos = sortInitiatives(filteredInitiatives.filter(
     (initiative) => initiative.category === 'Model Zoo'
-  );
+  ));
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -123,12 +174,18 @@ const Initiatives = () => {
         onFiltersChange={setIsFiltering}
         onFilterUpdate={handleFilterUpdate}
       />
-      
-      <div className="mb-6">
+
+      <div className="mb-6 flex justify-between items-center">
         <p className="text-sm text-gray-500">
           Showing {filteredInitiatives.length} initiatives
           {(isFiltering || searchQuery) ? " with the selected filters" : ""}
         </p>
+        <InitiativeSortControls 
+          onSortChange={handleSortChange}
+          onDirectionChange={handleDirectionChange}
+          sortBy={sortBy}
+          ascending={ascending}
+        />
       </div>
 
       <CategorySection title="Grand Challenges" initiatives={challenges} />

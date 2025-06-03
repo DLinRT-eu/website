@@ -53,7 +53,7 @@ const InitiativeSortControls = ({
         variant="ghost" 
         size="icon"
         onClick={toggleDirection}
-        title={sortBy === "random" ? "Shuffle" : (ascending ? "Ascending" : "Descending")}
+        title={sortBy === "random" ? "Shuffle again" : (ascending ? "Sort A-Z" : "Sort Z-A")}
         className="ml-1"
       >
         {sortBy === "random" ? (

@@ -6,21 +6,9 @@ import { InitiativeSortOption } from '@/components/initiatives/InitiativeSortCon
 export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
   const [sortBy, setSortBy] = useState<InitiativeSortOption>("status");
   const [ascending, setAscending] = useState(true);
-  const [shuffleKey, setShuffleKey] = useState(0);
 
   // Sort initiatives based on the selected option
   const sortedInitiatives = useMemo(() => {
-    if (sortBy === "random") {
-      // Only shuffle when random is selected
-      const shuffled = [...filteredInitiatives];
-      for (let i = shuffled.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-      }
-      return shuffled;
-    }
-
-    // For all other sorting options, work directly with filteredInitiatives
     const sorted = [...filteredInitiatives].sort((a, b) => {
       let comparison = 0;
       
@@ -43,19 +31,14 @@ export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
     });
 
     return sorted;
-  }, [filteredInitiatives, sortBy, ascending, shuffleKey]);
+  }, [filteredInitiatives, sortBy, ascending]);
 
   const handleSortChange = (option: InitiativeSortOption) => {
     setSortBy(option);
   };
 
   const handleDirectionChange = (isAscending: boolean) => {
-    if (sortBy === "random") {
-      // Trigger a re-shuffle by updating shuffle key
-      setShuffleKey(prev => prev + 1);
-    } else {
-      setAscending(isAscending);
-    }
+    setAscending(isAscending);
   };
 
   // Group initiatives by category using the sorted results

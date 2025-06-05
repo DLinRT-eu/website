@@ -1,5 +1,5 @@
 
-import { ArrowDownAZ, ArrowDownZA, Shuffle } from "lucide-react";
+import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
-export type InitiativeSortOption = "random" | "name" | "organization" | "status";
+export type InitiativeSortOption = "name" | "organization" | "status";
 
 interface InitiativeSortControlsProps {
   onSortChange: (option: InitiativeSortOption) => void;
@@ -43,7 +43,6 @@ const InitiativeSortControls = ({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="random">Random</SelectItem>
           <SelectItem value="name">Name</SelectItem>
           <SelectItem value="organization">Organization</SelectItem>
           <SelectItem value="status">Status</SelectItem>
@@ -53,12 +52,10 @@ const InitiativeSortControls = ({
         variant="ghost" 
         size="icon"
         onClick={toggleDirection}
-        title={sortBy === "random" ? "Shuffle again" : (ascending ? "Sort A-Z" : "Sort Z-A")}
+        title={ascending ? "Sort A-Z" : "Sort Z-A"}
         className="ml-1"
       >
-        {sortBy === "random" ? (
-          <Shuffle className="h-4 w-4" />
-        ) : ascending ? (
+        {ascending ? (
           <ArrowDownAZ className="h-4 w-4" />
         ) : (
           <ArrowDownZA className="h-4 w-4" />

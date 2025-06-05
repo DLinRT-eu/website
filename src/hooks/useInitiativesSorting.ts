@@ -1,3 +1,4 @@
+
 import { useState, useMemo } from 'react';
 import { Initiative } from '@/types/initiative';
 import { InitiativeSortOption } from '@/components/initiatives/InitiativeSortControls';
@@ -7,25 +8,20 @@ export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
   const [ascending, setAscending] = useState(true);
   const [shuffleKey, setShuffleKey] = useState(0);
 
-  // Shuffle initiatives only when needed (on mount or when shuffle button is clicked)
-  const shuffledInitiatives = useMemo(() => {
-    if (sortBy !== "random") return filteredInitiatives;
-    
-    const shuffled = [...filteredInitiatives];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  }, [filteredInitiatives, sortBy, shuffleKey]);
-
-  // Sort initiatives (excluding random sorting which is handled above)
+  // Sort initiatives based on the selected option
   const sortedInitiatives = useMemo(() => {
     if (sortBy === "random") {
-      return shuffledInitiatives;
+      // Only shuffle when random is selected
+      const shuffled = [...filteredInitiatives];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
     }
 
-    const sorted = [...shuffledInitiatives].sort((a, b) => {
+    // For all other sorting options, work directly with filteredInitiatives
+    const sorted = [...filteredInitiatives].sort((a, b) => {
       let comparison = 0;
       
       switch (sortBy) {
@@ -47,7 +43,7 @@ export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
     });
 
     return sorted;
-  }, [shuffledInitiatives, sortBy, ascending]);
+  }, [filteredInitiatives, sortBy, ascending, shuffleKey]);
 
   const handleSortChange = (option: InitiativeSortOption) => {
     setSortBy(option);

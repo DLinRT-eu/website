@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+
+import React, { useState, useEffect, useMemo } from 'react';
 import SEO from '@/components/SEO';
 import { Beaker, Database, Brain } from 'lucide-react';
 import dataService from '@/services/DataService';
@@ -17,8 +18,7 @@ const Initiatives = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<InitiativeSortOption>("random");
   const [ascending, setAscending] = useState(true);
-  // Initialize shuffleTrigger with a random value to ensure different order on each page load
-  const [shuffleTrigger, setShuffleTrigger] = useState(Math.random());
+  const [refreshKey, setRefreshKey] = useState(0);
   const { toast } = useToast();
   
   const structuredData = {
@@ -34,28 +34,16 @@ const Initiatives = () => {
     }
   };
 
-  // Trigger initial shuffle when component mounts and sortBy is random
-  useEffect(() => {
-    if (sortBy === "random") {
-      setShuffleTrigger(Math.random());
-    }
-  }, []); // Empty dependency array ensures this runs only on mount
-
-  // Function to shuffle array randomly
-  const shuffleArray = useCallback(<T,>(array: T[]): T[] => {
-    const shuffled = [...array];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
-    return shuffled;
-  }, []);
-
-  // Memoized function to sort initiatives - prevents continuous re-sorting
+  // Memoized function to sort initiatives
   const sortInitiatives = useMemo(() => {
     return (initiatives: Initiative[]): Initiative[] => {
       if (sortBy === "random") {
-        return shuffleArray(initiatives);
+        const shuffled = [...initiatives];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled;
       }
 
       const sorted = [...initiatives].sort((a, b) => {
@@ -81,7 +69,7 @@ const Initiatives = () => {
 
       return sorted;
     };
-  }, [sortBy, ascending, shuffleTrigger, shuffleArray]);
+  }, [sortBy, ascending, refreshKey]);
   
   // Handle search and filtering
   useEffect(() => {
@@ -144,8 +132,8 @@ const Initiatives = () => {
 
   const handleDirectionChange = (isAscending: boolean) => {
     if (sortBy === "random") {
-      // Trigger a re-shuffle instead of changing direction
-      setShuffleTrigger(Math.random());
+      // Trigger a re-shuffle by updating refresh key
+      setRefreshKey(prev => prev + 1);
     } else {
       setAscending(isAscending);
     }

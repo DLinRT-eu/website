@@ -1,10 +1,9 @@
-
 import { useState, useMemo } from 'react';
 import { Initiative } from '@/types/initiative';
 import { InitiativeSortOption } from '@/components/initiatives/InitiativeSortControls';
 
 export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
-  const [sortBy, setSortBy] = useState<InitiativeSortOption>("random");
+  const [sortBy, setSortBy] = useState<InitiativeSortOption>("status");
   const [ascending, setAscending] = useState(true);
   const [shuffleKey, setShuffleKey] = useState(0);
 

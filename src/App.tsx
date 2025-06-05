@@ -18,7 +18,6 @@ import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
 import Timeline from "./pages/Timeline";
 import Initiatives from "./pages/Initiatives";
-import About from "./pages/About";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
@@ -45,7 +44,6 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="products" element={<Products />} />
           <Route path="initiatives" element={<Initiatives />} />
-          <Route path="about" element={<About />} />
           <Route path="maintenance-team" element={<MaintenanceTeam />} />
           <Route path="donate" element={<Donate />} />
           <Route path="product/:id" element={<ProductDetails />} />

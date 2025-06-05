@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import SEO from '@/components/SEO';
 import { Beaker, Database, Brain } from 'lucide-react';
@@ -18,7 +17,8 @@ const Initiatives = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<InitiativeSortOption>("random");
   const [ascending, setAscending] = useState(true);
-  const [shuffleTrigger, setShuffleTrigger] = useState(0);
+  // Initialize shuffleTrigger with a random value to ensure different order on each page load
+  const [shuffleTrigger, setShuffleTrigger] = useState(Math.random());
   const { toast } = useToast();
   
   const structuredData = {
@@ -33,6 +33,13 @@ const Initiatives = () => {
       "url": "https://dlinrt.eu"
     }
   };
+
+  // Trigger initial shuffle when component mounts and sortBy is random
+  useEffect(() => {
+    if (sortBy === "random") {
+      setShuffleTrigger(Math.random());
+    }
+  }, []); // Empty dependency array ensures this runs only on mount
 
   // Function to shuffle array randomly
   const shuffleArray = useCallback(<T,>(array: T[]): T[] => {
@@ -138,7 +145,7 @@ const Initiatives = () => {
   const handleDirectionChange = (isAscending: boolean) => {
     if (sortBy === "random") {
       // Trigger a re-shuffle instead of changing direction
-      setShuffleTrigger(prev => prev + 1);
+      setShuffleTrigger(Math.random());
     } else {
       setAscending(isAscending);
     }

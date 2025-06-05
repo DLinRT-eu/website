@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo } from 'react';
 import SEO from '@/components/SEO';
 import { Beaker, Database, Brain } from 'lucide-react';
@@ -18,7 +17,7 @@ const Initiatives = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState<InitiativeSortOption>("random");
   const [ascending, setAscending] = useState(true);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [shuffleKey, setShuffleKey] = useState(0);
   const { toast } = useToast();
   
   const structuredData = {
@@ -34,42 +33,47 @@ const Initiatives = () => {
     }
   };
 
-  // Memoized function to sort initiatives
-  const sortInitiatives = useMemo(() => {
-    return (initiatives: Initiative[]): Initiative[] => {
-      if (sortBy === "random") {
-        const shuffled = [...initiatives];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-        return shuffled;
+  // Shuffle initiatives only when needed (on mount or when shuffle button is clicked)
+  const shuffledInitiatives = useMemo(() => {
+    if (sortBy !== "random") return filteredInitiatives;
+    
+    const shuffled = [...filteredInitiatives];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }, [filteredInitiatives, sortBy, shuffleKey]);
+
+  // Sort initiatives (excluding random sorting which is handled above)
+  const sortedInitiatives = useMemo(() => {
+    if (sortBy === "random") {
+      return shuffledInitiatives;
+    }
+
+    const sorted = [...shuffledInitiatives].sort((a, b) => {
+      let comparison = 0;
+      
+      switch (sortBy) {
+        case "name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case "organization":
+          comparison = a.organization.localeCompare(b.organization);
+          break;
+        case "status":
+          const statusOrder = { "Active": 0, "Completed": 1, "Upcoming": 2 };
+          comparison = statusOrder[a.status] - statusOrder[b.status];
+          break;
+        default:
+          return 0;
       }
+      
+      return ascending ? comparison : -comparison;
+    });
 
-      const sorted = [...initiatives].sort((a, b) => {
-        let comparison = 0;
-        
-        switch (sortBy) {
-          case "name":
-            comparison = a.name.localeCompare(b.name);
-            break;
-          case "organization":
-            comparison = a.organization.localeCompare(b.organization);
-            break;
-          case "status":
-            const statusOrder = { "Active": 0, "Completed": 1, "Upcoming": 2 };
-            comparison = statusOrder[a.status] - statusOrder[b.status];
-            break;
-          default:
-            return 0;
-        }
-        
-        return ascending ? comparison : -comparison;
-      });
-
-      return sorted;
-    };
-  }, [sortBy, ascending, refreshKey]);
+    return sorted;
+  }, [shuffledInitiatives, sortBy, ascending]);
   
   // Handle search and filtering
   useEffect(() => {
@@ -132,31 +136,31 @@ const Initiatives = () => {
 
   const handleDirectionChange = (isAscending: boolean) => {
     if (sortBy === "random") {
-      // Trigger a re-shuffle by updating refresh key
-      setRefreshKey(prev => prev + 1);
+      // Trigger a re-shuffle by updating shuffle key
+      setShuffleKey(prev => prev + 1);
     } else {
       setAscending(isAscending);
     }
   };
   
-  // Group initiatives by category and apply sorting to each category separately
+  // Group initiatives by category using the sorted results
   const challenges = useMemo(() => {
-    return sortInitiatives(filteredInitiatives.filter(
+    return sortedInitiatives.filter(
       (initiative) => initiative.category === 'Grand Challenge'
-    ));
-  }, [filteredInitiatives, sortInitiatives]);
+    );
+  }, [sortedInitiatives]);
   
   const datasets = useMemo(() => {
-    return sortInitiatives(filteredInitiatives.filter(
+    return sortedInitiatives.filter(
       (initiative) => initiative.category === 'Open Dataset'
-    ));
-  }, [filteredInitiatives, sortInitiatives]);
+    );
+  }, [sortedInitiatives]);
 
   const modelZoos = useMemo(() => {
-    return sortInitiatives(filteredInitiatives.filter(
+    return sortedInitiatives.filter(
       (initiative) => initiative.category === 'Model Zoo'
-    ));
-  }, [filteredInitiatives, sortInitiatives]);
+    );
+  }, [sortedInitiatives]);
 
   return (
     <div className="container mx-auto px-4 py-8">

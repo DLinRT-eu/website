@@ -1,3 +1,4 @@
+
 import React from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
@@ -8,8 +9,7 @@ import { getAllOptions } from "@/utils/filterOptions";
 import dataService from "@/services/DataService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { FileDown } from "lucide-react";
+import NewsletterSignupCompact from "@/components/NewsletterSignupCompact";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -47,29 +47,28 @@ const Index = () => {
       />
       <IntroSection />
       
-      {/* Black Paper Download Section */}
-      <div className="bg-gradient-to-b from-white to-gray-50 py-8">
-        <div className="max-w-3xl mx-auto px-4 text-center">
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">DLinRT.eu Intent & Roadmap</h2>
-          <p className="text-gray-600 mb-4">
-            Learn more about our mission, goals, and future plans—rooted in our non-profit, independent, open-source, and community-driven ethos—in our official Black Paper document
-          </p>
-          <Button 
-            variant="outline" 
-            size="lg"
-            className="bg-white hover:bg-gray-100 border border-gray-200 shadow-sm"
-            asChild
-          >
-            <a 
-              href="/DLinRT_eu_Intent_Roadmap_v0_1.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2"
-            >
-              <FileDown className="h-5 w-5" />
-              <span>Download Black Paper (PDF)</span>
-            </a>
-          </Button>
+      {/* Newsletter Signup Section - Replaces Black Paper section */}
+      <div className="bg-gradient-to-b from-white to-gray-50 py-12">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+              <div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">Stay Connected</h2>
+                <p className="text-gray-600 mb-4">
+                  Join our community to receive updates about new deep learning products, research initiatives, 
+                  and developments in radiotherapy AI. Be part of the movement advancing patient care through technology.
+                </p>
+                <div className="flex items-center space-x-4 text-sm text-gray-500">
+                  <span>✓ Product updates</span>
+                  <span>✓ Research news</span>
+                  <span>✓ Community events</span>
+                </div>
+              </div>
+              <div className="flex justify-center">
+                <NewsletterSignupCompact />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       

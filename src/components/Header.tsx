@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker } from 'lucide-react';
+import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker, Info } from 'lucide-react';
 import MobileNav from './MobileNav';
 
 const Header = () => {
@@ -51,9 +51,15 @@ const Header = () => {
               </Link>
             </li>
             <li>
+              <Link to="/about" className="flex items-center px-4 py-2 hover:text-white/90">
+                <Info className="w-4 h-4 mr-2" />
+                About
+              </Link>
+            </li>
+            <li>
               <Link to="/maintenance-team" className="flex items-center px-4 py-2 hover:text-white/90">
                 <Users className="w-4 h-4 mr-2" />
-                About & Team
+                Team
               </Link>
             </li>
             <li>

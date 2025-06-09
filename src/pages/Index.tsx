@@ -47,7 +47,46 @@ const Index = () => {
       />
       <IntroSection />
       
-      {/* Newsletter Signup Section - Replaces Black Paper section */}
+      {/* Website Description Section */}
+      <div className="bg-gray-50 py-12">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl font-bold text-gray-900 mb-6">
+              Advancing Radiotherapy Through AI Innovation
+            </h2>
+            <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
+              <p className="mb-4">
+                DLinRT.eu serves as the comprehensive database for deep learning solutions in radiation oncology, 
+                specifically designed for the European healthcare market. Our platform bridges the gap between 
+                cutting-edge artificial intelligence research and clinical practice in radiotherapy.
+              </p>
+              <p className="mb-4">
+                We catalog and evaluate commercial deep learning products across the entire radiotherapy workflow, 
+                from image reconstruction and enhancement to auto-contouring, treatment planning, and clinical 
+                prediction. Each product is thoroughly documented with technical specifications, regulatory 
+                certifications, clinical evidence, and market availability information.
+              </p>
+              <p>
+                Whether you're a medical physicist seeking auto-contouring solutions, a radiation oncologist 
+                exploring treatment planning AI, or a healthcare administrator evaluating new technologies, 
+                DLinRT.eu provides the trusted, up-to-date information you need to make informed decisions. 
+                Our mission is to accelerate the adoption of proven AI technologies that improve patient 
+                outcomes while maintaining the highest standards of safety and efficacy in radiation therapy.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+        <TaskTaxonomy 
+          categories={categoryCounts} 
+          onCategoryClick={handleCategoryClick}
+          filterType="task"
+        />
+      </div>
+
+      {/* Newsletter Signup Section - Moved below TaskTaxonomy */}
       <div className="bg-gradient-to-b from-white to-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
@@ -70,14 +109,6 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </div>
-      
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
-        <TaskTaxonomy 
-          categories={categoryCounts} 
-          onCategoryClick={handleCategoryClick}
-          filterType="task"
-        />
       </div>
 
       <NewsSection />

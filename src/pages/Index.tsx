@@ -1,3 +1,4 @@
+
 import React from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
@@ -50,9 +51,6 @@ const Index = () => {
       <div className="bg-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-6">
-              Advancing Radiotherapy Through AI Innovation
-            </h2>
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
               <p className="mb-4">
                 DLinRT.eu is a dedicated resource for commercial deep learning (DL) solutions in radiation oncology, 

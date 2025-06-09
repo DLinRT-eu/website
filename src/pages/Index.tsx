@@ -1,4 +1,3 @@
-
 import React from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
@@ -56,22 +55,20 @@ const Index = () => {
             </h2>
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
               <p className="mb-4">
-                DLinRT.eu serves as the comprehensive database for deep learning solutions in radiation oncology, 
-                specifically designed for the European healthcare market. Our platform bridges the gap between 
-                cutting-edge artificial intelligence research and clinical practice in radiotherapy.
+                DLinRT.eu is a dedicated resource for commercial deep learning (DL) solutions in radiation oncology, 
+                focused on the European market and beyond. The platform supports the integration of DL technologies 
+                into routine clinical practice in radiotherapy.
               </p>
               <p className="mb-4">
-                We catalog and evaluate commercial deep learning products across the entire radiotherapy workflow, 
-                from image reconstruction and enhancement to auto-contouring, treatment planning, and clinical 
-                prediction. Each product is thoroughly documented with technical specifications, regulatory 
-                certifications, clinical evidence, and market availability information.
+                We catalogue and evaluate DL products across the radiotherapy workflow—from image reconstruction 
+                and enhancement to auto-contouring, treatment planning, and clinical prediction. Each product entry 
+                includes technical specifications, regulatory status, clinical evidence, and market availability.
               </p>
               <p>
-                Whether you're a medical physicist seeking auto-contouring solutions, a radiation oncologist 
-                exploring treatment planning AI, or a healthcare administrator evaluating new technologies, 
-                DLinRT.eu provides the trusted, up-to-date information you need to make informed decisions. 
-                Our mission is to accelerate the adoption of proven AI technologies that improve patient 
-                outcomes while maintaining the highest standards of safety and efficacy in radiation therapy.
+                Whether you're a medical physicist seeking auto-contouring tools, a radiation oncologist exploring 
+                treatment planning solutions, or a healthcare administrator reviewing new technologies, DLinRT.eu 
+                provides clear, up-to-date information to support informed decision-making. Our goal is to promote 
+                the safe and effective adoption of DL tools in clinical radiotherapy.
               </p>
             </div>
           </div>

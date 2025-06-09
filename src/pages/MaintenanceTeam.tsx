@@ -49,6 +49,17 @@ const MaintenanceTeam = () => {
     }
   };
 
+  const handleDownloadClick = () => {
+    const link = document.createElement('a');
+    link.href = './DLinRT_eu_Intent_Roadmap_v0_1.pdf';
+    link.download = 'DLinRT_eu_Intent_Roadmap_v0_1.pdf';
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       <SEO
@@ -70,17 +81,10 @@ const MaintenanceTeam = () => {
             variant="outline" 
             size="lg"
             className="bg-white hover:bg-gray-100 border border-gray-200 shadow-sm"
-            asChild
+            onClick={handleDownloadClick}
           >
-            <a 
-              href="/DLinRT_eu_Intent_Roadmap_v0_1.pdf" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2"
-            >
-              <FileDown className="h-5 w-5" />
-              <span>Download Black Paper (PDF)</span>
-            </a>
+            <FileDown className="h-5 w-5" />
+            <span>Download Black Paper (PDF)</span>
           </Button>
         </div>
       </div>

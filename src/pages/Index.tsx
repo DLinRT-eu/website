@@ -53,20 +53,29 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed">
               <p className="mb-4">
-                DLinRT.eu is a dedicated resource for commercial deep learning (DL) solutions in radiation oncology, 
+                DLinRT.eu is a dedicated resource for <Link to="/products" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">commercial deep learning (DL) solutions</Link> in radiation oncology, 
                 focused on the European market and beyond. The platform supports the integration of DL technologies 
                 into routine clinical practice in radiotherapy.
               </p>
               <p className="mb-4">
-                We catalogue and evaluate DL products across the radiotherapy workflow—from image reconstruction 
+                We <Link to="/products" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">catalogue and evaluate DL products</Link> across the radiotherapy workflow—from image reconstruction 
                 and enhancement to auto-contouring, treatment planning, and clinical prediction. Each product entry 
-                includes technical specifications, regulatory status, clinical evidence, and market availability.
+                includes technical specifications, regulatory status, clinical evidence, and market availability. 
+                Our <Link to="/dashboard" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">analytics dashboard</Link> provides insights into market trends, while our <Link to="/companies" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">companies directory</Link> offers 
+                comprehensive vendor information.
+              </p>
+              <p className="mb-4">
+                Whether you're a medical physicist seeking <Link to="/products?task=Auto-contouring" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">auto-contouring tools</Link>, a radiation oncologist exploring 
+                <Link to="/products?task=Treatment%20Planning" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline"> treatment planning solutions</Link>, or a healthcare administrator reviewing new technologies, DLinRT.eu 
+                provides clear, up-to-date information to support informed decision-making. Our goal is to promote 
+                the safe and effective adoption of DL tools in clinical radiotherapy. Learn more about our mission 
+                and team on our <Link to="/maintenance-team" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">about page</Link>, explore ongoing <Link to="/initiatives" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">research initiatives</Link>, or reach out through our <Link to="/support" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">support center</Link>.
               </p>
               <p>
-                Whether you're a medical physicist seeking auto-contouring tools, a radiation oncologist exploring 
-                treatment planning solutions, or a healthcare administrator reviewing new technologies, DLinRT.eu 
-                provides clear, up-to-date information to support informed decision-making. Our goal is to promote 
-                the safe and effective adoption of DL tools in clinical radiotherapy.
+                Stay informed about the latest developments in the field through our <Link to="/news" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">news section</Link>, which covers 
+                product updates, research breakthroughs, and industry announcements. For questions, feedback, or 
+                collaboration opportunities, our <Link to="/support" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">support team</Link> is ready to assist you in navigating 
+                the evolving landscape of AI in radiotherapy.
               </p>
             </div>
           </div>

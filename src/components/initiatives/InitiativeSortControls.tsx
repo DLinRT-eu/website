@@ -1,5 +1,5 @@
 
-import { ArrowDownAZ, ArrowDownZA } from "lucide-react";
+import { ArrowDownAZ, ArrowDownZA, Shuffle } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
-export type InitiativeSortOption = "name" | "organization" | "status";
+export type InitiativeSortOption = "random" | "name" | "organization" | "status" | "startDate";
 
 interface InitiativeSortControlsProps {
   onSortChange: (option: InitiativeSortOption) => void;
@@ -32,6 +32,8 @@ const InitiativeSortControls = ({
     onDirectionChange(!ascending);
   };
 
+  const isDirectionDisabled = sortBy === "random";
+
   return (
     <div className="flex items-center gap-2">
       <span className="text-sm text-gray-500">Sort by:</span>
@@ -43,19 +45,24 @@ const InitiativeSortControls = ({
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
+          <SelectItem value="random">Random</SelectItem>
           <SelectItem value="name">Name</SelectItem>
           <SelectItem value="organization">Organization</SelectItem>
           <SelectItem value="status">Status</SelectItem>
+          <SelectItem value="startDate">Start Date</SelectItem>
         </SelectContent>
       </Select>
       <Button 
         variant="ghost" 
         size="icon"
         onClick={toggleDirection}
-        title={ascending ? "Sort A-Z" : "Sort Z-A"}
+        disabled={isDirectionDisabled}
+        title={isDirectionDisabled ? "Direction not applicable for random sort" : ascending ? "Sort A-Z / Oldest first" : "Sort Z-A / Newest first"}
         className="ml-1"
       >
-        {ascending ? (
+        {sortBy === "random" ? (
+          <Shuffle className="h-4 w-4" />
+        ) : ascending ? (
           <ArrowDownAZ className="h-4 w-4" />
         ) : (
           <ArrowDownZA className="h-4 w-4" />

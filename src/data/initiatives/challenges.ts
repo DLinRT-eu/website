@@ -3,6 +3,21 @@ import { Initiative } from "@/types/initiative";
 
 export const CHALLENGE_INITIATIVES: Initiative[] = [
   {
+    id: "panther",
+    name: "PANTHER Challenge",
+    category: "Grand Challenge",
+    description: "Pancreatic tumor segmentation in therapeutic and diagnostic MRI.",
+    website: "https://panther.grand-challenge.org/",
+    organization: "Radboud University Medical Center/ MICCAI Society",
+    startDate: "2020-04-15",
+    status: "Active",
+    tags: ["Pancreatic Cancer", "MRI", "Segmentation", "Radiation Therapy"],
+    features: ["3D MRI datasets", "Ground truth segmentations", "Standardized evaluation metrics"],
+    dataAccess: "Available on Zenodo",
+    resultsUrl: "https://panther.grand-challenge.org/evaluation/open-development-phase/leaderboard/",
+    participationInfo: "Open to academic and commercial participants worldwide",
+  },
+  {
     id: "hecktor",
     name: "HECKTOR Challenge",
     category: "Grand Challenge",

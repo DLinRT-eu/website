@@ -6,7 +6,7 @@ import { InitiativeSortOption } from '@/components/initiatives/InitiativeSortCon
 export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
   const [sortBy, setSortBy] = useState<InitiativeSortOption>("random");
   const [ascending, setAscending] = useState(true);
-  const [randomSeed, setRandomSeed] = useState(Math.random());
+  const [randomSeed, setRandomSeed] = useState(() => Math.random());
 
   // Generate new random seed when component mounts or when random sort is selected
   useEffect(() => {
@@ -15,18 +15,42 @@ export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
     }
   }, [sortBy]);
 
+  // Fisher-Yates shuffle algorithm for proper randomization
+  const shuffleArray = (array: Initiative[], seed: number): Initiative[] => {
+    const shuffled = [...array];
+    let currentIndex = shuffled.length;
+    
+    // Use seed to create a pseudo-random number generator
+    const seededRandom = (seed: number) => {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    };
+    
+    let seedValue = seed;
+    
+    while (currentIndex !== 0) {
+      // Generate random index using seeded random
+      seedValue = seededRandom(seedValue * 9301 + 49297) * 100000;
+      const randomIndex = Math.floor(seededRandom(seedValue) * currentIndex);
+      currentIndex--;
+      
+      // Swap elements
+      [shuffled[currentIndex], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[currentIndex]];
+    }
+    
+    return shuffled;
+  };
+
   // Sort initiatives based on the selected option
   const sortedInitiatives = useMemo(() => {
+    if (sortBy === "random") {
+      return shuffleArray(filteredInitiatives, randomSeed);
+    }
+    
     const sorted = [...filteredInitiatives].sort((a, b) => {
       let comparison = 0;
       
       switch (sortBy) {
-        case "random":
-          // Use a seeded pseudo-random sort to ensure consistency during the same session
-          const seedA = (a.id + randomSeed.toString()).split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-          const seedB = (b.id + randomSeed.toString()).split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-          comparison = (seedA % 1000) - (seedB % 1000);
-          break;
         case "name":
           comparison = a.name.localeCompare(b.name);
           break;
@@ -44,11 +68,6 @@ export const useInitiativesSorting = (filteredInitiatives: Initiative[]) => {
           break;
         default:
           return 0;
-      }
-      
-      // For random sorting, don't apply ascending/descending
-      if (sortBy === "random") {
-        return comparison;
       }
       
       return ascending ? comparison : -comparison;

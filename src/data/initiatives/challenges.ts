@@ -9,7 +9,7 @@ export const CHALLENGE_INITIATIVES: Initiative[] = [
     description: "Pancreatic tumor segmentation in therapeutic and diagnostic MRI.",
     website: "https://panther.grand-challenge.org/",
     organization: "Radboud University Medical Center/ MICCAI Society",
-    startDate: "2020-04-15",
+    startDate: "2025-04-15",
     status: "Active",
     tags: ["Pancreatic Cancer", "MRI", "Segmentation", "Radiation Therapy"],
     features: ["3D MRI datasets", "Ground truth segmentations", "Standardized evaluation metrics"],

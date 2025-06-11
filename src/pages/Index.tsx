@@ -9,7 +9,7 @@ import { getAllOptions } from "@/utils/filterOptions";
 import dataService from "@/services/DataService";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
-import NewsletterSignupCompact from "@/components/NewsletterSignupCompact";
+import MailingListSignup from "@/components/MailingListSignup";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -90,25 +90,22 @@ const Index = () => {
         />
       </div>
 
-      {/* Newsletter Signup Section - Moved below TaskTaxonomy */}
+      {/* Mailing List Signup Section */}
       <div className="bg-gradient-to-b from-white to-gray-50 py-12">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-8">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid md:grid-cols-2 gap-8 items-start">
               <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-3">Stay Connected</h2>
+                <h2 className="text-2xl font-bold text-gray-900 mb-3">Join Our Mailing List</h2>
                 <p className="text-gray-600 mb-4">
-                  Join our community to receive updates about new deep learning products, research initiatives, 
-                  and developments in radiotherapy AI. Be part of the movement advancing patient care through technology.
+                  Stay informed about the latest deep learning solutions in radiotherapy. Get updates on new products, 
+                  industry news, and community announcements delivered to your inbox.
                 </p>
-                <div className="flex items-center space-x-4 text-sm text-gray-500">
-                  <span>✓ Product updates</span>
-                  <span>✓ Research news</span>
-                  <span>✓ Community events</span>
-                </div>
               </div>
               <div className="flex justify-center">
-                <NewsletterSignupCompact />
+                <div className="w-full max-w-md">
+                  <MailingListSignup />
+                </div>
               </div>
             </div>
           </div>

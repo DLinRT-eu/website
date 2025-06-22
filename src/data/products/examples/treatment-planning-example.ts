@@ -10,7 +10,7 @@ export const treatmentPlanningExample: ProductDetails = {
   description: "An example AI treatment planning product for testing and documentation.",
   url: "https://example.com/products/planning",
   contactEmail: "info@example.com",
-  contractPhone: "+1 555-123-4567",
+  contactPhone: "+1 555-123-4567",
   logoUrl: "/placeholder.svg",
   
   modality: ["LINAC", "VMAT", "IMRT"],

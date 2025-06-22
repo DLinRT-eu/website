@@ -17,7 +17,7 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/mvision-ai.png",
     website: "https://www.mvision.ai/ai-contouring/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Clinical workflow integration"],

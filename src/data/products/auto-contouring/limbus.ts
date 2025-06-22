@@ -24,7 +24,7 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     supportedStructures: LIMBUS_ALL_STRUCTURES,
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["CT", "MRI","CBCT"],
+      input: ["CT", "MRI", "CBCT"],
       inputFormat: ["DICOM"],
       output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]

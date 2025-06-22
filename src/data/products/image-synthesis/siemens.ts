@@ -16,7 +16,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/siemens.ts",
     website: "https://www.siemens-healthineers.com/magnetic-resonance-imaging/clinical-specialities/synthetic-ct",
     anatomicalLocation: ["Brain", "Pelvis", "Head & Neck"],
-    modality: "MRI",
+    modality: ["MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["MR-based synthetic CT", "Integrated workflow", "Automated processing"],

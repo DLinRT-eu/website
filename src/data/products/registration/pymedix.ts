@@ -30,8 +30,8 @@ export const PYMEDIX_PRODUCTS: ProductDetails[] = [
       population: "Adult patients",
       input: ["CT", "MRI", "PET"],
       inputFormat: ["DICOM"],
-      output: ["Registered image sets", "Transformation matrices"],
-      outputFormat: ["DICOM", "DICOM-RT"]
+      output: ["Registered images", "Fused images"],
+      outputFormat: ["DICOM"]
     },
     technology: {
       integration: ["Treatment Planning Systems", "PACS"],

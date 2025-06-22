@@ -11,6 +11,7 @@ export const performanceMonitorExample: ProductDetails = {
   url: "https://example.com/products/monitor",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
+  logoUrl: "/placeholder.svg",
   
   modality: ["LINAC", "CBCT", "EPID"],
   anatomy: ["N/A"],
@@ -23,12 +24,12 @@ export const performanceMonitorExample: ProductDetails = {
     "Comprehensive reporting dashboard"
   ],
   
-  technicalSpecs: {
-    inputFormat: ["DICOM", "Log files", "Machine data"],
-    outputFormat: ["Reports", "Dashboards", "Alerts"],
-    integrations: ["Major LINAC vendors", "R&V systems", "QA software"],
-    processingTime: "Real-time monitoring with <30s latency",
-    accuracy: "Detects 99.5% of deviations >1%"
+  technicalSpecifications: {
+    population: "N/A - Equipment monitoring",
+    input: ["Log files", "EPID images", "Machine parameters"],
+    inputFormat: ["Vendor-specific", "DICOM"],
+    output: ["Reports", "Alerts", "Quality assessments"],
+    outputFormat: ["PDF", "HTML", "Real-time alerts"]
   },
   
   regulatoryInfo: {

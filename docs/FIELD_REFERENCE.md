@@ -6,11 +6,12 @@ This document provides a comprehensive reference for all fields used in the DLin
 ## Table of Contents
 
 1. [Product/ProductDetails Fields](#productproductdetails-fields)
-2. [Company Fields](#company-fields)
-3. [Initiative Fields](#initiative-fields)
-4. [News Item Fields](#news-item-fields)
-5. [Controlled Vocabularies](#controlled-vocabularies)
-6. [Data Types and Formats](#data-types-and-formats)
+2. [Technical Specifications Deep Dive](#technical-specifications-deep-dive)
+3. [Company Fields](#company-fields)
+4. [Initiative Fields](#initiative-fields)
+5. [News Item Fields](#news-item-fields)
+6. [Controlled Vocabularies](#controlled-vocabularies)
+7. [Data Types and Formats](#data-types-and-formats)
 
 ## Product/ProductDetails Fields
 
@@ -60,10 +61,10 @@ Products represent deep learning solutions available for radiotherapy applicatio
 |-------|------|----------|-------------|
 | `technicalSpecifications` | object | No | Technical details about input/output |
 | `technicalSpecifications.population` | string | No | Target patient population |
-| `technicalSpecifications.input` | string[] | No | Types of input data accepted |
-| `technicalSpecifications.inputFormat` | string[] | No | Supported input file formats |
-| `technicalSpecifications.output` | string[] | No | Types of output data generated |
-| `technicalSpecifications.outputFormat` | string[] | No | Supported output file formats |
+| `technicalSpecifications.input` | string[] | No | Types of input data accepted. See [Input Types](#input-types) |
+| `technicalSpecifications.inputFormat` | string[] | No | Supported input file formats. See [Input Formats](#input-formats) |
+| `technicalSpecifications.output` | string[] | No | Types of output data generated. See [Output Types](#output-types) |
+| `technicalSpecifications.outputFormat` | string[] | No | Supported output file formats. See [Output Formats](#output-formats) |
 
 ### Technology Integration
 
@@ -144,6 +145,217 @@ Products represent deep learning solutions available for radiotherapy applicatio
 | `githubUrl` | string | No | GitHub repository URL (if open source) |
 | `userRating` | number | No | User rating score |
 | `source` | string | No | Source of the information |
+
+## Technical Specifications Deep Dive
+
+The technical specifications section provides detailed information about a product's input requirements, output capabilities, and technical characteristics. This section is crucial for understanding how products integrate into clinical workflows.
+
+### Field Structure
+
+```typescript
+technicalSpecifications: {
+  population?: string;           // Target patient population
+  input?: string[];             // Input data types
+  inputFormat?: string[];       // Input file formats
+  output?: string[];            // Output data types  
+  outputFormat?: string[];      // Output file formats
+}
+```
+
+### Input Types
+
+Standardized input data types that products can accept:
+
+#### Medical Images
+- **CT** - Computed Tomography images
+- **MRI** - Magnetic Resonance Imaging
+- **CBCT** - Cone Beam CT images
+- **PET** - Positron Emission Tomography
+- **PET/CT** - Combined PET/CT studies
+- **X-ray** - Conventional radiography
+- **SPECT** - Single Photon Emission CT
+
+#### Planning Data
+- **Structure sets** - Contoured anatomical structures
+- **Treatment plans** - Radiation therapy plans
+- **Dose distributions** - Calculated dose maps
+- **DVH data** - Dose-volume histogram data
+- **Plan parameters** - Treatment planning parameters
+
+#### Machine Data
+- **Log files** - Machine operation logs
+- **EPID images** - Electronic Portal Imaging Device images
+- **Machine parameters** - Linac configuration data
+- **QA measurements** - Quality assurance data
+
+#### Multi-modal Data
+- **Multi-contrast MR** - Multiple MRI sequences
+- **4D imaging** - Time-resolved imaging data
+- **Respiratory-gated** - Breathing motion data
+
+### Input Formats
+
+Standardized file formats for input data:
+
+#### Standard Medical Formats
+- **DICOM** - Standard medical imaging format
+- **DICOM-RT** - Radiotherapy-specific DICOM
+- **DICOM RT-STRUCT** - Structure set format
+- **DICOM RT-PLAN** - Treatment plan format
+- **DICOM RT-DOSE** - Dose distribution format
+
+#### Vendor-Specific Formats
+- **Pinnacle** - Philips Pinnacle format
+- **Eclipse** - Varian Eclipse format
+- **RayStation** - RaySearch format
+- **Monaco** - Elekta Monaco format
+- **iPlan** - BrainLAB format
+
+#### Generic Formats
+- **NIfTI** - Neuroimaging format
+- **NRRD** - Nearly Raw Raster Data
+- **MetaImage** - ITK MetaImage format
+- **Analyze** - Mayo Analyze format
+
+### Output Types
+
+Standardized output data types that products generate:
+
+#### Segmentation Outputs
+- **Structure sets** - Contoured organs/targets
+- **Organ contours** - Individual organ delineations
+- **Target volumes** - Treatment target definitions
+- **Masks** - Binary segmentation masks
+
+#### Planning Outputs  
+- **Treatment plans** - Optimized therapy plans
+- **Dose distributions** - Calculated dose maps
+- **DVH curves** - Dose-volume histograms
+- **Plan quality metrics** - Plan evaluation metrics
+
+#### Image Outputs
+- **Enhanced images** - Processed/improved images
+- **Synthetic images** - Generated synthetic data
+- **Registered images** - Spatially aligned images
+- **Fused images** - Combined multi-modal images
+
+#### Analysis Outputs
+- **Reports** - Structured analysis reports
+- **Metrics** - Quantitative measurements
+- **Predictions** - Outcome predictions
+- **Quality assessments** - QA analysis results
+
+#### Alerts and Notifications
+- **Alerts** - System notifications
+- **Warnings** - Clinical warnings
+- **Status updates** - Processing status
+
+### Output Formats
+
+Standardized file formats for output data:
+
+#### Medical Standard Formats
+- **DICOM-RT** - Standard RT format
+- **DICOM RT-STRUCT** - Structure sets
+- **DICOM RT-PLAN** - Treatment plans
+- **DICOM RT-DOSE** - Dose distributions
+
+#### Document Formats
+- **PDF** - Portable document format
+- **HTML** - Web-based reports
+- **XML** - Structured data format
+- **JSON** - JavaScript Object Notation
+
+#### Data Exchange Formats
+- **CSV** - Comma-separated values
+- **Excel** - Microsoft Excel format
+- **Text files** - Plain text output
+- **Database export** - Structured database format
+
+#### Visualization Formats
+- **Images (PNG/JPEG)** - Static visualizations
+- **Interactive plots** - Web-based charts
+- **3D models** - Three-dimensional visualizations
+
+### Category-Specific Examples
+
+#### Auto-Contouring Products
+```typescript
+technicalSpecifications: {
+  population: "Adult patients",
+  input: ["CT", "MRI", "CBCT"],
+  inputFormat: ["DICOM"],
+  output: ["Structure sets", "Organ contours"],
+  outputFormat: ["DICOM-RT", "DICOM RT-STRUCT"]
+}
+```
+
+#### Image Synthesis Products
+```typescript
+technicalSpecifications: {
+  population: "Adult patients undergoing RT planning",
+  input: ["MRI", "Multi-contrast MR"],
+  inputFormat: ["DICOM"],
+  output: ["Synthetic CT", "Enhanced images"],
+  outputFormat: ["DICOM"]
+}
+```
+
+#### Treatment Planning Products
+```typescript
+technicalSpecifications: {
+  population: "Cancer patients",
+  input: ["CT", "Structure sets", "Dose constraints"],
+  inputFormat: ["DICOM", "DICOM-RT"],
+  output: ["Treatment plans", "Dose distributions", "DVH curves"],
+  outputFormat: ["DICOM RT-PLAN", "DICOM RT-DOSE"]
+}
+```
+
+#### Performance Monitor Products
+```typescript
+technicalSpecifications: {
+  population: "N/A - Equipment monitoring",
+  input: ["Log files", "EPID images", "Machine parameters"],
+  inputFormat: ["Vendor-specific", "DICOM"],
+  output: ["Reports", "Alerts", "Quality assessments"],
+  outputFormat: ["PDF", "HTML", "Real-time alerts"]
+}
+```
+
+### Usage Guidelines
+
+#### When to Use Different Input Types
+- **CT**: Primary imaging for most RT applications
+- **MRI**: Soft tissue visualization, MR-only workflows
+- **CBCT**: Image-guided radiation therapy, positioning verification
+- **PET/CT**: Metabolic imaging for treatment planning
+- **Multi-modal**: When fusion of different imaging types is required
+
+#### Format Selection Guidelines
+- **DICOM**: Standard for medical imaging interchange
+- **DICOM-RT**: Required for RT-specific data (structures, plans, dose)
+- **Vendor-specific**: When tight integration with specific TPS is needed
+- **Generic formats**: For research applications or custom workflows
+
+#### Quality Considerations
+- Always specify the most restrictive format requirements
+- Include both primary and fallback format options when possible
+- Specify version requirements for vendor-specific formats
+- Document any preprocessing requirements
+
+### Validation Rules
+
+#### Input/Output Consistency
+- Input and output types should be logically consistent
+- Format specifications should match the data types
+- Processing capabilities should align with input/output specifications
+
+#### Category-Specific Requirements
+- **Auto-contouring**: Must specify anatomical input and structure output
+- **Image synthesis**: Must specify source and target imaging modalities
+- **Treatment planning**: Must include planning-specific inputs and outputs
+- **Performance monitoring**: Should focus on QA and system data
 
 ## Company Fields
 
@@ -293,6 +505,8 @@ Use `true`/`false` for boolean values like `trainingRequired`.
 4. **URL Validation**: Ensure URLs are valid and accessible
 5. **Array Consistency**: Maintain consistent terminology within arrays
 6. **ID Uniqueness**: All IDs must be unique within their category
+7. **Technical Specifications Consistency**: Input/output types and formats must be logically consistent
+8. **Category-Specific Requirements**: Each product category has specific field requirements
 
 ## Cross-References
 

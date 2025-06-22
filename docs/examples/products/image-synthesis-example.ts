@@ -24,7 +24,7 @@ export const imageSynthesisExample: ProductDetails = {
   
   features: [
     "MR-to-CT synthesis",
-    "Multi-contrast MR synthesis",
+    "Multi-contrast MR synthesis", 
     "AI-powered image translation",
     "Consistent HU values in synthetic CT",
     "Processing time under 2 minutes",
@@ -37,6 +37,14 @@ export const imageSynthesisExample: ProductDetails = {
     integrations: ["Major TPS systems", "PACS"],
     processingTime: "1-2 minutes per volume",
     accuracy: "Mean absolute HU error < 40 units"
+  },
+  
+  technicalSpecifications: {
+    population: "Adult patients undergoing RT planning",
+    input: ["MRI", "Multi-contrast MR"],
+    inputFormat: ["DICOM"],
+    output: ["Synthetic CT", "Enhanced images"],
+    outputFormat: ["DICOM"]
   },
   
   regulatoryInfo: {

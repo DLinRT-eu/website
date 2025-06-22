@@ -7,10 +7,17 @@ export const imageSynthesisExample: ProductDetails = {
   company: "Example Company",
   companyUrl: "https://example.com",
   category: "Image Synthesis",
-  description: "An example image synthesis product for testing and documentation.",
+  // Example: Image synthesis product with registration capabilities
+  secondaryCategories: ["Registration"],
+  description: "An example image synthesis product for testing and documentation with advanced registration features.",
   url: "https://example.com/products/synthesis",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
+  logoUrl: "/placeholder.svg",
+  
+  // Version tracking example
+  version: "1.5.2",
+  releaseDate: "2023-05-28",
   
   modality: ["MRI", "CT"],
   anatomy: ["Brain", "Pelvis", "Whole Body"],
@@ -20,15 +27,16 @@ export const imageSynthesisExample: ProductDetails = {
     "Multi-contrast MR synthesis",
     "AI-powered image translation",
     "Consistent HU values in synthetic CT",
-    "Processing time under 2 minutes"
+    "Processing time under 2 minutes",
+    "Automatic image registration" // Feature from secondary category
   ],
   
-  technicalSpecs: {
+  technicalSpecifications: {
+    population: "Adult patients undergoing RT planning",
+    input: ["MRI", "Multi-contrast MR"],
     inputFormat: ["DICOM"],
-    outputFormat: ["DICOM"],
-    integrations: ["Major TPS systems", "PACS"],
-    processingTime: "1-2 minutes per volume",
-    accuracy: "Mean absolute HU error < 40 units"
+    output: ["Synthetic CT", "Enhanced images"],
+    outputFormat: ["DICOM"]
   },
   
   regulatoryInfo: {
@@ -39,7 +47,6 @@ export const imageSynthesisExample: ProductDetails = {
   },
   
   marketInfo: {
-    releaseDate: "2022-08-15",
     countries: ["EU", "UK", "Canada", "Australia", "Japan"],
     installBase: "20+ institutions"
   },

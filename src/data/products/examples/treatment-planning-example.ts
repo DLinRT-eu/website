@@ -10,7 +10,8 @@ export const treatmentPlanningExample: ProductDetails = {
   description: "An example AI treatment planning product for testing and documentation.",
   url: "https://example.com/products/planning",
   contactEmail: "info@example.com",
-  contactPhone: "+1 555-123-4567",
+  contractPhone: "+1 555-123-4567",
+  logoUrl: "/placeholder.svg",
   
   modality: ["LINAC", "VMAT", "IMRT"],
   anatomy: ["Head & Neck", "Prostate", "Breast", "Lung"],
@@ -23,12 +24,12 @@ export const treatmentPlanningExample: ProductDetails = {
     "Plan quality assessment"
   ],
   
-  technicalSpecs: {
-    inputFormat: ["DICOM RT-STRUCT", "DICOM CT"],
-    outputFormat: ["DICOM RT-PLAN"],
-    integrations: ["Major TPS vendors", "Record & Verify systems"],
-    processingTime: "5-10 minutes per plan",
-    accuracy: "98% plans clinically acceptable without modification"
+  technicalSpecifications: {
+    population: "Cancer patients",
+    input: ["CT", "Structure sets", "Dose constraints"],
+    inputFormat: ["DICOM", "DICOM-RT"],
+    output: ["Treatment plans", "Dose distributions", "DVH curves"],
+    outputFormat: ["DICOM RT-PLAN", "DICOM RT-DOSE"]
   },
   
   regulatoryInfo: {

@@ -22,10 +22,10 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     keyFeatures: ["DL-driven plan optimization", "Quality metrics", "Automated planning"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["Treatment plans", "CT", "Structure sets"],
-      inputFormat: ["DICOM-RT"],
-      output: ["Optimized plans", "Quality reports"],
-      outputFormat: ["DICOM-RT"]
+      input: ["CT", "Structure sets", "Treatment plans"],
+      inputFormat: ["DICOM", "DICOM-RT"],
+      output: ["Treatment plans", "Plan quality metrics", "Reports"],
+      outputFormat: ["DICOM RT-PLAN", "PDF"]
     },
     technology: {
       integration: ["TPS integration", "Cloud API"],

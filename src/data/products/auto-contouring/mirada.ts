@@ -23,7 +23,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
       population: "Adult patients",
       input: ["CT"],
       inputFormat: ["DICOM"],
-      output: ["Structure sets", "Contour reports"],
+      output: ["Structure sets"],
       outputFormat: ["DICOM-RT"]
     },
     technology: {

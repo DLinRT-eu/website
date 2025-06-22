@@ -11,7 +11,7 @@ export const registrationExample: ProductDetails = {
   url: "https://example.com/products/registration",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
-  logoUrl: "/placeholder.svg", // Add logoUrl
+  logoUrl: "/placeholder.svg",
   
   modality: ["CT", "MRI", "PET", "CBCT"],
   anatomy: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
@@ -30,6 +30,14 @@ export const registrationExample: ProductDetails = {
     integrations: ["Major TPS systems", "PACS", "Standalone software"],
     processingTime: "<60 seconds for rigid registration, <3 minutes for deformable",
     accuracy: "Mean TRE <2mm for anatomical landmarks"
+  },
+  
+  technicalSpecifications: {
+    population: "Adult patients",
+    input: ["CT", "MRI", "PET", "CBCT"],
+    inputFormat: ["DICOM", "LIGHT RT-STRUCT"],
+    output: ["Registered images", "Fused images"],
+    outputFormat: ["DICOM", "DICOM-RT"]
   },
   
   regulatoryInfo: {

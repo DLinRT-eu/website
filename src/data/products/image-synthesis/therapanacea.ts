@@ -16,13 +16,13 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/therapanacea.ts",
     website: "https://www.therapanacea.eu/our-products/mrbox/",
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
-    modality: "MRI",
+    modality: ["MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Prostate Cancer", "Brain Tumors", "Head and Neck Cancer"],
     keyFeatures: ["Synthetic CT generation", "MR-based planning", "Multi-contrast imaging"],
     technicalSpecifications: {
       population: "Adult patients",
-      input: ["MRI images"],
+      input: ["MRI"],
       inputFormat: ["DICOM"],
       output: ["Synthetic CT"],
       outputFormat: ["DICOM"]

@@ -9,7 +9,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.raysearchlabs.com/",
     productUrl: "https://www.raysearchlabs.com/media/publications/deep-learning-planning-model-catalogue-flip-pdf/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/treatment-planning/raysearch-planning.ts",
-    description: "Advanced treatment planning system with AI-enhanced optimization algorithms for comprehensive radiation therapy planning across all treatment techniques.",
+    description: "Advanced treatment planning system with AI-enhanced optimization algorithms (i.e. deep learning dose prediction followed by dose mimicking) for radiation therapy planning across different treatment techniques (i.e. Proton Pencil Beam Scanning, SMLC, VMAT).",
     features: ["AI-enhanced optimization", "Multi-criteria optimization", "Advanced planning"],
     category: "Treatment Planning",
     certification: "CE & FDA",

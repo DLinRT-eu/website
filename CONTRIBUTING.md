@@ -1,9 +1,19 @@
-
-# Contributing Guidelines
+# Contributing to DLinRT.eu
 
 Welcome!  
 Thank you for considering contributing to our community-driven resource on **Commercial Solutions in Radiotherapy**. This project relies on accurate, objective, and up-to-date information.  
 Please review the following guidelines carefully before submitting your contribution.
+
+---
+
+## Before You Start
+
+Before contributing, please review:
+
+1. **[Field Reference Documentation](docs/FIELD_REFERENCE.md)** - Essential reading for understanding all data fields, controlled vocabularies, and validation rules
+2. **[Product Review Guide](docs/review/GUIDE.md)** - Comprehensive guide for adding and reviewing products
+3. **[Code of Conduct](CODE_OF_CONDUCT.md)** - Our community standards
+4. **[Security Guidelines](SECURITY.md)** - Security best practices
 
 ---
 
@@ -82,3 +92,11 @@ If you are unsure about anything, feel free to open an issue with your question 
 **Let's build a reliable, open knowledge base for the radiotherapy community — together!**
 
 ---
+
+**Field Reference Documentation**: Essential reading for understanding all data fields, controlled vocabularies, and validation rules.
+
+**Product Review Guide**: Comprehensive guide for adding and reviewing products.
+
+**Code of Conduct**: Our community standards.
+
+**Security Guidelines**: Security best practices.

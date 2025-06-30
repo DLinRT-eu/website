@@ -9,7 +9,11 @@ const formatArray = (arr: any[] | undefined): string => {
 
 const formatDate = (date: string | undefined): string => {
   if (!date) return "N/A";
-  return new Date(date).toLocaleDateString();
+  try {
+    return new Date(date).toLocaleDateString();
+  } catch (error) {
+    return date || "N/A";
+  }
 };
 
 // Helper function to generate logo URL based on company name if needed
@@ -23,7 +27,51 @@ const generateLogoUrl = (product: ProductDetails): string => {
   return `/logos/${standardizedCompany}.png`;
 };
 
+// Helper function to safely format pricing information
+const formatPricing = (pricing: any): string => {
+  if (!pricing) return "N/A";
+  if (typeof pricing === 'string') return pricing;
+  if (typeof pricing === 'object') {
+    const model = Array.isArray(pricing.model) ? pricing.model.join("; ") : (pricing.model || "N/A");
+    const basedOn = Array.isArray(pricing.basedOn) ? pricing.basedOn.join("; ") : (pricing.basedOn || "N/A");
+    return `Model: ${model}, Based on: ${basedOn}`;
+  }
+  return "N/A";
+};
+
 export const generateModelCardData = (product: ProductDetails): ModelCardData => {
+  // Safely handle regulatory data
+  const ceStatus = product.regulatory?.ce?.status || 
+    (product.certification?.toLowerCase().includes('ce') ? 'Certified' : 'N/A');
+  
+  const fdaStatus = product.regulatory?.fda || 
+    (product.certification?.toLowerCase().includes('fda') ? 'Cleared' : 'N/A');
+
+  // Safely handle modality data
+  const modalitySupport = Array.isArray(product.modality) 
+    ? product.modality.join("; ") 
+    : (product.modality || "N/A");
+
+  // Safely handle supported structures
+  const supportedStructures = Array.isArray(product.supportedStructures)
+    ? product.supportedStructures.map(s => {
+        if (typeof s === 'string') return s;
+        if (typeof s === 'object' && s.name) return s.name;
+        return String(s);
+      }).join("; ")
+    : "N/A";
+
+  // Safely handle evidence data
+  const evidenceText = Array.isArray(product.evidence) 
+    ? product.evidence.map(e => {
+        if (typeof e === 'string') return e;
+        if (typeof e === 'object' && e.type && e.description) {
+          return `${e.type}: ${e.description}`;
+        }
+        return String(e);
+      }).join("; ")
+    : (typeof product.evidence === 'string' ? product.evidence : "N/A");
+
   return {
     basicInfo: {
       productName: product.name || "N/A",
@@ -33,14 +81,16 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       secondaryCategories: formatArray(product.secondaryCategories),
       releaseDate: formatDate(product.releaseDate),
       lastUpdated: formatDate(product.lastUpdated),
-      ceStatus: product.regulatory?.ce?.status || (product.certification?.toLowerCase().includes('ce') ? 'Certified' : 'N/A'),
-      fdaStatus: product.regulatory?.fda || (product.certification?.toLowerCase().includes('fda') ? 'Cleared' : 'N/A'),
+      ceStatus: ceStatus,
+      fdaStatus: fdaStatus,
     },
     clinicalApplication: {
-      intendedUse: product.regulatory?.intendedUseStatement || product.suggestedUse || product.description || "N/A",
+      intendedUse: product.regulatory?.intendedUseStatement || 
+        product.suggestedUse || 
+        product.description || "N/A",
       targetAnatomy: formatArray(product.anatomicalLocation || product.anatomy),
       diseaseTargeted: formatArray(product.diseaseTargeted),
-      modalitySupport: Array.isArray(product.modality) ? product.modality.join("; ") : (product.modality || "N/A"),
+      modalitySupport: modalitySupport,
       clinicalEvidence: product.clinicalEvidence || "N/A",
     },
     technicalSpecs: {
@@ -52,19 +102,18 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       population: product.technicalSpecifications?.population || "N/A",
     },
     performance: {
-      supportedStructures: Array.isArray(product.supportedStructures) 
-        ? product.supportedStructures.map(s => typeof s === 'string' ? s : s.name).join("; ")
-        : "N/A",
+      supportedStructures: supportedStructures,
       limitations: formatArray(product.limitations),
-      evidence: Array.isArray(product.evidence) 
-        ? product.evidence.map(e => typeof e === 'string' ? e : `${e.type}: ${e.description}`).join("; ")
-        : (typeof product.evidence === 'string' ? product.evidence : "N/A"),
+      evidence: evidenceText,
     },
     regulatory: {
-      ceDetails: product.regulatory?.ce ? `${product.regulatory.ce.status} (Class ${product.regulatory.ce.class})` : "N/A",
+      ceDetails: product.regulatory?.ce ? 
+        `${product.regulatory.ce.status}${product.regulatory.ce.class ? ` (Class ${product.regulatory.ce.class})` : ''}` : 
+        "N/A",
       fdaDetails: product.regulatory?.fda || "N/A",
       intendedUseStatement: product.regulatory?.intendedUseStatement || "N/A",
-      marketPresence: product.market?.countriesPresent ? `${product.market.countriesPresent} countries` : "N/A",
+      marketPresence: product.market?.countriesPresent ? 
+        `${product.market.countriesPresent} countries` : "N/A",
     },
     contact: {
       website: product.website || "N/A",

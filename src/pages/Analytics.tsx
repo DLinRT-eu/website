@@ -62,7 +62,6 @@ const Analytics = () => {
       <SEO 
         title="Analytics - Deep Learning in Radiotherapy"
         description="Website analytics and traffic insights for Deep Learning in Radiotherapy platform"
-        keywords="analytics, traffic, website statistics, page views, visitors"
       />
       
       <div className="container mx-auto px-4 py-8">

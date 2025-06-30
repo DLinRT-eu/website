@@ -11,7 +11,8 @@ import ChartViewSelector from '@/components/analytics/ChartViewSelector';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { BarChart3, Trash2, Shield } from 'lucide-react';
-import { isTrackingAllowed, getCookieConsent } from '@/utils/cookieUtils';
+import { isTrackingAllowed } from '@/services/analytics/storageUtils';
+import { getCookieConsent } from '@/utils/cookieUtils';
 import { useToast } from '@/hooks/use-toast';
 import SEO from '@/components/SEO';
 

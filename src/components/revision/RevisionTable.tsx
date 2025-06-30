@@ -6,8 +6,12 @@ import {
   TableRow 
 } from "@/components/ui/table";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { FileSpreadsheet, Download } from 'lucide-react';
 import { ProductDetails } from '@/types/productDetails';
 import { getDaysSinceRevision } from '@/utils/revisionUtils';
+import { exportReviewToCSV, exportReviewToExcel } from '@/utils/reviewExport';
+import { useToast } from "@/hooks/use-toast";
 import FilterBar from './filters/FilterBar';
 import SortableHeader from './table/SortableHeader';
 import ProductTableBody from './table/ProductTableBody';
@@ -43,6 +47,7 @@ const RevisionTable: React.FC<RevisionTableProps> = ({
   selectedCompany,
   selectedUrgency
 }) => {
+  const { toast } = useToast();
   const [sortField, setSortField] = useState<string>('days');
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [searchQuery, setSearchQuery] = useState('');
@@ -104,21 +109,77 @@ const RevisionTable: React.FC<RevisionTableProps> = ({
     setSearchQuery(query);
   };
 
+  // Handle export functions
+  const handleExportCSV = () => {
+    try {
+      exportReviewToCSV(sortedProducts, assignments);
+      toast({
+        title: "Export Successful",
+        description: `Exported ${sortedProducts.length} products to CSV`,
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "Failed to export to CSV format",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleExportExcel = () => {
+    try {
+      exportReviewToExcel(sortedProducts, assignments);
+      toast({
+        title: "Export Successful",
+        description: `Exported ${sortedProducts.length} products to Excel`,
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "Failed to export to Excel format",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <Card className="overflow-hidden">
       <div className="p-4 bg-muted/50 border-b">
-        <FilterBar 
-          searchQuery={searchQuery}
-          onSearchChange={handleSearchChange}
-          categories={categories}
-          companies={companies}
-          selectedCategory={selectedCategory}
-          selectedCompany={selectedCompany}
-          selectedUrgency={selectedUrgency}
-          onCategoryFilter={onCategoryFilter}
-          onCompanyFilter={onCompanyFilter}
-          onUrgencyFilter={onUrgencyFilter}
-        />
+        <div className="flex flex-col gap-4">
+          <FilterBar 
+            searchQuery={searchQuery}
+            onSearchChange={handleSearchChange}
+            categories={categories}
+            companies={companies}
+            selectedCategory={selectedCategory}
+            selectedCompany={selectedCompany}
+            selectedUrgency={selectedUrgency}
+            onCategoryFilter={onCategoryFilter}
+            onCompanyFilter={onCompanyFilter}
+            onUrgencyFilter={onUrgencyFilter}
+          />
+          
+          <div className="flex gap-2 justify-end">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportCSV}
+              className="flex items-center gap-2"
+            >
+              <Download className="h-4 w-4" />
+              Export CSV
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleExportExcel}
+              className="flex items-center gap-2"
+            >
+              <FileSpreadsheet className="h-4 w-4" />
+              Export Excel
+            </Button>
+          </div>
+        </div>
       </div>
       
       <div className="overflow-x-auto">

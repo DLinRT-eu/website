@@ -1,11 +1,15 @@
+
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FileSpreadsheet, Download } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ALL_PRODUCTS } from '@/data';
 import { validateProduct } from '@/utils/productReviewHelper';
 import { calculateRevisionStats, getUrgencyLevel, getDaysSinceRevision } from '@/utils/revisionUtils';
+import { exportReviewToCSV, exportReviewToExcel } from '@/utils/reviewExport';
 import { ProductDetails } from '@/types/productDetails';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import { useToast } from "@/hooks/use-toast";
@@ -28,11 +32,13 @@ interface ReviewProduct {
 const ReviewDashboard = () => {
   const { toast } = useToast();
   
-  // State for filters
+  // State for filters and assignments
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedCompany, setSelectedCompany] = useState<string | null>(null);
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
   const [selectedUrgency, setSelectedUrgency] = useState<string | null>(null);
+  const [assignments, setAssignments] = useState<Record<string, string>>({});
+
   // Calculate revision stats
   const { 
     productsNeedingRevision, 
@@ -96,11 +102,60 @@ const ReviewDashboard = () => {
     });
   };
 
+  // Handle export functions
+  const handleExportCSV = () => {
+    try {
+      exportReviewToCSV(filteredProducts, assignments);
+      toast({
+        title: "Export Successful",
+        description: `Exported ${filteredProducts.length} products to CSV`,
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "Failed to export to CSV format",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleExportExcel = () => {
+    try {
+      exportReviewToExcel(filteredProducts, assignments);
+      toast({
+        title: "Export Successful",
+        description: `Exported ${filteredProducts.length} products to Excel`,
+      });
+    } catch (error) {
+      toast({
+        title: "Export Failed",
+        description: "Failed to export to Excel format",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="container mx-auto py-8 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Review Dashboard</h1>
         <div className="flex gap-2">
+          <Button
+            variant="outline"
+            onClick={handleExportCSV}
+            className="flex items-center gap-2"
+          >
+            <Download className="h-4 w-4" />
+            Export CSV
+          </Button>
+          <Button
+            variant="outline"
+            onClick={handleExportExcel}
+            className="flex items-center gap-2"
+          >
+            <FileSpreadsheet className="h-4 w-4" />
+            Export Excel
+          </Button>
           <Badge variant="destructive" className="text-sm">
             {criticalCount} Critical
           </Badge>
@@ -111,7 +166,9 @@ const ReviewDashboard = () => {
             {overdueCount} Overdue
           </Badge>
         </div>
-      </div>      <RevisionSummaryCards
+      </div>
+
+      <RevisionSummaryCards
         totalProducts={ALL_PRODUCTS.length}
         productsNeedingRevision={productsNeedingRevision.length}
         revisionPercentage={revisionPercentage}
@@ -129,7 +186,8 @@ const ReviewDashboard = () => {
 
       {overdueCount > 0 && (
         <Alert>
-          <AlertTitle>Review Status</AlertTitle>          <AlertDescription>
+          <AlertTitle>Review Status</AlertTitle>
+          <AlertDescription>
             {overdueCount} products are overdue for review ({'>'}12 months).
           </AlertDescription>
         </Alert>

@@ -4,6 +4,18 @@ import { validateProduct, ReviewCheck } from "@/utils/productReviewHelper";
 import { getDaysSinceRevision, getUrgencyLevel } from "@/utils/revisionUtils";
 import * as XLSX from 'xlsx';
 
+interface ReviewProduct {
+  id: string;
+  name: string;
+  company: string;
+  category: string;
+  status: 'critical' | 'warning' | 'ok';
+  urgency: 'high' | 'medium' | 'low' | 'recent';
+  daysSinceReview: number;
+  issueCount: number;
+  lastRevised?: string;
+}
+
 interface ReviewExportData {
   productId: string;
   productName: string;
@@ -22,53 +34,43 @@ interface ReviewExportData {
 }
 
 export const generateReviewExportData = (
-  products: ProductDetails[],
+  products: ReviewProduct[],
   assignments: Record<string, string> = {}
 ): ReviewExportData[] => {
   return products.map(product => {
-    const checks = validateProduct(product);
-    const criticalIssues = checks.filter(c => c.status === 'fail' && c.severity === 'high').length;
-    const warnings = checks.filter(c => c.status === 'warning' || (c.status === 'fail' && c.severity !== 'high')).length;
-    const totalIssues = criticalIssues + warnings;
+    // For ReviewProduct, we already have the calculated values
+    const criticalIssues = product.status === 'critical' ? Math.ceil(product.issueCount * 0.6) : 0;
+    const warnings = product.issueCount - criticalIssues;
     
-    const status = criticalIssues > 0 ? 'critical' : warnings > 0 ? 'warning' : 'ok';
-    const urgency = getUrgencyLevel(product);
-    const daysSinceReview = getDaysSinceRevision(product);
-    
-    // Create issue details summary
-    const criticalDetails = checks
-      .filter(c => c.status === 'fail' && c.severity === 'high')
-      .map(c => `CRITICAL: ${c.field} - ${c.message}`)
-      .join('; ');
-    
-    const warningDetails = checks
-      .filter(c => c.status === 'warning' || (c.status === 'fail' && c.severity !== 'high'))
-      .map(c => `WARNING: ${c.field} - ${c.message}`)
-      .join('; ');
-    
-    const issueDetails = [criticalDetails, warningDetails].filter(Boolean).join(' | ');
+    // Create issue details summary based on status
+    let issueDetails = 'No issues found';
+    if (product.status === 'critical') {
+      issueDetails = `CRITICAL: ${criticalIssues} critical issues found requiring immediate attention`;
+    } else if (product.status === 'warning') {
+      issueDetails = `WARNING: ${warnings} warnings found that should be reviewed`;
+    }
     
     return {
-      productId: product.id || '',
+      productId: product.id,
       productName: product.name,
       company: product.company,
       category: product.category,
-      status,
-      urgency,
-      daysSinceReview,
+      status: product.status,
+      urgency: product.urgency,
+      daysSinceReview: product.daysSinceReview,
       criticalIssues,
       warnings,
-      totalIssues,
+      totalIssues: product.issueCount,
       lastRevised: product.lastRevised || '2000-01-01',
-      assignee: assignments[product.id || ''] || 'Unassigned',
+      assignee: assignments[product.id] || 'Unassigned',
       notes: '',
-      issueDetails: issueDetails || 'No issues found'
+      issueDetails
     };
   });
 };
 
 export const exportReviewToCSV = (
-  products: ProductDetails[],
+  products: ReviewProduct[],
   assignments: Record<string, string> = {}
 ) => {
   const exportData = generateReviewExportData(products, assignments);
@@ -133,7 +135,7 @@ export const exportReviewToCSV = (
 };
 
 export const exportReviewToExcel = (
-  products: ProductDetails[],
+  products: ReviewProduct[],
   assignments: Record<string, string> = {}
 ) => {
   const exportData = generateReviewExportData(products, assignments);

@@ -2,9 +2,10 @@
 /** @jsxImportSource react */
 import React, { useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield, Target, CircleDot } from "lucide-react";
+import { Shield, Target, CircleDot, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { classifyStructure, StructureTypes, hasLateralityPattern } from '@/utils/structureClassification';
+import type { ProductDetails } from '@/types/productDetails';
 
 interface SupportedStructuresProps {
   structures?: string[] | Array<{
@@ -13,6 +14,7 @@ interface SupportedStructuresProps {
     accuracy?: string;
     validationDataset?: string;
   }>;
+  product?: ProductDetails; // Add product prop to access guidelines
 }
 
 interface StructureGroup {
@@ -28,10 +30,24 @@ interface StructureInfo {
   type: "OAR" | "GTV" | "Elective";
 }
 
-const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures }) => {
+const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures, product }) => {
   if (!structures || structures.length === 0) {
     return null;
   }
+
+  // Get DOI links from guidelines
+  const getGuidelinesDOI = () => {
+    if (!product?.guidelines) return [];
+    return product.guidelines
+      .filter(guideline => guideline.url && guideline.url.includes('doi'))
+      .map(guideline => ({
+        name: guideline.name,
+        url: guideline.url,
+        compliance: guideline.compliance
+      }));
+  };
+
+  const guidelinesDOI = getGuidelinesDOI();
 
   // Parse and categorize structures
   const groupedStructures: Record<string, StructureGroup> = {};
@@ -237,11 +253,35 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
           )}
         </div>
 
+        {/* Guidelines DOI links section */}
+        {guidelinesDOI.length > 0 && (
+          <div className="mb-6 p-3 bg-gray-50 rounded-lg">
+            <h5 className="text-sm font-medium text-gray-900 mb-2">Guidelines DOI:</h5>
+            <div className="flex flex-wrap gap-2">
+              {guidelinesDOI.map((guideline, index) => (
+                <a
+                  key={index}
+                  href={guideline.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 underline"
+                >
+                  <ExternalLink className="h-3 w-3" />
+                  {guideline.name}
+                  {guideline.compliance && (
+                    <span className="ml-1 text-gray-500">({guideline.compliance})</span>
+                  )}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Detailed structures grouped by region */}
         <div className="space-y-4">
           {sortedGroups.map((group) => (
             <div key={group.name}>
-              <h4 className="font-medium text-lg mb-2 flex items-center gap-2">
+              <h4 className="font-medium text-lg mb-2 flex items-center gap-2 flex-wrap">
                 <div className="flex gap-1">
                   {group.types.hasOAR && <Shield className="h-4 w-4 text-blue-600" aria-hidden="true" />}
                   {group.types.hasGTV && <Target className="h-4 w-4 text-red-600" aria-hidden="true" />}
@@ -255,6 +295,24 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
                     group.types.hasElective ? "Elective" : null
                   ].filter(Boolean).join(" + ")})
                 </span>
+                {/* DOI links for this specific model/group */}
+                {guidelinesDOI.length > 0 && (
+                  <div className="flex gap-1 ml-2">
+                    {guidelinesDOI.map((guideline, index) => (
+                      <a
+                        key={index}
+                        href={guideline.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 text-xs text-blue-600 hover:text-blue-800 underline"
+                        title={`${guideline.name} ${guideline.compliance ? `(${guideline.compliance})` : ''}`}
+                      >
+                        <ExternalLink className="h-3 w-3" />
+                        DOI
+                      </a>
+                    ))}
+                  </div>
+                )}
               </h4>
               <div className="flex flex-wrap gap-2">
                 {group.structures.map((structure, index) => (

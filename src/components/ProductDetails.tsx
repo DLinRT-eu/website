@@ -83,7 +83,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           <TechnicalSpecificationsDetails product={product} />
           
           {product.category === "Auto-Contouring" && product.supportedStructures && (
-            <SupportedStructures structures={product.supportedStructures} />
+            <SupportedStructures structures={product.supportedStructures} product={product} />
           )}
           
           <EvidenceLimitationsDetails product={product} />

@@ -1,9 +1,9 @@
-import { Card } from "@/components/ui/card";
+import { useNavigate } from "react-router-dom";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
-import { ExternalLink, Calendar, Tag, AlertCircle } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { ExternalLink, FileSpreadsheet } from "lucide-react";
+import { ProductDetails } from "@/types/productDetails";
 import { toast } from "sonner";
 
 interface ProductCardProps {
@@ -14,203 +14,135 @@ interface ProductCardProps {
   features: string[];
   category: string;
   certification?: string;
-  logoUrl?: string;  // Updated to match Product interface
+  logoUrl?: string;
+  anatomicalLocation?: string[];
+  modality?: string | string[];
   website?: string;
-  productUrl?: string;
   companyUrl?: string;
-  releaseDate?: string;
-  version?: string;
-  secondaryCategories?: string[];
+  productUrl?: string;
 }
 
 const ProductCard = ({ 
-  id,
+  id, 
   name, 
   company, 
   description, 
   features, 
   category, 
-  certification, 
-  logoUrl = '/placeholder.svg',  // Set default value here
+  certification,
+  logoUrl = "/placeholder.svg",
+  anatomicalLocation,
+  modality,
   website,
-  productUrl,
   companyUrl,
-  releaseDate,
-  version,
-  secondaryCategories
+  productUrl
 }: ProductCardProps) => {
-  // Fallback for missing product data
-  if (!name || !company) {
-    return <div className="text-red-500">Invalid product data.</div>;
-  }
-
-  // Format date if available
-  const formattedDate = releaseDate ? new Date(releaseDate).toLocaleDateString() : null;
+  const navigate = useNavigate();
   
-  // Handle image error state
-  const [imageError, setImageError] = useState(false);
-  const [imageLoaded, setImageLoaded] = useState(false);
-  
-  // Generate company logo filename based on company name if no logoUrl provided
-  const generateLogoUrl = () => {
-    if (logoUrl && logoUrl.trim() !== '') {
-      return logoUrl.startsWith('/') ? logoUrl.trim() : `/${logoUrl.trim()}`;
-    }
+  const handleExportModelCard = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // Create a simplified product object for export
+    const productForExport: ProductDetails = {
+      id,
+      name,
+      company,
+      description,
+      features,
+      category,
+      certification,
+      logoUrl,
+      anatomicalLocation,
+      modality,
+      website,
+      companyUrl,
+      productUrl
+    } as ProductDetails;
     
-    // Create a standardized company logo filename
-    const standardizedCompany = company.toLowerCase().replace(/\s+/g, '-');
-    return `/logos/${standardizedCompany}.png`;
-  };
-  
-  // Use placeholder if error or path doesn't exist
-  const logoSrc = imageError ? '/placeholder.svg' : generateLogoUrl();
-  
-  // Normalize certification display
-  const displayCertification = certification ? 
-    (certification.toLowerCase().includes('ce') ? 'CE Mark' : 
-     certification.toLowerCase().includes('fda') ? 'FDA Cleared' : 
-     certification) : null;
-  
-  // Handle logo load errors with better logging
-  const handleLogoError = () => {
-    console.error(`Failed to load logo for ${company} - ${name}: ${generateLogoUrl()}`);
-    setImageError(true);
-    setImageLoaded(true);
+    import("@/utils/modelCardExport").then(({ exportModelCardToExcel }) => {
+      exportModelCardToExcel(productForExport);
+      toast.success(`Model card exported for ${name}`);
+    }).catch(() => {
+      toast.error("Failed to export model card");
+    });
   };
 
-  // Log missing logos when in development
-  useEffect(() => {
-    if (imageError && process.env.NODE_ENV === 'development') {
-      console.warn(`Logo not found for ${company} - ${name}: ${generateLogoUrl()}`);
-    }
-  }, [imageError, company, name]);
+  const formatModality = (modality: string | string[] | undefined): string => {
+    if (!modality) return "Unknown";
+    return Array.isArray(modality) ? modality.join(", ") : modality;
+  };
+
+  const getModalityColor = (modality: string | string[] | undefined): string => {
+    const modalityStr = formatModality(modality).toLowerCase();
+    if (modalityStr.includes("ct")) return "bg-blue-100 text-blue-800";
+    if (modalityStr.includes("mri")) return "bg-green-100 text-green-800";
+    if (modalityStr.includes("pet")) return "bg-purple-100 text-purple-800";
+    return "bg-gray-100 text-gray-800";
+  };
 
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow border-[#00A6D6]/10">
-      <Link to={`/product/${id}`} className="block">
-        <div className="mb-6 bg-gray-50 rounded-lg overflow-hidden">
-          <AspectRatio ratio={16/9} className="bg-white relative">
-            {!imageLoaded && !imageError && (
-              <div className="absolute inset-0 flex items-center justify-center bg-gray-100">
-                <div className="w-8 h-8 border-4 border-t-[#00A6D6] border-gray-200 rounded-full animate-spin"></div>
-              </div>
-            )}
-            <img
-              src={logoSrc}
-              alt={`${name} logo`}
-              className={`object-contain w-full h-full p-4 ${imageLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-200`}
-              onError={handleLogoError}
-              onLoad={() => setImageLoaded(true)}
-            />
-            {imageError && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
-                <div className="text-gray-400 text-sm text-center">
-                  <AlertCircle className="w-6 h-6 mx-auto mb-1" />
-                  <div>{company}</div>
-                </div>
-              </div>
-            )}
-          </AspectRatio>
-        </div>
-        
-        <div className="flex justify-between items-start mb-4">
-          <div>
-            <h3 className="text-xl font-semibold text-gray-900 flex items-center gap-2">
-              {productUrl ? (
-                <a 
-                  href={productUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  aria-label={`Visit ${name} website`}
-                  className="hover:text-[#00A6D6] flex items-center gap-1"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {name} <ExternalLink className="h-4 w-4" />
-                </a>
-              ) : name}
-            </h3>
-            <p className="text-sm text-[#00A6D6]">
-              {companyUrl ? (
-                <a 
-                  href={companyUrl} 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  aria-label={`Visit ${company} website`}
-                  className="hover:text-[#00A6D6]/80 flex items-center gap-1"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  {company} <ExternalLink className="h-4 w-4" />
-                </a>
-              ) : company}
-            </p>
+    <Card 
+      className="h-full hover:shadow-lg transition-shadow cursor-pointer group" 
+      onClick={() => navigate(`/product/${id}`)}
+    >
+      <CardHeader className="pb-3">
+        <div className="flex items-start justify-between">
+          <div className="flex items-center space-x-3 flex-1 min-w-0">
+            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <img 
+                src={logoUrl} 
+                alt={`${company} logo`} 
+                className="w-8 h-8 object-contain"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "/placeholder.svg";
+                }}
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <CardTitle className="text-lg leading-tight truncate">{name}</CardTitle>
+              <p className="text-sm text-gray-600 truncate">{company}</p>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 items-end">
-            <Badge variant="secondary" className="bg-[#00A6D6]/10 text-[#00A6D6] border-none">
+          <div className="flex flex-col items-end gap-1 ml-2">
+            <Badge variant="secondary" className="text-xs">
               {category}
             </Badge>
-            {displayCertification && (
-              <Badge variant="outline" className="bg-green-50 text-green-700">
-                {displayCertification}
-              </Badge>
-            )}
-          </div>
-        </div>
-        <p className="text-gray-600 mb-4 line-clamp-2">{description}</p>
-        
-        {/* Website link if available */}
-        {website && (
-          <div className="mb-4">
-            <a 
-              href={website} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              aria-label={`Visit ${name} website`}
-              className="text-sm text-[#00A6D6] flex items-center gap-1 hover:underline"
-              onClick={(e) => e.stopPropagation()}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleExportModelCard}
+              className="opacity-0 group-hover:opacity-100 transition-opacity p-1 h-auto"
+              title="Export Model Card"
             >
-              Visit website <ExternalLink className="h-3 w-3" />
-            </a>
+              <FileSpreadsheet className="h-3 w-3" />
+            </Button>
           </div>
-        )}
-        
-        {/* Version and release date information */}
-        {(version || releaseDate) && (
-          <div className="mb-4 flex flex-wrap gap-3 text-sm text-gray-500">
-            {version && (
-              <div className="flex items-center gap-1">
-                <Tag className="h-4 w-4" />
-                <span>v{version}</span>
-              </div>
-            )}
-            {formattedDate && (
-              <div className="flex items-center gap-1">
-                <Calendar className="h-4 w-4" />
-                <span>Released: {formattedDate}</span>
-              </div>
-            )}
-          </div>
-        )}
-        
-        <div className="flex flex-wrap gap-2">
-          {/* Secondary categories */}
-          {secondaryCategories && secondaryCategories.length > 0 && (
-            <>
-              {secondaryCategories.map((category, index) => (
-                <Badge key={`secondary-${index}`} variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                  {category}
-                </Badge>
-              ))}
-            </>
-          )}
-          
-          {/* Features */}
-          {features.map((feature, index) => (
-            <Badge key={index} variant="outline" className="bg-gray-50">
-              {feature}
-            </Badge>
-          ))}
         </div>
-      </Link>
+      </CardHeader>
+
+      <CardContent className="py-0">
+        <p className="text-sm text-gray-700 mb-4 line-clamp-3">{description}</p>
+        {features && features.length > 0 && (
+          <div className="mb-4">
+            <h4 className="text-sm font-semibold text-gray-800">Key Features:</h4>
+            <ul className="list-disc list-inside text-sm text-gray-600">
+              {features.slice(0, 3).map((feature, index) => (
+                <li key={index} className="line-clamp-1">{feature}</li>
+              ))}
+              {features.length > 3 && (
+                <li className="line-clamp-1">And more...</li>
+              )}
+            </ul>
+          </div>
+        )}
+        {modality && (
+          <div className="flex items-center mt-2">
+            <Badge className={`mr-2 text-xs ${getModalityColor(modality)}`}>
+              {formatModality(modality)}
+            </Badge>
+          </div>
+        )}
+      </CardContent>
     </Card>
   );
 };

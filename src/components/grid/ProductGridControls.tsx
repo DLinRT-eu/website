@@ -5,6 +5,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { exportProductsToCSV } from "@/utils/exportProducts";
 import { Product } from "@/types/product";
 import SortControls, { SortOption } from "./SortControls";
+import ModelCardExportControls from "./ModelCardExportControls";
+import { ProductDetails } from "@/types/productDetails";
 
 interface ProductGridControlsProps {
   itemsPerPage: number;
@@ -26,43 +28,50 @@ const ProductGridControls = ({
   onDirectionChange
 }: ProductGridControlsProps) => {
   return (
-    <div className="mb-6 flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-      <div className="flex flex-wrap items-center gap-4">
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500">Products per page:</span>
-          <Select
-            value={String(itemsPerPage)}
-            onValueChange={onItemsPerPageChange}
-          >
-            <SelectTrigger className="w-[100px]">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {[5, 10, 20, 50].map((number) => (
-                <SelectItem key={number} value={String(number)}>
-                  {number}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+    <div className="mb-6 space-y-4">
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-gray-500">Products per page:</span>
+            <Select
+              value={String(itemsPerPage)}
+              onValueChange={onItemsPerPageChange}
+            >
+              <SelectTrigger className="w-[100px]">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {[5, 10, 20, 50].map((number) => (
+                  <SelectItem key={number} value={String(number)}>
+                    {number}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          
+          <SortControls 
+            sortBy={sortBy}
+            ascending={ascending}
+            onSortChange={onSortChange}
+            onDirectionChange={onDirectionChange}
+          />
         </div>
         
-        <SortControls 
-          sortBy={sortBy}
-          ascending={ascending}
-          onSortChange={onSortChange}
-          onDirectionChange={onDirectionChange}
-        />
+        <Button
+          variant="outline"
+          onClick={() => exportProductsToCSV(products as ProductDetails[])}
+          className="flex items-center gap-2"
+        >
+          <FileSpreadsheet className="h-4 w-4" />
+          Export All to CSV
+        </Button>
       </div>
       
-      <Button
-        variant="outline"
-        onClick={() => exportProductsToCSV(products)}
-        className="flex items-center gap-2"
-      >
-        <FileSpreadsheet className="h-4 w-4" />
-        Export to CSV
-      </Button>
+      {/* Model Card Export Section */}
+      <div className="border-t pt-4">
+        <ModelCardExportControls products={products as ProductDetails[]} />
+      </div>
     </div>
   );
 };

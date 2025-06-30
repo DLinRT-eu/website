@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnalyticsProvider } from "./providers/AnalyticsProvider";
+import CookieConsent from "./components/CookieConsent";
 import Header from "./components/Header";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -63,6 +64,7 @@ const App = () => (
             <Route path="terms-of-use" element={<TermsOfUse />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <CookieConsent />
         </AnalyticsProvider>
       </BrowserRouter>
     </TooltipProvider>

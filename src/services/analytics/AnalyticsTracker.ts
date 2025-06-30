@@ -2,13 +2,16 @@
 import { v4 as uuidv4 } from "uuid";
 import { PageVisit, DailyVisitData, TopPageData } from "./types";
 import { 
-  STORAGE_KEY, 
-  VISITOR_ID_KEY, 
-  SESSION_ID_KEY,
   getStoredAnalytics,
   saveAnalytics,
   getTodayKey,
-  clearAnalytics
+  clearAnalytics,
+  getVisitorId,
+  setVisitorId,
+  getSessionId,
+  setSessionId,
+  isTrackingAllowed,
+  clearTrackingIds
 } from "./storageUtils";
 
 class AnalyticsTracker {
@@ -18,24 +21,37 @@ class AnalyticsTracker {
   private todayKey: string = getTodayKey();
 
   constructor() {
-    // Generate visitor ID if not exists
-    const visitorId = localStorage.getItem(VISITOR_ID_KEY);
-    if (!visitorId) {
-      this.visitId = uuidv4();
-      localStorage.setItem(VISITOR_ID_KEY, this.visitId);
-    } else {
-      this.visitId = visitorId;
+    this.initializeTracking();
+  }
+
+  private initializeTracking(): void {
+    if (!isTrackingAllowed()) {
+      console.log('Analytics tracking disabled - no cookie consent');
+      return;
     }
 
-    // Generate session ID
-    this.sessionId = sessionStorage.getItem(SESSION_ID_KEY);
+    // Get or generate visitor ID
+    this.visitId = getVisitorId();
+    if (!this.visitId) {
+      this.visitId = uuidv4();
+      setVisitorId(this.visitId);
+    }
+
+    // Get or generate session ID
+    this.sessionId = getSessionId();
     if (!this.sessionId) {
       this.sessionId = uuidv4();
-      sessionStorage.setItem(SESSION_ID_KEY, this.sessionId);
+      setSessionId(this.sessionId);
     }
+
+    console.log('Analytics tracking initialized with cookie consent');
   }
 
   trackPageView(path: string, title: string): void {
+    if (!isTrackingAllowed() || !this.visitId) {
+      return;
+    }
+
     // End previous page visit if exists
     this.endPageVisit();
 
@@ -71,7 +87,7 @@ class AnalyticsTracker {
     }
     analytics[this.todayKey].pageVisits[path].count++;
     
-    // Check if this is a new visitor today
+    // Check if this is a new visitor today (use localStorage for daily tracking)
     const visitorKey = `visitor-${this.todayKey}`;
     const todayVisitors = localStorage.getItem(visitorKey) ? 
       JSON.parse(localStorage.getItem(visitorKey) || '[]') : [];
@@ -86,7 +102,7 @@ class AnalyticsTracker {
   }
 
   endPageVisit(): void {
-    if (!this.currentPageVisit) return;
+    if (!this.currentPageVisit || !isTrackingAllowed()) return;
 
     const duration = Math.floor((Date.now() - this.currentPageVisit.timestamp) / 1000);
     
@@ -157,6 +173,24 @@ class AnalyticsTracker {
 
   clearAnalytics(): void {
     clearAnalytics();
+    clearTrackingIds();
+  }
+
+  /**
+   * Reinitialize tracking (called after consent changes)
+   */
+  reinitialize(): void {
+    this.visitId = null;
+    this.sessionId = null;
+    this.currentPageVisit = null;
+    this.initializeTracking();
+  }
+
+  /**
+   * Get tracking status
+   */
+  isTrackingEnabled(): boolean {
+    return isTrackingAllowed() && !!this.visitId;
   }
 }
 

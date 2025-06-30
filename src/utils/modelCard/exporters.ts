@@ -1,6 +1,6 @@
-
 import { ProductDetails } from "@/types/productDetails";
 import * as XLSX from 'xlsx';
+import jsPDF from 'jspdf';
 import { generateModelCardData } from "./dataGenerator";
 
 export const exportModelCardToExcel = (product: ProductDetails) => {
@@ -189,4 +189,145 @@ export const exportModelCardToJSON = (product: ProductDetails) => {
   a.click();
   document.body.removeChild(a);
   window.URL.revokeObjectURL(url);
+};
+
+export const exportModelCardToPDF = (product: ProductDetails) => {
+  const modelCard = generateModelCardData(product);
+  const doc = new jsPDF();
+  
+  // Set up colors and styling
+  const primaryColor = [41, 128, 185]; // Blue
+  const secondaryColor = [52, 73, 94]; // Dark gray
+  const lightGray = [236, 240, 241]; // Light gray
+  
+  let yPosition = 20;
+  const pageWidth = doc.internal.pageSize.width;
+  const margin = 20;
+  const contentWidth = pageWidth - (margin * 2);
+  
+  // Helper function to add a section header
+  const addSectionHeader = (title: string) => {
+    if (yPosition > 250) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    
+    doc.setFillColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.rect(margin, yPosition - 5, contentWidth, 12, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.text(title, margin + 5, yPosition + 3);
+    yPosition += 20;
+    doc.setTextColor(0, 0, 0);
+  };
+  
+  // Helper function to add field-value pairs
+  const addField = (label: string, value: string) => {
+    if (yPosition > 270) {
+      doc.addPage();
+      yPosition = 20;
+    }
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'bold');
+    doc.text(label + ':', margin, yPosition);
+    
+    doc.setFont('helvetica', 'normal');
+    const labelWidth = doc.getTextWidth(label + ': ');
+    const maxWidth = contentWidth - labelWidth;
+    const lines = doc.splitTextToSize(value, maxWidth);
+    
+    doc.text(lines, margin + labelWidth, yPosition);
+    yPosition += lines.length * 5 + 3;
+  };
+  
+  // Title and header
+  doc.setFillColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+  doc.rect(0, 0, pageWidth, 30, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(18);
+  doc.setFont('helvetica', 'bold');
+  doc.text('AI Model Card', margin, 20);
+  doc.setFontSize(12);
+  doc.text(modelCard.basicInfo.productName, margin, 25);
+  
+  yPosition = 45;
+  doc.setTextColor(0, 0, 0);
+  
+  // Add export timestamp
+  doc.setFontSize(8);
+  doc.setFont('helvetica', 'italic');
+  doc.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth - margin - 40, 15);
+  
+  // Basic Information Section
+  addSectionHeader('Basic Information');
+  addField('Product Name', modelCard.basicInfo.productName);
+  addField('Version', modelCard.basicInfo.version);
+  addField('Company', modelCard.basicInfo.company);
+  addField('Category', modelCard.basicInfo.category);
+  addField('Secondary Categories', modelCard.basicInfo.secondaryCategories);
+  addField('Release Date', modelCard.basicInfo.releaseDate);
+  addField('Last Updated', modelCard.basicInfo.lastUpdated);
+  addField('CE Status', modelCard.basicInfo.ceStatus);
+  addField('FDA Status', modelCard.basicInfo.fdaStatus);
+  
+  // Clinical Application Section
+  addSectionHeader('Clinical Application');
+  addField('Intended Use', modelCard.clinicalApplication.intendedUse);
+  addField('Target Anatomy', modelCard.clinicalApplication.targetAnatomy);
+  addField('Disease Targeted', modelCard.clinicalApplication.diseaseTargeted);
+  addField('Modality Support', modelCard.clinicalApplication.modalitySupport);
+  addField('Clinical Evidence', modelCard.clinicalApplication.clinicalEvidence);
+  
+  // Technical Specifications Section
+  addSectionHeader('Technical Specifications');
+  addField('Input Formats', modelCard.technicalSpecs.inputFormats);
+  addField('Output Formats', modelCard.technicalSpecs.outputFormats);
+  addField('Processing Time', modelCard.technicalSpecs.processingTime);
+  addField('Integration', modelCard.technicalSpecs.integration);
+  addField('Deployment', modelCard.technicalSpecs.deployment);
+  addField('Population', modelCard.technicalSpecs.population);
+  
+  // Performance & Validation Section
+  addSectionHeader('Performance & Validation');
+  addField('Supported Structures', modelCard.performance.supportedStructures);
+  addField('Limitations', modelCard.performance.limitations);
+  addField('Evidence', modelCard.performance.evidence);
+  
+  // Regulatory & Market Section
+  addSectionHeader('Regulatory & Market Information');
+  addField('CE Details', modelCard.regulatory.ceDetails);
+  addField('FDA Details', modelCard.regulatory.fdaDetails);
+  addField('Intended Use Statement', modelCard.regulatory.intendedUseStatement);
+  addField('Market Presence', modelCard.regulatory.marketPresence);
+  
+  // Contact Information Section
+  addSectionHeader('Contact Information');
+  addField('Website', modelCard.contact.website);
+  addField('Company URL', modelCard.contact.companyUrl);
+  addField('Product URL', modelCard.contact.productUrl);
+  addField('Contact Email', modelCard.contact.contactEmail);
+  addField('Support Email', modelCard.contact.supportEmail);
+  
+  // Quality Assurance Section
+  addSectionHeader('Quality Assurance');
+  addField('Last Verified', modelCard.quality.lastVerified);
+  addField('Last Revised', modelCard.quality.lastRevised);
+  addField('Source', modelCard.quality.source);
+  addField('GitHub URL', modelCard.quality.githubUrl);
+  
+  // Footer on last page
+  const totalPages = doc.internal.pages.length - 1;
+  for (let i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    doc.setFontSize(8);
+    doc.setTextColor(128, 128, 128);
+    doc.text(`Page ${i} of ${totalPages}`, pageWidth - margin - 20, doc.internal.pageSize.height - 10);
+    doc.text('DLinRT.eu Model Card', margin, doc.internal.pageSize.height - 10);
+  }
+  
+  // Save the PDF
+  const fileName = `${product.name.replace(/[^a-zA-Z0-9]/g, '_')}_ModelCard.pdf`;
+  doc.save(fileName);
 };

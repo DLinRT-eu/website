@@ -2,7 +2,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ClipboardEdit, FileSpreadsheet, Download, FileText } from "lucide-react";
+import { ClipboardEdit, FileSpreadsheet, Download, FileText, FileImage } from "lucide-react";
 import type { ProductDetails as ProductDetailsType } from "@/types/productDetails";
 import ProductHeaderInfo from "./product/ProductHeaderInfo";
 import GeneralInformationDetails from "./product/GeneralInformationDetails";
@@ -25,7 +25,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   const navigate = useNavigate();
 
   const handleExportExcel = () => {
-    import("@/utils/modelCardExport").then(({ exportModelCardToExcel }) => {
+    import("@/utils/modelCard").then(({ exportModelCardToExcel }) => {
       exportModelCardToExcel(product);
       toast.success(`Model card exported to Excel for ${product.name}`);
     }).catch(() => {
@@ -34,7 +34,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   };
 
   const handleExportCSV = () => {
-    import("@/utils/modelCardExport").then(({ exportModelCardToCSV }) => {
+    import("@/utils/modelCard").then(({ exportModelCardToCSV }) => {
       exportModelCardToCSV(product);
       toast.success(`Model card exported to CSV for ${product.name}`);
     }).catch(() => {
@@ -43,11 +43,20 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   };
 
   const handleExportJSON = () => {
-    import("@/utils/modelCardExport").then(({ exportModelCardToJSON }) => {
+    import("@/utils/modelCard").then(({ exportModelCardToJSON }) => {
       exportModelCardToJSON(product);
       toast.success(`Model card exported to JSON for ${product.name}`);
     }).catch(() => {
       toast.error("Failed to export model card to JSON");
+    });
+  };
+
+  const handleExportPDF = () => {
+    import("@/utils/modelCard").then(({ exportModelCardToPDF }) => {
+      exportModelCardToPDF(product);
+      toast.success(`Model card exported to PDF for ${product.name}`);
+    }).catch(() => {
+      toast.error("Failed to export model card to PDF");
     });
   };
 
@@ -89,6 +98,15 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           <div className="bg-white shadow rounded-lg p-6">
             <h3 className="text-lg font-medium text-gray-900 mb-4">Export Model Card</h3>
             <div className="space-y-3">
+              <Button
+                onClick={handleExportPDF}
+                className="w-full flex items-center justify-center gap-2"
+                variant="default"
+              >
+                <FileImage className="h-4 w-4" />
+                Export to PDF
+              </Button>
+              
               <Button
                 onClick={handleExportExcel}
                 className="w-full flex items-center justify-center gap-2"

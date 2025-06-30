@@ -34,21 +34,146 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
     return arr;
   }, [filteredProducts]);
 
-  // Apply search filter if a query exists
+  // Enhanced search function that searches across all product fields
   const searchFilteredProducts = useMemo(() => {
     if (!searchQuery.trim()) return shuffledProducts;
     
+    const query = searchQuery.toLowerCase();
+    
     return shuffledProducts.filter(product => {
-      const query = searchQuery.toLowerCase();
-      const nameMatch = product.name.toLowerCase().includes(query);
-      const companyMatch = product.company.toLowerCase().includes(query);
-      const descriptionMatch = product.description?.toLowerCase().includes(query);
-      const featuresMatch = product.features?.some(feature => 
-        feature.toLowerCase().includes(query)
-      );
-      const categoryMatch = product.category.toLowerCase().includes(query);
-      
-      return nameMatch || companyMatch || descriptionMatch || featuresMatch || categoryMatch;
+      // Helper function to recursively search through objects and arrays
+      const searchInValue = (value: any): boolean => {
+        if (!value) return false;
+        
+        if (typeof value === 'string') {
+          return value.toLowerCase().includes(query);
+        }
+        
+        if (Array.isArray(value)) {
+          return value.some(item => searchInValue(item));
+        }
+        
+        if (typeof value === 'object') {
+          return Object.values(value).some(val => searchInValue(val));
+        }
+        
+        if (typeof value === 'number') {
+          return value.toString().includes(query);
+        }
+        
+        return false;
+      };
+
+      // Search in basic fields
+      const basicFields = [
+        product.name,
+        product.company,
+        product.description,
+        product.category,
+        product.subspeciality,
+        product.certification,
+        product.version,
+        product.suggestedUse,
+        product.clinicalEvidence,
+        product.website,
+        product.productUrl,
+        product.companyUrl,
+        product.url,
+        product.contactEmail,
+        product.contactPhone
+      ];
+
+      if (basicFields.some(field => searchInValue(field))) {
+        return true;
+      }
+
+      // Search in array fields
+      const arrayFields = [
+        product.features,
+        product.anatomicalLocation,
+        product.anatomy,
+        product.diseaseTargeted,
+        product.keyFeatures,
+        product.useCases,
+        product.compatibleSystems,
+        product.secondaryCategories,
+        product.limitations
+      ];
+
+      if (arrayFields.some(field => searchInValue(field))) {
+        return true;
+      }
+
+      // Search in modality (can be string or array)
+      if (searchInValue(product.modality)) {
+        return true;
+      }
+
+      // Search in supported structures
+      if (product.supportedStructures) {
+        if (Array.isArray(product.supportedStructures)) {
+          if (product.supportedStructures.some(structure => {
+            if (typeof structure === 'string') {
+              return structure.toLowerCase().includes(query);
+            }
+            if (typeof structure === 'object') {
+              return searchInValue(structure);
+            }
+            return false;
+          })) {
+            return true;
+          }
+        }
+      }
+
+      // Search in technical specifications
+      if (product.technicalSpecifications && searchInValue(product.technicalSpecifications)) {
+        return true;
+      }
+
+      // Search in technology information
+      if (product.technology && searchInValue(product.technology)) {
+        return true;
+      }
+
+      // Search in regulatory information
+      if (product.regulatory && searchInValue(product.regulatory)) {
+        return true;
+      }
+
+      // Search in market information
+      if (product.market && searchInValue(product.market)) {
+        return true;
+      }
+
+      // Search in pricing information
+      if (product.pricing && searchInValue(product.pricing)) {
+        return true;
+      }
+
+      // Search in evidence
+      if (product.evidence && searchInValue(product.evidence)) {
+        return true;
+      }
+
+      // Search in compatibility fields (for backward compatibility)
+      if (product.regulatoryInfo && searchInValue(product.regulatoryInfo)) {
+        return true;
+      }
+
+      if (product.marketInfo && searchInValue(product.marketInfo)) {
+        return true;
+      }
+
+      if (product.pricingInfo && searchInValue(product.pricingInfo)) {
+        return true;
+      }
+
+      if (product.technicalSpecs && searchInValue(product.technicalSpecs)) {
+        return true;
+      }
+
+      return false;
     });
   }, [shuffledProducts, searchQuery]);
 

@@ -9,7 +9,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { FileSpreadsheet, Download } from 'lucide-react';
 import { ProductDetails } from '@/types/productDetails';
-import { getDaysSinceRevision } from '@/utils/revisionUtils';
+import { getDaysSinceRevision, getUrgencyLevel } from '@/utils/revisionUtils';
+import { validateProduct } from '@/utils/productReviewHelper';
 import { exportReviewToCSV, exportReviewToExcel } from '@/utils/reviewExport';
 import { useToast } from "@/hooks/use-toast";
 import FilterBar from './filters/FilterBar';
@@ -25,6 +26,18 @@ interface RevisionTableProps {
   selectedCategory: string | null;
   selectedCompany: string | null;
   selectedUrgency: string | null;
+}
+
+interface ReviewProduct {
+  id: string;
+  name: string;
+  company: string;
+  category: string;
+  status: 'critical' | 'warning' | 'ok';
+  urgency: 'high' | 'medium' | 'low' | 'recent';
+  daysSinceReview: number;
+  issueCount: number;
+  lastRevised?: string;
 }
 
 const TEAM_MEMBERS = [
@@ -52,6 +65,29 @@ const RevisionTable: React.FC<RevisionTableProps> = ({
   const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('desc');
   const [searchQuery, setSearchQuery] = useState('');
   const [assignments, setAssignments] = useState<Record<string, string>>({});
+
+  // Transform ProductDetails to ReviewProduct for export
+  const transformToReviewProducts = (products: ProductDetails[]): ReviewProduct[] => {
+    return products.map(product => {
+      const checks = validateProduct(product);
+      const failures = checks.filter(c => c.status === 'fail').length;
+      const warnings = checks.filter(c => c.status === 'warning').length;
+      const daysSinceReview = getDaysSinceRevision(product);
+      const urgencyLevel = getUrgencyLevel(product);
+
+      return {
+        id: product.id || '',
+        name: product.name,
+        company: product.company,
+        category: product.category,
+        status: failures > 0 ? 'critical' : warnings > 0 ? 'warning' : 'ok',
+        urgency: urgencyLevel,
+        daysSinceReview,
+        issueCount: failures + warnings,
+        lastRevised: product.lastRevised
+      } as ReviewProduct;
+    });
+  };
 
   // Get unique categories and companies
   const categories = Array.from(new Set(products.map(p => p.category)));
@@ -112,7 +148,8 @@ const RevisionTable: React.FC<RevisionTableProps> = ({
   // Handle export functions
   const handleExportCSV = () => {
     try {
-      exportReviewToCSV(sortedProducts, assignments);
+      const reviewProducts = transformToReviewProducts(sortedProducts);
+      exportReviewToCSV(reviewProducts, assignments);
       toast({
         title: "Export Successful",
         description: `Exported ${sortedProducts.length} products to CSV`,
@@ -128,7 +165,8 @@ const RevisionTable: React.FC<RevisionTableProps> = ({
 
   const handleExportExcel = () => {
     try {
-      exportReviewToExcel(sortedProducts, assignments);
+      const reviewProducts = transformToReviewProducts(sortedProducts);
+      exportReviewToExcel(reviewProducts, assignments);
       toast({
         title: "Export Successful",
         description: `Exported ${sortedProducts.length} products to Excel`,

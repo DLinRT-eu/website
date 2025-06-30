@@ -1,10 +1,9 @@
+
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, FileSpreadsheet } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
-import { toast } from "sonner";
 
 interface ProductCardProps {
   id?: string;
@@ -38,33 +37,6 @@ const ProductCard = ({
   productUrl
 }: ProductCardProps) => {
   const navigate = useNavigate();
-  
-  const handleExportModelCard = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    // Create a simplified product object for export
-    const productForExport: ProductDetails = {
-      id,
-      name,
-      company,
-      description,
-      features,
-      category,
-      certification,
-      logoUrl,
-      anatomicalLocation,
-      modality,
-      website,
-      companyUrl,
-      productUrl
-    } as ProductDetails;
-    
-    import("@/utils/modelCardExport").then(({ exportModelCardToExcel }) => {
-      exportModelCardToExcel(productForExport);
-      toast.success(`Model card exported for ${name}`);
-    }).catch(() => {
-      toast.error("Failed to export model card");
-    });
-  };
 
   const formatModality = (modality: string | string[] | undefined): string => {
     if (!modality) return "Unknown";
@@ -81,7 +53,7 @@ const ProductCard = ({
 
   return (
     <Card 
-      className="h-full hover:shadow-lg transition-shadow cursor-pointer group" 
+      className="h-full hover:shadow-lg transition-shadow cursor-pointer" 
       onClick={() => navigate(`/product/${id}`)}
     >
       <CardHeader className="pb-3">
@@ -103,20 +75,9 @@ const ProductCard = ({
               <p className="text-sm text-gray-600 truncate">{company}</p>
             </div>
           </div>
-          <div className="flex flex-col items-end gap-1 ml-2">
-            <Badge variant="secondary" className="text-xs">
-              {category}
-            </Badge>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleExportModelCard}
-              className="opacity-0 group-hover:opacity-100 transition-opacity p-1 h-auto"
-              title="Export Model Card"
-            >
-              <FileSpreadsheet className="h-3 w-3" />
-            </Button>
-          </div>
+          <Badge variant="secondary" className="text-xs ml-2">
+            {category}
+          </Badge>
         </div>
       </CardHeader>
 

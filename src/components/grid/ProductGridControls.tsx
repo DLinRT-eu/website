@@ -5,7 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { exportProductsToCSV } from "@/utils/exportProducts";
 import { Product } from "@/types/product";
 import SortControls, { SortOption } from "./SortControls";
-import ModelCardExportControls from "./ModelCardExportControls";
 import { ProductDetails } from "@/types/productDetails";
 
 interface ProductGridControlsProps {
@@ -28,7 +27,7 @@ const ProductGridControls = ({
   onDirectionChange
 }: ProductGridControlsProps) => {
   return (
-    <div className="mb-6 space-y-4">
+    <div className="mb-6">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
@@ -66,11 +65,6 @@ const ProductGridControls = ({
           <FileSpreadsheet className="h-4 w-4" />
           Export All to CSV
         </Button>
-      </div>
-      
-      {/* Model Card Export Section */}
-      <div className="border-t pt-4">
-        <ModelCardExportControls products={products as ProductDetails[]} />
       </div>
     </div>
   );

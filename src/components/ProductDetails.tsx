@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import ContactInformation from "./product/ContactInformation";
 import SupportedStructures from "./product/SupportedStructures";
 import ProductRevisionStatus from "./ProductRevisionStatus";
 import EvidenceLimitationsDetails from "./product/EvidenceLimitationsDetails";
+import ModelCardExportControls from "./grid/ModelCardExportControls";
 
 interface ProductDetailsProps {
   product: ProductDetailsType;
@@ -55,6 +57,12 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
         
         <div className="space-y-6">
           <ContactInformation product={product} />
+          
+          {/* Model Card Export Section */}
+          <div className="bg-white shadow rounded-lg p-6">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Export Model Card</h3>
+            <ModelCardExportControls products={[product]} selectedProduct={product} />
+          </div>
           
           {/* Add revision status component */}
           <div className="bg-white shadow rounded-lg p-6">

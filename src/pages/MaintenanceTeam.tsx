@@ -24,15 +24,15 @@ const TEAM_MEMBERS = [
   },
   {
     name: "Paul Doolan",
-    role: "Maintainer & Reviewer",
-    image: "/placeholder.svg",
+    role: "Advisor & Reviewer",
+    image: "https://x.com/PJDoolan/photo",
     bio: "https://www.linkedin.com/in/pjdoolan1/",
     email: "paul.doolan@dlinrt.eu",
   },
   {
     name: "Ana Maria Barragan Montero",
-    role: "Maintainer & Reviewer", 
-    image: "/placeholder.svg",
+    role: "Advisor & Reviewer", 
+    image: "https://media.licdn.com/dms/image/v2/C4D03AQEZU-Eklp4OmQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1641728655258?e=1756944000&v=beta&t=Jjy194jxhY40_IB5hsj4eX_KpkIUOtvybJT5-WN0PXQ",
     bio: "https://be.linkedin.com/in/ana-maria-barragan-montero-93090266",
     email: "ana.barragan@dlinrt.eu",
   }

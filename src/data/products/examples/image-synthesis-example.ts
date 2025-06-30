@@ -31,6 +31,23 @@ export const imageSynthesisExample: ProductDetails = {
     "Automatic image registration" // Feature from secondary category
   ],
   
+  guidelines: [
+    {
+      name: "AAPM TG-275",
+      version: "2022",
+      reference: "https://doi.org/10.1002/mp.15419",
+      url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
+      compliance: "full"
+    },
+    {
+      name: "AAPM TG-132",
+      version: "2013",
+      reference: "https://doi.org/10.1118/1.4816279",
+      url: "https://www.aapm.org/pubs/reports/RPT_132.pdf",
+      compliance: "partial"
+    }
+  ],
+  
   technicalSpecifications: {
     population: "Adult patients undergoing RT planning",
     input: ["MRI", "Multi-contrast MR"],

@@ -20,6 +20,29 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["DL-driven plan optimization", "Quality metrics", "Automated planning"],
+    guidelines: [
+      {
+        name: "AAPM TG-275",
+        version: "2022",
+        reference: "https://doi.org/10.1002/mp.15419",
+        url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
+        compliance: "full"
+      },
+      {
+        name: "ICRU Report 83",
+        version: "2010",
+        reference: "https://doi.org/10.1093/jicru/ndq001",
+        url: "https://icru.org/home/reports/prescribing-recording-and-reporting-photon-beam-intensity-modulated-radiation-therapy-imrt-report-83",
+        compliance: "full"
+      },
+      {
+        name: "IAEA TRS-430",
+        version: "2004",
+        reference: "https://www.iaea.org/publications/6789/commissioning-and-quality-assurance-of-computerized-planning-systems-for-radiation-treatment-of-cancer",
+        url: "https://www.iaea.org/publications/6789/commissioning-and-quality-assurance-of-computerized-planning-systems-for-radiation-treatment-of-cancer",
+        compliance: "partial"
+      }
+    ],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["CT", "Structure sets", "Treatment plans"],

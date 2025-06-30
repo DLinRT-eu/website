@@ -26,6 +26,29 @@ export const PYMEDIX_PRODUCTS: ProductDetails[] = [
       "Seamless TPS integration",
       "Quality assurance metrics"
     ],
+    guidelines: [
+      {
+        name: "AAPM TG-132",
+        version: "2013",
+        reference: "https://doi.org/10.1118/1.4816279",
+        url: "https://www.aapm.org/pubs/reports/RPT_132.pdf",
+        compliance: "full"
+      },
+      {
+        name: "AAPM TG-162",
+        version: "2014",
+        reference: "https://doi.org/10.1118/1.4866223",
+        url: "https://www.aapm.org/pubs/reports/RPT_162.pdf",
+        compliance: "full"
+      },
+      {
+        name: "AAPM TG-275",
+        version: "2022",
+        reference: "https://doi.org/10.1002/mp.15419",
+        url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
+        compliance: "partial"
+      }
+    ],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["CT", "MRI", "PET"],

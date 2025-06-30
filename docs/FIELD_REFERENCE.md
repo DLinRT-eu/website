@@ -1,4 +1,3 @@
-
 # DLinRT.eu Field Reference Documentation
 
 This document provides a comprehensive reference for all fields used in the DLinRT.eu database, including products, companies, initiatives, and news items. It serves as a nomenclature and data dictionary for contributors.
@@ -7,11 +6,12 @@ This document provides a comprehensive reference for all fields used in the DLin
 
 1. [Product/ProductDetails Fields](#productproductdetails-fields)
 2. [Technical Specifications Deep Dive](#technical-specifications-deep-dive)
-3. [Company Fields](#company-fields)
-4. [Initiative Fields](#initiative-fields)
-5. [News Item Fields](#news-item-fields)
-6. [Controlled Vocabularies](#controlled-vocabularies)
-7. [Data Types and Formats](#data-types-and-formats)
+3. [Guidelines Compliance](#guidelines-compliance)
+4. [Company Fields](#company-fields)
+5. [Initiative Fields](#initiative-fields)
+6. [News Item Fields](#news-item-fields)
+7. [Controlled Vocabularies](#controlled-vocabularies)
+8. [Data Types and Formats](#data-types-and-formats)
 
 ## Product/ProductDetails Fields
 
@@ -54,6 +54,52 @@ Products represent deep learning solutions available for radiotherapy applicatio
 | `modality` | string or string[] | No | Imaging modalities supported. See [Modalities](#modalities) |
 | `diseaseTargeted` | string[] | No | Specific diseases or cancer types targeted |
 | `supportedStructures` | string[] or Structure[] | No | Anatomical structures that can be contoured/analyzed |
+
+### Guidelines Compliance
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `guidelines` | Guideline[] | No | Professional guidelines and standards followed by the product |
+
+#### Guideline Object Structure
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `name` | string | Yes | Name of the guideline (e.g., "AAPM TG-263") |
+| `version` | string | No | Version or year of the guideline |
+| `reference` | string | No | DOI or official reference link to the guideline |
+| `url` | string | No | Direct URL to access the guideline |
+| `compliance` | string | No | Level of compliance: "full", "partial", or "planned" |
+
+#### Common Radiotherapy Guidelines
+
+The following guidelines are commonly referenced in radiotherapy AI products:
+
+**AAPM Task Group Reports:**
+- **AAPM TG-263** (2018): Standardizing nomenclatures in radiation oncology
+  - DOI: `https://doi.org/10.1002/mp.12909`
+- **AAPM TG-275** (2022): Guidance on the use of artificial intelligence in medical physics
+  - DOI: `https://doi.org/10.1002/mp.15419`
+- **AAPM TG-132** (2013): Use of image registration and fusion algorithms in radiotherapy
+  - DOI: `https://doi.org/10.1118/1.4816279`
+- **AAPM TG-162** (2014): Software for planar image registration, fusion, and analysis
+  - DOI: `https://doi.org/10.1118/1.4866223`
+
+**ESTRO Guidelines:**
+- **ESTRO Consensus Guideline on CT-based Auto-contouring** (2021)
+  - DOI: `https://doi.org/10.1016/j.radonc.2021.09.019`
+
+**ICRU Reports:**
+- **ICRU Report 83** (2010): Prescribing, recording, and reporting photon-beam IMRT
+  - DOI: `https://doi.org/10.1093/jicru/ndq001`
+- **ICRU Report 91** (2017): Stereotactic treatments with small photon beams
+  - DOI: `https://doi.org/10.1093/jicru/ndx008`
+
+**Quality Assurance Guidelines:**
+- **IEC 60601-2-1** (2020): Medical electrical equipment requirements for linear accelerators
+  - DOI: `https://doi.org/10.3403/30258698`
+- **NCS Report 22** (2015): Quality assurance and control for VMAT
+  - DOI: `https://doi.org/10.25030/ncs-022`
 
 ### Technical Specifications
 
@@ -358,6 +404,51 @@ technicalSpecifications: {
 - **Treatment planning**: Must include planning-specific inputs and outputs
 - **Performance monitoring**: Should focus on QA and system data
 
+## Guidelines Compliance
+
+The guidelines field allows products to specify which professional standards, protocols, and best practices they follow. This is crucial for establishing credibility and helping users understand the scientific basis of the product.
+
+### Usage Guidelines
+
+#### When to Include Guidelines
+- **Auto-contouring products**: Should reference AAPM TG-263 for nomenclature and ESTRO consensus guidelines
+- **AI-based products**: Should reference AAPM TG-275 for AI guidance
+- **Registration products**: Should reference AAPM TG-132 and TG-162 for registration standards
+- **Treatment planning products**: Should reference ICRU reports and IAEA standards
+- **Performance monitoring**: Should reference IEC standards and quality assurance protocols
+
+#### Compliance Levels
+- **full**: Product fully implements all recommendations from the guideline
+- **partial**: Product implements some but not all recommendations
+- **planned**: Compliance is planned for future versions
+
+#### Reference Field Best Practices
+- Always use DOI links when available (preferred format)
+- For guidelines without DOIs, use official publication URLs
+- Include version numbers or publication years for clarity
+- Verify that links are accessible and current
+
+### Example Usage
+
+```typescript
+guidelines: [
+  {
+    name: "AAPM TG-263",
+    version: "2018",
+    reference: "https://doi.org/10.1002/mp.12909",
+    url: "https://www.aapm.org/pubs/reports/RPT_263.pdf",
+    compliance: "full"
+  },
+  {
+    name: "AAPM TG-275",
+    version: "2022",
+    reference: "https://doi.org/10.1002/mp.15419",
+    url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
+    compliance: "partial"
+  }
+]
+```
+
 ## Company Fields
 
 Companies represent organizations that develop or distribute deep learning products for radiotherapy.
@@ -506,8 +597,9 @@ Use `true`/`false` for boolean values like `trainingRequired`.
 4. **URL Validation**: Ensure URLs are valid and accessible
 5. **Array Consistency**: Maintain consistent terminology within arrays
 6. **ID Uniqueness**: All IDs must be unique within their category
-7. **Technical Specifications Consistency**: Input/output types and formats must be logically consistent
-8. **Category-Specific Requirements**: Each product category has specific field requirements
+7. **Guidelines References**: Prefer DOI links over direct URLs when available
+8. **Technical Specifications Consistency**: Input/output types and formats must be logically consistent
+9. **Category-Specific Requirements**: Each product category has specific field requirements
 
 ## Cross-References
 
@@ -516,6 +608,7 @@ This field reference is used by:
 - [Product Review Guide](./review/GUIDE.md) - For product validation and review
 - [Contributing Guidelines](../CONTRIBUTING.md) - For contributors adding new data
 - [Example Templates](./examples/) - Showing proper field usage
+- [Guidelines Reference](../src/data/guidelines-reference.ts) - Common guideline DOI references
 
 ## Need Help?
 
@@ -523,8 +616,9 @@ If you have questions about specific fields or need clarification on data format
 
 1. Check the example files in `src/data/products/examples/`
 2. Review existing products for reference patterns
-3. Open a GitHub issue for guidance
-4. Contact the maintenance team through the support page
+3. Consult the guidelines reference file for common DOI links
+4. Open a GitHub issue for guidance
+5. Contact the maintenance team through the support page
 
 ---
 

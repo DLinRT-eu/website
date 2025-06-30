@@ -22,6 +22,29 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Clinical workflow integration"],
     supportedStructures: MVISION_ALL_STRUCTURES,
+    guidelines: [
+      {
+        name: "AAPM TG-263",
+        version: "2018",
+        reference: "https://doi.org/10.1002/mp.12909",
+        url: "https://www.aapm.org/pubs/reports/RPT_263.pdf",
+        compliance: "full"
+      },
+      {
+        name: "AAPM TG-275",
+        version: "2022",
+        reference: "https://doi.org/10.1002/mp.15419",
+        url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
+        compliance: "partial"
+      },
+      {
+        name: "ESTRO Consensus Guideline on CT-based Auto-contouring",
+        version: "2021",
+        reference: "https://doi.org/10.1016/j.radonc.2021.09.019",
+        url: "https://www.thegreenjournal.com/article/S0167-8140(21)08440-0/fulltext",
+        compliance: "full"
+      }
+    ],
     technicalSpecifications: {
       population: "Adult patients",
       input: ["CT"],

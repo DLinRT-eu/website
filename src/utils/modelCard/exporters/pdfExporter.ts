@@ -1,4 +1,3 @@
-
 import { ProductDetails } from "@/types/productDetails";
 import jsPDF from 'jspdf';
 import { generateModelCardData } from "../dataGenerator";
@@ -59,7 +58,7 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
       } else {
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold');
-        doc.text(safeLabel + ':', margin + 5, yPosition);
+        doc.text(safeLabel + ': ', margin + 5, yPosition);
         
         doc.setFont('helvetica', 'normal');
         const labelWidth = doc.getTextWidth(safeLabel + ': ') + 5;

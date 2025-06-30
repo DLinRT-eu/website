@@ -39,6 +39,28 @@ const formatPricing = (pricing: any): string => {
   return "N/A";
 };
 
+// Helper function to format guidelines information
+const formatGuidelines = (guidelines: any[] | undefined): { compliance: string; details: string } => {
+  if (!guidelines || guidelines.length === 0) {
+    return { compliance: "N/A", details: "No guidelines information available" };
+  }
+
+  const complianceTypes = guidelines.map(g => g.compliance).filter(Boolean);
+  const complianceSummary = complianceTypes.length > 0 ? 
+    `${complianceTypes.filter(c => c === 'full').length} full, ${complianceTypes.filter(c => c === 'partial').length} partial, ${complianceTypes.filter(c => c === 'planned').length} planned` :
+    "Not specified";
+
+  const details = guidelines.map(g => {
+    let detail = g.name;
+    if (g.version) detail += ` (v${g.version})`;
+    if (g.compliance) detail += ` - ${g.compliance} compliance`;
+    if (g.reference) detail += ` [${g.reference}]`;
+    return detail;
+  }).join("; ");
+
+  return { compliance: complianceSummary, details };
+};
+
 export const generateModelCardData = (product: ProductDetails): ModelCardData => {
   // Safely handle regulatory data
   const ceStatus = product.regulatory?.ce?.status || 
@@ -71,6 +93,9 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
         return String(e);
       }).join("; ")
     : (typeof product.evidence === 'string' ? product.evidence : "N/A");
+
+  // Format guidelines data
+  const guidelinesData = formatGuidelines(product.guidelines);
 
   return {
     basicInfo: {
@@ -130,5 +155,6 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       source: product.source || "N/A",
       githubUrl: product.githubUrl || "N/A",
     },
+    guidelines: guidelinesData,
   };
 };

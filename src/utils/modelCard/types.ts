@@ -52,4 +52,8 @@ export interface ModelCardData {
     source: string;
     githubUrl: string;
   };
+  guidelines: {
+    compliance: string;
+    details: string;
+  };
 }

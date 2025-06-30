@@ -75,4 +75,13 @@ export interface ProductDetails extends Product {
   
   // New field for company revision date
   companyRevisionDate?: string;
+  
+  // New field for guidelines followed
+  guidelines?: Array<{
+    name: string;
+    version?: string;
+    reference?: string;
+    url?: string;
+    compliance?: 'full' | 'partial' | 'planned';
+  }>;
 }

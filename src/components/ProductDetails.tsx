@@ -15,6 +15,7 @@ import ContactInformation from "./product/ContactInformation";
 import SupportedStructures from "./product/SupportedStructures";
 import ProductRevisionStatus from "./ProductRevisionStatus";
 import EvidenceLimitationsDetails from "./product/EvidenceLimitationsDetails";
+import GuidelinesDetails from "./product/GuidelinesDetails";
 import { toast } from "sonner";
 
 interface ProductDetailsProps {
@@ -86,6 +87,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           )}
           
           <EvidenceLimitationsDetails product={product} />
+          <GuidelinesDetails product={product} />
           <RegulatoryInformationDetails product={product} />
           <MarketInformationDetails product={product} />
           <PricingInformationDetails product={product} />

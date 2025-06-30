@@ -57,6 +57,13 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
     ]);
     XLSX.utils.book_append_sheet(wb, performanceSheet, "Performance");
     
+    // Guidelines Compliance Sheet
+    const guidelinesSheet = XLSX.utils.json_to_sheet([
+      { Field: "Compliance Summary", Value: modelCard.guidelines.compliance },
+      { Field: "Guidelines Details", Value: modelCard.guidelines.details },
+    ]);
+    XLSX.utils.book_append_sheet(wb, guidelinesSheet, "Guidelines");
+    
     // Regulatory & Market Sheet
     const regulatorySheet = XLSX.utils.json_to_sheet([
       { Field: "CE Details", Value: modelCard.regulatory.ceDetails },

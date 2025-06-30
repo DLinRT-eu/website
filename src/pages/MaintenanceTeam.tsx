@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
 import BlackPaperSection from "@/components/about/BlackPaperSection";
@@ -37,7 +38,23 @@ const TEAM_MEMBERS = [
   }
 ];
 
+// Fisher-Yates shuffle algorithm
+const shuffleArray = <T,>(array: T[]): T[] => {
+  const shuffled = [...array];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
 const MaintenanceTeam = () => {
+  const [shuffledTeamMembers, setShuffledTeamMembers] = useState(TEAM_MEMBERS);
+
+  useEffect(() => {
+    setShuffledTeamMembers(shuffleArray(TEAM_MEMBERS));
+  }, []);
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
@@ -52,7 +69,7 @@ const MaintenanceTeam = () => {
     "about": {
       "@type": "Organization",
       "name": "DLinRT Maintenance Team",
-      "member": TEAM_MEMBERS.map(member => ({
+      "member": shuffledTeamMembers.map(member => ({
         "@type": "Person",
         "name": member.name,
         "jobTitle": member.role,
@@ -74,7 +91,7 @@ const MaintenanceTeam = () => {
       <BlackPaperSection />
       <MissionVisionSection />
       <CoreValuesSection />
-      <TeamSection teamMembers={TEAM_MEMBERS} />
+      <TeamSection teamMembers={shuffledTeamMembers} />
       <Footer />
     </div>
   );

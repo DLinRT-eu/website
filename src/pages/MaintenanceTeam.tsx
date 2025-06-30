@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import SEO from "@/components/SEO";
 import Footer from "@/components/Footer";
@@ -21,6 +20,20 @@ const TEAM_MEMBERS = [
     image: "https://media.licdn.com/dms/image/v2/D4E03AQGq6Zvj1IRXLw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677416417272?e=1753315200&v=beta&t=HFi9QRUXVuJ3DJnWgXgIcg0erCWOwzXpzKmgqdlojSk",
     bio: "https://portal.research.lu.se/en/persons/mustafa-kadhim",
     email: "mustafa.kadhim@dlinrt.eu",
+  },
+  {
+    name: "Paul Doolan",
+    role: "Maintainer & Reviewer",
+    image: "/placeholder.svg",
+    bio: "https://www.linkedin.com/in/pjdoolan1/",
+    email: "paul.doolan@dlinrt.eu",
+  },
+  {
+    name: "Ana Maria Barragan Montero",
+    role: "Maintainer & Reviewer", 
+    image: "/placeholder.svg",
+    bio: "https://be.linkedin.com/in/ana-maria-barragan-montero-93090266",
+    email: "ana.barragan@dlinrt.eu",
   }
 ];
 

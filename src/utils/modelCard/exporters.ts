@@ -1,3 +1,4 @@
+
 import { ProductDetails } from "@/types/productDetails";
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
@@ -14,6 +15,9 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
     { Field: "Product Name", Value: modelCard.basicInfo.productName },
     { Field: "Version", Value: modelCard.basicInfo.version },
     { Field: "Company", Value: modelCard.basicInfo.company },
+    { Field: "Company URL", Value: modelCard.contact.companyUrl },
+    { Field: "Product URL", Value: modelCard.contact.productUrl },
+    { Field: "Logo URL", Value: modelCard.contact.logoUrl },
     { Field: "Category", Value: modelCard.basicInfo.category },
     { Field: "Secondary Categories", Value: modelCard.basicInfo.secondaryCategories },
     { Field: "Release Date", Value: modelCard.basicInfo.releaseDate },
@@ -66,6 +70,7 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
     { Field: "Website", Value: modelCard.contact.website },
     { Field: "Company URL", Value: modelCard.contact.companyUrl },
     { Field: "Product URL", Value: modelCard.contact.productUrl },
+    { Field: "Logo URL", Value: modelCard.contact.logoUrl },
     { Field: "Contact Email", Value: modelCard.contact.contactEmail },
     { Field: "Support Email", Value: modelCard.contact.supportEmail },
   ]);
@@ -94,6 +99,9 @@ export const exportModelCardToCSV = (product: ProductDetails) => {
     { Section: "Basic Information", Field: "Product Name", Value: modelCard.basicInfo.productName },
     { Section: "Basic Information", Field: "Version", Value: modelCard.basicInfo.version },
     { Section: "Basic Information", Field: "Company", Value: modelCard.basicInfo.company },
+    { Section: "Basic Information", Field: "Company URL", Value: modelCard.contact.companyUrl },
+    { Section: "Basic Information", Field: "Product URL", Value: modelCard.contact.productUrl },
+    { Section: "Basic Information", Field: "Logo URL", Value: modelCard.contact.logoUrl },
     { Section: "Basic Information", Field: "Category", Value: modelCard.basicInfo.category },
     { Section: "Basic Information", Field: "Secondary Categories", Value: modelCard.basicInfo.secondaryCategories },
     { Section: "Basic Information", Field: "Release Date", Value: modelCard.basicInfo.releaseDate },
@@ -131,6 +139,7 @@ export const exportModelCardToCSV = (product: ProductDetails) => {
     { Section: "Contact Information", Field: "Website", Value: modelCard.contact.website },
     { Section: "Contact Information", Field: "Company URL", Value: modelCard.contact.companyUrl },
     { Section: "Contact Information", Field: "Product URL", Value: modelCard.contact.productUrl },
+    { Section: "Contact Information", Field: "Logo URL", Value: modelCard.contact.logoUrl },
     { Section: "Contact Information", Field: "Contact Email", Value: modelCard.contact.contactEmail },
     { Section: "Contact Information", Field: "Support Email", Value: modelCard.contact.supportEmail },
     
@@ -222,9 +231,9 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
     doc.setTextColor(0, 0, 0);
   };
   
-  // Helper function to add field-value pairs
+  // Helper function to add field-value pairs with improved spacing
   const addField = (label: string, value: string) => {
-    if (yPosition > 270) {
+    if (yPosition > 265) {
       doc.addPage();
       yPosition = 20;
     }
@@ -239,7 +248,7 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
     const lines = doc.splitTextToSize(value, maxWidth);
     
     doc.text(lines, margin + labelWidth, yPosition);
-    yPosition += lines.length * 5 + 3;
+    yPosition += Math.max(lines.length * 4, 4) + 5; // Improved spacing between items
   };
   
   // Title and header
@@ -265,6 +274,9 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
   addField('Product Name', modelCard.basicInfo.productName);
   addField('Version', modelCard.basicInfo.version);
   addField('Company', modelCard.basicInfo.company);
+  addField('Company URL', modelCard.contact.companyUrl);
+  addField('Product URL', modelCard.contact.productUrl);
+  addField('Logo URL', modelCard.contact.logoUrl);
   addField('Category', modelCard.basicInfo.category);
   addField('Secondary Categories', modelCard.basicInfo.secondaryCategories);
   addField('Release Date', modelCard.basicInfo.releaseDate);
@@ -307,6 +319,7 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
   addField('Website', modelCard.contact.website);
   addField('Company URL', modelCard.contact.companyUrl);
   addField('Product URL', modelCard.contact.productUrl);
+  addField('Logo URL', modelCard.contact.logoUrl);
   addField('Contact Email', modelCard.contact.contactEmail);
   addField('Support Email', modelCard.contact.supportEmail);
   

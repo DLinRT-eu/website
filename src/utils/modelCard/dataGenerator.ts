@@ -12,6 +12,17 @@ const formatDate = (date: string | undefined): string => {
   return new Date(date).toLocaleDateString();
 };
 
+// Helper function to generate logo URL based on company name if needed
+const generateLogoUrl = (product: ProductDetails): string => {
+  if (product.logoUrl && product.logoUrl.trim() !== '') {
+    return product.logoUrl.startsWith('/') ? product.logoUrl.trim() : `/${product.logoUrl.trim()}`;
+  }
+  
+  // Create a standardized company logo filename
+  const standardizedCompany = product.company.toLowerCase().replace(/\s+/g, '-');
+  return `/logos/${standardizedCompany}.png`;
+};
+
 export const generateModelCardData = (product: ProductDetails): ModelCardData => {
   return {
     basicInfo: {
@@ -59,6 +70,7 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       website: product.website || "N/A",
       companyUrl: product.companyUrl || "N/A",
       productUrl: product.productUrl || "N/A",
+      logoUrl: generateLogoUrl(product),
       contactEmail: product.contactEmail || "N/A",
       supportEmail: product.supportEmail || "N/A",
     },

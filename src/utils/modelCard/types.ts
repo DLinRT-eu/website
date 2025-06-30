@@ -41,6 +41,7 @@ export interface ModelCardData {
     website: string;
     companyUrl: string;
     productUrl: string;
+    logoUrl: string;
     contactEmail: string;
     supportEmail: string;
   };

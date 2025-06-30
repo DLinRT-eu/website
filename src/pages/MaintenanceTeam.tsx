@@ -25,7 +25,7 @@ const TEAM_MEMBERS = [
   {
     name: "Paul Doolan",
     role: "Advisor & Reviewer",
-    image: "https://x.com/PJDoolan/photo",
+    image: "https://media.licdn.com/dms/image/v2/C5603AQFwqrTK0EGCwA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1601366437774?e=1756944000&v=beta&t=cD2rZV6XpB1FvsK1zNg9qFp3KA8QXU2e_wgmmGYJzZg",
     bio: "https://www.linkedin.com/in/pjdoolan1/",
     email: "paul.doolan@dlinrt.eu",
   },

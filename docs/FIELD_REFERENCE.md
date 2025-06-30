@@ -127,6 +127,7 @@ Products represent deep learning solutions available for radiotherapy applicatio
 | `lastUpdated` | string | No | When product information was last updated |
 | `lastVerified` | string | No | When product information was last verified |
 | `lastRevised` | string | No | When product underwent major revision |
+| `companyRevisionDate` | string | No | When the company last revised/updated the product information (YYYY-MM-DD format) |
 
 ### Contact and Support
 

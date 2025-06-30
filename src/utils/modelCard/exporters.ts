@@ -86,6 +86,7 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
     const qualitySheet = XLSX.utils.json_to_sheet([
       { Field: "Last Verified", Value: modelCard.quality.lastVerified },
       { Field: "Last Revised", Value: modelCard.quality.lastRevised },
+      { Field: "Company Revision Date", Value: modelCard.quality.companyRevisionDate },
       { Field: "Source", Value: modelCard.quality.source },
       { Field: "GitHub URL", Value: modelCard.quality.githubUrl },
     ]);
@@ -157,6 +158,7 @@ export const exportModelCardToCSV = (product: ProductDetails) => {
       // Quality Assurance
       { Section: "Quality Assurance", Field: "Last Verified", Value: modelCard.quality.lastVerified },
       { Section: "Quality Assurance", Field: "Last Revised", Value: modelCard.quality.lastRevised },
+      { Section: "Quality Assurance", Field: "Company Revision Date", Value: modelCard.quality.companyRevisionDate },
       { Section: "Quality Assurance", Field: "Source", Value: modelCard.quality.source },
       { Section: "Quality Assurance", Field: "GitHub URL", Value: modelCard.quality.githubUrl },
     ];
@@ -351,6 +353,7 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
     addSectionHeader('Quality Assurance');
     addField('Last Verified', modelCard.quality.lastVerified);
     addField('Last Revised', modelCard.quality.lastRevised);
+    addField('Company Revision Date', modelCard.quality.companyRevisionDate);
     addField('Source', modelCard.quality.source);
     addField('GitHub URL', modelCard.quality.githubUrl);
     

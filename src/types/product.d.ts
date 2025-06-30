@@ -1,5 +1,4 @@
 
-
 export interface Product {
   id?: string;
   name: string;
@@ -78,5 +77,7 @@ export interface Product {
     link: string;
   }>;
   limitations?: string[];
+  
+  // New field for company revision date
+  companyRevisionDate?: string;
 }
-

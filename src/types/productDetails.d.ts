@@ -72,4 +72,7 @@ export interface ProductDetails extends Product {
   regulatoryInfo?: any;
   marketInfo?: any;
   pricingInfo?: any;
+  
+  // New field for company revision date
+  companyRevisionDate?: string;
 }

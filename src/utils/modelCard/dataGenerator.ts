@@ -126,6 +126,7 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
     quality: {
       lastVerified: formatDate(product.lastVerified),
       lastRevised: formatDate(product.lastRevised),
+      companyRevisionDate: formatDate(product.companyRevisionDate),
       source: product.source || "N/A",
       githubUrl: product.githubUrl || "N/A",
     },

@@ -48,6 +48,7 @@ export interface ModelCardData {
   quality: {
     lastVerified: string;
     lastRevised: string;
+    companyRevisionDate: string;
     source: string;
     githubUrl: string;
   };

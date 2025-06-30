@@ -14,7 +14,8 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "ge-dlip-ct",
       "ge-air-recon-dl-enhancement"
     ],
-    "category": "Medical Imaging"
+    "category": "Medical Imaging",
+    "logoUrl": "/logos/ge_healthcare.png"
   },
   {
     "id": "philips-healthcare",
@@ -31,7 +32,8 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "philips-intellispace-ai-enhancement",
       "philips-smartdose-ct-enhancement"
     ],
-    "category": "Medical Imaging"
+    "category": "Medical Imaging",
+    "logoUrl": "/logos/philips.png"
   },
   {
     "id": "siemens-healthineers",
@@ -47,7 +49,8 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "siemens-dual-energy-optimizer",
       "siemens-clara-train-image"
     ],
-    "category": "Medical Imaging"
+    "category": "Medical Imaging",
+    "logoUrl": "/logos/siemens.png"
   },
   {
     "id": "canon-medical",
@@ -59,7 +62,8 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "canon-aice-mr",
       "canon-advanced-vis-ai"
     ],
-    "category": "Medical Imaging"
+    "category": "Medical Imaging",
+    "logoUrl": "/logos/canon.jpg"
   },
   {
     "id": "united-imaging",
@@ -72,6 +76,7 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "united-ucs-ai",
       "united-uvision-ai"
     ],
-    "category": "Medical Imaging"
+    "category": "Medical Imaging",
+    "logoUrl": "/logos/unitedimaging.png"
   }
 ];

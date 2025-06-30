@@ -10,7 +10,8 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
     "productIds": [
       "elekta-iris"
     ],
-    "category": "Radiotherapy Equipment"
+    "category": "Radiotherapy Equipment",
+    "logoUrl": "/logos/Elekta.png"
   },
   {
     "id": "accuray",
@@ -21,6 +22,7 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
       "accuray-clearrt", 
       "accuray-synchrony-image"
     ],
-    "category": "Radiotherapy Equipment"
+    "category": "Radiotherapy Equipment",
+    "logoUrl": "/logos/accuray.png"
   }
 ];

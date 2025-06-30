@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo } from 'react';
 import { Input } from '@/components/ui/input';
 import { Search, Building, ArrowDownAZ, ArrowDownZA } from 'lucide-react';
@@ -139,6 +140,7 @@ const Companies = () => {
               key={company.id} 
               name={company.name}
               website={company.website}
+              logoUrl={company.logoUrl}
               products={company.products as any[]}
               description={company.description}
             />

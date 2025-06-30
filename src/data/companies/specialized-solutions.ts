@@ -8,7 +8,8 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
     "description": "Specialists in MRI-only radiotherapy planning solutions.",
     "website": "https://spectronicmedical.com/",
     "productIds": ["spectronic-mriplus", "spectronic-mri-planner"],
-    "category": "Specialized Solutions"
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/spectronic-medical.jpg"
   },
   {
     "id": "raysearch",
@@ -16,7 +17,8 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
     "description": "Developer of innovative software solutions for radiation therapy treatment planning.",
     "website": "https://www.raysearchlabs.com",
     "productIds": ["raysearch-raystation", "raysearch-raystation-deep-learning"],
-    "category": "Specialized Solutions"
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/raystation.jpg"
   },
   {
     "id": "airs-medical",
@@ -27,7 +29,8 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
       "airs-swiftmr", 
       "airs-ct-clarity"
     ],
-    "category": "Specialized Solutions"
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/airs.jpg"
   },
   {
     "id": "subtle-medical",
@@ -39,7 +42,8 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
       "subtle-pet",
       "subtle-gad"
     ],
-    "category": "Specialized Solutions"
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/SubtleMedical.jpg"
   },
   {
     "id": "pymedix",
@@ -47,6 +51,7 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
     "description": "Specialists in medical imaging registration and analysis solutions.",
     "website": "https://pymedix.com/",
     "productIds": ["pymedix-registration"],
-    "category": "Specialized Solutions"
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/pymedix.png"
   }
 ];

@@ -59,11 +59,11 @@ const ProductCard = ({
       <CardHeader className="pb-3">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3 flex-1 min-w-0">
-            <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0">
+            <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 border">
               <img 
                 src={logoUrl} 
                 alt={`${company} logo`} 
-                className="w-8 h-8 object-contain"
+                className="w-12 h-12 object-contain"
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.src = "/placeholder.svg";

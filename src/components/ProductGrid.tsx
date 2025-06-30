@@ -1,4 +1,3 @@
-
 import { useState, useMemo, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import ProductGridControls from "./grid/ProductGridControls";
@@ -11,9 +10,10 @@ import { ProductDetails } from "@/types/productDetails";
 interface ProductGridProps {
   filters?: FilterState;
   searchQuery?: string;
+  advancedSearch?: boolean;
 }
 
-const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
+const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: ProductGridProps) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(50);
   const [sortBy, setSortBy] = useState<SortOption>("random");
@@ -34,7 +34,7 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
     return arr;
   }, [filteredProducts]);
 
-  // Enhanced search function that searches across all product fields
+  // Search function that adapts based on advanced search setting
   const searchFilteredProducts = useMemo(() => {
     if (!searchQuery.trim()) return shuffledProducts;
     
@@ -64,6 +64,24 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
         return false;
       };
 
+      if (!advancedSearch) {
+        // Basic search: only search in main fields
+        const basicFields = [
+          product.name,
+          product.company,
+          product.description,
+          product.category
+        ];
+
+        const basicFieldsMatch = basicFields.some(field => searchInValue(field));
+        const featuresMatch = product.features?.some(feature => 
+          feature.toLowerCase().includes(query)
+        );
+
+        return basicFieldsMatch || featuresMatch;
+      }
+
+      // Advanced search: search in all fields
       // Search in basic fields
       const basicFields = [
         product.name,
@@ -175,7 +193,7 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
 
       return false;
     });
-  }, [shuffledProducts, searchQuery]);
+  }, [shuffledProducts, searchQuery, advancedSearch]);
 
   // Sort products based on current sorting criteria
   const sortedProducts = useMemo(() => {
@@ -254,6 +272,11 @@ const ProductGrid = ({ filters, searchQuery = "" }: ProductGridProps) => {
       <div className="mb-4 text-sm text-gray-500">
         Showing {sortedProducts.length} {sortedProducts.length === 1 ? 'product' : 'products'}
         {(filters && (filters.tasks.length > 0 || filters.locations.length > 0 || filters.modalities.length > 0 || filters.certifications.length > 0)) || searchQuery ? ' based on your filters' : ''}
+        {searchQuery && advancedSearch && (
+          <span className="ml-2 text-blue-600 font-medium">
+            (Advanced search enabled)
+          </span>
+        )}
       </div>
 
       {sortedProducts.length === 0 ? (

@@ -1,3 +1,4 @@
+
 import SearchHeader from "@/components/SearchHeader";
 import ProductGrid from "@/components/ProductGrid";
 import FilterBar from "@/components/FilterBar";
@@ -19,6 +20,7 @@ const Products = () => {
     modalities: [],
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [advancedSearch, setAdvancedSearch] = useState(false);
   const location = useLocation();
 
   // Get all products and count by category
@@ -138,6 +140,10 @@ const Products = () => {
     setSearchQuery(query);
   };
 
+  const handleAdvancedSearchToggle = (enabled: boolean) => {
+    setAdvancedSearch(enabled);
+  };
+
   const handleFilterUpdate = (newFilters: FilterState) => {
     // Standardize certification labels to avoid duplicates
     if (newFilters.certifications) {
@@ -162,7 +168,10 @@ const Products = () => {
         canonical="https://dlinrt.eu/products"
         structuredData={structuredData}
       />
-      <SearchHeader onSearch={handleSearch} />
+      <SearchHeader 
+        onSearch={handleSearch} 
+        onAdvancedSearchToggle={handleAdvancedSearchToggle}
+      />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-semibold text-gray-900">
@@ -186,6 +195,7 @@ const Products = () => {
         <ProductGrid 
           filters={currentFilters} 
           searchQuery={searchQuery}
+          advancedSearch={advancedSearch}
         />
       </main>
       <Footer />

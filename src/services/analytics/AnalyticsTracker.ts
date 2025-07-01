@@ -21,7 +21,7 @@ class AnalyticsTracker {
 
   constructor() {
     this.initializeTracking();
-    // Clean up old visitor tracking data (keep only last 30 days)
+    // Clean up old visitor tracking data (keep only last year)
     this.cleanupOldVisitorData();
   }
 
@@ -50,16 +50,16 @@ class AnalyticsTracker {
 
   private cleanupOldVisitorData(): void {
     try {
-      // Remove visitor tracking data older than 30 days
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      // Remove visitor tracking data older than 1 year (365 days)
+      const oneYearAgo = new Date();
+      oneYearAgo.setDate(oneYearAgo.getDate() - 365);
       
       for (let i = localStorage.length - 1; i >= 0; i--) {
         const key = localStorage.key(i);
         if (key && key.startsWith('visitor-')) {
           const dateStr = key.replace('visitor-', '');
           const date = new Date(dateStr);
-          if (date < thirtyDaysAgo) {
+          if (date < oneYearAgo) {
             localStorage.removeItem(key);
           }
         }

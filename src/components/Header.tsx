@@ -6,11 +6,11 @@ import MobileNav from './MobileNav';
 const Header = () => {
   return (
     <header className="bg-[#00A6D6] text-white py-2 px-3 sticky top-0 z-50 shadow-md">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
-        <div className="flex items-center flex-1 min-w-0">
+      <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
+        <div className="flex items-center flex-1 min-w-0 pr-2">
           <Link 
             to="/" 
-            className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold hover:text-white/90 transition-colors whitespace-nowrap"
+            className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold hover:text-white/90 transition-colors leading-tight"
           >
             Deep Learning in Radiotherapy
           </Link>

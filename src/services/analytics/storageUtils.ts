@@ -1,4 +1,3 @@
-
 import { DailyVisitData } from './types';
 import { setCookie, getCookie, getCookieConsent } from '@/utils/cookieUtils';
 
@@ -11,22 +10,55 @@ export const SESSION_ID_KEY = "dlinrt-session-id";
  * Get analytics data from local storage
  */
 export function getStoredAnalytics(): Record<string, DailyVisitData> {
-  const storedData = localStorage.getItem(STORAGE_KEY);
-  return storedData ? JSON.parse(storedData) : {};
+  try {
+    const storedData = localStorage.getItem(STORAGE_KEY);
+    if (!storedData) return {};
+    
+    const parsed = JSON.parse(storedData);
+    
+    // Validate that the data structure is correct
+    if (typeof parsed !== 'object' || parsed === null) {
+      console.warn('Invalid analytics data format, resetting');
+      return {};
+    }
+    
+    return parsed;
+  } catch (error) {
+    console.error('Failed to parse analytics data:', error);
+    return {};
+  }
 }
 
 /**
  * Save analytics data to local storage
  */
 export function saveAnalytics(data: Record<string, DailyVisitData>): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  try {
+    // Validate data before saving
+    if (typeof data !== 'object' || data === null) {
+      console.error('Invalid data provided to saveAnalytics');
+      return;
+    }
+    
+    const jsonData = JSON.stringify(data);
+    localStorage.setItem(STORAGE_KEY, jsonData);
+    
+    // Verify the save was successful
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved || saved !== jsonData) {
+      console.error('Failed to save analytics data to localStorage');
+    }
+  } catch (error) {
+    console.error('Error saving analytics data:', error);
+  }
 }
 
 /**
  * Get today's date string in YYYY-MM-DD format
  */
 export function getTodayKey(): string {
-  return new Date().toISOString().split('T')[0];
+  const now = new Date();
+  return now.toISOString().split('T')[0];
 }
 
 /**
@@ -91,4 +123,31 @@ export function clearTrackingIds(): void {
 export function isTrackingAllowed(): boolean {
   const consent = getCookieConsent();
   return consent?.analytics ?? false;
+}
+
+/**
+ * Migrate old analytics data format if needed
+ */
+export function migrateAnalyticsData(): void {
+  try {
+    const analytics = getStoredAnalytics();
+    let needsMigration = false;
+    
+    // Check if any entries need migration
+    Object.keys(analytics).forEach(date => {
+      const entry = analytics[date];
+      if (!entry.date || typeof entry.totalVisits !== 'number' || typeof entry.uniqueVisitors !== 'number') {
+        needsMigration = true;
+      }
+    });
+    
+    if (needsMigration) {
+      console.log('Migrating analytics data format...');
+      // Reset to ensure clean state
+      localStorage.removeItem(STORAGE_KEY);
+    }
+  } catch (error) {
+    console.warn('Analytics data migration failed:', error);
+    localStorage.removeItem(STORAGE_KEY);
+  }
 }

@@ -2,6 +2,7 @@
 import React, { createContext, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import analyticsTracker from "@/services/analytics";
+import { migrateAnalyticsData } from "@/services/analytics/storageUtils";
 
 type AnalyticsContextType = {
   trackEvent: (eventName: string, eventData?: Record<string, any>) => void;
@@ -15,6 +16,11 @@ export const useAnalytics = () => useContext(AnalyticsContext);
 
 export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const location = useLocation();
+
+  // Initialize analytics and run migration once
+  useEffect(() => {
+    migrateAnalyticsData();
+  }, []);
 
   // Track page views
   useEffect(() => {

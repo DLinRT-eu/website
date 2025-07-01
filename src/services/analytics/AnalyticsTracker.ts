@@ -1,4 +1,3 @@
-
 import { v4 as uuidv4 } from "uuid";
 import { PageVisit, DailyVisitData, TopPageData } from "./types";
 import { 
@@ -22,6 +21,8 @@ class AnalyticsTracker {
 
   constructor() {
     this.initializeTracking();
+    // Clean up old visitor tracking data (keep only last 30 days)
+    this.cleanupOldVisitorData();
   }
 
   private initializeTracking(): void {
@@ -45,6 +46,27 @@ class AnalyticsTracker {
     }
 
     console.log('Analytics tracking initialized with cookie consent');
+  }
+
+  private cleanupOldVisitorData(): void {
+    try {
+      // Remove visitor tracking data older than 30 days
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      
+      for (let i = localStorage.length - 1; i >= 0; i--) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('visitor-')) {
+          const dateStr = key.replace('visitor-', '');
+          const date = new Date(dateStr);
+          if (date < thirtyDaysAgo) {
+            localStorage.removeItem(key);
+          }
+        }
+      }
+    } catch (error) {
+      console.warn('Failed to cleanup old visitor data:', error);
+    }
   }
 
   trackPageView(path: string, title: string): void {
@@ -87,10 +109,17 @@ class AnalyticsTracker {
     }
     analytics[this.todayKey].pageVisits[path].count++;
     
-    // Check if this is a new visitor today (use localStorage for daily tracking)
+    // Check if this is a new visitor today
     const visitorKey = `visitor-${this.todayKey}`;
-    const todayVisitors = localStorage.getItem(visitorKey) ? 
-      JSON.parse(localStorage.getItem(visitorKey) || '[]') : [];
+    let todayVisitors: string[] = [];
+    
+    try {
+      const storedVisitors = localStorage.getItem(visitorKey);
+      todayVisitors = storedVisitors ? JSON.parse(storedVisitors) : [];
+    } catch (error) {
+      console.warn('Failed to parse visitor data, resetting:', error);
+      todayVisitors = [];
+    }
     
     if (!todayVisitors.includes(this.visitId)) {
       todayVisitors.push(this.visitId);
@@ -98,7 +127,10 @@ class AnalyticsTracker {
       analytics[this.todayKey].uniqueVisitors++;
     }
 
+    // Ensure data persistence
     saveAnalytics(analytics);
+    
+    console.log(`Page view tracked: ${path} - Total visits today: ${analytics[this.todayKey].totalVisits}`);
   }
 
   endPageVisit(): void {
@@ -174,6 +206,13 @@ class AnalyticsTracker {
   clearAnalytics(): void {
     clearAnalytics();
     clearTrackingIds();
+    // Also clear visitor tracking data
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const key = localStorage.key(i);
+      if (key && key.startsWith('visitor-')) {
+        localStorage.removeItem(key);
+      }
+    }
   }
 
   /**
@@ -183,6 +222,7 @@ class AnalyticsTracker {
     this.visitId = null;
     this.sessionId = null;
     this.currentPageVisit = null;
+    this.todayKey = getTodayKey(); // Update today's key
     this.initializeTracking();
   }
 
@@ -191,6 +231,28 @@ class AnalyticsTracker {
    */
   isTrackingEnabled(): boolean {
     return isTrackingAllowed() && !!this.visitId;
+  }
+
+  /**
+   * Get total analytics summary across all days
+   */
+  getTotalSummary(): { totalVisits: number; totalUniqueVisitors: number; daysTracked: number } {
+    const analytics = getStoredAnalytics();
+    const days = Object.keys(analytics);
+    
+    let totalVisits = 0;
+    let totalUniqueVisitors = 0;
+    
+    days.forEach(day => {
+      totalVisits += analytics[day].totalVisits;
+      totalUniqueVisitors += analytics[day].uniqueVisitors;
+    });
+    
+    return {
+      totalVisits,
+      totalUniqueVisitors,
+      daysTracked: days.length
+    };
   }
 }
 

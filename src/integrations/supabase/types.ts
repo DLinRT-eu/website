@@ -9,6 +9,87 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      analytics_daily: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          total_visits: number
+          unique_visitors: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          total_visits?: number
+          unique_visitors?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          total_visits?: number
+          unique_visitors?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      analytics_page_visits: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          path: string
+          title: string | null
+          total_duration: number
+          updated_at: string
+          visit_count: number
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          path: string
+          title?: string | null
+          total_duration?: number
+          updated_at?: string
+          visit_count?: number
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          path?: string
+          title?: string | null
+          total_duration?: number
+          updated_at?: string
+          visit_count?: number
+        }
+        Relationships: []
+      }
+      analytics_visitors: {
+        Row: {
+          created_at: string
+          date: string
+          id: string
+          visitor_id: string
+        }
+        Insert: {
+          created_at?: string
+          date: string
+          id?: string
+          visitor_id: string
+        }
+        Update: {
+          created_at?: string
+          date?: string
+          id?: string
+          visitor_id?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           consent_given: boolean
@@ -50,7 +131,10 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      cleanup_old_analytics_data: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

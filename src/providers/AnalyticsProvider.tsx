@@ -19,14 +19,31 @@ export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   // Initialize analytics and run migration once
   useEffect(() => {
-    migrateAnalyticsData();
+    const initializeAnalytics = async () => {
+      try {
+        await migrateAnalyticsData();
+      } catch (error) {
+        console.warn('Analytics migration failed:', error);
+      }
+    };
+    
+    initializeAnalytics();
   }, []);
 
   // Track page views
   useEffect(() => {
-    const path = location.pathname;
-    const title = document.title;
-    analyticsTracker.trackPageView(path, title);
+    const trackPageView = async () => {
+      const path = location.pathname;
+      const title = document.title;
+      
+      try {
+        await analyticsTracker.trackPageView(path, title);
+      } catch (error) {
+        console.warn('Failed to track page view:', error);
+      }
+    };
+
+    trackPageView();
     
     // Cleanup function - called when component unmounts or location changes
     return () => {

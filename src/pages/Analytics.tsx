@@ -10,7 +10,7 @@ import DateRangeSelector from '@/components/analytics/DateRangeSelector';
 import ChartViewSelector from '@/components/analytics/ChartViewSelector';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { BarChart3, Trash2, Shield } from 'lucide-react';
+import { BarChart3, Trash2, Shield, RefreshCw } from 'lucide-react';
 import { isTrackingAllowed } from '@/services/analytics/storageUtils';
 import { getCookieConsent } from '@/utils/cookieUtils';
 import { useToast } from '@/hooks/use-toast';
@@ -23,15 +23,39 @@ const Analytics = () => {
   });
   const [chartView, setChartView] = useState<'daily' | 'weekly' | 'monthly'>('daily');
   const [analyticsData, setAnalyticsData] = useState<Record<string, DailyVisitData>>({});
+  const [topPages, setTopPages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 
   // Load analytics data
   useEffect(() => {
-    const startDateStr = format(dateRange.startDate, 'yyyy-MM-dd');
-    const endDateStr = format(dateRange.endDate, 'yyyy-MM-dd');
-    const data = analyticsTracker.getAnalytics(startDateStr, endDateStr);
-    setAnalyticsData(data);
-  }, [dateRange]);
+    const loadAnalyticsData = async () => {
+      setLoading(true);
+      try {
+        const startDateStr = format(dateRange.startDate, 'yyyy-MM-dd');
+        const endDateStr = format(dateRange.endDate, 'yyyy-MM-dd');
+        
+        const [data, pages] = await Promise.all([
+          analyticsTracker.getAnalytics(startDateStr, endDateStr),
+          analyticsTracker.getTopPages(startDateStr, endDateStr, 10)
+        ]);
+        
+        setAnalyticsData(data);
+        setTopPages(pages);
+      } catch (error) {
+        console.error('Error loading analytics data:', error);
+        toast({
+          title: "Error Loading Data",
+          description: "Failed to load analytics data. Please try again.",
+          variant: "destructive"
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadAnalyticsData();
+  }, [dateRange, toast]);
 
   // Calculate summary metrics
   const summaryMetrics = useMemo(() => {
@@ -55,20 +79,27 @@ const Analytics = () => {
       }));
   }, [analyticsData]);
 
-  // Get top pages
-  const topPages = useMemo(() => {
-    const startDateStr = format(dateRange.startDate, 'yyyy-MM-dd');
-    const endDateStr = format(dateRange.endDate, 'yyyy-MM-dd');
-    return analyticsTracker.getTopPages(startDateStr, endDateStr, 10);
-  }, [dateRange]);
+  const handleClearData = async () => {
+    try {
+      await analyticsTracker.clearAnalytics();
+      setAnalyticsData({});
+      setTopPages([]);
+      toast({
+        title: "Analytics Data Cleared",
+        description: "All analytics data has been deleted.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to clear analytics data. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
 
-  const handleClearData = () => {
-    analyticsTracker.clearAnalytics();
-    setAnalyticsData({});
-    toast({
-      title: "Analytics Data Cleared",
-      description: "All analytics data has been deleted from your device.",
-    });
+  const handleRefresh = () => {
+    // Trigger a re-fetch by updating the effect dependency
+    setDateRange({ ...dateRange });
   };
 
   const trackingEnabled = isTrackingAllowed();
@@ -92,6 +123,16 @@ const Analytics = () => {
           </div>
           
           <div className="flex items-center space-x-4">
+            <Button 
+              onClick={handleRefresh}
+              variant="outline"
+              size="sm"
+              disabled={loading}
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh
+            </Button>
             <ChartViewSelector chartView={chartView} setChartView={setChartView} />
             <DateRangeSelector dateRange={dateRange} setDateRange={setDateRange} />
           </div>
@@ -109,6 +150,14 @@ const Analytics = () => {
               </div>
             </CardContent>
           </Card>
+        )}
+
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-8">
+            <RefreshCw className="h-6 w-6 animate-spin mr-2" />
+            <span>Loading analytics data...</span>
+          </div>
         )}
 
         {/* Summary Cards */}
@@ -140,11 +189,11 @@ const Analytics = () => {
             <CardContent>
               <div className="space-y-3 text-sm text-muted-foreground">
                 <p>
-                  This analytics data is stored locally and uses cookies only with your explicit consent. 
+                  This analytics data is stored securely in our database and uses cookies only with your explicit consent. 
                   All visitor tracking is anonymous and privacy-focused.
                 </p>
                 <p>
-                  <strong>Data retention:</strong> Maximum 2 years<br/>
+                  <strong>Data retention:</strong> Maximum 1 year<br/>
                   <strong>Cookie consent:</strong> {consent?.analytics ? 'Granted' : 'Not granted'}<br/>
                   <strong>Consent date:</strong> {consent?.timestamp ? new Date(consent.timestamp).toLocaleDateString() : 'N/A'}
                 </p>
@@ -165,6 +214,7 @@ const Analytics = () => {
                 onClick={handleClearData}
                 variant="outline"
                 className="w-full flex items-center gap-2 text-red-600 hover:text-red-700 hover:bg-red-50"
+                disabled={loading}
               >
                 <Trash2 className="h-4 w-4" />
                 Clear All Analytics Data

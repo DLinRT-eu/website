@@ -1,55 +1,166 @@
+
 import { DailyVisitData } from './types';
 import { setCookie, getCookie, getCookieConsent } from '@/utils/cookieUtils';
+import { supabase } from '@/integrations/supabase/client';
 
-// Storage keys
-export const STORAGE_KEY = "dlinrt-analytics";
+// Storage keys for cookies
 export const VISITOR_ID_KEY = "dlinrt-visitor-id";
 export const SESSION_ID_KEY = "dlinrt-session-id";
 
 /**
- * Get analytics data from local storage
+ * Get analytics data from Supabase
  */
-export function getStoredAnalytics(): Record<string, DailyVisitData> {
+export async function getStoredAnalytics(startDate?: string, endDate?: string): Promise<Record<string, DailyVisitData>> {
   try {
-    const storedData = localStorage.getItem(STORAGE_KEY);
-    if (!storedData) return {};
-    
-    const parsed = JSON.parse(storedData);
-    
-    // Validate that the data structure is correct
-    if (typeof parsed !== 'object' || parsed === null) {
-      console.warn('Invalid analytics data format, resetting');
+    let query = supabase
+      .from('analytics_daily')
+      .select('*')
+      .order('date', { ascending: true });
+
+    if (startDate) {
+      query = query.gte('date', startDate);
+    }
+    if (endDate) {
+      query = query.lte('date', endDate);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error fetching analytics data:', error);
       return {};
     }
+
+    if (!data) return {};
+
+    // Convert to the expected format
+    const analytics: Record<string, DailyVisitData> = {};
     
-    return parsed;
+    for (const record of data) {
+      // Get page visits for this date
+      const { data: pageVisits } = await supabase
+        .from('analytics_page_visits')
+        .select('*')
+        .eq('date', record.date);
+
+      const pageVisitsMap: Record<string, { count: number; totalDuration: number }> = {};
+      
+      if (pageVisits) {
+        pageVisits.forEach(visit => {
+          pageVisitsMap[visit.path] = {
+            count: visit.visit_count,
+            totalDuration: visit.total_duration
+          };
+        });
+      }
+
+      analytics[record.date] = {
+        date: record.date,
+        totalVisits: record.total_visits,
+        uniqueVisitors: record.unique_visitors,
+        pageVisits: pageVisitsMap
+      };
+    }
+
+    return analytics;
   } catch (error) {
-    console.error('Failed to parse analytics data:', error);
+    console.error('Failed to fetch analytics data:', error);
     return {};
   }
 }
 
 /**
- * Save analytics data to local storage
+ * Save or update analytics data in Supabase
  */
-export function saveAnalytics(data: Record<string, DailyVisitData>): void {
+export async function saveAnalytics(date: string, data: DailyVisitData): Promise<void> {
   try {
-    // Validate data before saving
-    if (typeof data !== 'object' || data === null) {
-      console.error('Invalid data provided to saveAnalytics');
+    // Upsert daily analytics
+    const { error: dailyError } = await supabase
+      .from('analytics_daily')
+      .upsert({
+        date,
+        total_visits: data.totalVisits,
+        unique_visitors: data.uniqueVisitors,
+        updated_at: new Date().toISOString()
+      }, {
+        onConflict: 'date'
+      });
+
+    if (dailyError) {
+      console.error('Error saving daily analytics:', dailyError);
       return;
     }
-    
-    const jsonData = JSON.stringify(data);
-    localStorage.setItem(STORAGE_KEY, jsonData);
-    
-    // Verify the save was successful
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (!saved || saved !== jsonData) {
-      console.error('Failed to save analytics data to localStorage');
+
+    // Upsert page visits
+    for (const [path, pageData] of Object.entries(data.pageVisits)) {
+      const { error: pageError } = await supabase
+        .from('analytics_page_visits')
+        .upsert({
+          date,
+          path,
+          title: path, // Use path as title for now
+          visit_count: pageData.count,
+          total_duration: pageData.totalDuration,
+          updated_at: new Date().toISOString()
+        }, {
+          onConflict: 'date,path'
+        });
+
+      if (pageError) {
+        console.error('Error saving page visit data:', pageError);
+      }
     }
   } catch (error) {
     console.error('Error saving analytics data:', error);
+  }
+}
+
+/**
+ * Record a unique visitor for a specific date
+ */
+export async function recordUniqueVisitor(date: string, visitorId: string): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from('analytics_visitors')
+      .insert({
+        date,
+        visitor_id: visitorId
+      });
+
+    // If error is due to duplicate (visitor already recorded for this date), that's expected
+    if (error && error.code !== '23505') {
+      console.error('Error recording unique visitor:', error);
+      return false;
+    }
+
+    return error?.code !== '23505'; // Return true if this was a new visitor
+  } catch (error) {
+    console.error('Failed to record unique visitor:', error);
+    return false;
+  }
+}
+
+/**
+ * Check if visitor was already recorded for a specific date
+ */
+export async function isVisitorRecorded(date: string, visitorId: string): Promise<boolean> {
+  try {
+    const { data, error } = await supabase
+      .from('analytics_visitors')
+      .select('id')
+      .eq('date', date)
+      .eq('visitor_id', visitorId)
+      .single();
+
+    if (error && error.code !== 'PGRST116') {
+      console.error('Error checking visitor record:', error);
+      return false;
+    }
+
+    return !!data;
+  } catch (error) {
+    console.error('Failed to check visitor record:', error);
+    return false;
   }
 }
 
@@ -62,10 +173,18 @@ export function getTodayKey(): string {
 }
 
 /**
- * Clear analytics data from local storage
+ * Clear analytics data from Supabase
  */
-export function clearAnalytics(): void {
-  localStorage.removeItem(STORAGE_KEY);
+export async function clearAnalytics(): Promise<void> {
+  try {
+    await Promise.all([
+      supabase.from('analytics_visitors').delete().neq('id', ''),
+      supabase.from('analytics_page_visits').delete().neq('id', ''),
+      supabase.from('analytics_daily').delete().neq('id', '')
+    ]);
+  } catch (error) {
+    console.error('Error clearing analytics data:', error);
+  }
 }
 
 /**
@@ -126,28 +245,46 @@ export function isTrackingAllowed(): boolean {
 }
 
 /**
- * Migrate old analytics data format if needed
+ * Migrate old localStorage analytics data to Supabase
  */
-export function migrateAnalyticsData(): void {
+export async function migrateAnalyticsData(): Promise<void> {
   try {
-    const analytics = getStoredAnalytics();
-    let needsMigration = false;
+    const STORAGE_KEY = "dlinrt-analytics";
+    const storedData = localStorage.getItem(STORAGE_KEY);
     
-    // Check if any entries need migration
-    Object.keys(analytics).forEach(date => {
-      const entry = analytics[date];
-      if (!entry.date || typeof entry.totalVisits !== 'number' || typeof entry.uniqueVisitors !== 'number') {
-        needsMigration = true;
-      }
-    });
-    
-    if (needsMigration) {
-      console.log('Migrating analytics data format...');
-      // Reset to ensure clean state
-      localStorage.removeItem(STORAGE_KEY);
+    if (!storedData) {
+      console.log('No local analytics data to migrate');
+      return;
     }
+
+    const parsed = JSON.parse(storedData);
+    console.log('Migrating analytics data to Supabase...');
+
+    // Migrate each day's data
+    for (const [date, dayData] of Object.entries(parsed)) {
+      if (typeof dayData === 'object' && dayData !== null) {
+        await saveAnalytics(date, dayData as DailyVisitData);
+      }
+    }
+
+    // Clear localStorage after successful migration
+    localStorage.removeItem(STORAGE_KEY);
+    console.log('Analytics data migration completed');
   } catch (error) {
     console.warn('Analytics data migration failed:', error);
-    localStorage.removeItem(STORAGE_KEY);
+  }
+}
+
+/**
+ * Clean up old analytics data (called by Supabase function)
+ */
+export async function cleanupOldAnalyticsData(): Promise<void> {
+  try {
+    const { error } = await supabase.rpc('cleanup_old_analytics_data');
+    if (error) {
+      console.error('Error cleaning up old analytics data:', error);
+    }
+  } catch (error) {
+    console.warn('Failed to cleanup old analytics data:', error);
   }
 }

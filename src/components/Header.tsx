@@ -40,7 +40,7 @@ const Header = () => {
             <li>
               <Link to="/initiatives" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
                 <Beaker className="w-4 h-4 mr-1 lg:mr-2" />
-                <span className="hidden lg:inline">Research & </span>Initiatives
+                <span className="hidden lg:inline">Research&nbsp;&amp;&nbsp;</span>Initiatives
               </Link>
             </li>
             <li>
@@ -64,7 +64,7 @@ const Header = () => {
             <li>
               <Link to="/support" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
                 <LifeBuoy className="w-4 h-4 mr-1 lg:mr-2" />
-                <span className="hidden lg:inline">Support & </span>Contact
+                <span className="hidden lg:inline">Support&nbsp;&amp;&nbsp;</span>Contact
               </Link>
             </li>
           </ul>

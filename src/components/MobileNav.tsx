@@ -59,7 +59,7 @@ const MobileNav = () => {
             className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
           >
             <Beaker className="w-5 h-5 mr-3 text-gray-500" />
-            <span className="font-medium">Research & Initiatives</span>
+            <span className="font-medium">Research&nbsp;&amp;&nbsp;Initiatives</span>
           </Link>
           
           <Link 
@@ -95,7 +95,7 @@ const MobileNav = () => {
             className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors"
           >
             <LifeBuoy className="w-5 h-5 mr-3 text-gray-500" />
-            <span className="font-medium">Support & Contact</span>
+            <span className="font-medium">Support&nbsp;&amp;&nbsp;Contact</span>
           </Link>
         </nav>
       </SheetContent>

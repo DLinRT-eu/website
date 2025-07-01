@@ -56,7 +56,7 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/maintenance-team" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
+              <Link to="/about" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
                 <Info className="w-4 h-4 mr-1 lg:mr-2" />
                 About
               </Link>

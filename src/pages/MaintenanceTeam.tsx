@@ -60,7 +60,7 @@ const MaintenanceTeam = () => {
     "@type": "AboutPage",
     "name": "About DLinRT.eu & Maintenance Team",
     "description": "Learn about our mission, goals, and meet the experts who maintain the DLinRT products finder",
-    "url": "https://dlinrt.eu/maintenance-team",
+    "url": "https://dlinrt.eu/about",
     "isPartOf": {
       "@type": "WebSite",
       "name": "Deep Learning in Radiotherapy",
@@ -84,7 +84,7 @@ const MaintenanceTeam = () => {
       <SEO
         title="About DLinRT.eu & Team"
         description="Learn about our mission, goals, and team dedicated to advancing deep learning in radiotherapy through open-source, community-driven initiatives."
-        canonical="https://dlinrt.eu/maintenance-team"
+        canonical="https://dlinrt.eu/about"
         structuredData={structuredData}
       />
       

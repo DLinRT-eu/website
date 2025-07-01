@@ -69,7 +69,7 @@ const Index = () => {
                 <Link to="/products?task=Treatment%20Planning" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline"> treatment planning solutions</Link>, or a healthcare administrator reviewing new technologies, DLinRT.eu 
                 provides clear, up-to-date information to support informed decision-making. Our goal is to promote 
                 the safe and effective adoption of DL tools in clinical radiotherapy. Learn more about our mission 
-                and team on our <Link to="/maintenance-team" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">about page</Link>, explore ongoing <Link to="/initiatives" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">research initiatives</Link>, or reach out through our <Link to="/support" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">support center</Link>.
+                and team on our <Link to="/about" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">about page</Link>, explore ongoing <Link to="/initiatives" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">research initiatives</Link>, or reach out through our <Link to="/support" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">support center</Link>.
               </p>
               <p>
                 Stay informed about the latest developments in the field through our <Link to="/news" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">news section</Link>, which covers 

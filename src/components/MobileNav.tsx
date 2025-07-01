@@ -81,7 +81,7 @@ const MobileNav = () => {
           </Link>
           
           <Link 
-            to="/maintenance-team" 
+            to="/about" 
             onClick={handleLinkClick}
             className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
           >

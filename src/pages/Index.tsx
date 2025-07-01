@@ -61,8 +61,8 @@ const Index = () => {
                 We <Link to="/products" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">catalogue and evaluate DL products</Link> across the radiotherapy workflow—from image reconstruction 
                 and enhancement to auto-contouring, treatment planning, and clinical prediction. Each product entry 
                 includes technical specifications, regulatory status, clinical evidence, and market availability. 
-                Our <Link to="/dashboard" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">analytics dashboard</Link> provides insights into market trends, while our <Link to="/companies" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">companies directory</Link> offers 
-                comprehensive vendor information.
+                Our <Link to="/dashboard" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">analytics dashboard</Link> delivers quantitative insights into how deep learning solutions are distributed across different categories and market segments, while our <Link to="/companies" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">companies directory</Link> highlights 
+                the vendors pioneering deep learning integration in radiotherapy product development.
               </p>
               <p className="mb-4">
                 Whether you're a medical physicist seeking <Link to="/products?task=Auto-contouring" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">auto-contouring tools</Link>, a radiation oncologist exploring 

@@ -85,24 +85,35 @@ const PrivacyPolicy = () => (
           To exercise any of these rights, please contact us at info@dlinrt.eu.
         </p>
 
-        <h2 className="text-xl font-semibold mt-6 mb-3">Cookies and Tracking</h2>
+        <h2 className="text-xl font-semibold mt-6 mb-3">Cookies and Analytics</h2>
         <p className="mb-4">
-          This website does <strong>not</strong> use cookies for analytics, advertising, or tracking purposes. We do not use third-party analytics services or social media plugins that collect user data.
+          This website uses analytics cookies <strong>only with your explicit consent</strong>. When you consent to analytics cookies, we collect:
+        </p>
+        <ul className="mb-4 ml-6 list-disc">
+          <li>Anonymous visitor statistics (page views, session duration)</li>
+          <li>Popular pages and user navigation patterns</li>
+          <li>Basic browser and device information</li>
+        </ul>
+        <p className="mb-4">
+          <strong>Data retention:</strong> Analytics data is automatically deleted after 1 year.<br/>
+          <strong>Cookie duration:</strong> Analytics cookies expire after 2 years.<br/>
+          <strong>Third parties:</strong> No third-party analytics services are used - all data stays on your device or our secure servers.
         </p>
         <p className="mb-4">
-          Any technical cookies that may be used are strictly necessary for the basic functionality of our newsletter and contact form features and do not track or profile users.
+          Essential cookies (for basic website functionality) are used regardless of consent and do not track or profile users.
         </p>
 
         <h2 className="text-xl font-semibold mt-6 mb-3">Third-Party Services</h2>
         <p className="mb-4">
-          We use minimal third-party services only for essential functionality:
+          We use minimal third-party services for essential functionality:
         </p>
         <ul className="mb-4 ml-6 list-disc">
-          <li><strong>Email delivery:</strong> We use a secure email service provider to send newsletters and respond to contact form submissions</li>
-          <li><strong>Data storage:</strong> Personal data is stored securely using industry-standard encryption and security practices</li>
+          <li><strong>Newsletter service:</strong> ml.kundenserver.de (Germany) - GDPR compliant email list management with explicit consent</li>
+          <li><strong>Email delivery:</strong> We use a secure email service provider to respond to contact form submissions</li>
+          <li><strong>Data storage:</strong> Supabase (EU-hosted) - Personal data is stored securely using industry-standard encryption</li>
         </ul>
         <p className="mb-4">
-          These services are bound by strict data protection agreements and GDPR compliance requirements.
+          All third-party services are bound by strict data protection agreements and GDPR compliance requirements. Data processing agreements are in place where required by law.
         </p>
 
         <h2 className="text-xl font-semibold mt-6 mb-3">GDPR Compliance</h2>

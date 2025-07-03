@@ -84,7 +84,7 @@ const Companies = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <SEO 
         title="Companies"
         description="Explore leading companies developing innovative DL solutions for radiation therapy, medical imaging synthesis, and clinical decision support in radiotherapy."

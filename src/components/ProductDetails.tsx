@@ -17,6 +17,7 @@ import ProductRevisionStatus from "./ProductRevisionStatus";
 import EvidenceLimitationsDetails from "./product/EvidenceLimitationsDetails";
 import GuidelinesDetails from "./product/GuidelinesDetails";
 import { toast } from "sonner";
+import Footer from "./Footer";
 
 interface ProductDetailsProps {
   product: ProductDetailsType;
@@ -62,7 +63,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 space-y-8">
+    <div className="min-h-screen bg-white">
+      <div className="container mx-auto px-4 md:px-8 py-8 space-y-8">
       <div className="flex justify-between items-center">
         <ProductHeaderInfo product={product} />
         <Button 
@@ -145,6 +147,8 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           </div>
         </div>
       </div>
+      </div>
+      <Footer />
     </div>
   );
 };

@@ -8,8 +8,8 @@ const SecurityCertifications = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO
-        title="Security & Certifications"
-        description="Security measures, certifications, and compliance information for DLinRT.eu"
+        title="Security Certifications & Compliance Standards - SSL, GDPR, Data Protection"
+        description="Comprehensive security measures, SSL/TLS certificates, GDPR compliance, and data protection standards for DLinRT.eu. Learn about our EU-hosted infrastructure and security monitoring."
         canonical="https://dlinrt.eu/security"
       />
       

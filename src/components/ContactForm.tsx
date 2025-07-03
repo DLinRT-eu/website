@@ -17,6 +17,7 @@ import {
 import { useToast } from '@/hooks/use-toast';
 import { Mail } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
+import { useSecurityMonitoring } from '@/hooks/useSecurityMonitoring';
 
 // Define form schema with Zod
 const formSchema = z.object({
@@ -31,6 +32,7 @@ type FormValues = z.infer<typeof formSchema>;
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { checkRateLimit, logSecurityEvent } = useSecurityMonitoring();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -43,6 +45,16 @@ const ContactForm = () => {
   });
 
   const onSubmit = async (data: FormValues) => {
+    // Check rate limit before processing
+    if (!checkRateLimit('contact_form', 3, 300000)) { // 3 attempts per 5 minutes
+      toast({
+        variant: "destructive",
+        title: "Too many attempts",
+        description: "Please wait before submitting another message.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     
     try {
@@ -69,6 +81,17 @@ const ContactForm = () => {
       form.reset();
     } catch (error: any) {
       console.error('Contact form submission error:', error);
+      
+      // Log security event for failed form submissions
+      logSecurityEvent({
+        type: 'form_submission_failed',
+        details: { 
+          form: 'contact',
+          error: error.message,
+          email: data.email 
+        },
+        timestamp: new Date()
+      });
       
       // Error notification
       toast({

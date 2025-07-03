@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { RefreshCw } from 'lucide-react';
 import AnalyticsSummaryCards from '@/components/analytics/AnalyticsSummaryCards';
@@ -30,13 +29,13 @@ const Analytics = () => {
   const consent = getCookieConsent();
 
   return (
-    <>
+    <div className="min-h-screen bg-white">
       <SEO 
         title="Analytics - Deep Learning in Radiotherapy"
         description="Website analytics and traffic insights for Deep Learning in Radiotherapy platform"
       />
       
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 md:px-8 py-8">
         <AnalyticsHeader
           chartView={chartView}
           setChartView={setChartView}
@@ -64,7 +63,7 @@ const Analytics = () => {
         />
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
           {/* Traffic Chart */}
           <VisitorTrafficChart chartData={chartData} />
           
@@ -72,13 +71,16 @@ const Analytics = () => {
           <TopPagesTable topPages={topPages} />
         </div>
 
-        <AnalyticsGDPRSection
-          consent={consent}
-          loading={loading}
-          onClearData={handleClearData}
-        />
+        {/* GDPR Compliance Section */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mt-6">
+          <AnalyticsGDPRSection
+            consent={consent}
+            loading={loading}
+            onClearData={handleClearData}
+          />
+        </div>
       </div>
-    </>
+    </div>
   );
 };
 

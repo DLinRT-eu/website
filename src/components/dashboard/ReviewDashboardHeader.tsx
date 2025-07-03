@@ -19,9 +19,9 @@ export const ReviewDashboardHeader: React.FC<ReviewDashboardHeaderProps> = ({
   onExportExcel
 }) => {
   return (
-    <div className="flex justify-between items-center">
-      <h1 className="text-3xl font-bold">Review Dashboard</h1>
-      <div className="flex gap-2">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <h1 className="text-2xl sm:text-3xl font-bold">Review Dashboard</h1>
+      <div className="flex flex-wrap gap-2">
         <Button
           variant="outline"
           onClick={onExportCSV}

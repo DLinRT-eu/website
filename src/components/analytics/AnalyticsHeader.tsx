@@ -25,16 +25,16 @@ export const AnalyticsHeader: React.FC<AnalyticsHeaderProps> = ({
   onRefresh
 }) => {
   return (
-    <div className="flex items-center justify-between mb-8">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
       <div className="flex items-center space-x-3">
         <BarChart3 className="h-8 w-8 text-[#00A6D6]" />
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
-          <p className="text-gray-600 mt-1">Track website traffic and user engagement</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Analytics Dashboard</h1>
+          <p className="text-gray-600 mt-1 text-sm sm:text-base">Track website traffic and user engagement</p>
         </div>
       </div>
       
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-4">
         <Button 
           onClick={onRefresh}
           variant="outline"

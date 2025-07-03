@@ -15,7 +15,7 @@ export const AnalyticsGDPRSection: React.FC<AnalyticsGDPRSectionProps> = ({
   onClearData
 }) => {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+    <>
       {/* Privacy Notice */}
       <Card>
         <CardHeader>
@@ -59,6 +59,6 @@ export const AnalyticsGDPRSection: React.FC<AnalyticsGDPRSectionProps> = ({
           </Button>
         </CardContent>
       </Card>
-    </div>
+    </>
   );
 };

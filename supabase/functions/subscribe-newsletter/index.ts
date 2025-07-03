@@ -62,7 +62,7 @@ const handler = async (req: Request): Promise<Response> => {
       .from('newsletter_subscribers')
       .select('email, unsubscribed_at')
       .eq('email', email)
-      .single();
+      .maybeSingle();
 
     if (existingSubscriber) {
       if (!existingSubscriber.unsubscribed_at) {

@@ -120,6 +120,19 @@ export async function saveAnalytics(date: string, data: DailyVisitData): Promise
  */
 export async function recordUniqueVisitor(date: string, visitorId: string): Promise<boolean> {
   try {
+    // First check if visitor already exists for this date
+    const { data: existingVisitor } = await supabase
+      .from('analytics_visitors')
+      .select('id')
+      .eq('date', date)
+      .eq('visitor_id', visitorId)
+      .maybeSingle();
+
+    if (existingVisitor) {
+      return false; // Visitor already recorded for this date
+    }
+
+    // Insert new visitor record
     const { error } = await supabase
       .from('analytics_visitors')
       .insert({
@@ -127,13 +140,16 @@ export async function recordUniqueVisitor(date: string, visitorId: string): Prom
         visitor_id: visitorId
       });
 
-    // If error is due to duplicate (visitor already recorded for this date), that's expected
-    if (error && error.code !== '23505') {
+    if (error) {
+      // If it's a unique constraint violation, the visitor was just recorded by another request
+      if (error.code === '23505') {
+        return false;
+      }
       console.error('Error recording unique visitor:', error);
       return false;
     }
 
-    return error?.code !== '23505'; // Return true if this was a new visitor
+    return true; // Successfully recorded new visitor
   } catch (error) {
     console.error('Failed to record unique visitor:', error);
     return false;

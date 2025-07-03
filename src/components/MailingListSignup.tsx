@@ -124,9 +124,14 @@ const MailingListSignup = () => {
               </FormControl>
               <div className="space-y-1 leading-none">
                 <FormLabel className="text-sm">
-                  Yes, I want to join the DLinRT mailing list (noreply@dlinrt.eu) to receive updates about 
-                  deep learning solutions in radiotherapy. I understand this will open in a new window 
-                  for external processing.
+                  <strong>Mailing List Consent:</strong> I agree to join the DLinRT mailing list (noreply@dlinrt.eu) to receive updates about 
+                  deep learning solutions in radiotherapy. I understand that:
+                  <ul className="mt-2 ml-4 text-xs list-disc">
+                    <li>My email will be processed by ml.kundenserver.de (Germany) - a GDPR-compliant service</li>
+                    <li>I can unsubscribe at any time by clicking the link in emails or contacting info@dlinrt.eu</li>
+                    <li>My data will be deleted if I unsubscribe or request deletion</li>
+                    <li>This form opens in a new window for secure processing</li>
+                  </ul>
                 </FormLabel>
                 <FormMessage />
               </div>
@@ -143,10 +148,16 @@ const MailingListSignup = () => {
           <Mail className="ml-2 h-4 w-4" />
         </Button>
         
-        <div className="text-xs text-gray-500">
+        <div className="text-xs text-gray-500 bg-gray-50 p-3 rounded">
+          <p className="font-semibold mb-1">Data Processing Notice:</p>
+          <p className="mb-2">
+            This form submits to ml.kundenserver.de (Germany), a GDPR-compliant mailing list service. 
+            Your email address will be processed under our data processing agreement for the sole purpose 
+            of sending radiotherapy AI updates.
+          </p>
           <p>
-            This form will open in a new window and is processed by an external mailing list service. 
-            You can unsubscribe at any time by contacting info@dlinrt.eu.
+            <strong>Your rights:</strong> Access, rectification, erasure, data portability. 
+            Contact info@dlinrt.eu to exercise your rights or unsubscribe.
           </p>
         </div>
       </form>

@@ -99,6 +99,10 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      schedule_analytics_cleanup: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never

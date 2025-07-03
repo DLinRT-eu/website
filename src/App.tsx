@@ -25,6 +25,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
 import Analytics from "./pages/Analytics";
+import SecurityCertifications from "./pages/SecurityCertifications";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="review/:id" element={<ProductReview />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-use" element={<TermsOfUse />} />
+            <Route path="security" element={<SecurityCertifications />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <CookieConsent />

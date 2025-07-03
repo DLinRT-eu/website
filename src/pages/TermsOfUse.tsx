@@ -12,7 +12,7 @@ const TermsOfUse = () => (
     <main className="max-w-3xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-4">Terms of Use</h1>
       <p className="mb-4">
-        <strong>Last updated: December 17, 2024</strong>
+        <strong>Last updated: July 3, 2025</strong>
       </p>
       
       <div className="prose prose-gray max-w-none">
@@ -57,9 +57,15 @@ const TermsOfUse = () => (
           <li>Using the website in compliance with applicable laws and regulations</li>
         </ul>
 
-        <h2 className="text-xl font-semibold mt-6 mb-3">Medical and Professional Advice Disclaimer</h2>
+        <h2 className="text-xl font-semibold mt-6 mb-3">Medical and Clinical Decision Disclaimer</h2>
         <p className="mb-4">
           The information provided on this website is <strong>not</strong> intended as medical advice, clinical guidance, or professional consultation. Healthcare professionals should conduct their own evaluation of products and consult appropriate regulatory authorities before implementation.
+        </p>
+        <p className="mb-4">
+          <strong>CLINICAL RESPONSIBILITY:</strong> Users are solely responsible for all clinical decisions made based on information from this website. DLinRT.eu, its maintainers, contributors, and affiliates accept no responsibility for clinical outcomes, patient safety, or treatment decisions. All medical and clinical decisions must be made by qualified healthcare professionals based on their own professional judgment, patient assessment, and applicable medical standards.
+        </p>
+        <p className="mb-4">
+          Healthcare professionals must ensure compliance with local regulations, institutional protocols, and professional standards when considering any products or information presented on this website for clinical use.
         </p>
 
         <h2 className="text-xl font-semibold mt-6 mb-3">External Links</h2>

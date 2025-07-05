@@ -3,47 +3,72 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://dlinrt.eu/</loc>
-    <lastmod>2025-04-29</lastmod>
+    <lastmod>2025-07-05</lastmod>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>https://dlinrt.eu/products</loc>
-    <lastmod>2025-04-29</lastmod>
+    <lastmod>2025-07-05</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://dlinrt.eu/companies</loc>
-    <lastmod>2025-04-29</lastmod>
+    <lastmod>2025-07-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dlinrt.eu/initiatives</loc>
-    <lastmod>2025-04-29</lastmod>
+    <lastmod>2025-07-05</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://dlinrt.eu/news</loc>
-    <lastmod>2025-04-29</lastmod>
+    <lastmod>2025-07-05</lastmod>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://dlinrt.eu/dashboard</loc>
-    <lastmod>2025-04-29</lastmod>
+    <lastmod>2025-07-05</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://dlinrt.eu/maintenance-team</loc>
-    <lastmod>2025-04-29</lastmod>
-    <priority>0.5</priority>
+    <loc>https://dlinrt.eu/about</loc>
+    <lastmod>2025-07-05</lastmod>
+    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://dlinrt.eu/support</loc>
-    <lastmod>2025-04-29</lastmod>
+    <lastmod>2025-07-05</lastmod>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://dlinrt.eu/donate</loc>
-    <lastmod>2025-04-29</lastmod>
+    <loc>https://dlinrt.eu/timeline</loc>
+    <lastmod>2025-07-05</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dlinrt.eu/analytics</loc>
+    <lastmod>2025-07-05</lastmod>
     <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://dlinrt.eu/donate</loc>
+    <lastmod>2025-07-05</lastmod>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://dlinrt.eu/privacy-policy</loc>
+    <lastmod>2025-07-05</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://dlinrt.eu/terms-of-use</loc>
+    <lastmod>2025-07-05</lastmod>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://dlinrt.eu/security</loc>
+    <lastmod>2025-07-05</lastmod>
+    <priority>0.4</priority>
   </url>
 </urlset>

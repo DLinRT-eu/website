@@ -26,6 +26,10 @@ import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
 import Analytics from "./pages/Analytics";
 import SecurityCertifications from "./pages/SecurityCertifications";
+import AutoContouringPage from "./pages/categories/AutoContouring";
+import TreatmentPlanningPage from "./pages/categories/TreatmentPlanning";
+import ImageSynthesisPage from "./pages/categories/ImageSynthesis";
+import Breadcrumb from "./components/Breadcrumb";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -45,6 +49,7 @@ const App = () => (
       <BrowserRouter>
         <AnalyticsProvider>
           <Header />
+          <Breadcrumb />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="products" element={<Products />} />
@@ -64,6 +69,9 @@ const App = () => (
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-use" element={<TermsOfUse />} />
             <Route path="security" element={<SecurityCertifications />} />
+            <Route path="category/auto-contouring" element={<AutoContouringPage />} />
+            <Route path="category/treatment-planning" element={<TreatmentPlanningPage />} />
+            <Route path="category/image-synthesis" element={<ImageSynthesisPage />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <CookieConsent />

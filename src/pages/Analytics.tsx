@@ -31,8 +31,8 @@ const Analytics = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="Analytics - Deep Learning in Radiotherapy"
-        description="Website analytics and traffic insights for Deep Learning in Radiotherapy platform"
+        title="Website Analytics & Traffic Insights - DLinRT Deep Learning Platform"
+        description="Comprehensive analytics dashboard showing website traffic, user engagement, and page performance metrics for the Deep Learning in Radiotherapy platform. Monitor visitor trends and popular content."
       />
       
       <div className="container mx-auto px-4 md:px-8 py-8">

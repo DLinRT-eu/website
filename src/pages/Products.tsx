@@ -163,8 +163,8 @@ const Products = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO
-        title="AI Products in Radiotherapy"
-        description="Search and explore deep learning products in Radiotherapy, including auto-contouring, image synthesis, and treatment planning tools."
+        title="AI Products Database - Deep Learning Solutions for Radiotherapy & Oncology"
+        description="Comprehensive database of AI products for radiation oncology. Search and compare deep learning solutions for auto-contouring, treatment planning, image synthesis, and clinical prediction tools."
         canonical="https://dlinrt.eu/products"
         structuredData={structuredData}
       />

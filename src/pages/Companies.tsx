@@ -86,8 +86,8 @@ const Companies = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="Companies"
-        description="Explore leading companies developing innovative DL solutions for radiation therapy, medical imaging synthesis, and clinical decision support in radiotherapy."
+        title="Medical AI Companies Directory - Radiotherapy Deep Learning Vendors"
+        description="Comprehensive directory of leading medical technology companies developing AI solutions for radiotherapy. Explore vendors offering deep learning tools for imaging, treatment planning, and clinical decision support."
         canonical="https://dlinrt.eu/companies"
         structuredData={structuredData}
       />

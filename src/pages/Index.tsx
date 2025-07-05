@@ -40,8 +40,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="Deep Learning in Radiotherapy"
-        description="Search and explore DL products in Radiotherapy - the leading database for deep learning solutions in radiation oncology."
+        title="Deep Learning in Radiotherapy - AI Products Database & Research Platform"
+        description="Comprehensive database of AI solutions for radiation oncology. Search and explore deep learning products for auto-contouring, treatment planning, imaging, and clinical prediction in radiotherapy."
         canonical="https://dlinrt.eu/"
         structuredData={structuredData}
       />

@@ -13,6 +13,8 @@ import { ReviewDashboardAlerts } from '@/components/dashboard/ReviewDashboardAle
 import { useReviewData } from '@/hooks/useReviewData';
 import { ALL_PRODUCTS } from '@/data';
 
+import SEO from '@/components/SEO';
+
 const ReviewDashboard = () => {
   const { toast } = useToast();
   const {
@@ -29,6 +31,14 @@ const ReviewDashboard = () => {
     setSelectedStatus,
     setSelectedUrgency
   } = useReviewData();
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Product Review Dashboard - Quality Control & Maintenance",
+    "description": "Internal dashboard for tracking product information quality, review status, and maintenance tasks for the Deep Learning in Radiotherapy database.",
+    "url": "https://dlinrt.eu/review"
+  };
 
   // Handle filter changes
   const handleFilterChange = (type: string, value: string | null) => {
@@ -88,7 +98,14 @@ const ReviewDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="Product Review Dashboard - Quality Control & Data Maintenance"
+        description="Internal quality control dashboard for tracking product data accuracy, review status, and maintenance tasks for the Deep Learning in Radiotherapy database. Monitor data quality metrics and review progress."
+        canonical="https://dlinrt.eu/review"
+        structuredData={structuredData}
+        noindex={true}
+      />
       <div className="container mx-auto px-4 md:px-8 py-8 space-y-6">
       <ReviewDashboardHeader
         criticalCount={summaryStats.criticalCount}

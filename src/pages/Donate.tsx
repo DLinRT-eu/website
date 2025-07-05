@@ -30,8 +30,8 @@ const Donate = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-purple-50 py-12">
       <SEO
-        title="Support Our Project"
-        description="Help us make a difference in medical device innovation by supporting our project through donations or contributions."
+        title="Donate & Support Deep Learning in Radiotherapy - Fund Medical AI Innovation"
+        description="Support the advancement of AI in radiation oncology by funding our open-source deep learning research platform. Help accelerate medical device innovation and improve patient care through your contribution."
         canonical="https://dlinrt.eu/donate"
         structuredData={structuredData}
       />

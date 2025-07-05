@@ -82,8 +82,8 @@ const MaintenanceTeam = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO
-        title="About DLinRT.eu & Team"
-        description="Learn about our mission, goals, and team dedicated to advancing deep learning in radiotherapy through open-source, community-driven initiatives."
+        title="About DLinRT.eu - Mission, Team & Vision for AI in Radiotherapy"
+        description="Discover our mission to advance deep learning in radiation oncology through open-source research. Meet our expert team dedicated to accelerating AI adoption in radiotherapy and medical device innovation."
         canonical="https://dlinrt.eu/about"
         structuredData={structuredData}
       />

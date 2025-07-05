@@ -20,8 +20,8 @@ const InitiativesHeader = () => {
   return (
     <>
       <SEO
-        title="Research Initiatives"
-        description="Explore research initiatives, open datasets, model zoos, and grand challenges in radiotherapy. Discover resources to accelerate innovation in radiation oncology research."
+        title="Research Initiatives & Open Datasets - AI Radiotherapy Resources"
+        description="Comprehensive collection of research initiatives, open datasets, model zoos, and grand challenges in deep learning for radiotherapy. Discover resources to accelerate AI innovation in radiation oncology."
         canonical="https://dlinrt.eu/initiatives"
         structuredData={structuredData}
       />

@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 const TermsOfUse = () => (
   <div className="min-h-screen bg-white">
     <SEO
-      title="Terms of Use"
-      description="DLinRT.eu Terms of Use: Legal terms and conditions for using our deep learning in radiotherapy product database."
+      title="Terms of Use & Legal Conditions - DLinRT Deep Learning Platform"
+      description="Legal terms and conditions for using the DLinRT.eu deep learning in radiotherapy database. Review usage rights, disclaimers, and responsibilities for accessing our AI medical technology platform."
       canonical="https://dlinrt.eu/terms-of-use"
     />
     <main className="max-w-3xl mx-auto px-4 py-8">

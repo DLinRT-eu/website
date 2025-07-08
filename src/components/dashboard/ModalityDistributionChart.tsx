@@ -9,6 +9,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
 import { CircleCheckIcon } from 'lucide-react';
+import { validateChartData, validateClickData, validateCountingMode, validateTotalCount, validateFilterValue } from '@/utils/chartDataValidation';
 
 interface ModalityDistributionChartProps {
   modalityData: {
@@ -36,17 +37,33 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
   onModalityClick
 }) => {
   const isMobile = useIsMobile();
+  
+  // Validate and sanitize all inputs
+  const validatedModalityData = validateChartData(modalityData);
+  const validatedTotalModalities = validateTotalCount(totalModalities);
+  const validatedCountingMode = validateCountingMode(countingMode);
+  const validatedSelectedModality = validateFilterValue(selectedModality);
+  const validatedSelectedTask = validateFilterValue(selectedTask);
+  const validatedSelectedLocation = validateFilterValue(selectedLocation);
+  
+  // Secure click handler
+  const handleModalityClick = (data: any) => {
+    const validatedData = validateClickData(data);
+    if (validatedData && onModalityClick) {
+      onModalityClick(validatedData);
+    }
+  };
 
   // Single modality view
-  if (selectedModality !== "all" && modalityData.length === 1) {
+  if (validatedSelectedModality !== "all" && validatedModalityData.length === 1) {
     // Get the selected modality data
-    const modality = modalityData[0];
+    const modality = validatedModalityData[0];
     
     return (
       <Card className="w-full">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg md:text-2xl flex items-center gap-2">
-            {countingMode === 'models' ? 'AI Models' : 'Products'} by Modality ({totalModalities} total)
+            {validatedCountingMode === 'models' ? 'AI Models' : 'Products'} by Modality ({validatedTotalModalities} total)
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -57,10 +74,10 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
             <h3 className="text-xl font-bold mb-2">{modality.name}</h3>
             <p className="text-muted-foreground mb-2">Selected Modality</p>
             <p className="text-3xl font-bold">{modality.value}</p>
-            <p className="text-muted-foreground">{countingMode === 'models' ? 'AI Models' : 'Products'}</p>
+            <p className="text-muted-foreground">{validatedCountingMode === 'models' ? 'AI Models' : 'Products'}</p>
             
             <button 
-              onClick={() => onModalityClick({ name: modality.name })}
+              onClick={() => handleModalityClick({ name: modality.name })}
               className="mt-6 text-sm text-purple-500 underline cursor-pointer hover:text-purple-700"
             >
               Click to clear filter
@@ -76,16 +93,16 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          {countingMode === 'models' ? 'AI Models' : 'Products'} by Modality ({totalModalities} total)
-          {selectedTask !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by task</span>}
-          {selectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
+          {validatedCountingMode === 'models' ? 'AI Models' : 'Products'} by Modality ({validatedTotalModalities} total)
+          {validatedSelectedTask !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by task</span>}
+          {validatedSelectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveChartWrapper minHeight="320px">
           <ChartContainer className="h-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={modalityData} margin={isMobile ? { top: 5, right: 10, left: 5, bottom: 70 } : { top: 5, right: 30, left: 10, bottom: 30 }}>
+              <BarChart data={validatedModalityData} margin={isMobile ? { top: 5, right: 10, left: 5, bottom: 70 } : { top: 5, right: 30, left: 10, bottom: 30 }}>
                 <XAxis 
                   dataKey="name"
                   tick={{
@@ -104,11 +121,11 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
                 <Tooltip content={<ChartTooltipContent />} />
                 <Bar 
                   dataKey="value" 
-                  onClick={onModalityClick}
+                  onClick={handleModalityClick}
                   cursor="pointer"
                   fillOpacity={0.9}
                 >
-                  {modalityData.map((entry, index) => (
+                  {validatedModalityData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
                       fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : '#00A6D6')} 

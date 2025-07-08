@@ -8,6 +8,7 @@ import {
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell } from "recharts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
+import { validateChartData, validateClickData, validateCountingMode, validateTotalCount, validateFilterValue } from '@/utils/chartDataValidation';
 
 interface TaskDistributionChartProps {
   taskData: {
@@ -35,21 +36,37 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
   onTaskClick
 }) => {
   const isMobile = useIsMobile();
+  
+  // Validate and sanitize all inputs
+  const validatedTaskData = validateChartData(taskData);
+  const validatedTotalModels = validateTotalCount(totalModels);
+  const validatedCountingMode = validateCountingMode(countingMode);
+  const validatedSelectedTask = validateFilterValue(selectedTask);
+  const validatedSelectedLocation = validateFilterValue(selectedLocation);
+  const validatedSelectedModality = validateFilterValue(selectedModality);
+  
+  // Secure click handler
+  const handleTaskClick = (data: any) => {
+    const validatedData = validateClickData(data);
+    if (validatedData && onTaskClick) {
+      onTaskClick(validatedData);
+    }
+  };
 
   return (
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          {countingMode === 'models' ? 'AI Models' : 'Products'} by Task ({totalModels} total)
-          {selectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
-          {selectedModality !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by modality</span>}
+          {validatedCountingMode === 'models' ? 'AI Models' : 'Products'} by Task ({validatedTotalModels} total)
+          {validatedSelectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
+          {validatedSelectedModality !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by modality</span>}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <ResponsiveChartWrapper minHeight="320px">
           <ChartContainer className="h-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={taskData} margin={isMobile ? { top: 5, right: 10, left: 5, bottom: 70 } : { top: 5, right: 30, left: 10, bottom: 30 }}>
+              <BarChart data={validatedTaskData} margin={isMobile ? { top: 5, right: 10, left: 5, bottom: 70 } : { top: 5, right: 30, left: 10, bottom: 30 }}>
                 <XAxis 
                   dataKey="name"
                   tick={{
@@ -68,11 +85,11 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
                 <Tooltip content={<ChartTooltipContent />} />
                 <Bar 
                   dataKey="value" 
-                  onClick={onTaskClick}
+                  onClick={handleTaskClick}
                   cursor="pointer"
                   fillOpacity={0.9}
                 >
-                  {taskData.map((entry, index) => (
+                  {validatedTaskData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
                       fill={entry.isSelected ? '#F43F5E' : '#00A6D6'}

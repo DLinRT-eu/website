@@ -8,6 +8,7 @@ import {
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
+import { validateChartData, validateCountingMode, validateTotalCount, validateFilterValue } from '@/utils/chartDataValidation';
 
 interface CompanyDistributionChartProps {
   companyData: {
@@ -31,9 +32,17 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
 }) => {
   const isMobile = useIsMobile();
   
+  // Validate and sanitize all inputs
+  const validatedCompanyData = validateChartData(companyData);
+  const validatedTotalCompanies = validateTotalCount(totalCompanies);
+  const validatedCountingMode = validateCountingMode(countingMode);
+  const validatedSelectedTask = validateFilterValue(selectedTask);
+  const validatedSelectedLocation = validateFilterValue(selectedLocation);
+  const validatedSelectedModality = validateFilterValue(selectedModality);
+  
   // Sort companies by model count, descending
-  const sortedData = companyData && companyData.length > 0 
-    ? [...companyData].sort((a, b) => b.value - a.value)
+  const sortedData = validatedCompanyData && validatedCompanyData.length > 0 
+    ? [...validatedCompanyData].sort((a, b) => b.value - a.value)
     : [];
 
   // For mobile, limit the number of companies displayed to improve readability
@@ -51,9 +60,9 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
     
   // Get active filters list for title display
   const activeFilters = [];
-  if (selectedTask !== "all") activeFilters.push(`Task: ${selectedTask}`);
-  if (selectedLocation !== "all") activeFilters.push(`Location: ${selectedLocation}`);
-  if (selectedModality !== "all") activeFilters.push(`Modality: ${selectedModality}`);
+  if (validatedSelectedTask !== "all") activeFilters.push(`Task: ${validatedSelectedTask}`);
+  if (validatedSelectedLocation !== "all") activeFilters.push(`Location: ${validatedSelectedLocation}`);
+  if (validatedSelectedModality !== "all") activeFilters.push(`Modality: ${validatedSelectedModality}`);
   
   const filterText = activeFilters.length > 0 
     ? `(${activeFilters.join(", ")})`
@@ -63,7 +72,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          {countingMode === 'models' ? 'AI Models' : 'Products'} by Company ({totalCompanies} total) {filterText}
+          {validatedCountingMode === 'models' ? 'AI Models' : 'Products'} by Company ({validatedTotalCompanies} total) {filterText}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -101,9 +110,9 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
           </div>
         )}
         {isMobile && displayData.length > 10 && (
-          <div className="mt-4 text-sm text-center text-muted-foreground">
-            Showing top 10 companies. View on desktop for all {companyData.length} companies.
-          </div>
+            <div className="mt-4 text-sm text-center text-muted-foreground">
+              Showing top 10 companies. View on desktop for all {validatedCompanyData.length} companies.
+            </div>
         )}
       </CardContent>
     </Card>

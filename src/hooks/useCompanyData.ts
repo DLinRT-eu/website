@@ -3,27 +3,7 @@ import { COMPANIES } from '@/data';
 import dataService from '@/services/DataService';
 import { CompanyDetails } from '@/types/company';
 import { ProductDetails } from '@/types/productDetails';
-
-/**
- * Helper function to count models within a product
- * For auto-contouring: count distinct modalities as separate models (CT, MRI, CBCT)
- * For image synthesis: each product typically represents one model
- * For other categories: each product represents one model
- */
-const countModelsInProduct = (product: ProductDetails): number => {
-  // For auto-contouring products, count distinct modalities as separate models
-  if (product.category === "Auto-Contouring") {
-    if (Array.isArray(product.modality)) {
-      return product.modality.length;
-    } else if (product.modality) {
-      return 1;
-    }
-    return 1; // Default to 1 if no modality specified
-  }
-  
-  // For other categories, each product typically represents one model
-  return 1;
-};
+import { countModelsInProduct } from '@/utils/modelCounting';
 
 export const useCompanyData = (
   companies = dataService.getAllCompanies(),

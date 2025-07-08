@@ -51,7 +51,7 @@ const Dashboard = () => {
   // Use custom hooks to process chart data
   const { 
     taskData, 
-    totalProducts, 
+    totalModels, 
     locationData, 
     totalLocations, 
     modalityData, 
@@ -150,7 +150,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <TaskDistributionChart 
           taskData={taskData}
-          totalProducts={totalProducts}
+          totalModels={totalModels}
           onTaskClick={handleTaskBarClick}
           selectedTask={selectedTask}
           selectedLocation={selectedLocation}

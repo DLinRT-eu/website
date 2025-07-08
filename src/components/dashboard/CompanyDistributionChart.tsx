@@ -29,7 +29,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
 }) => {
   const isMobile = useIsMobile();
   
-  // Sort companies by product count, descending
+  // Sort companies by model count, descending
   const sortedData = companyData && companyData.length > 0 
     ? [...companyData].sort((a, b) => b.value - a.value)
     : [];
@@ -61,7 +61,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          Products by Company ({totalCompanies} total) {filterText}
+          AI Models by Company ({totalCompanies} total) {filterText}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -95,7 +95,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
           </ResponsiveChartWrapper>
         ) : (
           <div className="py-12 text-center text-muted-foreground">
-            No company data available for the current filters.
+            No company models available for the current filters.
           </div>
         )}
         {isMobile && displayData.length > 10 && (

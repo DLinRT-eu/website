@@ -44,7 +44,7 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
       <Card className="w-full">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg md:text-2xl flex items-center gap-2">
-            Products by Modality ({totalModalities} total)
+            AI Models by Modality ({totalModalities} total)
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -55,7 +55,7 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
             <h3 className="text-xl font-bold mb-2">{modality.name}</h3>
             <p className="text-muted-foreground mb-2">Selected Modality</p>
             <p className="text-3xl font-bold">{modality.value}</p>
-            <p className="text-muted-foreground">Products</p>
+            <p className="text-muted-foreground">AI Models</p>
             
             <button 
               onClick={() => onModalityClick({ name: modality.name })}
@@ -74,7 +74,7 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          Products by Modality ({totalModalities} total)
+          AI Models by Modality ({totalModalities} total)
           {selectedTask !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by task</span>}
           {selectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
         </CardTitle>

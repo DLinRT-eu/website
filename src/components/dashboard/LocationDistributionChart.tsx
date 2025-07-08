@@ -59,7 +59,7 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
       <Card className="w-full">
         <CardHeader className="pb-2">
           <CardTitle className="text-lg md:text-2xl flex items-center gap-2">
-            Products by Location ({totalLocations} total)
+            AI Models by Location ({totalLocations} total)
           </CardTitle>
         </CardHeader>
         <CardContent>
@@ -70,7 +70,7 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
             <h3 className="text-xl font-bold mb-2">{location.name}</h3>
             <p className="text-muted-foreground mb-2">Selected Location</p>
             <p className="text-3xl font-bold">{location.value}</p>
-            <p className="text-muted-foreground">Products</p>
+            <p className="text-muted-foreground">AI Models</p>
             
             <button 
               onClick={() => onLocationClick({ name: location.name })}
@@ -89,7 +89,7 @@ const LocationDistributionChart: React.FC<LocationDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          Products by Location ({totalLocations} total)
+          AI Models by Location ({totalLocations} total)
           {selectedTask !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by task</span>}
           {selectedModality !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by modality</span>}
         </CardTitle>

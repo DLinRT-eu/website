@@ -14,6 +14,27 @@ const matchesTask = (product: ProductDetails, task: string): boolean => {
   return false;
 };
 
+/**
+ * Helper function to count models within a product
+ * For auto-contouring: count distinct modalities as separate models (CT, MRI, CBCT)
+ * For image synthesis: each product typically represents one model
+ * For other categories: each product represents one model
+ */
+const countModelsInProduct = (product: ProductDetails): number => {
+  // For auto-contouring products, count distinct modalities as separate models
+  if (product.category === "Auto-Contouring") {
+    if (Array.isArray(product.modality)) {
+      return product.modality.length;
+    } else if (product.modality) {
+      return 1;
+    }
+    return 1; // Default to 1 if no modality specified
+  }
+  
+  // For other categories, each product typically represents one model
+  return 1;
+};
+
 export const useChartData = (
   products: ProductDetails[], 
   selectedTask: string, 
@@ -66,12 +87,15 @@ export const useChartData = (
 
   // Prepare data for task distribution - based on filtered products for location/modality
   const taskData = getAllOptions('category').map(category => {
-    // Count products that match this category (after other filters are applied) - includes secondary categories
-    const value = filteredProducts.filter(p => matchesTask(p, category)).length;
+    // Count models that match this category (after other filters are applied) - includes secondary categories
+    const matchingProducts = filteredProducts.filter(p => matchesTask(p, category));
+    const value = matchingProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
+    
     // Original count before location and modality filters - includes secondary categories
-    const originalValue = selectedTask === "all" ? 
-      products.filter(p => matchesTask(p, category)).length : 
-      value;
+    const originalMatchingProducts = selectedTask === "all" ? 
+      products.filter(p => matchesTask(p, category)) : 
+      matchingProducts;
+    const originalValue = originalMatchingProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
     
     return {
       name: category,
@@ -83,28 +107,30 @@ export const useChartData = (
     };
   }).filter(item => item.value > 0);
 
-  // Total product count - use filtered products if any filter is active
-  const totalProducts = filteredProducts.length;
+  // Total model count - use filtered products if any filter is active
+  const totalModels = filteredProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
 
   // Prepare data for anatomical location distribution - based on filtered products for task/modality
   const allLocations = getAllOptions('anatomicalLocation');
   
   const locationData = allLocations.map(location => {
-    // Count products that match this location (after other filters are applied)
-    const value = filteredProducts.filter(p => {
+    // Count models that match this location (after other filters are applied)
+    const matchingProducts = filteredProducts.filter(p => {
       // Handle both anatomicalLocation and anatomy fields for consistency
       const anatomyList = p.anatomicalLocation || p.anatomy || [];
       return anatomyList.includes(location);
-    }).length;
+    });
+    const value = matchingProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
     
     // Original count before task and modality filters
-    const originalValue = selectedLocation === "all" ?
+    const originalMatchingProducts = selectedLocation === "all" ?
       products.filter(p => {
         // Handle both anatomicalLocation and anatomy fields for consistency
         const anatomyList = p.anatomicalLocation || p.anatomy || [];
         return anatomyList.includes(location);
-      }).length :
-      value;
+      }) :
+      matchingProducts;
+    const originalValue = originalMatchingProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
     
     // Assign a fixed color based on the location name
     const color = LOCATION_COLORS[location] || '#0EA5E9';
@@ -134,23 +160,25 @@ export const useChartData = (
       return { name: modality, value: 0, originalValue: 0, isSelected: false };
     }
     
-    // Count products that match this modality (after other filters are applied)
-    const value = filteredProducts.filter(p => {
+    // Count models that match this modality (after other filters are applied)
+    const matchingProducts = filteredProducts.filter(p => {
       if (Array.isArray(p.modality)) {
         return p.modality.includes(modality);
       }
       return p.modality === modality;
-    }).length;
+    });
+    const value = matchingProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
 
     // Original count before task and location filters
-    const originalValue = selectedModality === "all" ?
+    const originalMatchingProducts = selectedModality === "all" ?
       products.filter(p => {
         if (Array.isArray(p.modality)) {
           return p.modality.includes(modality);
         }
         return p.modality === modality;
-      }).length :
-      value;
+      }) :
+      matchingProducts;
+    const originalValue = originalMatchingProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
     
     return {
       name: modality || 'Unknown',
@@ -234,7 +262,7 @@ export const useChartData = (
 
   return {
     taskData,
-    totalProducts,
+    totalModels,
     locationData: finalLocationData,
     totalLocations,
     modalityData: finalModalityData,

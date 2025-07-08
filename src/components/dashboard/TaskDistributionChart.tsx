@@ -17,7 +17,7 @@ interface TaskDistributionChartProps {
     isFiltered?: boolean;
     fill?: string;
   }[];
-  totalProducts: number;
+  totalModels: number;
   selectedTask: string;
   selectedLocation?: string;
   selectedModality?: string;
@@ -26,7 +26,7 @@ interface TaskDistributionChartProps {
 
 const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
   taskData,
-  totalProducts,
+  totalModels,
   selectedTask,
   selectedLocation = "all",
   selectedModality = "all",
@@ -38,7 +38,7 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          Products by Task ({totalProducts} total)
+          AI Models by Task ({totalModels} total)
           {selectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
           {selectedModality !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by modality</span>}
         </CardTitle>

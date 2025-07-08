@@ -51,7 +51,7 @@ export const FilterSelect = ({
           <SelectValue placeholder={displayText} />
         </SelectTrigger>
         <SelectContent 
-          className="bg-white border border-gray-200 shadow-lg w-[220px] z-[500]"
+          className="bg-white border border-gray-200 shadow-lg w-[220px] z-[500] max-h-[300px] overflow-y-auto"
           align="start"
           position="popper"
           sideOffset={8}
@@ -71,13 +71,16 @@ export const FilterSelect = ({
                   `}
                   onClick={(e) => {
                     e.preventDefault();
+                    e.stopPropagation();
                     handleOptionClick(option);
                   }}
                 >
                   <Checkbox 
                     checked={isSelected}
                     className={`h-4 w-4 cursor-pointer ${isSelected ? "bg-[#00A6D6] border-[#00A6D6]" : "border-gray-300"}`}
-                    onCheckedChange={() => handleOptionClick(option)}
+                    onCheckedChange={(checked) => {
+                      handleOptionClick(option);
+                    }}
                     id={`checkbox-${option}`}
                   />
                   <label 

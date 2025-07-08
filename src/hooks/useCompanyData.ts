@@ -14,7 +14,17 @@ export const useCompanyData = (
   // Prepare data by mapping companies to their products and product counts
   const companyData = companies.map(company => {
     // Get products for this company, either from filtered list or all products
-    const companyProducts = products.filter(p => company.productIds.includes(p.id || ''));
+    const companyProducts = products.filter(p => {
+      const hasId = p.id || '';
+      const isIncluded = company.productIds.includes(hasId);
+      
+      // Debug logging for inconsistent company numbers
+      if (company.name === "Siemens Healthineers" && !isIncluded && hasId) {
+        console.log(`Siemens product not matched: ${hasId}, productIds:`, company.productIds);
+      }
+      
+      return isIncluded;
+    });
     
     return {
       name: company.name,

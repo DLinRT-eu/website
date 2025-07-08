@@ -46,8 +46,11 @@ export const getAllOptions = (field: keyof Product): string[] => {
       const usedLocations = new Set<string>();
       
       ALL_PRODUCTS.forEach(product => {
-        if (product.anatomicalLocation && Array.isArray(product.anatomicalLocation)) {
-          product.anatomicalLocation.forEach(location => {
+        // Handle both anatomicalLocation and anatomy fields for consistency
+        const locations = product.anatomicalLocation || product.anatomy || [];
+        
+        if (locations && Array.isArray(locations)) {
+          locations.forEach(location => {
             // Process locations based on our standard tags
             if (ANATOMY_TAGS.includes(location)) {
               usedLocations.add(location);

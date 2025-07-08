@@ -38,6 +38,7 @@ export const useChartData = (
     
     // Filter by location if not "all"
     if (selectedLocation !== "all") {
+      // Handle both anatomicalLocation and anatomy fields for consistency
       const anatomyList = product.anatomicalLocation || product.anatomy || [];
       if (!anatomyList.includes(selectedLocation)) {
         return false;
@@ -91,6 +92,7 @@ export const useChartData = (
   const locationData = allLocations.map(location => {
     // Count products that match this location (after other filters are applied)
     const value = filteredProducts.filter(p => {
+      // Handle both anatomicalLocation and anatomy fields for consistency
       const anatomyList = p.anatomicalLocation || p.anatomy || [];
       return anatomyList.includes(location);
     }).length;
@@ -98,6 +100,7 @@ export const useChartData = (
     // Original count before task and modality filters
     const originalValue = selectedLocation === "all" ?
       products.filter(p => {
+        // Handle both anatomicalLocation and anatomy fields for consistency
         const anatomyList = p.anatomicalLocation || p.anatomy || [];
         return anatomyList.includes(location);
       }).length :

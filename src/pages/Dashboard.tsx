@@ -15,6 +15,7 @@ import LocationDistributionChart from "@/components/dashboard/LocationDistributi
 import ModalityDistributionChart from "@/components/dashboard/ModalityDistributionChart";
 import CompanyDistributionChart from "@/components/dashboard/CompanyDistributionChart";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import { CountingModeToggle } from "@/components/dashboard/CountingModeToggle";
 
 // Lazily load the charts that are only shown conditionally
 const StructuresChart = lazy(() => import("@/components/dashboard/StructuresChart"));
@@ -24,6 +25,7 @@ const Dashboard = () => {
   const [selectedTask, setSelectedTask] = useState<string>("all");
   const [selectedLocation, setSelectedLocation] = useState<string>("all");
   const [selectedModality, setSelectedModality] = useState<string>("all");
+  const [countingMode, setCountingMode] = useState<'models' | 'products'>('models');
   const { toast } = useToast();
   const isMobile = useIsMobile();
   
@@ -59,10 +61,10 @@ const Dashboard = () => {
     structureData,
     structureTypeData,
     filteredProducts 
-  } = useChartData(products, selectedTask, selectedLocation, selectedModality);
+  } = useChartData(products, selectedTask, selectedLocation, selectedModality, countingMode);
 
   // Get company data using the updated hook with filtered products
-  const { companyData, totalCompanies } = useCompanyData(companies, filteredProducts);
+  const { companyData, totalCompanies } = useCompanyData(companies, filteredProducts, countingMode);
 
   // Handler functions
   const handleTaskBarClick = (data: any) => {
@@ -146,11 +148,17 @@ const Dashboard = () => {
         allLocations={allLocations}
         allModalities={allModalities}
       />
+      
+      <CountingModeToggle 
+        countingMode={countingMode}
+        onToggle={setCountingMode}
+      />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <TaskDistributionChart 
           taskData={taskData}
           totalModels={totalModels}
+          countingMode={countingMode}
           onTaskClick={handleTaskBarClick}
           selectedTask={selectedTask}
           selectedLocation={selectedLocation}
@@ -160,6 +168,7 @@ const Dashboard = () => {
         <LocationDistributionChart 
           locationData={locationData}
           totalLocations={totalLocations}
+          countingMode={countingMode}
           selectedLocation={selectedLocation}
           selectedTask={selectedTask}
           selectedModality={selectedModality}
@@ -170,6 +179,7 @@ const Dashboard = () => {
         <ModalityDistributionChart 
           modalityData={modalityData}
           totalModalities={totalModalities}
+          countingMode={countingMode}
           selectedModality={selectedModality}
           selectedTask={selectedTask}
           selectedLocation={selectedLocation}
@@ -179,6 +189,7 @@ const Dashboard = () => {
         <CompanyDistributionChart 
           companyData={companyData}
           totalCompanies={totalCompanies}
+          countingMode={countingMode}
           selectedTask={selectedTask}
           selectedLocation={selectedLocation}
           selectedModality={selectedModality}

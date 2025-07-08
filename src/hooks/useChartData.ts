@@ -15,7 +15,8 @@ export const useChartData = (
   products: ProductDetails[], 
   selectedTask: string, 
   selectedLocation: string,
-  selectedModality: string
+  selectedModality: string,
+  countingMode: 'models' | 'products' = 'models'
 ) => {
   const [structureData, setStructureData] = useState<{name: string, value: number}[]>([]);
   const [structureTypeData, setStructureTypeData] = useState<{
@@ -30,11 +31,11 @@ export const useChartData = (
   const filteredProducts = filterProducts(products, selectedTask, selectedLocation, selectedModality);
 
   // Transform data for charts
-  const taskData = transformTaskData(products, filteredProducts, selectedTask);
-  const totalModels = countTotalModels(filteredProducts);
-  const locationData = transformLocationData(products, filteredProducts, selectedLocation);
+  const taskData = transformTaskData(products, filteredProducts, selectedTask, countingMode);
+  const totalModels = countTotalModels(filteredProducts, countingMode);
+  const locationData = transformLocationData(products, filteredProducts, selectedLocation, countingMode);
   const totalLocations = locationData.reduce((sum, item) => sum + item.value, 0);
-  const modalityData = transformModalityData(products, filteredProducts, selectedModality);
+  const modalityData = transformModalityData(products, filteredProducts, selectedModality, countingMode);
   const totalModalities = modalityData.reduce((sum, item) => sum + item.value, 0);
 
   // Update structure data when task changes

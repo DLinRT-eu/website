@@ -7,7 +7,8 @@ import { countModelsInProduct } from '@/utils/modelCounting';
 
 export const useCompanyData = (
   companies = dataService.getAllCompanies(),
-  filteredProducts?: ProductDetails[]
+  filteredProducts?: ProductDetails[],
+  countingMode: 'models' | 'products' = 'models'
 ) => {
   // Get products - either use filtered ones if provided or get all
   const products = filteredProducts || dataService.getAllProducts();
@@ -28,7 +29,7 @@ export const useCompanyData = (
     });
     
     // Count total models for this company
-    const totalModels = companyProducts.reduce((sum, product) => sum + countModelsInProduct(product), 0);
+    const totalModels = companyProducts.reduce((sum, product) => sum + countModelsInProduct(product, countingMode), 0);
     
     return {
       name: company.name,

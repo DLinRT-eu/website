@@ -15,7 +15,12 @@ export const matchesTask = (product: ProductDetails, task: string): boolean => {
  * For image synthesis: each product typically represents one model
  * For other categories: each product represents one model
  */
-export const countModelsInProduct = (product: ProductDetails): number => {
+export const countModelsInProduct = (product: ProductDetails, countingMode: 'models' | 'products' = 'models'): number => {
+  // If counting products, always return 1
+  if (countingMode === 'products') {
+    return 1;
+  }
+  
   // For auto-contouring products, count distinct modalities as separate models
   if (product.category === "Auto-Contouring") {
     if (Array.isArray(product.modality)) {
@@ -33,14 +38,14 @@ export const countModelsInProduct = (product: ProductDetails): number => {
 /**
  * Count total models in a list of products
  */
-export const countTotalModels = (products: ProductDetails[]): number => {
-  return products.reduce((sum, product) => sum + countModelsInProduct(product), 0);
+export const countTotalModels = (products: ProductDetails[], countingMode: 'models' | 'products' = 'models'): number => {
+  return products.reduce((sum, product) => sum + countModelsInProduct(product, countingMode), 0);
 };
 
 /**
  * Count models that match a specific task/category
  */
-export const countModelsForTask = (products: ProductDetails[], task: string): number => {
+export const countModelsForTask = (products: ProductDetails[], task: string, countingMode: 'models' | 'products' = 'models'): number => {
   const matchingProducts = products.filter(p => matchesTask(p, task));
-  return countTotalModels(matchingProducts);
+  return countTotalModels(matchingProducts, countingMode);
 };

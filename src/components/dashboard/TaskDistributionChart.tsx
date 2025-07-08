@@ -18,6 +18,7 @@ interface TaskDistributionChartProps {
     fill?: string;
   }[];
   totalModels: number;
+  countingMode?: 'models' | 'products';
   selectedTask: string;
   selectedLocation?: string;
   selectedModality?: string;
@@ -27,6 +28,7 @@ interface TaskDistributionChartProps {
 const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
   taskData,
   totalModels,
+  countingMode = 'models',
   selectedTask,
   selectedLocation = "all",
   selectedModality = "all",
@@ -38,7 +40,7 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          AI Models by Task ({totalModels} total)
+          {countingMode === 'models' ? 'AI Models' : 'Products'} by Task ({totalModels} total)
           {selectedLocation !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by location</span>}
           {selectedModality !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by modality</span>}
         </CardTitle>

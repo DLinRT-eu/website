@@ -15,6 +15,7 @@ interface CompanyDistributionChartProps {
     value: number;
   }[];
   totalCompanies: number;
+  countingMode?: 'models' | 'products';
   selectedTask: string;
   selectedLocation?: string;
   selectedModality?: string;
@@ -23,6 +24,7 @@ interface CompanyDistributionChartProps {
 const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
   companyData,
   totalCompanies,
+  countingMode = 'models',
   selectedTask,
   selectedLocation = "all",
   selectedModality = "all"
@@ -61,7 +63,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          AI Models by Company ({totalCompanies} total) {filterText}
+          {countingMode === 'models' ? 'AI Models' : 'Products'} by Company ({totalCompanies} total) {filterText}
         </CardTitle>
       </CardHeader>
       <CardContent>

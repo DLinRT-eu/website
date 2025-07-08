@@ -11,18 +11,19 @@ import { filterProductsByLocation, filterProductsByModality } from './productFil
 export const transformTaskData = (
   products: ProductDetails[],
   filteredProducts: ProductDetails[],
-  selectedTask: string
+  selectedTask: string,
+  countingMode: 'models' | 'products' = 'models'
 ) => {
   return getAllOptions('category').map(category => {
     // Count models that match this category (after other filters are applied) - includes secondary categories
     const matchingProducts = filteredProducts.filter(p => matchesTask(p, category));
-    const value = countTotalModels(matchingProducts);
+    const value = countTotalModels(matchingProducts, countingMode);
     
     // Original count before location and modality filters - includes secondary categories
     const originalMatchingProducts = selectedTask === "all" ? 
       products.filter(p => matchesTask(p, category)) : 
       matchingProducts;
-    const originalValue = countTotalModels(originalMatchingProducts);
+    const originalValue = countTotalModels(originalMatchingProducts, countingMode);
     
     return {
       name: category,
@@ -41,20 +42,21 @@ export const transformTaskData = (
 export const transformLocationData = (
   products: ProductDetails[],
   filteredProducts: ProductDetails[],
-  selectedLocation: string
+  selectedLocation: string,
+  countingMode: 'models' | 'products' = 'models'
 ) => {
   const allLocations = getAllOptions('anatomicalLocation');
   
   const locationData = allLocations.map(location => {
     // Count models that match this location (after other filters are applied)
     const matchingProducts = filterProductsByLocation(filteredProducts, location);
-    const value = countTotalModels(matchingProducts);
+    const value = countTotalModels(matchingProducts, countingMode);
     
     // Original count before task and modality filters
     const originalMatchingProducts = selectedLocation === "all" ?
       filterProductsByLocation(products, location) :
       matchingProducts;
-    const originalValue = countTotalModels(originalMatchingProducts);
+    const originalValue = countTotalModels(originalMatchingProducts, countingMode);
     
     // Assign a fixed color based on the location name
     const color = LOCATION_COLORS[location] || '#0EA5E9';
@@ -82,7 +84,8 @@ export const transformLocationData = (
 export const transformModalityData = (
   products: ProductDetails[],
   filteredProducts: ProductDetails[],
-  selectedModality: string
+  selectedModality: string,
+  countingMode: 'models' | 'products' = 'models'
 ) => {
   const modalityData = getAllOptions('modality').map(modality => {
     // Skip LINAC and MRI-LINAC in the chart data
@@ -92,13 +95,13 @@ export const transformModalityData = (
     
     // Count models that match this modality (after other filters are applied)
     const matchingProducts = filterProductsByModality(filteredProducts, modality);
-    const value = countTotalModels(matchingProducts);
+    const value = countTotalModels(matchingProducts, countingMode);
 
     // Original count before task and location filters
     const originalMatchingProducts = selectedModality === "all" ?
       filterProductsByModality(products, modality) :
       matchingProducts;
-    const originalValue = countTotalModels(originalMatchingProducts);
+    const originalValue = countTotalModels(originalMatchingProducts, countingMode);
     
     return {
       name: modality || 'Unknown',

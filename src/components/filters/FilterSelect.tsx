@@ -34,7 +34,11 @@ export const FilterSelect = ({
       : selectedValues[0]
     : placeholder;
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (option: string, e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
     onValueChange(option);
   };
 
@@ -69,23 +73,22 @@ export const FilterSelect = ({
                     ${isSelected ? "bg-[#00A6D6]/10" : ""}
                     hover:bg-gray-100 transition-colors
                   `}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleOptionClick(option);
-                  }}
+                  onClick={(e) => handleOptionClick(option, e)}
                 >
                   <Checkbox 
                     checked={isSelected}
                     className={`h-4 w-4 cursor-pointer ${isSelected ? "bg-[#00A6D6] border-[#00A6D6]" : "border-gray-300"}`}
-                    onCheckedChange={(checked) => {
-                      handleOptionClick(option);
-                    }}
+                    onCheckedChange={() => handleOptionClick(option)}
+                    onClick={(e) => e.stopPropagation()}
                     id={`checkbox-${option}`}
                   />
                   <label 
                     htmlFor={`checkbox-${option}`}
                     className="flex-1 cursor-pointer"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleOptionClick(option, e);
+                    }}
                   >
                     {option}
                   </label>

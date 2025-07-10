@@ -14,7 +14,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.united-imaging.com/",
     productUrl: "https://www.united-imaging.com/en/products/radiationtherapy",
     anatomicalLocation: ["Whole body"],
-    modality: "CBCT",
+    modality: ["CBCT"],
     diseaseTargeted: ["Cancer"],
     releaseDate: "2021-11-01",
     version: "1.2",

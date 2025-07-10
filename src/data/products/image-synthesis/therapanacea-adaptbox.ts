@@ -23,7 +23,7 @@ export const THERAPANACEA_ADAPTBOX_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/therapanacea.png",
     website: "https://www.therapanacea.eu/our-products/adaptbox/",
     anatomicalLocation: ["Pelvis"],
-    modality: "CBCT",
+    modality: ["CBCT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Prostate Cancer"],
     keyFeatures: [

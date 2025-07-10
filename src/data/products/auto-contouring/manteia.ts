@@ -16,7 +16,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/manteia.png",
     website: "https://www.manteiatech.com/",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Clinical workflow integration"],

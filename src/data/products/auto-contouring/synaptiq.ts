@@ -15,7 +15,7 @@ export const SYNAPTIQ_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/synaptiq.png",
     website: "https://synaptiq.io/product/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Clinical workflow integration"],

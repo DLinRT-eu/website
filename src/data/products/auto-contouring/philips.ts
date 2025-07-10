@@ -16,7 +16,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/philips.png",
     website: "https://www.usa.philips.com/healthcare/product/HCNMRB780/mrcat-prostate-auto-contouring-mr-rt-clinical-application",
     anatomicalLocation: ["Pelvis"],
-    modality: "MRI",
+    modality: ["MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Multi-atlas based algorithms", "Model-based segmentation", "Seamless TPS integration"],

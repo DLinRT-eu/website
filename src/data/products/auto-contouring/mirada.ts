@@ -15,7 +15,7 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/mirada-medical.png",
     website: "https://mirada-medical.com/product/mirada-dlcexpert-ai-autocontouring/",
     anatomicalLocation: ["Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["Deep learning algorithms", "Batch processing", "Clinical workflow integration"],

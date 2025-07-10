@@ -16,7 +16,7 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/wisdom-tech.png",
     website: "http://www.wisdom-tech.online/view-16.html",
     anatomicalLocation: ["Brain","Head & Neck", "Thorax", "Abdomen", "Pelvis"],
-    modality: "CT",
+    modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["AI-powered segmentation", "Fast processing", "Clinical workflow integration"],

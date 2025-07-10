@@ -10,10 +10,44 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
 import { validateChartData, validateCountingMode, validateTotalCount, validateFilterValue } from '@/utils/chartDataValidation';
 
+// Custom tooltip component for company chart
+const CompanyTooltip = ({ active, payload, countingMode }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    const { name, value, products } = data;
+    
+    return (
+      <div className="bg-popover border border-border rounded-lg shadow-lg p-3 max-w-sm">
+        <div className="font-semibold text-sm mb-2">
+          {name}
+        </div>
+        <div className="text-sm mb-2">
+          {countingMode === 'models' ? 'AI Models' : 'Products'}: {value}
+        </div>
+        {products && products.length > 0 && (
+          <div className="text-xs text-muted-foreground">
+            <div className="font-medium mb-1">Products:</div>
+            <ul className="space-y-1">
+              {products.map((product: any, index: number) => (
+                <li key={index} className="truncate">
+                  • {product.name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    );
+  }
+  return null;
+};
+
 interface CompanyDistributionChartProps {
   companyData: {
     name: string;
     value: number;
+    company?: any;
+    products?: any[];
   }[];
   totalCompanies: number;
   countingMode?: 'models' | 'products';
@@ -98,7 +132,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
                     }}
                     tickMargin={8}
                   />
-                  <Tooltip content={<ChartTooltipContent />} />
+                  <Tooltip content={<CompanyTooltip countingMode={validatedCountingMode} />} />
                   <Bar dataKey="value" fill="#00A6D6" />
                 </BarChart>
               </ResponsiveContainer>

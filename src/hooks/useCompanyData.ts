@@ -34,7 +34,8 @@ export const useCompanyData = (
     return {
       name: company.name,
       value: totalModels,
-      company // Keep full company data in case needed
+      company, // Keep full company data in case needed
+      products: companyProducts // Include the filtered products for this company
     };
   }).filter(item => item.value > 0); // Only include companies with products
 

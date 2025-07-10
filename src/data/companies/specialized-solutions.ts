@@ -16,7 +16,7 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
     "name": "RaySearch Laboratories",
     "description": "Developer of innovative software solutions for radiation therapy treatment planning.",
     "website": "https://www.raysearchlabs.com",
-    "productIds": ["raysearch-raystation", "raysearch-raystation-deep-learning"],
+    "productIds": ["raysearch-raystation", "raysearch-raystation-planning"],
     "category": "Specialized Solutions",
     "logoUrl": "/logos/raystation.jpg"
   },

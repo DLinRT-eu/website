@@ -7,9 +7,18 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
     "name": "Spectronic Medical",
     "description": "Specialists in MRI-only radiotherapy planning solutions.",
     "website": "https://spectronicmedical.com/",
-    "productIds": ["spectronic-mriplus", "spectronic-mri-planner"],
+    "productIds": ["spectronic-mriplus", "spectronic-mri-planner", "spectronic-mriplanner"],
     "category": "Specialized Solutions",
     "logoUrl": "/logos/spectronic-medical.jpg"
+  },
+  {
+    "id": "syntheticmr",
+    "name": "SyntheticMR",
+    "description": "Pioneering medical imaging technology company specializing in quantitative MRI and synthetic image generation.",
+    "website": "https://syntheticmr.com/",
+    "productIds": ["syntheticmr-neuro"],
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/syntheticMRI.png"
   },
   {
     "id": "raysearch",

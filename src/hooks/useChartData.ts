@@ -21,6 +21,7 @@ export const useChartData = (
   const [structureData, setStructureData] = useState<{name: string, value: number}[]>([]);
   const [structureTypeData, setStructureTypeData] = useState<{
     productName: string;
+    companyName: string;
     OARs: number;
     GTV: number;
     Elective: number;

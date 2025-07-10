@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface StructureTypeData {
   productName: string;
+  companyName: string;
   OARs: number;
   GTV: number;
   Elective: number;
@@ -48,7 +49,13 @@ const StructureTypeDistributionChart: React.FC<StructureTypeDistributionChartPro
               <YAxis />
               <Tooltip 
                 formatter={(value: number, name: string) => [value, name]}
-                labelFormatter={(label) => `Product: ${label}`}
+                labelFormatter={(label, payload) => {
+                  if (payload && payload.length > 0) {
+                    const data = payload[0].payload;
+                    return `${data.companyName} - ${data.productName}`;
+                  }
+                  return `Product: ${label}`;
+                }}
               />
               <Legend />
               <Bar dataKey="OARs" stackId="a" fill="#3b82f6" name="OARs" />

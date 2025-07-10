@@ -161,7 +161,7 @@ export const transformStructureData = (
 export const transformStructureTypeData = (
   filteredProducts: ProductDetails[],
   selectedTask: string
-): {productName: string; OARs: number; GTV: number; Elective: number; total: number}[] => {
+): {productName: string; companyName: string; OARs: number; GTV: number; Elective: number; total: number}[] => {
   if (selectedTask !== "Auto-Contouring") {
     return [];
   }
@@ -184,6 +184,7 @@ export const transformStructureTypeData = (
     const counts = countStructureTypes(structureList);
     return {
       productName: product.name,
+      companyName: product.company,
       ...counts
     };
   })

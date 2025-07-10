@@ -116,11 +116,6 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     lastRevised: "2025-05-12",
     source: "Automatically retrieved and revised",
     // Adding new fields
-    evidence: [
-      "10.1016/j.ijrobp.2023.07.035",
-      "10.1088/1361-6560/ac619a",
-      "10.1016/j.radonc.2022.01.034"
-    ],
     limitations: [
       "Limited performance on contrast-enhanced CT scans",
       "Reduced accuracy for post-surgical anatomy",

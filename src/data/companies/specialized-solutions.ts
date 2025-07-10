@@ -55,6 +55,15 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
     "logoUrl": "/logos/SubtleMedical.jpg"
   },
   {
+    "id": "ptw-dosimetry",
+    "name": "PTW",
+    "description": "Leading provider of dosimetry solutions and quality assurance systems for radiation therapy.",
+    "website": "https://www.ptwdosimetry.com",
+    "productIds": ["ptw-aqualis"],
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/ptw.jpg"
+  },
+  {
     "id": "pymedix",
     "name": "PyMedix",
     "description": "Specialists in medical imaging registration and analysis solutions.",

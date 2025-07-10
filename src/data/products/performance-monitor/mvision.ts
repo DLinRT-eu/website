@@ -9,7 +9,7 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.mvision.ai/",
     productUrl: "https://mvision.ai/verify/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/performance-monitor/mvision.ts",
-    description: "Advanced quality assurance platform for monitoring and analyzing radiotherapy treatment plan delivery accuracy.",
+    description: "Compare AI contours.",
     features: [
       "Automated verification", 
       "Treatment monitoring", 

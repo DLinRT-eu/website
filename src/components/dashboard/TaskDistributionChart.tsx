@@ -92,8 +92,8 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
                   {validatedTaskData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={entry.isSelected ? '#F43F5E' : '#00A6D6'}
-                      fillOpacity={entry.isFiltered ? 0.7 : 1}
+                      fill={entry.fill || '#64748B'}
+                      fillOpacity={entry.isFiltered ? 0.7 : (entry.isSelected ? 1 : 0.8)}
                     />
                   ))}
                 </Bar>

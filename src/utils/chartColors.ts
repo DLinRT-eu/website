@@ -45,6 +45,19 @@ export const MODALITY_COLORS: Record<string, string> = {
   'Agnostic': '#EC4899',     // Pink
 };
 
+// Fixed mapping of tasks/categories to colors (matching TaskTaxonomy colors)
+export const TASK_COLORS: Record<string, string> = {
+  'Reconstruction': '#A855F7',        // Purple (from bg-purple-100)
+  'Image Enhancement': '#F59E0B',     // Yellow/Amber (from bg-yellow-100)
+  'Image Synthesis': '#10B981',       // Green (from bg-green-100)
+  'Auto-Contouring': '#3B82F6',       // Blue (from bg-blue-100)
+  'Treatment Planning': '#EC4899',    // Pink (from bg-pink-100)
+  'Clinical Prediction': '#F97316',   // Orange (from bg-orange-100)
+  'Registration': '#6366F1',          // Indigo (from bg-indigo-100)
+  'Performance Monitor': '#6B7280',   // Gray (from bg-gray-100)
+  'Model Training': '#06B6D4',        // Cyan (from bg-cyan-100)
+};
+
 // Get modality color with fallback
 export const getModalityColor = (modality: string | string[]): string => {
   if (!modality) return '#64748B'; // Gray fallback
@@ -55,6 +68,20 @@ export const getModalityColor = (modality: string | string[]): string => {
   // Check for exact matches first
   for (const [key, color] of Object.entries(MODALITY_COLORS)) {
     if (normalizedModality.includes(key.toLowerCase())) {
+      return color;
+    }
+  }
+  
+  return '#64748B'; // Gray fallback
+};
+
+// Get task color with fallback
+export const getTaskColor = (task: string): string => {
+  if (!task) return '#64748B'; // Gray fallback
+  
+  // Check for exact matches first
+  for (const [key, color] of Object.entries(TASK_COLORS)) {
+    if (task === key) {
       return color;
     }
   }

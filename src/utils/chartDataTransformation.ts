@@ -1,6 +1,6 @@
 import { ProductDetails } from '@/types/productDetails';
 import { getAllOptions } from './filterOptions';
-import { LOCATION_COLORS } from './chartColors';
+import { LOCATION_COLORS, getTaskColor } from './chartColors';
 import { countStructureTypes } from './structureClassification';
 import { matchesTask, countModelsInProduct, countTotalModels, countModelsForTask } from './modelCounting';
 import { filterProductsByLocation, filterProductsByModality } from './productFiltering';
@@ -31,7 +31,7 @@ export const transformTaskData = (
       originalValue,
       isSelected: category === selectedTask,
       isFiltered: value < originalValue && value > 0,
-      fill: category === selectedTask ? '#F43F5E' : undefined
+      fill: getTaskColor(category)
     };
   }).filter(item => item.value > 0);
 };

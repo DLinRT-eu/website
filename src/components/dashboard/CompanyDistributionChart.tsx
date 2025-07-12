@@ -106,25 +106,22 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={displayData} 
-                  margin={isMobile ? { top: 5, right: 15, left: 5, bottom: 100 } : { top: 5, right: 30, left: 20, bottom: 120 }}
+                  layout="vertical"
+                  margin={isMobile ? { top: 5, right: 20, left: 120, bottom: 5 } : { top: 5, right: 30, left: 180, bottom: 5 }}
                 >
-                  <XAxis 
-                    dataKey="name"
-                    tick={{
-                      fontSize: isMobile ? 10 : 12,
-                      fill: '#374151',
-                      fontWeight: 500,
-                    }}
-                    angle={isMobile ? -45 : -35}
-                    textAnchor="end"
-                    height={isMobile ? 100 : 120}
-                    tickMargin={10}
-                    interval={0}
-                  />
+                  <XAxis type="number" />
                   <YAxis 
-                    tick={{
-                      fontSize: isMobile ? 10 : 12,
+                    dataKey="name" 
+                    type="category" 
+                    width={isMobile ? 115 : 175}
+                    tick={{ 
+                      fontSize: isMobile ? 10 : 12, 
+                      fontWeight: 500,
+                      textAnchor: 'end',
+                      fill: '#374151'
                     }}
+                    tickMargin={5}
+                    interval={0}
                   />
                   <Tooltip content={<CompanyTooltip countingMode={validatedCountingMode} />} />
                   <Bar dataKey="value" fill="#00A6D6" />

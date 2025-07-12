@@ -44,10 +44,24 @@ const ProductCard = ({
     return Array.isArray(modality) ? modality.join(", ") : modality;
   };
 
-  const getModalityBadgeStyle = (modality: string | string[] | undefined): string => {
-    const color = getModalityColor(modality);
-    // Convert hex to HSL and create badge classes
+  const getModalityBadgeStyle = (): string => {
     return `border-transparent text-white`;
+  };
+
+  const renderModalityBadges = (modality: string | string[] | undefined) => {
+    if (!modality) return null;
+    
+    const modalities = Array.isArray(modality) ? modality : [modality];
+    
+    return modalities.map((singleModality, index) => (
+      <Badge 
+        key={index}
+        className={`text-xs mr-2 ${getModalityBadgeStyle()}`}
+        style={{ backgroundColor: getModalityColor(singleModality.trim()) }}
+      >
+        {singleModality.trim()}
+      </Badge>
+    ));
   };
 
   return (
@@ -96,13 +110,8 @@ const ProductCard = ({
           </div>
         )}
         {modality && (
-          <div className="flex items-center mt-2 mb-4">
-            <Badge 
-              className={`text-xs ${getModalityBadgeStyle(modality)}`}
-              style={{ backgroundColor: getModalityColor(modality) }}
-            >
-              {formatModality(modality)}
-            </Badge>
+          <div className="flex items-center flex-wrap gap-1 mt-2 mb-4">
+            {renderModalityBadges(modality)}
           </div>
         )}
       </CardContent>

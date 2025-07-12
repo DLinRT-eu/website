@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
+import { getModalityColor } from "@/utils/chartColors";
 
 interface ProductCardProps {
   id?: string;
@@ -43,12 +44,10 @@ const ProductCard = ({
     return Array.isArray(modality) ? modality.join(", ") : modality;
   };
 
-  const getModalityColor = (modality: string | string[] | undefined): string => {
-    const modalityStr = formatModality(modality).toLowerCase();
-    if (modalityStr.includes("ct")) return "bg-blue-100 text-blue-800";
-    if (modalityStr.includes("mri")) return "bg-green-100 text-green-800";
-    if (modalityStr.includes("pet")) return "bg-purple-100 text-purple-800";
-    return "bg-gray-100 text-gray-800";
+  const getModalityBadgeStyle = (modality: string | string[] | undefined): string => {
+    const color = getModalityColor(modality);
+    // Convert hex to HSL and create badge classes
+    return `border-transparent text-white`;
   };
 
   return (
@@ -98,7 +97,10 @@ const ProductCard = ({
         )}
         {modality && (
           <div className="flex items-center mt-2 mb-4">
-            <Badge className={`text-xs ${getModalityColor(modality)}`}>
+            <Badge 
+              className={`text-xs ${getModalityBadgeStyle(modality)}`}
+              style={{ backgroundColor: getModalityColor(modality) }}
+            >
               {formatModality(modality)}
             </Badge>
           </div>

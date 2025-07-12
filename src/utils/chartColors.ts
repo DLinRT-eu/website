@@ -27,3 +27,32 @@ export const LOCATION_COLORS: Record<string, string> = {
   'Female Pelvis': '#84CC16', // Lime
   'Thorax': '#8B5CF6',       // Vivid Purple
 };
+
+// Fixed mapping of modalities to colors
+export const MODALITY_COLORS: Record<string, string> = {
+  'CT': '#0EA5E9',           // Bright Ocean Blue
+  'MRI': '#10B981',          // Emerald Green
+  'PET': '#8B5CF6',          // Vivid Purple
+  'SPECT': '#F59E0B',        // Amber
+  'X-ray': '#F43F5E',        // Vibrant Red
+  'Ultrasound': '#14B8A6',   // Teal
+  'Multi-modal': '#6366F1',  // Indigo
+  'Agnostic': '#EC4899',     // Pink
+};
+
+// Get modality color with fallback
+export const getModalityColor = (modality: string | string[]): string => {
+  if (!modality) return '#64748B'; // Gray fallback
+  
+  const modalityStr = Array.isArray(modality) ? modality.join(', ') : modality;
+  const normalizedModality = modalityStr.toLowerCase();
+  
+  // Check for exact matches first
+  for (const [key, color] of Object.entries(MODALITY_COLORS)) {
+    if (normalizedModality.includes(key.toLowerCase())) {
+      return color;
+    }
+  }
+  
+  return '#64748B'; // Gray fallback
+};

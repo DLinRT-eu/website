@@ -10,6 +10,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import ResponsiveChartWrapper from './ResponsiveChartWrapper';
 import { CircleCheckIcon } from 'lucide-react';
 import { validateChartData, validateClickData, validateCountingMode, validateTotalCount, validateFilterValue } from '@/utils/chartDataValidation';
+import { getModalityColor } from '@/utils/chartColors';
 
 interface ModalityDistributionChartProps {
   modalityData: {
@@ -128,7 +129,7 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
                   {validatedModalityData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : '#00A6D6')} 
+                      fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : getModalityColor(entry.name))} 
                     />
                   ))}
                 </Bar>

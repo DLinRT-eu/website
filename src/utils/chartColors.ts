@@ -34,7 +34,7 @@ export const MODALITY_COLORS: Record<string, string> = {
   'MRI': '#10B981',          // Emerald Green
   'PET': '#8B5CF6',          // Vivid Purple
   'PET/CT': '#F59E0B',       // Orange
-  'CBCT': '#1E3A8A',         // Dark Blue
+  'CBCT': '#1E40AF',         // Darker Blue (darker than CT)
   'SPECT': '#F59E0B',        // Amber
   'X-ray': '#F43F5E',        // Vibrant Red
   'Ultrasound': '#14B8A6',   // Teal

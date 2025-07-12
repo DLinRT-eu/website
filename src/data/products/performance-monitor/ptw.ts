@@ -9,12 +9,12 @@ export const PTW_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.ptwdosimetry.com",
     productUrl: "https://www.ptwdosimetry.com/en/products/aiqualis",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/performance-monitor/ptw.ts",
-    description: "Monitor your AI contouring quality in clinical practice",
+    description: "AI contouring quality monitoring solution for clinical practice",
     features: [
-      "Automated QA", 
-      "Comprehensive workflow", 
-      "Real-time monitoring", 
-      "Treatment verification"
+      "AI contour monitoring", 
+      "Quality assessment", 
+      "Clinical integration", 
+      "Performance tracking"
     ],
     category: "Performance Monitor",
     certification: "MDR exempt",
@@ -25,18 +25,18 @@ export const PTW_PRODUCTS: ProductDetails[] = [
     subspeciality: "Medical Physics",
     diseaseTargeted: ["Cancer"],
     keyFeatures: [
-      "Multi-vendor compatibility",
-      "Automated data acquisition",
-      "Comprehensive analysis",
-      "Clear reporting",
-      "Decision support"
+      "AI contour quality monitoring",
+      "Clinical practice integration",
+      "Performance analytics",
+      "Quality metrics tracking",
+      "Workflow optimization"
     ],
     technicalSpecifications: {
-      population: "All patients",
-      input: ["Treatment logs", "Machine QA data", "Patient QA measurements"],
-      inputFormat: ["DICOM", "Custom formats"],
-      output: ["QA reports", "Performance trend analysis"],
-      outputFormat: ["PDF", "CSV", "DICOM"]
+      population: "Radiotherapy patients with AI-generated contours",
+      input: ["AI contours", "Manual contours", "Treatment data"],
+      inputFormat: ["DICOM-RT", "RT Structure Sets"],
+      output: ["Quality reports", "Performance metrics"],
+      outputFormat: ["PDF", "CSV", "Dashboard"]
     },
     technology: {
       integration: ["TPS integration", "R&V integration", "LINAC connectivity"],
@@ -51,7 +51,7 @@ export const PTW_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "510(k) cleared",
-      intendedUseStatement: "For quality assurance and performance monitoring of radiotherapy treatments and equipment."
+      intendedUseStatement: "For monitoring and quality assessment of AI-generated contours in clinical radiotherapy practice."
     },
     market: {
       onMarketSince: "2019",

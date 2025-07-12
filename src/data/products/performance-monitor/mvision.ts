@@ -9,12 +9,12 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.mvision.ai/",
     productUrl: "https://mvision.ai/verify/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/performance-monitor/mvision.ts",
-    description: "Contour Comparison Tool Helps clinicians compare and visualize user and AI-generated contours",
+    description: "Contour comparison tool for visualizing user and AI-generated contours",
     features: [
-      "Automated verification", 
-      "Treatment monitoring", 
-      "Performance analysis", 
-      "Workflow integration"
+      "Contour comparison", 
+      "Visualization tools", 
+      "AI contour analysis", 
+      "Clinical workflow integration"
     ],
     category: "Performance Monitor",
     certification: "MDR exempt",
@@ -25,18 +25,18 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
     subspeciality: "Medical Physics",
     diseaseTargeted: ["Cancer"],
     keyFeatures: [
-      "Automated plan verification",
-      "Dose delivery monitoring",
-      "Comprehensive reporting",
-      "EPID-based verification",
-      "Integrated workflow"
+      "Contour visualization",
+      "AI vs manual comparison",
+      "Interactive analysis tools",
+      "Clinical decision support",
+      "Workflow integration"
     ],
     technicalSpecifications: {
-      population: "All radiotherapy patients",
-      input: ["Treatment plans", "Delivered dose data", "EPID measurements"],
-      inputFormat: ["DICOM", "DICOM-RT"],
-      output: ["Verification reports", "Treatment analysis"],
-      outputFormat: ["PDF", "DICOM"]
+      population: "Radiotherapy patients with contoured structures",
+      input: ["AI contours", "Manual contours", "Structure sets"],
+      inputFormat: ["DICOM-RT", "RT Structure Sets"],
+      output: ["Comparison reports", "Visualization data"],
+      outputFormat: ["PDF", "Interactive dashboard"]
     },
     technology: {
       integration: ["TPS integration", "PACS integration", "LINAC connectivity"],
@@ -51,7 +51,7 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
         type: "Medical Device"
       },
       fda: "Under review",
-      intendedUseStatement: "For verification and quality assurance of radiotherapy treatment delivery."
+      intendedUseStatement: "For comparison and visualization of user-generated and AI-generated contours in radiotherapy planning."
     },
     market: {
       onMarketSince: "2020",

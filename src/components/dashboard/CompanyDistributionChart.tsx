@@ -80,7 +80,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
     : [];
 
   // For mobile, limit the number of companies displayed to improve readability
-  const displayData = isMobile ? sortedData.slice(0, 8) : sortedData;
+  const displayData = isMobile ? sortedData.slice(0, 15) : sortedData;
     
   // Get active filters list for title display
   const activeFilters = [];
@@ -134,9 +134,9 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
             No company models available for the current filters.
           </div>
         )}
-        {isMobile && sortedData.length > 8 && (
+        {isMobile && sortedData.length > 15 && (
             <div className="mt-4 text-sm text-center text-muted-foreground">
-              Showing top 8 companies. View on desktop for all {validatedCompanyData.length} companies.
+              Showing top 15 companies. View on desktop for all {validatedCompanyData.length} companies.
             </div>
         )}
       </CardContent>

@@ -56,8 +56,8 @@ const ProductCard = ({
       className="h-full hover:shadow-lg transition-shadow cursor-pointer" 
       onClick={() => navigate(`/product/${id}`)}
     >
-      <CardHeader className="pb-3">
-        <div className="flex items-start justify-between">
+      <CardHeader className="pb-3 px-4 sm:px-6">
+        <div className="flex items-start justify-between gap-3">
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 border">
               <img 
@@ -75,13 +75,13 @@ const ProductCard = ({
               <p className="text-sm text-gray-600 truncate">{company}</p>
             </div>
           </div>
-          <Badge variant="secondary" className="text-xs ml-2">
+          <Badge variant="secondary" className="text-xs flex-shrink-0">
             {category}
           </Badge>
         </div>
       </CardHeader>
 
-      <CardContent className="py-0">
+      <CardContent className="py-0 px-4 sm:px-6">
         <p className="text-sm text-gray-700 mb-4 line-clamp-3">{description}</p>
         {features && features.length > 0 && (
           <div className="mb-4">
@@ -97,8 +97,8 @@ const ProductCard = ({
           </div>
         )}
         {modality && (
-          <div className="flex items-center mt-2">
-            <Badge className={`mr-2 text-xs ${getModalityColor(modality)}`}>
+          <div className="flex items-center mt-2 mb-4">
+            <Badge className={`text-xs ${getModalityColor(modality)}`}>
               {formatModality(modality)}
             </Badge>
           </div>

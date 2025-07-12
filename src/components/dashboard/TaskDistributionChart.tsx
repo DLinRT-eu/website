@@ -66,16 +66,19 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
         <ResponsiveChartWrapper minHeight="320px">
           <ChartContainer className="h-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={validatedTaskData} margin={isMobile ? { top: 5, right: 10, left: 5, bottom: 70 } : { top: 5, right: 30, left: 10, bottom: 30 }}>
+              <BarChart data={validatedTaskData} margin={isMobile ? { top: 5, right: 15, left: 5, bottom: 90 } : { top: 5, right: 30, left: 20, bottom: 80 }}>
                 <XAxis 
                   dataKey="name"
                   tick={{
-                    fontSize: isMobile ? 10 : 12,
+                    fontSize: isMobile ? 11 : 13,
+                    fill: '#374151',
+                    fontWeight: 500,
                   }}
-                  angle={-20}
+                  angle={isMobile ? -45 : -35}
                   textAnchor="end"
-                  height={isMobile ? 70 : 50}
-                  tickMargin={8}
+                  height={isMobile ? 90 : 80}
+                  tickMargin={10}
+                  interval={0}
                 />
                 <YAxis 
                   tick={{

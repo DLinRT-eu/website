@@ -80,17 +80,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
     : [];
 
   // For mobile, limit the number of companies displayed to improve readability
-  const displayData = isMobile ? sortedData.slice(0, 10) : sortedData;
-
-  // Calculate left margin based on the longest company name
-  // Reduced multipliers and adjusted min/max values for better space utilization
-  const maxCompanyNameLength = displayData.length > 0 
-    ? Math.max(...displayData.map(item => item.name.length))
-    : 0;
-  
-  const leftMargin = isMobile ? 
-    Math.min(100, Math.max(80, maxCompanyNameLength * 4)) : 
-    Math.min(140, Math.max(100, maxCompanyNameLength * 5));
+  const displayData = isMobile ? sortedData.slice(0, 8) : sortedData;
     
   // Get active filters list for title display
   const activeFilters = [];
@@ -116,21 +106,25 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={displayData} 
-                  layout="vertical"
-                  margin={{ top: 5, right: 20, left: leftMargin, bottom: 5 }}
+                  margin={isMobile ? { top: 5, right: 15, left: 5, bottom: 100 } : { top: 5, right: 30, left: 20, bottom: 120 }}
                 >
-                  <XAxis type="number" />
-                  <YAxis 
-                    dataKey="name" 
-                    type="category" 
-                    width={leftMargin - 10}
-                    tick={{ 
-                      fontSize: isMobile ? 11 : 13, 
-                      fontWeight: isMobile ? 400 : 500,
-                      textAnchor: 'end',
-                      dy: 3
+                  <XAxis 
+                    dataKey="name"
+                    tick={{
+                      fontSize: isMobile ? 10 : 12,
+                      fill: '#374151',
+                      fontWeight: 500,
                     }}
-                    tickMargin={8}
+                    angle={isMobile ? -45 : -35}
+                    textAnchor="end"
+                    height={isMobile ? 100 : 120}
+                    tickMargin={10}
+                    interval={0}
+                  />
+                  <YAxis 
+                    tick={{
+                      fontSize: isMobile ? 10 : 12,
+                    }}
                   />
                   <Tooltip content={<CompanyTooltip countingMode={validatedCountingMode} />} />
                   <Bar dataKey="value" fill="#00A6D6" />
@@ -143,9 +137,9 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
             No company models available for the current filters.
           </div>
         )}
-        {isMobile && displayData.length > 10 && (
+        {isMobile && sortedData.length > 8 && (
             <div className="mt-4 text-sm text-center text-muted-foreground">
-              Showing top 10 companies. View on desktop for all {validatedCompanyData.length} companies.
+              Showing top 8 companies. View on desktop for all {validatedCompanyData.length} companies.
             </div>
         )}
       </CardContent>

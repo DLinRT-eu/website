@@ -33,9 +33,14 @@ export const MODALITY_COLORS: Record<string, string> = {
   'CT': '#0EA5E9',           // Bright Ocean Blue
   'MRI': '#10B981',          // Emerald Green
   'PET': '#8B5CF6',          // Vivid Purple
+  'PET/CT': '#F59E0B',       // Orange
+  'CBCT': '#1E3A8A',         // Dark Blue
   'SPECT': '#F59E0B',        // Amber
   'X-ray': '#F43F5E',        // Vibrant Red
   'Ultrasound': '#14B8A6',   // Teal
+  'LINAC': '#6366F1',        // Indigo
+  'MRI-LINAC': '#EC4899',    // Pink
+  'RT Struct': '#8B5CF6',    // Vivid Purple
   'Multi-modal': '#6366F1',  // Indigo
   'Agnostic': '#EC4899',     // Pink
 };

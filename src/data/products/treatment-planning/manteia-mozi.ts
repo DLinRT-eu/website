@@ -16,7 +16,7 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/manteia.png",
     website: "https://www.manteiatech.com/mozi",
     anatomicalLocation: ["All sites"],
-    modality: ["RT planning"],
+    modality: ["RT Plan"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
     keyFeatures: ["DL-driven plan optimization", "Quality metrics", "Automated planning"],

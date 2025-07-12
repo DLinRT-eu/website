@@ -21,7 +21,7 @@ export const PTW_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/ptw.jpg",
     website: "https://www.ptwdosimetry.com/en/products/aiqualis",
     anatomicalLocation: ["Multiple"],
-    modality: ["LINAC", "MRI-LINAC"],
+    modality: ["RT Struct"],
     subspeciality: "Medical Physics",
     diseaseTargeted: ["Cancer"],
     keyFeatures: [

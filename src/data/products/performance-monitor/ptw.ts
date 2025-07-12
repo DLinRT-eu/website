@@ -67,7 +67,7 @@ export const PTW_PRODUCTS: ProductDetails[] = [
     version: "2.4",
     releaseDate: "2023-06-01",
     lastUpdated: "2024-02-15",
-    lastRevised: "2025-05-06",
+    lastRevised: "2025-07-12",
     source: "Automatically retrieved and revised by company"
   }
 ];

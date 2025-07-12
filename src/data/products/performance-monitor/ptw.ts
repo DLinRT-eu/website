@@ -9,7 +9,7 @@ export const PTW_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.ptwdosimetry.com",
     productUrl: "https://www.ptwdosimetry.com/en/products/aiqualis",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/performance-monitor/ptw.ts",
-    description: "Automated quality assurance software for radiotherapy performance monitoring and patient treatment verification.",
+    description: "Monitor your AI contouring quality in clinical practice",
     features: [
       "Automated QA", 
       "Comprehensive workflow", 

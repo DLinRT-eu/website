@@ -37,6 +37,39 @@ const EvidenceLimitationsDetails = ({ product }: EvidenceLimitationsDetailsProps
     );
   };
 
+  // Helper function to render evidence items (handles both string and object formats)
+  const renderEvidenceItem = (item: string | { type: string; description: string; link: string }, index: number) => {
+    if (typeof item === 'string') {
+      // Handle legacy DOI string format
+      return (
+        <div key={index} className="pl-2 py-1 border-l-2 border-blue-200">
+          {formatDOI(item)}
+        </div>
+      );
+    } else {
+      // Handle new object format
+      return (
+        <div key={index} className="pl-2 py-2 border-l-2 border-blue-200 space-y-1">
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="text-xs">
+              {item.type}
+            </Badge>
+          </div>
+          <p className="text-sm text-gray-700">{item.description}</p>
+          <a 
+            href={item.link} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-blue-600 hover:underline text-sm"
+          >
+            <FileText className="h-4 w-4" />
+            View Evidence
+          </a>
+        </div>
+      );
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -48,11 +81,7 @@ const EvidenceLimitationsDetails = ({ product }: EvidenceLimitationsDetailsProps
           <div>
             <h3 className="font-medium text-lg mb-2">Clinical Evidence</h3>
             <div className="space-y-2">
-              {evidence.map((item, index) => (
-                <div key={index} className="pl-2 py-1 border-l-2 border-blue-200">
-                  {formatDOI(item)}
-                </div>
-              ))}
+              {evidence.map((item, index) => renderEvidenceItem(item, index))}
             </div>
           </div>
         )}

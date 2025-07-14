@@ -1,11 +1,11 @@
 import { NewsItem } from "@/types/news";
 
-export const fdaAiListUpdateJanuary2025: NewsItem = {
-  id: "fda-ai-list-update-january-2025",
-  date: "2025-01-14",
-  title: "Major FDA AI List Update: 64 Products and 32 Companies Now Tracked",
+export const fdaAiListUpdateJuly2025: NewsItem = {
+  id: "fda-ai-list-update-july-2025",
+  date: "2025-07-14",
+  title: "Major FDA AI List Update: 64 Products and 32 Companies now listed",
   summary: "Following the latest FDA AI-enabled medical devices update, DLinRT.eu has expanded to include 64 products from 32 companies, plus enhanced search and dashboard analytics.",
-  content: `# Major FDA AI List Update: 64 Products and 32 Companies Now Tracked
+  content: `# Major FDA AI List Update: 64 Products and 32 Companies now listed
 
 Following the latest update of the **FDA AI-enabled Medical Devices List** (last updated July 10, 2025), DLinRT.eu has significantly expanded its comprehensive database of deep learning products in radiotherapy.
 

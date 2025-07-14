@@ -19,7 +19,7 @@ export const SUN_NUCLEAR_PRODUCTS: ProductDetails[] = [
     ],
     category: "Treatment Planning",
     certification: "FDA 510(k)",
-    logoUrl: "/logos/sun-nuclear.png",
+    logoUrl: "/logos/SunNuclear.png",
     website: "https://oncospace.com/",
     anatomicalLocation: ["Head and Neck"],
     modality: ["Treatment Planning System Data"],

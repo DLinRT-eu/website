@@ -70,7 +70,7 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     ],
     category: "Auto-Contouring",
     certification: "CE",
-    logoUrl: "/logos/taiwan-medical-imaging.png",
+    logoUrl: "/logos/Taiwan_MedImag.svg",
     website: "https://www.taimedimg.com",
     anatomicalLocation: ["Brain"],
     modality: ["MRI"],

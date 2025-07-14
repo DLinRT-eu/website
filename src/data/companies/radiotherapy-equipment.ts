@@ -45,6 +45,6 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
       "rpa-radiation-planning-assistant"
     ],
     "category": "Radiotherapy Equipment",
-    "logoUrl": "/logos/md-anderson.png"
+    "logoUrl": "/logos/md_anderson.svg"
   }
 ];

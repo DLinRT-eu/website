@@ -22,6 +22,7 @@ import { VYSIONER_PRODUCTS } from "./vysioner";
 import { WISDOM_TECH_PRODUCTS } from "./wisdom-tech";
 import { DIRECTORGANS_PRODUCTS } from "./directorgans";
 import { ONCOSOFT_PRODUCTS } from "./oncosoft";
+import { TAIWAN_MEDICAL_IMAGING_PRODUCTS } from "./taiwan-medical-imaging";
 
 export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...LIMBUS_PRODUCTS,
@@ -45,5 +46,6 @@ export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...VYSIONER_PRODUCTS,
   ...WISDOM_TECH_PRODUCTS,
   ...DIRECTORGANS_PRODUCTS,
-  ...ONCOSOFT_PRODUCTS
+  ...ONCOSOFT_PRODUCTS,
+  ...TAIWAN_MEDICAL_IMAGING_PRODUCTS
 ];

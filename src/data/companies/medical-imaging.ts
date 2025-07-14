@@ -78,5 +78,16 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
     ],
     "category": "Medical Imaging",
     "logoUrl": "/logos/unitedimaging.png"
+  },
+  {
+    "id": "taiwan-medical-imaging",
+    "name": "Taiwan Medical Imaging Co.",
+    "description": "Specialized medical imaging company focused on AI-powered brain image interpretation and longitudinal analysis.",
+    "website": "https://www.taimedimg.com",
+    "productIds": [
+      "taimedimg-deepmets"
+    ],
+    "category": "Medical Imaging",
+    "logoUrl": "/logos/taiwan-medical-imaging.png"
   }
 ];

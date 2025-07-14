@@ -116,7 +116,7 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
       ce: {
         status: "Not available"
       },
-      fda: "Not available",
+      fda: "510(k) Cleared",
       intendedUseStatement: "For automatic segmentation of organs at risk in radiation therapy planning."
     },
     market: {

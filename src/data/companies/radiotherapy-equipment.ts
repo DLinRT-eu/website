@@ -34,7 +34,7 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
       "oncospace-predictive-planning"
     ],
     "category": "Radiotherapy Equipment",
-    "logoUrl": "/logos/sun-nuclear.png"
+    "logoUrl": "/logos/SunNuclear.png"
   },
   {
     "id": "md-anderson",

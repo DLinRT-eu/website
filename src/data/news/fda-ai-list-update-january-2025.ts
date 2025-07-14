@@ -1,6 +1,6 @@
 import { NewsItem } from "@/types/news";
 
-export const fdaAiListUpdateJuly2025: NewsItem = {
+export const fdaAiListUpdateJanuary2025: NewsItem = {
   id: "fda-ai-list-update-july-2025",
   date: "2025-07-14",
   title: "Major FDA AI List Update: 64 Products and 32 Companies now listed",

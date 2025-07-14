@@ -32,7 +32,7 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
       "Multi-anatomical coverage"
     ],
     supportedStructures: [
-      // Brain CT - OARs
+      // Brain Model - CT
       {
         name: "Brain_CT",
         type: "OAR",
@@ -214,7 +214,7 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
 
-      // Head & Neck CT - OARs
+      // Head & Neck Model - CT
       {
         name: "Head_Neck_CT",
         type: "OAR",
@@ -377,100 +377,99 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
-
-      // Head & Neck CTVs
+      // Head & Neck Model - Elective Volumes
       {
         name: "LN_Neck_IA",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_IB_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_IB_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_II_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_II_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_III_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_III_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_IVA_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_IVA_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_IVB_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_IVB_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_VA_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_VA_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_VBC_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Neck_VBC_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
 
-      // Breast CT - OARs
+      // Breast Model - CT
       {
         name: "Breast_CT",
         type: "OAR",
@@ -532,6 +531,12 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
       {
+        name: "Brachiocephalic_Trunk",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
         name: "Bronchus_L",
         type: "OAR",
         accuracy: "Expert-level",
@@ -539,6 +544,18 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
       },
       {
         name: "Bronchus_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Clavicle_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Clavicle_R",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
@@ -556,7 +573,37 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
       {
+        name: "Humerus_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Humerus_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Lung_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Lung_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
         name: "Lung_LLL",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Lung_LUL",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
@@ -569,6 +616,12 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
       },
       {
         name: "Lung_RML",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Lung_RUL",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
@@ -718,7 +771,37 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
       {
+        name: "Scapula_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Scapula_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
         name: "Sternum",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Trachea",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "V_Brachioceph_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "V_Brachioceph_R",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
@@ -777,94 +860,93 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
-
-      // Breast CTVs
+      // Breast Model - Elective Volumes
       {
         name: "Breast_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "Breast_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Ax_L1_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Ax_L1_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Ax_L2_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Ax_L2_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Ax_L3_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Ax_L3_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_IMN_L",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_IMN_R",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Sclav_L_ESTRO",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Sclav_L_RTOG",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Sclav_R_ESTRO",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
         name: "LN_Sclav_R_RTOG",
-        type: "GTV",
+        type: "Elective",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
 
-      // Abdomen CT - OARs
+      // Abdomen Model - CT
       {
         name: "Abdomen_CT",
         type: "OAR",
@@ -1028,7 +1110,7 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
 
-      // Male Pelvis CT - OARs
+      // Male Pelvis Model - CT
       {
         name: "Male_Pelvis_CT",
         type: "OAR",
@@ -1054,13 +1136,37 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
       {
+        name: "Bag_Bowel",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
         name: "Bladder",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
       {
+        name: "Bowel_Large",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Bowel_Small",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
         name: "CaudaEquina",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Colon",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
@@ -1085,6 +1191,18 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
       },
       {
         name: "Femur_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Glnd_Adrenal_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Glnd_Adrenal_R",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
@@ -1150,6 +1268,30 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
       {
+        name: "Kidney_Cortex_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Kidney_Cortex_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Kidney_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Kidney_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
         name: "Rectum",
         type: "OAR",
         accuracy: "Expert-level",
@@ -1209,8 +1351,7 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
       },
-
-      // Male Pelvis CTV
+      // Male Pelvis Model - Target Volume
       {
         name: "Prostate",
         type: "GTV",
@@ -1218,9 +1359,243 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
         validationDataset: "Clinical validation"
       },
 
-      // Female Pelvis CT - OARs (same as Male Pelvis CT but for Female)
+      // Female Pelvis Model - CT (same structures as Male Pelvis)
       {
         name: "Female_Pelvis_CT",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "A_Iliac_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "A_Iliac_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Anus",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Bag_Bowel",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Bladder",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Bowel_Large",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Bowel_Small",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "CaudaEquina",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Colon",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Femur_Head_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Femur_Head_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Femur_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Femur_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Glnd_Adrenal_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Glnd_Adrenal_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Gluteus_Maximus_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Gluteus_Maximus_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Gluteus_Medius_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Gluteus_Medius_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Gluteus_Minimus_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Gluteus_Minimus_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Hip_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Hip_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Iliopsoas_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Iliopsoas_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Kidney_Cortex_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Kidney_Cortex_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Kidney_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Kidney_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Rectum",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "Sacrum",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "V_Iliac_L",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "V_Iliac_R",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "VB_L1",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "VB_L2",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "VB_L3",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "VB_L4",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "VB_L5",
+        type: "OAR",
+        accuracy: "Expert-level",
+        validationDataset: "Clinical validation"
+      },
+      {
+        name: "VB_S1",
         type: "OAR",
         accuracy: "Expert-level",
         validationDataset: "Clinical validation"
@@ -1277,8 +1652,8 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
     },
     version: "2024",
     releaseDate: "2024-01-01",
-    lastUpdated: "2024-12-10",
-    lastRevised: "2024-12-10",
+    lastUpdated: "2025-07-14",
+    lastRevised: "2025-07-14",
     clinicalEvidence: "Proven in clinical practice with over 4M contours processed for 80K+ patients since 2022"
   }
 ];

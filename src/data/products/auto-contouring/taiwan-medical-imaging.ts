@@ -71,7 +71,7 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/Taiwan_MedImag.svg",
-    website: "https://www.taimedimg.com",
+    website: "https://www.taimedimg.tw/en/samd/",
     anatomicalLocation: ["Brain"],
     modality: ["MRI"],
     subspeciality: "Radiation Oncology",

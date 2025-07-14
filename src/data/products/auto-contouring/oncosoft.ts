@@ -32,13 +32,59 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
       "Multi-anatomical coverage"
     ],
     supportedStructures: [
-      // Brain Model - CT
-      {
-        name: "Brain_CT",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation on 80K+ patients"
-      },
+      // Brain CT (OARs)
+      { name: "Brain CT: Bone_Mandible", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Brainstem", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Cavity_Oral", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Cochlea (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Eye (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Glnd_Submand (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Hippocampus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Joint_TM (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Lens (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Lobe_Temporal (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: OpticChiasm", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: OpticNrv (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Parotid (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Pharynx", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Pituitary", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: Skull", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: SpinalCord", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: VB_C1", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Brain CT: VB_C2", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+
+      // Head & Neck CT (OARs)
+      { name: "Head & Neck CT: A_Carotid (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: BrachialPlex (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Brachiocephalic_Trunk", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Clavicle (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Esophagus", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Glnd_Thyroid", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Humerus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Larynx", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Lung (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Lung_LUL", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Lung_RUL", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Scapula (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: Trachea", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: V_Brachioceph (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: VB_C3", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: VB_C4", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: VB_C5", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: VB_C6", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: VB_C7", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+
+      // Head & Neck CT (CTVs)
+      { name: "Head & Neck CT: LN_Neck_IA", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: LN_Neck_IB (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: LN_Neck_II (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: LN_Neck_III (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: LN_Neck_IVA (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: LN_Neck_IVB (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: LN_Neck_VA (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Head & Neck CT: LN_Neck_VBC (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+
+      // Breast CT (OARs) - continuing the comprehensive list...
       {
         name: "Bone_Mandible",
         type: "OAR",

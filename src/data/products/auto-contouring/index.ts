@@ -21,6 +21,7 @@ import { SYNAPTIQ_PRODUCTS } from "./synaptiq";
 import { VYSIONER_PRODUCTS } from "./vysioner";
 import { WISDOM_TECH_PRODUCTS } from "./wisdom-tech";
 import { DIRECTORGANS_PRODUCTS } from "./directorgans";
+import { ONCOSOFT_PRODUCTS } from "./oncosoft";
 
 export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...LIMBUS_PRODUCTS,
@@ -43,5 +44,6 @@ export const AUTO_CONTOURING_PRODUCTS: ProductDetails[] = [
   ...SYNAPTIQ_PRODUCTS,
   ...VYSIONER_PRODUCTS,
   ...WISDOM_TECH_PRODUCTS,
-  ...DIRECTORGANS_PRODUCTS
+  ...DIRECTORGANS_PRODUCTS,
+  ...ONCOSOFT_PRODUCTS
 ];

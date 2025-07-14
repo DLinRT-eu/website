@@ -140,5 +140,14 @@ export const AUTO_CONTOURING_COMPANIES: CompanyDetails[] = [
     "productIds": ["wisdom-deep-contour"],
     "category": "Auto-Contouring",
     "logoUrl": "/logos/wisdom-tech.png"
+  },
+  {
+    "id": "oncosoft",
+    "name": "Oncosoft",
+    "description": "AI-driven precision and efficiency for radiation therapy with proven auto-contouring solutions.",
+    "website": "https://www.oncosoft.io/",
+    "productIds": ["oncosoft-oncostudio"],
+    "category": "Auto-Contouring",
+    "logoUrl": "/logos/oncosoft.png"
   }
 ];

@@ -58,15 +58,14 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     id: "taimedimg-deepmets",
     name: "TAIMedImg DeepMets",
     company: "Taiwan Medical Imaging Co.",
-    companyUrl: "https://www.taimedimg.com",
-    productUrl: "https://www.taimedimg.com/deepmets",
+    companyUrl: "https://www.taimedimg.tw/",
+    productUrl: "https://www.taimedimg.tw/en/samd/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/taiwan-medical-imaging.ts",
     description: "Intelligent assistant specialized in interpreting brain MRI images with advanced segmentation capabilities and longitudinal follow-up of GTV for brain metastases treatment planning.",
     features: [
       "AI-powered brain MRI interpretation",
       "Automated brain metastases segmentation", 
       "Longitudinal GTV tracking and follow-up",
-      "Advanced performance monitoring",
       "Clinical decision support"
     ],
     category: "Auto-Contouring",
@@ -80,7 +79,6 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     keyFeatures: [
       "Brain-specific AI interpretation",
       "GTV longitudinal analysis",
-      "Performance monitoring dashboard",
       "Treatment response assessment",
       "Multi-timepoint comparison"
     ],

@@ -88,6 +88,6 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "taimedimg-deepmets"
     ],
     "category": "Medical Imaging",
-    "logoUrl": "/logos/taiwan-medical-imaging.png"
+    "logoUrl": "/logos/Taiwan_MedImag.svg"
   }
 ];

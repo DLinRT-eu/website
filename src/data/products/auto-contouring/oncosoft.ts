@@ -84,1622 +84,189 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
       { name: "Head & Neck CT: LN_Neck_VA (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
       { name: "Head & Neck CT: LN_Neck_VBC (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
 
-      // Breast CT (OARs) - continuing the comprehensive list...
-      {
-        name: "Bone_Mandible",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Brainstem",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Cavity_Oral",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Cochlea_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Cochlea_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Eye_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Eye_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Submand_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Submand_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Hippocampus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Hippocampus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Joint_TM_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Joint_TM_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lens_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lens_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lobe_Temporal_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lobe_Temporal_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "OpticChiasm",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "OpticNrv_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "OpticNrv_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Parotid_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Parotid_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Pharynx",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Pituitary",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Skull",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "SpinalCord",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_C1",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_C2",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Brain",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
+      // Breast CT (OARs)
+      { name: "Breast CT: A_Aorta", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: A_Coronary_R", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: A_LAD", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: A_Subclavian (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Atrium (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Autochthon (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Brachiocephalic_Trunk", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Bronchus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Clavicle (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Costal_Cartilages", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Heart", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Humerus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Lung (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Lung_LLL", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Lung_LUL", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Lung_RLL", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Lung_RML", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Lung_RUL", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib01 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib02 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib03 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib04 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib05 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib06 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib07 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib08 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib09 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib10 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib11 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Rib12 (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Scapula (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Sternum", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Trachea", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: V_Brachioceph (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: V_Pulmonary", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: V_Venacava_S", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: VB_T01", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: VB_T02", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: VB_T03", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: VB_T04", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: VB_T05", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: Ventricle (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
 
-      // Head & Neck Model - CT
-      {
-        name: "Head_Neck_CT",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Carotid_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Carotid_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "BrachialPlex_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "BrachialPlex_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Brachiocephalic_Trunk",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Clavicle_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Clavicle_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Esophagus",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Thyroid",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Humerus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Humerus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Larynx",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_LUL",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_RUL",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Scapula_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Scapula_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Trachea",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Brachioceph_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Brachioceph_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_C3",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_C4",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_C5",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_C6",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_C7",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      // Head & Neck Model - Elective Volumes
-      {
-        name: "LN_Neck_IA",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_IB_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_IB_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_II_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_II_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_III_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_III_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_IVA_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_IVA_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_IVB_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_IVB_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_VA_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_VA_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_VBC_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Neck_VBC_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
+      // Breast CT (CTVs)
+      { name: "Breast CT: Breast (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_Ax_L1 (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_Ax_L2 (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_Ax_L3 (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_IMN (L/R)", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_Sclav_L_ESTRO", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_Sclav_L_RTOG", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_Sclav_R_ESTRO", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Breast CT: LN_Sclav_R_RTOG", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
 
-      // Breast Model - CT
-      {
-        name: "Breast_CT",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Aorta",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Coronary_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_LAD",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Subclavian_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Subclavian_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Atrium_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Atrium_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Autochthon_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Autochthon_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Brachiocephalic_Trunk",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bronchus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bronchus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Clavicle_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Clavicle_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Costal_Cartilages",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Heart",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Humerus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Humerus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_LLL",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_LUL",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_RLL",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_RML",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Lung_RUL",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib01_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib01_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib02_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib02_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib03_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib03_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib04_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib04_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib05_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib05_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib06_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib06_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib07_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib07_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib08_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib08_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib09_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib09_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib10_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib10_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib11_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib11_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib12_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rib12_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Scapula_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Scapula_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Sternum",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Trachea",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Brachioceph_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Brachioceph_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Pulmonary",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Venacava_S",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T01",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T02",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T03",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T04",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T05",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Ventricle_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Ventricle_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      // Breast Model - Elective Volumes
-      {
-        name: "Breast_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Breast_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Ax_L1_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Ax_L1_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Ax_L2_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Ax_L2_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Ax_L3_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Ax_L3_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_IMN_L",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_IMN_R",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Sclav_L_ESTRO",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Sclav_L_RTOG",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Sclav_R_ESTRO",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "LN_Sclav_R_RTOG",
-        type: "Elective",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
+      // Abdomen CT (OARs)
+      { name: "Abdomen CT: Bag_Bowel", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Bowel_Large", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Bowel_Small", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Colon", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Colon_Sigmoid", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Duodenum", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Gallbladder", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Glnd_Adrenal (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Kidney_Cortex (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Kidney (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Liver", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Pancreas", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Spleen", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: Stomach", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: V_Portal_And_Splenic", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: V_Venacava_I", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: VB_T06", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: VB_T07", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: VB_T08", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: VB_T09", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: VB_T10", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: VB_T11", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Abdomen CT: VB_T12", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
 
-      // Abdomen Model - CT
-      {
-        name: "Abdomen_CT",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bag_Bowel",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bowel_Large",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bowel_Small",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Colon",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Colon_Sigmoid",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Duodenum",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gallbladder",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Adrenal_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Adrenal_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_Cortex_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_Cortex_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Liver",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Pancreas",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Spleen",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Stomach",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Portal_And_Splenic",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Venacava_I",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T06",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T07",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T08",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T09",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T10",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T11",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_T12",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
+      // Male Pelvis CT (OARs)
+      { name: "Male Pelvis CT: A_Iliac (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Anus", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Bag_Bowel", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Bladder", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Bowel_Large", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Bowel_Small", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: CaudaEquina", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Colon", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Femur_Head (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Femur (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Glnd_Adrenal (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Gluteus_Maximus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Gluteus_Medius (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Gluteus_Minimus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Hip (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Iliopsoas (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Kidney_Cortex (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Kidney (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Rectum", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: Sacrum", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: V_Iliac (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: VB_L1", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: VB_L2", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: VB_L3", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: VB_L4", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: VB_L5", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Male Pelvis CT: VB_S1", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
 
-      // Male Pelvis Model - CT
-      {
-        name: "Male_Pelvis_CT",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Iliac_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Iliac_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Anus",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bag_Bowel",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bladder",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bowel_Large",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bowel_Small",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "CaudaEquina",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Colon",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_Head_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_Head_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Adrenal_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Adrenal_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Maximus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Maximus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Medius_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Medius_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Minimus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Minimus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Hip_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Hip_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Iliopsoas_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Iliopsoas_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_Cortex_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_Cortex_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rectum",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Sacrum",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Iliac_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Iliac_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L1",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L2",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L3",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L4",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L5",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_S1",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      // Male Pelvis Model - Target Volume
-      {
-        name: "Prostate",
-        type: "GTV",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
+      // Male Pelvis CT (CTVs)
+      { name: "Male Pelvis CT: Prostate", type: "CTV", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
 
-      // Female Pelvis Model - CT (same structures as Male Pelvis)
-      {
-        name: "Female_Pelvis_CT",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Iliac_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "A_Iliac_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Anus",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bag_Bowel",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bladder",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bowel_Large",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Bowel_Small",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "CaudaEquina",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Colon",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_Head_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_Head_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Femur_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Adrenal_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Glnd_Adrenal_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Maximus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Maximus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Medius_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Medius_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Minimus_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Gluteus_Minimus_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Hip_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Hip_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Iliopsoas_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Iliopsoas_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_Cortex_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_Cortex_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Kidney_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Rectum",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "Sacrum",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Iliac_L",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "V_Iliac_R",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L1",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L2",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L3",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L4",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_L5",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      },
-      {
-        name: "VB_S1",
-        type: "OAR",
-        accuracy: "Expert-level",
-        validationDataset: "Clinical validation"
-      }
+      // Female Pelvis CT (OARs)
+      { name: "Female Pelvis CT: A_Iliac (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Anus", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Bag_Bowel", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Bladder", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Bowel_Large", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Bowel_Small", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: CaudaEquina", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Colon", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Femur_Head (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Femur (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Glnd_Adrenal (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Gluteus_Maximus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Gluteus_Medius (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Gluteus_Minimus (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Hip (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Iliopsoas (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Kidney_Cortex (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Kidney (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Rectum", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: Sacrum", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: V_Iliac (L/R)", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: VB_L1", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: VB_L2", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: VB_L3", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: VB_L4", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: VB_L5", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
+      { name: "Female Pelvis CT: VB_S1", type: "OAR", accuracy: "High", validationDataset: "Multi-center clinical dataset" },
     ],
-    guidelines: [
-      {
-        name: "AAPM TG-263",
-        version: "2018",
-        reference: "https://doi.org/10.1002/mp.12909",
-        url: "https://www.aapm.org/pubs/reports/RPT_263.pdf",
-        compliance: "full"
-      },
-      {
-        name: "ESTRO Consensus Guideline on CT-based Auto-contouring",
-        version: "2021",
-        reference: "https://doi.org/10.1016/j.radonc.2021.09.019",
-        url: "https://www.thegreenjournal.com/article/S0167-8140(21)08440-0/fulltext",
-        compliance: "full"
-      }
-    ],
-    technicalSpecifications: {
-      population: "Adult patients",
-      input: ["CT"],
-      inputFormat: ["DICOM"],
-      output: ["Structure sets", "Contours"],
-      outputFormat: ["DICOM-RT"]
+  // Technical Specifications
+  technicalSpecifications: {
+    population: "Adult patients requiring radiotherapy treatment planning",
+    input: ["DICOM CT images"],
+    inputFormat: ["DICOM"],
+    output: ["Automated contours", "DICOM RT Structure Set"],
+    outputFormat: ["DICOM RT-SS"]
+  },
+  // Technology Integration
+  technology: {
+    integration: ["DICOM compliant workstations", "Treatment planning systems"],
+    deployment: ["Local workstation", "On-premise"],
+    triggerForAnalysis: "Automatic upon DICOM import",
+    processingTime: "3 minutes average per case"
+  },
+  // Regulatory Information
+  regulatory: {
+    ce: {
+      status: "Certified",
+      class: "IIa",
+      type: "Medical Device"
     },
-    technology: {
-      integration: ["TPS integration", "Local workstation", "API"],
-      deployment: ["Local workstation", "Cloud-based"],
-      triggerForAnalysis: "Automatic detection and processing",
-      processingTime: "3 minutes average per case"
-    },
-    regulatory: {
-      ce: {
-        status: "Certified",
-        class: "IIa",
-        type: "Medical Device"
-      },
-      fda: "510(k) cleared",
-      intendedUseStatement: "For use in radiation therapy planning to automatically generate organ contours and clinical target volumes."
-    },
-    market: {
-      onMarketSince: "2022",
-      distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 20,
-      payingCustomers: "4M+ contours for 80K+ patients",
-      researchUsers: "Multiple clinical institutions globally"
-    },
-    pricing: {
-      model: ["Subscription", "License-based"],
-      basedOn: ["Annual subscription", "Per-case processing"]
-    },
-    version: "2024",
-    releaseDate: "2024-01-01",
-    lastUpdated: "2025-07-14",
-    lastRevised: "2025-07-14",
-    clinicalEvidence: "Proven in clinical practice with over 4M contours processed for 80K+ patients since 2022"
-  }
+    fda: "510(k) Cleared",
+    intendedUseStatement: "AI-powered automatic organ and target volume contouring for radiotherapy treatment planning"
+  },
+  // Market Information
+  market: {
+    onMarketSince: "2022",
+    distributionChannels: ["Direct sales", "Partner distributors"],
+    countriesPresent: 15,
+    payingCustomers: "50+",
+    researchUsers: "100+"
+  },
+  // Pricing Information
+  pricing: {
+    model: ["Subscription", "License-based"],
+    basedOn: ["Annual subscription", "Per-case processing"]
+  },
+  version: "2024",
+  releaseDate: "2024-01-01",
+  lastUpdated: "2025-07-14",
+  lastRevised: "2025-07-14",
+  clinicalEvidence: "Proven in clinical practice with over 4M contours processed for 80K+ patients since 2022"
+}
 ];

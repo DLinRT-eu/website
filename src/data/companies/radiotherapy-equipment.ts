@@ -24,5 +24,16 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
     ],
     "category": "Radiotherapy Equipment",
     "logoUrl": "/logos/accuray.png"
+  },
+  {
+    "id": "sun-nuclear",
+    "name": "Sun Nuclear",
+    "description": "Provider of radiation therapy quality assurance and AI-powered treatment planning solutions.",
+    "website": "https://oncospace.com/",
+    "productIds": [
+      "oncospace-predictive-planning"
+    ],
+    "category": "Radiotherapy Equipment",
+    "logoUrl": "/logos/sun-nuclear.png"
   }
 ];

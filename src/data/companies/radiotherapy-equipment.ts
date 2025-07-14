@@ -35,5 +35,16 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
     ],
     "category": "Radiotherapy Equipment",
     "logoUrl": "/logos/sun-nuclear.png"
+  },
+  {
+    "id": "md-anderson",
+    "name": "MD Anderson Cancer Center",
+    "description": "Leading cancer center providing AI-powered radiation planning tools and automated contouring solutions.",
+    "website": "https://www.mdanderson.org/",
+    "productIds": [
+      "rpa-radiation-planning-assistant"
+    ],
+    "category": "Radiotherapy Equipment",
+    "logoUrl": "/logos/md-anderson.png"
   }
 ];

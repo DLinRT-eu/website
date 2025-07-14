@@ -12,7 +12,7 @@ export const MD_ANDERSON_PRODUCTS: ProductDetails[] = [
     features: ["Automated contouring", "Radiotherapy planning", "Multi-anatomical site support", "FDA approved"],
     category: "Treatment Planning",
     certification: "FDA",
-    logoUrl: "/logos/md-anderson.png",
+    logoUrl: "/logos/md_anderson.svg",
     website: "https://rpa.mdanderson.org/",
     anatomicalLocation: ["Cervix", "Post-Mastectomy Breast", "Head and Neck", "Whole Brain"],
     modality: ["CT"],

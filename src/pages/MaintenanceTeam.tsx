@@ -18,7 +18,7 @@ const TEAM_MEMBERS = [
   {
     name: "Mustafa Kadhim",
     role: "Maintainer & Reviewer",
-    image: "https://media.licdn.com/dms/image/v2/D4E03AQGq6Zvj1IRXLw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677416417272?e=1753315200&v=beta&t=HFi9QRUXVuJ3DJnWgXgIcg0erCWOwzXpzKmgqdlojSk",
+    image: "https://media.licdn.com/dms/image/v2/D4E03AQGq6Zvj1IRXLw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1677416417272?e=1756339200&v=beta&t=KYR2sBKRq_qNphfxkINLttJTd1PFsGT01F9Yx-qJSyc",
     bio: "https://portal.research.lu.se/en/persons/mustafa-kadhim",
     email: "mustafa.kadhim@dlinrt.eu",
   },

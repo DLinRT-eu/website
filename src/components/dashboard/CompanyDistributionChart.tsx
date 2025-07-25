@@ -99,36 +99,59 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
           {validatedCountingMode === 'models' ? 'AI Models' : 'Products'} by Company ({validatedTotalCompanies} total) {filterText}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-2 md:p-6">
         {displayData.length > 0 ? (
-          <ResponsiveChartWrapper minHeight={isMobile ? "350px" : "400px"}>
-            <ChartContainer className="h-full" config={{}}>
+          <div className={`w-full ${isMobile ? 'h-[600px]' : 'h-[500px]'}`}>
+            <ChartContainer className="h-full w-full" config={{}}>
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart 
                   data={displayData} 
                   layout="vertical"
-                  margin={isMobile ? { top: 5, right: 20, left: 120, bottom: 5 } : { top: 5, right: 30, left: 180, bottom: 5 }}
+                  margin={isMobile ? 
+                    { top: 10, right: 15, left: 10, bottom: 10 } : 
+                    { top: 10, right: 30, left: 20, bottom: 10 }
+                  }
                 >
                   <XAxis type="number" />
                   <YAxis 
                     dataKey="name" 
                     type="category" 
-                    width={isMobile ? 115 : 175}
-                    tick={{ 
-                      fontSize: isMobile ? 10 : 12, 
-                      fontWeight: 500,
-                      textAnchor: 'end',
-                      fill: '#374151'
+                    width={isMobile ? 140 : 200}
+                    tick={(props) => {
+                      const { x, y, payload } = props;
+                      const text = payload.value;
+                      const maxLength = isMobile ? 18 : 25;
+                      const truncatedText = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+                      
+                      return (
+                        <g transform={`translate(${x},${y})`}>
+                          <text 
+                            x={0} 
+                            y={0} 
+                            dy={16}
+                            textAnchor="end"
+                            fill="#374151"
+                            fontSize={isMobile ? 10 : 12}
+                            fontWeight={500}
+                          >
+                            {truncatedText}
+                          </text>
+                        </g>
+                      );
                     }}
-                    tickMargin={5}
+                    tickMargin={8}
                     interval={0}
                   />
                   <Tooltip content={<CompanyTooltip countingMode={validatedCountingMode} />} />
-                  <Bar dataKey="value" fill="#00A6D6" />
+                  <Bar 
+                    dataKey="value" 
+                    fill="#00A6D6" 
+                    radius={[0, 4, 4, 0]}
+                  />
                 </BarChart>
               </ResponsiveContainer>
             </ChartContainer>
-          </ResponsiveChartWrapper>
+          </div>
         ) : (
           <div className="py-12 text-center text-muted-foreground">
             No company models available for the current filters.

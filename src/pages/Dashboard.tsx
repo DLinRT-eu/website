@@ -129,7 +129,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <div className="container px-4 md:px-8 py-8 mx-auto">
+      <div className="container px-2 sm:px-4 md:px-8 py-4 md:py-8 mx-auto">
       <SEO
         title="AI Radiotherapy Analytics Dashboard - Product Distribution & Market Insights"
         description="Interactive analytics dashboard visualizing deep learning products in radiotherapy. Explore comprehensive data on product distribution by clinical task, geography, imaging modality, and manufacturer trends."
@@ -154,7 +154,7 @@ const Dashboard = () => {
         onToggle={setCountingMode}
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
         <TaskDistributionChart 
           taskData={taskData}
           totalModels={totalModels}

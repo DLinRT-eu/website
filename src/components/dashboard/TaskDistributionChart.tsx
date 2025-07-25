@@ -62,22 +62,28 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
           {validatedSelectedModality !== "all" && <span className="text-sm font-normal ml-2 text-muted-foreground">filtered by modality</span>}
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <ResponsiveChartWrapper minHeight={isMobile ? "600px" : "400px"}>
-          <ChartContainer className="h-full" config={{}}>
+      <CardContent className="p-2 md:p-6">
+        <ResponsiveChartWrapper minHeight={isMobile ? "450px" : "350px"}>
+          <ChartContainer className="h-full w-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={validatedTaskData} margin={isMobile ? { top: 10, right: 20, left: 10, bottom: 100 } : { top: 5, right: 30, left: 20, bottom: 80 }}>
+              <BarChart 
+                data={validatedTaskData} 
+                margin={isMobile ? 
+                  { top: 20, right: 10, left: 10, bottom: 120 } : 
+                  { top: 20, right: 30, left: 20, bottom: 80 }
+                }
+              >
                 <XAxis 
                   dataKey="name"
                   tick={{
-                    fontSize: isMobile ? 11 : 13,
+                    fontSize: isMobile ? 10 : 12,
                     fill: '#374151',
                     fontWeight: 500,
                   }}
                   angle={isMobile ? -45 : -35}
                   textAnchor="end"
-                  height={isMobile ? 90 : 80}
-                  tickMargin={10}
+                  height={isMobile ? 100 : 70}
+                  tickMargin={8}
                   interval={0}
                 />
                 <YAxis 

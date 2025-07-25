@@ -63,7 +63,7 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
         </CardTitle>
       </CardHeader>
       <CardContent className="p-2 md:p-6">
-        <ResponsiveChartWrapper minHeight={isMobile ? "450px" : "350px"}>
+        <div className={`w-full ${isMobile ? 'h-[450px]' : 'h-[350px]'}`}>
           <ChartContainer className="h-full w-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart 
@@ -96,20 +96,22 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
                   dataKey="value" 
                   onClick={handleTaskClick}
                   cursor="pointer"
-                  fillOpacity={0.9}
+                  fillOpacity={1}
+                  radius={[2, 2, 0, 0]}
                 >
                   {validatedTaskData.map((entry, index) => (
                     <Cell 
                       key={`cell-${index}`} 
-                      fill={entry.fill || '#64748B'}
-                      fillOpacity={entry.isFiltered ? 0.7 : (entry.isSelected ? 1 : 0.8)}
+                      fill={entry.fill || '#3B82F6'}
+                      stroke={entry.isSelected ? '#1D4ED8' : 'transparent'}
+                      strokeWidth={entry.isSelected ? 2 : 0}
                     />
                   ))}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>
           </ChartContainer>
-        </ResponsiveChartWrapper>
+        </div>
         <div className="mt-4 text-sm text-muted-foreground text-center">
           Click on any bar to filter by task
         </div>

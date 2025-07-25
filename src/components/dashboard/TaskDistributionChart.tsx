@@ -63,7 +63,7 @@ const TaskDistributionChart: React.FC<TaskDistributionChartProps> = ({
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ResponsiveChartWrapper minHeight={isMobile ? "500px" : "320px"}>
+        <ResponsiveChartWrapper minHeight={isMobile ? "600px" : "400px"}>
           <ChartContainer className="h-full" config={{}}>
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={validatedTaskData} margin={isMobile ? { top: 10, right: 20, left: 10, bottom: 100 } : { top: 5, right: 30, left: 20, bottom: 80 }}>

@@ -74,28 +74,43 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
     return null
   }
 
-  return (
-    <style
-      dangerouslySetInnerHTML={{
-        __html: Object.entries(THEMES)
-          .map(
-            ([theme, prefix]) => `
-${prefix} [data-chart=${id}] {
-${colorConfig
-  .map(([key, itemConfig]) => {
-    const color =
-      itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
-      itemConfig.color
-    return color ? `  --color-${key}: ${color};` : null
-  })
-  .join("\n")}
-}
-`
-          )
-          .join("\n"),
-      }}
-    />
-  )
+  // Sanitize inputs to prevent CSS injection
+  const sanitizeId = (id: string) => id.replace(/[^a-zA-Z0-9-_]/g, '')
+  const sanitizeColor = (color: string) => {
+    // Only allow valid CSS color formats (hex, rgb, hsl, named colors)
+    if (/^#([0-9A-F]{3}){1,2}$/i.test(color) || 
+        /^rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)$/i.test(color) ||
+        /^hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)$/i.test(color) ||
+        /^[a-zA-Z]+$/.test(color)) {
+      return color
+    }
+    return 'transparent' // Safe fallback
+  }
+
+  const sanitizedId = sanitizeId(id)
+  
+  const cssContent = Object.entries(THEMES)
+    .map(([theme, prefix]) => {
+      const sanitizedPrefix = prefix.replace(/[^a-zA-Z0-9-_.\s]/g, '')
+      const cssRules = colorConfig
+        .map(([key, itemConfig]) => {
+          const color =
+            itemConfig.theme?.[theme as keyof typeof itemConfig.theme] ||
+            itemConfig.color
+          if (!color) return null
+          
+          const sanitizedKey = key.replace(/[^a-zA-Z0-9-_]/g, '')
+          const sanitizedColor = sanitizeColor(color)
+          return `  --color-${sanitizedKey}: ${sanitizedColor};`
+        })
+        .filter(Boolean)
+        .join('\n')
+      
+      return `${sanitizedPrefix} [data-chart="${sanitizedId}"] {\n${cssRules}\n}`
+    })
+    .join('\n')
+
+  return <style>{cssContent}</style>
 }
 
 const ChartTooltip = RechartsPrimitive.Tooltip

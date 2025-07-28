@@ -66,12 +66,18 @@ export const getAllOptions = (field: keyof Product): string[] => {
     case 'company':
       return [...new Set(ALL_PRODUCTS.map(p => p.company))].sort();
     case 'certification': {
-      // Return only combined certification tags that are actually used in products
+      // Get all unique certifications actually used in products
       const usedCertifications = new Set<string>();
       
       ALL_PRODUCTS.forEach(product => {
-        if (product.certification && COMBINED_CERTIFICATION_TAGS.includes(product.certification)) {
-          usedCertifications.add(product.certification);
+        if (product.certification) {
+          // Handle different certification formats
+          if (product.certification === "CE Mark, FDA Cleared") {
+            // Convert legacy format to standard format
+            usedCertifications.add("CE & FDA");
+          } else {
+            usedCertifications.add(product.certification);
+          }
         }
       });
       

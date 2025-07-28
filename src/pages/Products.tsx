@@ -145,15 +145,6 @@ const Products = () => {
   };
 
   const handleFilterUpdate = (newFilters: FilterState) => {
-    // Standardize certification labels to avoid duplicates
-    if (newFilters.certifications) {
-      newFilters.certifications = newFilters.certifications.map(cert => {
-        if (cert.toLowerCase().includes('ce')) return 'CE Mark';
-        if (cert.toLowerCase().includes('fda')) return 'FDA Cleared';
-        return cert;
-      });
-    }
-    
     setCurrentFilters(newFilters);
     setFiltersActive(
       Object.values(newFilters).some(filterArray => filterArray.length > 0)

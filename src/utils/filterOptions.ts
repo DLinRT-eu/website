@@ -66,17 +66,23 @@ export const getAllOptions = (field: keyof Product): string[] => {
     case 'company':
       return [...new Set(ALL_PRODUCTS.map(p => p.company))].sort();
     case 'certification': {
-      // Get all unique certifications actually used in products
+      // Get all unique standardized certifications used in products
       const usedCertifications = new Set<string>();
       
       ALL_PRODUCTS.forEach(product => {
         if (product.certification) {
-          // Handle different certification formats
-          if (product.certification === "CE Mark, FDA Cleared") {
-            // Convert legacy format to standard format
+          const cert = product.certification.toLowerCase().trim();
+          // Standardize the certification values for display
+          if (cert.includes('ce') && cert.includes('fda')) {
             usedCertifications.add("CE & FDA");
-          } else {
-            usedCertifications.add(product.certification);
+          } else if (cert.includes('ce')) {
+            usedCertifications.add("CE");
+          } else if (cert.includes('fda')) {
+            usedCertifications.add("FDA");
+          } else if (cert === 'mdr exempt') {
+            usedCertifications.add("MDR exempt");
+          } else if (cert === 'nmpa') {
+            usedCertifications.add("NMPA");
           }
         }
       });

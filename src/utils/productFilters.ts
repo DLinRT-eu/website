@@ -83,18 +83,29 @@ export const normalizeAnatomicalLocations = (locations: string[]): string[] => {
  * Standardizes certification names to prevent duplicates
  */
 export const standardizeCertification = (certification: string): string => {
-  // Normalize certifications to prevent duplicates like "CE" and "CE Mark"
-  certification = certification.toLowerCase().trim();
-  if (certification.includes('ce')) {
+  // Normalize certifications to merge variations
+  const cert = certification.toLowerCase().trim();
+  
+  // Handle combined certifications first
+  if (cert.includes('ce') && cert.includes('fda')) {
+    return 'ce & fda';
+  }
+  
+  // Handle individual certifications
+  if (cert.includes('ce')) {
     return 'ce';
   }
-  if (certification.includes('fda')) {
+  if (cert.includes('fda')) {
     return 'fda';
   }
-  if (certification === 'mdr exempt') {
+  if (cert === 'mdr exempt') {
     return 'mdr exempt';
   }
-  return certification;
+  if (cert === 'nmpa') {
+    return 'nmpa';
+  }
+  
+  return cert;
 };
 
 /**

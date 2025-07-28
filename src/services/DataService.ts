@@ -71,11 +71,13 @@ class DataService {
         }
       }
       
-      // Standardize certification check - handle both "CE" and "CE Mark" as the same
+      // Standardize certification check - handle merged certifications
       if (filters.certifications?.length) {
         const productCert = standardizeCertification(product.certification || '');
-        if (!filters.certifications.some(cert => 
-          standardizeCertification(cert) === productCert)) {
+        if (!filters.certifications.some(cert => {
+          const filterCert = standardizeCertification(cert);
+          return filterCert === productCert;
+        })) {
           return false;
         }
       }

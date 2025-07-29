@@ -46,24 +46,35 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
               // Create canvas to convert image to base64
               const canvas = document.createElement('canvas');
               const ctx = canvas.getContext('2d');
-              canvas.width = img.width;
-              canvas.height = img.height;
-              
-              if (ctx) {
-                ctx.drawImage(img, 0, 0);
-                const base64 = canvas.toDataURL('image/png');
-                doc.addImage(base64, 'PNG', x, y, size, size);
+              if (!ctx) {
+                resolve();
+                return;
               }
+              
+              canvas.width = size * 4; // Higher resolution
+              canvas.height = size * 4;
+              
+              ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+              const base64 = canvas.toDataURL('image/png');
+              
+              // Add image to PDF
+              doc.addImage(base64, 'PNG', x, y, size, size);
+              resolve();
             } catch (error) {
               console.warn('Could not process logo:', logoUrl, error);
+              resolve();
             }
-            resolve();
           };
           
           img.onerror = () => {
             console.warn('Could not load logo:', logoUrl);
             resolve();
           };
+          
+          // Set timeout to prevent hanging
+          setTimeout(() => {
+            resolve();
+          }, 3000);
           
           img.src = fullUrl;
         } catch (error) {
@@ -89,20 +100,9 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
     // Calculate column width for products
     const colWidth = contentWidth / products.length;
 
-    // Product headers with logos - wait for all logos to load
-    const logoPromises: Promise<void>[] = [];
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      const x = margin + (i * colWidth);
-      
-      // Add logo (with promise to wait for loading)
-      logoPromises.push(addLogo(product.logoUrl || '/placeholder.svg', x + 5, yPosition, 12));
-    }
+    // Add product headers first without logos
     
-    // Wait for all logos to load before continuing
-    await Promise.all(logoPromises);
-    
-    // Add product headers after logos are loaded
+    // Add product headers first without logos
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 0, 0);
@@ -113,14 +113,14 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
       
       // Product name
       const productName = product.name.length > 20 ? product.name.substring(0, 17) + '...' : product.name;
-      doc.text(productName, x + 20, yPosition + 6);
+      doc.text(productName, x + 5, yPosition + 6);
       
       // Company name
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
       const companyName = product.company.length > 15 ? product.company.substring(0, 12) + '...' : product.company;
-      doc.text(companyName, x + 20, yPosition + 12);
+      doc.text(companyName, x + 5, yPosition + 12);
       
       // Reset font for next iteration
       doc.setFontSize(12);
@@ -132,6 +132,22 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
         doc.setDrawColor(200, 200, 200);
         doc.line(x + colWidth - 5, yPosition, x + colWidth - 5, yPosition + 15);
       }
+    }
+    
+    // Try to add logos, but don't block PDF generation if they fail
+    try {
+      const logoPromises = products.map((product, i) => {
+        const x = margin + (i * colWidth);
+        return addLogo(product.logoUrl || '/placeholder.svg', x + colWidth - 20, yPosition, 12);
+      });
+      
+      // Wait for logos with timeout
+      await Promise.race([
+        Promise.all(logoPromises),
+        new Promise(resolve => setTimeout(resolve, 5000)) // 5 second timeout
+      ]);
+    } catch (error) {
+      console.warn('Logo loading failed, continuing without logos:', error);
     }
     
     yPosition += 25;
@@ -228,8 +244,11 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
     }
 
     // Save the PDF
-    const fileName = `product-comparison-${products.map(p => p.name.replace(/[^a-zA-Z0-9]/g, '')).join('-')}-${Date.now()}.pdf`;
+    const fileName = `product-comparison-${Date.now()}.pdf`;
+    console.log('Saving PDF:', fileName);
     doc.save(fileName);
+    
+    console.log('PDF export completed successfully');
     
   } catch (error) {
     console.error('Error exporting comparison to PDF:', error);

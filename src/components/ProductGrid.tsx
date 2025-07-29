@@ -12,7 +12,6 @@ import ProductComparison from "./comparison/ProductComparison";
 import CompareButton from "./comparison/CompareButton";
 import { Button } from "./ui/button";
 import { Scale } from "lucide-react";
-import CompareValidation from './validation/CompareValidation';
 
 interface ProductGridProps {
   filters?: FilterState;
@@ -174,8 +173,6 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
         isOpen={showComparison}
         onClose={handleCloseComparison}
       />
-      
-      <CompareValidation />
     </div>
   );
 };

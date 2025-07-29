@@ -134,10 +134,12 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
     
     if (exportFormat === 'pdf') {
       try {
+        console.log('Starting PDF export...');
         await exportComparisonToPDF(products);
+        console.log('PDF export successful');
       } catch (error) {
         console.error('PDF export failed:', error);
-        alert('PDF export failed. Please try again.');
+        alert('PDF export failed. Please try again or check the console for details.');
       }
       return;
     }
@@ -178,10 +180,13 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden">
+      <DialogContent className="max-w-6xl max-h-[90vh] overflow-hidden" aria-describedby="comparison-description">
         <DialogHeader>
           <DialogTitle className="flex items-center justify-between">
             <span>Product Comparison</span>
+            <div id="comparison-description" className="sr-only">
+              Compare selected products side by side with export options
+            </div>
             <div className="flex items-center gap-2">
               <select
                 value={exportFormat}

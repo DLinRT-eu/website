@@ -53,9 +53,9 @@ const ProductCard = ({
   };
 
   const handleSelectionChange = (checked: boolean) => {
-    if (onSelectionChange) {
+    if (onSelectionChange && id) {
       const productData: ProductDetails = {
-        id: id || '',
+        id,
         name,
         company,
         description,
@@ -67,7 +67,13 @@ const ProductCard = ({
         modality,
         website,
         companyUrl,
-        productUrl
+        productUrl,
+        // Add other required fields with default values
+        releaseDate: '',
+        lastUpdated: '',
+        version: '',
+        url: website || '',
+        // Ensure all required ProductDetails fields are included
       } as ProductDetails;
       
       onSelectionChange(productData, checked);

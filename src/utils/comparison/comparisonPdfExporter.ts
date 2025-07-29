@@ -27,27 +27,50 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
     };
 
     // Helper function to load and add logo
-    const addLogo = async (logoUrl: string, x: number, y: number, size: number = 15) => {
-      try {
-        if (!logoUrl || logoUrl === '/placeholder.svg') return;
-        
-        // Convert logo URL to base64 if it's a local file
-        const response = await fetch(logoUrl);
-        const blob = await response.blob();
-        const base64 = await new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.readAsDataURL(blob);
-        });
-        
-        const img = new Image();
-        img.onload = () => {
-          doc.addImage(base64, 'PNG', x, y, size, size);
-        };
-        img.src = base64;
-      } catch (error) {
-        console.warn('Could not load logo:', logoUrl, error);
-      }
+    const addLogo = async (logoUrl: string, x: number, y: number, size: number = 15): Promise<void> => {
+      return new Promise((resolve) => {
+        try {
+          if (!logoUrl || logoUrl === '/placeholder.svg') {
+            resolve();
+            return;
+          }
+          
+          // For local logos, prepend with base URL if needed
+          const fullUrl = logoUrl.startsWith('http') ? logoUrl : `${window.location.origin}${logoUrl}`;
+          
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          
+          img.onload = () => {
+            try {
+              // Create canvas to convert image to base64
+              const canvas = document.createElement('canvas');
+              const ctx = canvas.getContext('2d');
+              canvas.width = img.width;
+              canvas.height = img.height;
+              
+              if (ctx) {
+                ctx.drawImage(img, 0, 0);
+                const base64 = canvas.toDataURL('image/png');
+                doc.addImage(base64, 'PNG', x, y, size, size);
+              }
+            } catch (error) {
+              console.warn('Could not process logo:', logoUrl, error);
+            }
+            resolve();
+          };
+          
+          img.onerror = () => {
+            console.warn('Could not load logo:', logoUrl);
+            resolve();
+          };
+          
+          img.src = fullUrl;
+        } catch (error) {
+          console.warn('Could not load logo:', logoUrl, error);
+          resolve();
+        }
+      });
     };
 
     // Title
@@ -63,10 +86,23 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
     doc.text(`Comparing ${products.length} products | Generated on ${new Date().toLocaleDateString()}`, margin, yPosition);
     yPosition += 20;
 
-    // Product headers with logos
+    // Calculate column width for products
     const colWidth = contentWidth / products.length;
+
+    // Product headers with logos - wait for all logos to load
+    const logoPromises: Promise<void>[] = [];
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      const x = margin + (i * colWidth);
+      
+      // Add logo (with promise to wait for loading)
+      logoPromises.push(addLogo(product.logoUrl || '/placeholder.svg', x + 5, yPosition, 12));
+    }
     
-    // Add product headers
+    // Wait for all logos to load before continuing
+    await Promise.all(logoPromises);
+    
+    // Add product headers after logos are loaded
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(0, 0, 0);
@@ -75,17 +111,21 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
       const product = products[i];
       const x = margin + (i * colWidth);
       
-      // Add logo
-      await addLogo(product.logoUrl || '/placeholder.svg', x + 5, yPosition, 12);
-      
       // Product name
-      doc.text(product.name, x + 20, yPosition + 6);
+      const productName = product.name.length > 20 ? product.name.substring(0, 17) + '...' : product.name;
+      doc.text(productName, x + 20, yPosition + 6);
       
       // Company name
       doc.setFontSize(10);
       doc.setFont('helvetica', 'normal');
       doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
-      doc.text(product.company, x + 20, yPosition + 12);
+      const companyName = product.company.length > 15 ? product.company.substring(0, 12) + '...' : product.company;
+      doc.text(companyName, x + 20, yPosition + 12);
+      
+      // Reset font for next iteration
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
       
       // Vertical separator line
       if (i < products.length - 1) {
@@ -113,16 +153,7 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
     fields.forEach((field, fieldIndex) => {
       checkPageBreak(20);
       
-      // Field label (left column)
-      doc.setFillColor(lightGray[0], lightGray[1], lightGray[2]);
-      doc.rect(margin, yPosition, colWidth, 15, 'F');
-      
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(0, 0, 0);
-      doc.text(field.label, margin + 5, yPosition + 8);
-      
-      // Field values for each product
+      // Field values for each product (no separate field label column)
       for (let i = 0; i < products.length; i++) {
         const product = products[i];
         const x = margin + (i * colWidth);
@@ -131,6 +162,16 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
         if (fieldIndex % 2 === 0) {
           doc.setFillColor(250, 250, 250);
           doc.rect(x, yPosition, colWidth, 15, 'F');
+        }
+        
+        // Add field label for first column only
+        if (i === 0) {
+          doc.setFontSize(9);
+          doc.setFont('helvetica', 'bold');
+          doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+          doc.text(field.label + ':', x + 2, yPosition + 5);
+          doc.setFont('helvetica', 'normal');
+          doc.setTextColor(0, 0, 0);
         }
         
         let value = product[field.key as keyof ProductDetails];
@@ -144,14 +185,19 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
           displayValue = 'N/A';
         }
 
-        // Truncate long text
-        if (displayValue.length > 40) {
-          displayValue = displayValue.substring(0, 37) + '...';
+        // Truncate long text based on available width
+        const maxChars = Math.floor(colWidth / 3); // Rough character estimate
+        if (displayValue.length > maxChars) {
+          displayValue = displayValue.substring(0, maxChars - 3) + '...';
         }
 
+        doc.setFontSize(8);
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(0, 0, 0);
-        doc.text(displayValue, x + 5, yPosition + 8);
+        
+        // Position text below field label for first column, or at top for others
+        const textY = i === 0 ? yPosition + 12 : yPosition + 8;
+        doc.text(displayValue, x + 2, textY);
         
         // Vertical separator line
         if (i < products.length - 1) {

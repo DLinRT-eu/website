@@ -243,10 +243,21 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
       );
     }
 
-    // Save the PDF
-    const fileName = `product-comparison-${Date.now()}.pdf`;
+    // Save the PDF with better filename and error handling
+    const fileName = `product-comparison-${new Date().toISOString().slice(0, 10)}.pdf`;
     console.log('Saving PDF:', fileName);
-    doc.save(fileName);
+    
+    // Force download by creating a blob and download link
+    const pdfBlob = doc.output('blob');
+    const url = URL.createObjectURL(pdfBlob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = fileName;
+    downloadLink.style.display = 'none';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    URL.revokeObjectURL(url);
     
     console.log('PDF export completed successfully');
     

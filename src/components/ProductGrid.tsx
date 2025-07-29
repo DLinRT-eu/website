@@ -35,7 +35,7 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
     ? dataService.filterProducts(filters)
     : dataService.getAllProducts();
 
-  // Shuffle products randomly on each reload (only once)
+  // Shuffle products randomly on each reload (only once), but not in compare mode
   const shuffledProducts = useProductShuffle(filteredProducts);
 
   // Apply search filtering
@@ -45,10 +45,10 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
     advancedSearch
   });
 
-  // Apply sorting
+  // Apply sorting - disable random sort in compare mode
   const sortedProducts = useProductSorting({
     products: searchFilteredProducts,
-    sortBy,
+    sortBy: isCompareMode && sortBy === "random" ? "name" : sortBy,
     ascending
   });
 

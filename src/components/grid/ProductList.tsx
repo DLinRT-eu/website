@@ -14,6 +14,7 @@ interface ProductListProps {
   isSelectable?: boolean;
   selectedProducts?: ProductDetails[];
   onSelectionChange?: (product: ProductDetails, selected: boolean) => void;
+  showAllInCompareMode?: boolean;
 }
 
 const ProductList = ({ 
@@ -26,11 +27,14 @@ const ProductList = ({
   hasFilters,
   isSelectable = false,
   selectedProducts = [],
-  onSelectionChange
+  onSelectionChange,
+  showAllInCompareMode = false
 }: ProductListProps) => {
-  const totalPages = Math.ceil(products.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  // In compare mode, show all products; otherwise use pagination
+  const shouldShowAll = isSelectable && showAllInCompareMode;
+  const totalPages = shouldShowAll ? 1 : Math.ceil(products.length / itemsPerPage);
+  const startIndex = shouldShowAll ? 0 : (currentPage - 1) * itemsPerPage;
+  const endIndex = shouldShowAll ? products.length : startIndex + itemsPerPage;
   const currentProducts = products.slice(startIndex, endIndex);
 
   const handlePageChange = (page: number) => {

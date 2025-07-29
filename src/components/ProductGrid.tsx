@@ -158,6 +158,7 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
         isSelectable={isCompareMode}
         selectedProducts={selectedProducts}
         onSelectionChange={handleProductSelection}
+        showAllInCompareMode={true}
       />
       
       {isCompareMode && (

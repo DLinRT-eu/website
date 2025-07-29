@@ -16,11 +16,14 @@ const Companies = () => {
   // Get companies and their products, filtering out companies with no products
   const companies = useMemo(() => {
     return dataService.getAllCompanies()
-      .map(company => ({
-        ...company,
-        products: dataService.getProductsByCompany(company.id),
-        productCount: dataService.getProductsByCompany(company.id).length
-      }))
+      .map(company => {
+        const companyProducts = dataService.getProductsByCompany(company.id);
+        return {
+          ...company,
+          products: companyProducts,
+          productCount: companyProducts.length
+        };
+      })
       .filter(company => company.productCount > 0);
   }, []);
 

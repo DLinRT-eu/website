@@ -1,7 +1,14 @@
 import { useMemo } from "react";
+import { CompanyDetails } from "@/types/company";
+import { Product } from "@/types/product";
+
+interface ExtendedCompanyDetails extends CompanyDetails {
+  products: Product[];
+  productCount: number;
+}
 
 interface CompanyGridProps {
-  companies: Array<any>; // Replace `any` with your company type
+  companies: ExtendedCompanyDetails[];
 }
 
 const CompanyGrid = ({ companies }: CompanyGridProps) => {
@@ -22,6 +29,7 @@ const CompanyGrid = ({ companies }: CompanyGridProps) => {
           {/* Render company details */}
           <h3>{company.name}</h3>
           <p>{company.description}</p>
+          <span>Products: {company.productCount}</span>
         </div>
       ))}
     </div>

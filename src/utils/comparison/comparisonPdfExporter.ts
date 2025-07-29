@@ -1,0 +1,192 @@
+import { ProductDetails } from "@/types/productDetails";
+import jsPDF from "jspdf";
+
+export const exportComparisonToPDF = async (products: ProductDetails[]) => {
+  try {
+    const doc = new jsPDF('l', 'mm', 'a4'); // Landscape orientation for better table layout
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const margin = 15;
+    const contentWidth = pageWidth - (margin * 2);
+    
+    // Colors
+    const primaryColor = [59, 130, 246] as const; // Blue
+    const secondaryColor = [75, 85, 99] as const; // Gray
+    const lightGray = [249, 250, 251] as const;
+    
+    let yPosition = margin;
+
+    // Helper function to add a new page if needed
+    const checkPageBreak = (requiredHeight: number) => {
+      if (yPosition + requiredHeight > pageHeight - margin) {
+        doc.addPage();
+        yPosition = margin;
+        return true;
+      }
+      return false;
+    };
+
+    // Helper function to load and add logo
+    const addLogo = async (logoUrl: string, x: number, y: number, size: number = 15) => {
+      try {
+        if (!logoUrl || logoUrl === '/placeholder.svg') return;
+        
+        // Convert logo URL to base64 if it's a local file
+        const response = await fetch(logoUrl);
+        const blob = await response.blob();
+        const base64 = await new Promise<string>((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.readAsDataURL(blob);
+        });
+        
+        const img = new Image();
+        img.onload = () => {
+          doc.addImage(base64, 'PNG', x, y, size, size);
+        };
+        img.src = base64;
+      } catch (error) {
+        console.warn('Could not load logo:', logoUrl, error);
+      }
+    };
+
+    // Title
+    doc.setFontSize(20);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+    doc.text('Product Comparison Report', margin, yPosition);
+    yPosition += 15;
+
+    // Subtitle
+    doc.setFontSize(12);
+    doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+    doc.text(`Comparing ${products.length} products | Generated on ${new Date().toLocaleDateString()}`, margin, yPosition);
+    yPosition += 20;
+
+    // Product headers with logos
+    const colWidth = contentWidth / products.length;
+    
+    // Add product headers
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 0, 0);
+    
+    for (let i = 0; i < products.length; i++) {
+      const product = products[i];
+      const x = margin + (i * colWidth);
+      
+      // Add logo
+      await addLogo(product.logoUrl || '/placeholder.svg', x + 5, yPosition, 12);
+      
+      // Product name
+      doc.text(product.name, x + 20, yPosition + 6);
+      
+      // Company name
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+      doc.text(product.company, x + 20, yPosition + 12);
+      
+      // Vertical separator line
+      if (i < products.length - 1) {
+        doc.setDrawColor(200, 200, 200);
+        doc.line(x + colWidth - 5, yPosition, x + colWidth - 5, yPosition + 15);
+      }
+    }
+    
+    yPosition += 25;
+
+    // Comparison fields
+    const fields = [
+      { key: 'description', label: 'Description' },
+      { key: 'category', label: 'Category' },
+      { key: 'certification', label: 'Certification' },
+      { key: 'modality', label: 'Modality' },
+      { key: 'anatomicalLocation', label: 'Anatomical Location' },
+      { key: 'releaseDate', label: 'Release Date' },
+      { key: 'lastUpdated', label: 'Last Updated' },
+      { key: 'features', label: 'Key Features' },
+      { key: 'website', label: 'Website' },
+    ];
+
+    // Add comparison table
+    fields.forEach((field, fieldIndex) => {
+      checkPageBreak(20);
+      
+      // Field label (left column)
+      doc.setFillColor(lightGray[0], lightGray[1], lightGray[2]);
+      doc.rect(margin, yPosition, colWidth, 15, 'F');
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(0, 0, 0);
+      doc.text(field.label, margin + 5, yPosition + 8);
+      
+      // Field values for each product
+      for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+        const x = margin + (i * colWidth);
+        
+        // Background for alternating rows
+        if (fieldIndex % 2 === 0) {
+          doc.setFillColor(250, 250, 250);
+          doc.rect(x, yPosition, colWidth, 15, 'F');
+        }
+        
+        let value = product[field.key as keyof ProductDetails];
+        let displayValue = '';
+
+        if (Array.isArray(value)) {
+          displayValue = value.join(', ');
+        } else if (value) {
+          displayValue = String(value);
+        } else {
+          displayValue = 'N/A';
+        }
+
+        // Truncate long text
+        if (displayValue.length > 40) {
+          displayValue = displayValue.substring(0, 37) + '...';
+        }
+
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(0, 0, 0);
+        doc.text(displayValue, x + 5, yPosition + 8);
+        
+        // Vertical separator line
+        if (i < products.length - 1) {
+          doc.setDrawColor(200, 200, 200);
+          doc.line(x + colWidth, yPosition, x + colWidth, yPosition + 15);
+        }
+      }
+      
+      // Horizontal separator line
+      doc.setDrawColor(200, 200, 200);
+      doc.line(margin, yPosition + 15, margin + contentWidth, yPosition + 15);
+      
+      yPosition += 15;
+    });
+
+    // Footer
+    const pageCount = doc.getNumberOfPages();
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+      doc.setFontSize(8);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+      doc.text(
+        `Page ${i} of ${pageCount} | Product Comparison Report | Generated by DLinRT.eu`,
+        margin,
+        pageHeight - 10
+      );
+    }
+
+    // Save the PDF
+    const fileName = `product-comparison-${products.map(p => p.name.replace(/[^a-zA-Z0-9]/g, '')).join('-')}-${Date.now()}.pdf`;
+    doc.save(fileName);
+    
+  } catch (error) {
+    console.error('Error exporting comparison to PDF:', error);
+    throw new Error('Failed to export comparison to PDF format');
+  }
+};

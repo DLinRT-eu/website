@@ -7,6 +7,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Download, ExternalLink } from 'lucide-react';
 import { exportModelCardToExcel, exportModelCardToCSV } from '@/utils/modelCard';
+import { exportComparisonToPDF } from '@/utils/comparison/comparisonPdfExporter';
 
 interface ProductComparisonProps {
   products: ProductDetails[];
@@ -20,7 +21,7 @@ interface ComparisonRow {
 }
 
 const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps) => {
-  const [exportFormat, setExportFormat] = useState<'excel' | 'csv'>('excel');
+  const [exportFormat, setExportFormat] = useState<'excel' | 'csv' | 'pdf'>('excel');
 
   // Create comparison data structure
   const createComparisonData = (): ComparisonRow[] => {
@@ -128,10 +129,20 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
     return columns;
   };
 
-  const handleExportComparison = () => {
+  const handleExportComparison = async () => {
     const comparisonData = createComparisonData();
     
-    // Create a simplified structure for export
+    if (exportFormat === 'pdf') {
+      try {
+        await exportComparisonToPDF(products);
+      } catch (error) {
+        console.error('PDF export failed:', error);
+        alert('PDF export failed. Please try again.');
+      }
+      return;
+    }
+    
+    // Create a simplified structure for Excel/CSV export
     const exportData = {
       id: `comparison_${Date.now()}`,
       name: `Product Comparison - ${products.map(p => p.name).join(' vs ')}`,
@@ -174,11 +185,12 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
             <div className="flex items-center gap-2">
               <select
                 value={exportFormat}
-                onChange={(e) => setExportFormat(e.target.value as 'excel' | 'csv')}
+                onChange={(e) => setExportFormat(e.target.value as 'excel' | 'csv' | 'pdf')}
                 className="px-3 py-1 border rounded text-sm"
               >
                 <option value="excel">Excel</option>
                 <option value="csv">CSV</option>
+                <option value="pdf">PDF</option>
               </select>
               <Button
                 onClick={handleExportComparison}

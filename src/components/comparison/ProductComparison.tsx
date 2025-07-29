@@ -35,19 +35,79 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
       { key: 'releaseDate', label: 'Release Date' },
       { key: 'lastUpdated', label: 'Last Updated' },
       { key: 'features', label: 'Key Features' },
+      { key: 'keyFeatures', label: 'Additional Features' },
       { key: 'website', label: 'Website' },
+      { key: 'productUrl', label: 'Product URL' },
+      { key: 'diseaseTargeted', label: 'Disease Targeted' },
+      { key: 'suggestedUse', label: 'Suggested Use' },
+      { key: 'clinicalEvidence', label: 'Clinical Evidence' },
     ];
 
     return fields.map(field => {
       const row: ComparisonRow = { field: field.label };
       
       products.forEach((product, index) => {
-        const value = product[field.key as keyof ProductDetails];
+        let value: any;
         let displayValue = '';
 
-        if (Array.isArray(value)) {
+        // Get the value based on the field key
+        switch (field.key) {
+          case 'name':
+            value = product.name;
+            break;
+          case 'company':
+            value = product.company;
+            break;
+          case 'description':
+            value = product.description;
+            break;
+          case 'category':
+            value = product.category;
+            break;
+          case 'certification':
+            value = product.certification;
+            break;
+          case 'modality':
+            value = product.modality;
+            break;
+          case 'anatomicalLocation':
+            value = product.anatomicalLocation;
+            break;
+          case 'releaseDate':
+            value = product.releaseDate;
+            break;
+          case 'lastUpdated':
+            value = product.lastUpdated;
+            break;
+          case 'features':
+            value = product.features;
+            break;
+          case 'keyFeatures':
+            value = product.keyFeatures;
+            break;
+          case 'website':
+            value = product.website || product.productUrl;
+            break;
+          case 'productUrl':
+            value = product.productUrl;
+            break;
+          case 'diseaseTargeted':
+            value = product.diseaseTargeted;
+            break;
+          case 'suggestedUse':
+            value = product.suggestedUse;
+            break;
+          case 'clinicalEvidence':
+            value = product.clinicalEvidence;
+            break;
+          default:
+            value = product[field.key as keyof ProductDetails];
+        }
+
+        // Format the display value
+        if (Array.isArray(value) && value.length > 0) {
           displayValue = value.join(', ');
-        } else if (value) {
+        } else if (value !== null && value !== undefined && value !== '') {
           displayValue = String(value);
         } else {
           displayValue = 'N/A';

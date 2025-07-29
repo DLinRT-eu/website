@@ -54,29 +54,13 @@ const ProductCard = ({
 
   const handleSelectionChange = (checked: boolean) => {
     if (onSelectionChange && id) {
-      const productData: ProductDetails = {
-        id,
-        name,
-        company,
-        description,
-        features,
-        category,
-        certification,
-        logoUrl,
-        anatomicalLocation,
-        modality,
-        website,
-        companyUrl,
-        productUrl,
-        // Add other required fields with default values
-        releaseDate: '',
-        lastUpdated: '',
-        version: '',
-        url: website || '',
-        // Ensure all required ProductDetails fields are included
-      } as ProductDetails;
-      
-      onSelectionChange(productData, checked);
+      // Get the full product details from data service instead of creating incomplete object
+      import("@/services/DataService").then(({ default: dataService }) => {
+        const fullProduct = dataService.getProductById(id);
+        if (fullProduct) {
+          onSelectionChange(fullProduct, checked);
+        }
+      });
     }
   };
 

@@ -25,9 +25,12 @@ const CookieSettings: React.FC<CookieSettingsProps> = ({ onClose }) => {
 
   return (
     <Dialog open={true} onOpenChange={() => onClose()}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl" aria-describedby="cookie-settings-description">
         <DialogHeader>
           <DialogTitle>Cookie Preferences</DialogTitle>
+          <div id="cookie-settings-description" className="sr-only">
+            Manage your cookie preferences and privacy settings
+          </div>
         </DialogHeader>
         
         <div className="space-y-6">

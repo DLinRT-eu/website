@@ -7,7 +7,6 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Download, ExternalLink } from 'lucide-react';
 import { exportModelCardToExcel, exportModelCardToCSV } from '@/utils/modelCard';
-import { exportComparisonToPDF } from '@/utils/comparison/comparisonPdfExporter';
 
 interface ProductComparisonProps {
   products: ProductDetails[];
@@ -21,7 +20,7 @@ interface ComparisonRow {
 }
 
 const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps) => {
-  const [exportFormat, setExportFormat] = useState<'excel' | 'csv' | 'pdf'>('excel');
+  const [exportFormat, setExportFormat] = useState<'excel' | 'csv'>('excel');
 
   // Create comparison data structure
   const createComparisonData = (): ComparisonRow[] => {
@@ -129,20 +128,8 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
     return columns;
   };
 
-  const handleExportComparison = async () => {
+  const handleExportComparison = () => {
     const comparisonData = createComparisonData();
-    
-    if (exportFormat === 'pdf') {
-      try {
-        console.log('Starting PDF export...');
-        await exportComparisonToPDF(products);
-        console.log('PDF export successful');
-      } catch (error) {
-        console.error('PDF export failed:', error);
-        alert('PDF export failed. Please try again or check the console for details.');
-      }
-      return;
-    }
     
     // Create a simplified structure for Excel/CSV export
     const exportData = {
@@ -190,12 +177,11 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
             <div className="flex items-center gap-2">
               <select
                 value={exportFormat}
-                onChange={(e) => setExportFormat(e.target.value as 'excel' | 'csv' | 'pdf')}
+                onChange={(e) => setExportFormat(e.target.value as 'excel' | 'csv')}
                 className="px-3 py-1 border rounded text-sm"
               >
                 <option value="excel">Excel</option>
                 <option value="csv">CSV</option>
-                <option value="pdf">PDF</option>
               </select>
               <Button
                 onClick={handleExportComparison}

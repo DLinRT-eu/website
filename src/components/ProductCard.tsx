@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
 import { getModalityColor } from "@/utils/chartColors";
+import { Checkbox } from "@/components/ui/checkbox";
 
 interface ProductCardProps {
   id?: string;
@@ -20,6 +21,9 @@ interface ProductCardProps {
   website?: string;
   companyUrl?: string;
   productUrl?: string;
+  isSelectable?: boolean;
+  isSelected?: boolean;
+  onSelectionChange?: (product: ProductDetails, selected: boolean) => void;
 }
 
 const ProductCard = ({ 
@@ -35,9 +39,40 @@ const ProductCard = ({
   modality,
   website,
   companyUrl,
-  productUrl
+  productUrl,
+  isSelectable = false,
+  isSelected = false,
+  onSelectionChange
 }: ProductCardProps) => {
   const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    if (!isSelectable) {
+      navigate(`/product/${id}`);
+    }
+  };
+
+  const handleSelectionChange = (checked: boolean) => {
+    if (onSelectionChange) {
+      const productData: ProductDetails = {
+        id: id || '',
+        name,
+        company,
+        description,
+        features,
+        category,
+        certification,
+        logoUrl,
+        anatomicalLocation,
+        modality,
+        website,
+        companyUrl,
+        productUrl
+      } as ProductDetails;
+      
+      onSelectionChange(productData, checked);
+    }
+  };
 
   const formatModality = (modality: string | string[] | undefined): string => {
     if (!modality) return "Unknown";
@@ -66,11 +101,20 @@ const ProductCard = ({
 
   return (
     <Card 
-      className="h-full hover:shadow-lg transition-shadow cursor-pointer" 
-      onClick={() => navigate(`/product/${id}`)}
+      className={`h-full hover:shadow-lg transition-shadow ${!isSelectable ? 'cursor-pointer' : ''} ${isSelected ? 'ring-2 ring-primary' : ''}`}
+      onClick={handleCardClick}
     >
       <CardHeader className="pb-3 px-4 sm:px-6">
         <div className="flex items-start justify-between gap-3">
+          {isSelectable && (
+            <div className="pt-1">
+              <Checkbox
+                checked={isSelected}
+                onCheckedChange={handleSelectionChange}
+                onClick={(e) => e.stopPropagation()}
+              />
+            </div>
+          )}
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="w-16 h-16 bg-gray-100 rounded-lg flex items-center justify-center flex-shrink-0 border">
               <img 

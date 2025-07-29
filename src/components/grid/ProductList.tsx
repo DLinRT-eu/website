@@ -1,4 +1,3 @@
-
 import { useMemo } from "react";
 import ProductCard from "../ProductCard";
 import ProductPagination from "./ProductPagination";
@@ -12,6 +11,9 @@ interface ProductListProps {
   searchQuery: string;
   advancedSearch: boolean;
   hasFilters: boolean;
+  isSelectable?: boolean;
+  selectedProducts?: ProductDetails[];
+  onSelectionChange?: (product: ProductDetails, selected: boolean) => void;
 }
 
 const ProductList = ({ 
@@ -21,7 +23,10 @@ const ProductList = ({
   onPageChange,
   searchQuery,
   advancedSearch,
-  hasFilters
+  hasFilters,
+  isSelectable = false,
+  selectedProducts = [],
+  onSelectionChange
 }: ProductListProps) => {
   const totalPages = Math.ceil(products.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
@@ -72,7 +77,18 @@ const ProductList = ({
               ...product,
               logoUrl: product.logoUrl || '/placeholder.svg'
             };
-            return <ProductCard key={product.id || `product-${Math.random()}`} {...productWithLogoUrl} />;
+            
+            const isSelected = selectedProducts.some(p => p.id === product.id);
+            
+            return (
+              <ProductCard 
+                key={product.id || `product-${Math.random()}`} 
+                {...productWithLogoUrl}
+                isSelectable={isSelectable}
+                isSelected={isSelected}
+                onSelectionChange={onSelectionChange}
+              />
+            );
           } catch (error) {
             console.error("Error rendering ProductCard:", error);
             return (

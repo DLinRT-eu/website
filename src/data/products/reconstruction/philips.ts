@@ -121,9 +121,9 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
       basedOn: ["MRI system model", "Site license"]
     },
     clinicalEvidence: "Multiple clinical studies showing equivalent diagnostic quality with 30-50% reduced scan times across neurological, musculoskeletal, and body imaging",
-    lastVerified: "2024-11-10",
-    lastUpdated: "2025-01-05",
-    lastRevised: "2025-05-05",
+    lastVerified: "2025-07-30",
+    lastUpdated: "2025-07-30",
+    lastRevised: "2025-07-30",
     source: "Automatically retrieved"
 
   }

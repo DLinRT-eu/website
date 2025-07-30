@@ -4,7 +4,7 @@ import { ProductDetails } from "@/types/productDetails";
 export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
   {
     id: "united-uai-vision-recon",
-    name: "uAI Vision Reconstruction",
+    name: "uAIFI",
     company: "United Imaging",
     category: "Reconstruction",
     description: "Deep learning-based CT reconstruction technology that reduces radiation dose while enhancing image quality.",
@@ -62,6 +62,67 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     lastVerified: "2024-09-20",
     lastRevised: "2025-05-10",
     source: "Automatically retrieved"
+
+  },
+  {
+    id: "united-uaifi-umr",
+    name: "uAIFI on uMR",
+    company: "United Imaging",
+    category: "Reconstruction",
+    description: "Deep learning-based MRI reconstruction that reduces acquisition time increasing image quality.",
+    features: ["AI-powered", "Deep learning reconstruction"],
+    certification: "CE Mark",
+    logoUrl: "/logos/unitedimaging.png",
+    companyUrl: "https://www.united-imaging.com/",
+    productUrl: "https://eu.united-imaging.com/en/product-service/products/mr/uaifi-technology",
+    anatomicalLocation: ["Whole body"],
+    modality: "MR",
+    diseaseTargeted: ["Cancer", "Cardiovascular disease", "Pulmonary disorders"],
+    releaseDate: "2020-05-05",
+    version: "2.0",
+    keyFeatures: [
+      "Deep neural network reconstruction",
+      "Reduced image noise",
+      "Enhanced structural detail",
+      "Improved contrast resolution"
+    ],
+    technicalSpecifications: {
+      population: "Adult",
+      input: ["Raw MRI data"],
+      inputFormat: ["United Imaging proprietary format"],
+      output: ["Reconstructed MRI"],
+      outputFormat: ["DICOM"]
+    },
+    technology: {
+      integration: ["uMR scanners", "uCloud platform"],
+      deployment: ["On-scanner"],
+      triggerForAnalysis: "Automatic post-acquisition",
+      processingTime: "<30 seconds per dataset"
+    },
+    regulatory: {
+      ce: {
+        status: "Approved",
+        class: "IIa",
+        type: "Medical Device"
+      },
+      fda: "FDA Cleared",
+      intendedUseStatement: "Intended for use in MRI image reconstruction to reduce acquisition time or increase image quality."
+    },
+    market: {
+      onMarketSince: "2020",
+      distributionChannels: ["Direct sales", "Integrated in MRI systems"],
+      countriesPresent: 25,
+      payingCustomers: "200+",
+      researchUsers: "40+"
+    },
+    pricing: {
+      model: ["System integration", "Subscription options"],
+      basedOn: ["Scanner model", "Usage volume"]
+    },
+    clinicalEvidence: "Emerging clinical evidence showing increase image quality",
+    lastVerified: "2025-07-30",
+    lastRevised: "2025-07-30",
+    source: "Automatically retrieved and verified"
 
   },
   {

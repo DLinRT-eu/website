@@ -15,16 +15,27 @@ const CompareButton = ({
   selectedProducts, 
   onCompare, 
   onClear, 
-  maxProducts = 4 
+  maxProducts = 5 
 }: CompareButtonProps) => {
   if (selectedProducts.length === 0) return null;
 
   const canCompare = selectedProducts.length >= 2;
   const isMaxReached = selectedProducts.length >= maxProducts;
 
-  // Check if all selected products have the same task/category
-  const firstTask = selectedProducts[0]?.category;
-  const hasSameTask = selectedProducts.every(product => product.category === firstTask);
+  // Check if selected products have compatible tasks/categories (including secondary categories)
+  const getProductCategories = (product: ProductDetails) => {
+    const categories = [product.category];
+    if (product.secondaryCategories) {
+      categories.push(...product.secondaryCategories);
+    }
+    return categories;
+  };
+
+  const firstProductCategories = selectedProducts[0] ? getProductCategories(selectedProducts[0]) : [];
+  const hasCompatibleTasks = selectedProducts.length <= 1 || selectedProducts.every(product => {
+    const productCategories = getProductCategories(product);
+    return firstProductCategories.some(cat => productCategories.includes(cat));
+  });
 
   return (
     <div className="fixed bottom-6 right-6 z-50 bg-background border rounded-lg shadow-lg p-4 max-w-sm">
@@ -53,9 +64,9 @@ const CompareButton = ({
           )}
         </div>
         
-        {!hasSameTask && selectedProducts.length > 1 && (
+        {!hasCompatibleTasks && selectedProducts.length > 1 && (
           <div className="text-xs text-destructive">
-            ⚠️ Products must have the same task to compare
+            ⚠️ Products must have compatible tasks to compare
           </div>
         )}
       </div>
@@ -70,7 +81,7 @@ const CompareButton = ({
 
       <Button
         onClick={onCompare}
-        disabled={!canCompare || !hasSameTask}
+        disabled={!canCompare || !hasCompatibleTasks}
         size="sm"
         className="w-full"
       >

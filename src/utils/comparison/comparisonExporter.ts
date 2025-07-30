@@ -205,10 +205,11 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
     doc.text(`Comparing ${products.length} products`, margin, yPosition);
     yPosition += 15;
     
-    // Calculate proper column width ensuring all columns fit
-    const fieldColumnWidth = 50; // Fixed width for field column
+    // Calculate proper column width ensuring all columns fit (max 5 products)
+    const maxProducts = Math.min(products.length, 5);
+    const fieldColumnWidth = 45; // Reduced width for field column to fit 5 products
     const availableWidth = contentWidth - fieldColumnWidth - 5; // 5mm gap
-    const productColumnWidth = Math.floor(availableWidth / products.length);
+    const productColumnWidth = Math.floor(availableWidth / maxProducts);
     
     // Product headers with logos
     let xPosition = margin + fieldColumnWidth + 5;
@@ -223,11 +224,16 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
       // Ensure logo doesn't go beyond page boundary
       const logoX = Math.min(currentX, pageWidth - margin - 20);
       
-      // Add logo if available
+      // Add logo if available - ensure it fits within column bounds
       if (product.company) {
         const logoUrl = `/logos/${product.company.toLowerCase().replace(/\s+/g, '-')}.png`;
         try {
-          await addLogo(logoUrl, logoX, yPosition - 5, 15, 10);
+          // Scale logo based on column width and ensure it fits
+          const logoSize = Math.min(12, productColumnWidth * 0.3);
+          const centeredLogoX = Math.max(logoX, currentX + (productColumnWidth / 2) - (logoSize / 2));
+          const boundedLogoX = Math.min(centeredLogoX, currentX + productColumnWidth - logoSize - 2);
+          
+          await addLogo(logoUrl, boundedLogoX, yPosition - 5, logoSize, logoSize * 0.7);
         } catch (error) {
           // Logo loading failed, continue without logo
         }

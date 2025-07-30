@@ -89,18 +89,31 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
 
   const handleProductSelection = (product: ProductDetails, selected: boolean) => {
     if (selected) {
-      // Check if product has same task as others
+      // Check if product has compatible tasks with others (including secondary categories)
       if (selectedProducts.length > 0) {
-        const firstCategory = selectedProducts[0].category;
-        if (product.category !== firstCategory) {
-          alert(`Cannot compare products from different categories. Selected products are from "${firstCategory}" category.`);
+        const getProductCategories = (p: ProductDetails) => {
+          const categories = [p.category];
+          if (p.secondaryCategories) {
+            categories.push(...p.secondaryCategories);
+          }
+          return categories;
+        };
+
+        const firstProductCategories = getProductCategories(selectedProducts[0]);
+        const productCategories = getProductCategories(product);
+        const hasCompatibleCategories = firstProductCategories.some(cat => 
+          productCategories.includes(cat)
+        );
+
+        if (!hasCompatibleCategories) {
+          alert(`Cannot compare products without compatible categories. Selected products have categories: "${firstProductCategories.join(', ')}" and this product has: "${productCategories.join(', ')}".`);
           return;
         }
       }
       
       // Check max selection limit
-      if (selectedProducts.length >= 4) {
-        alert('Maximum 4 products can be compared at once.');
+      if (selectedProducts.length >= 5) {
+        alert('Maximum 5 products can be compared at once.');
         return;
       }
       

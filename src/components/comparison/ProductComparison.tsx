@@ -27,11 +27,16 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
     const fields = [
       { key: 'name', label: 'Product Name' },
       { key: 'company', label: 'Company' },
+      { key: 'version', label: 'Version/Model' },
+      { key: 'algorithm', label: 'Algorithm/Technology' },
       { key: 'description', label: 'Description' },
       { key: 'category', label: 'Category' },
+      { key: 'secondaryCategories', label: 'Secondary Categories' },
       { key: 'certification', label: 'Certification' },
       { key: 'modality', label: 'Modality' },
       { key: 'anatomicalLocation', label: 'Anatomical Location' },
+      { key: 'processingTime', label: 'Processing Time' },
+      { key: 'guidelines', label: 'Guidelines Compliance' },
       { key: 'releaseDate', label: 'Release Date' },
       { key: 'lastUpdated', label: 'Last Updated' },
       { key: 'features', label: 'Key Features' },
@@ -41,6 +46,7 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
       { key: 'diseaseTargeted', label: 'Disease Targeted' },
       { key: 'suggestedUse', label: 'Suggested Use' },
       { key: 'clinicalEvidence', label: 'Clinical Evidence' },
+      { key: 'supportedStructures', label: 'Supported Structures' },
     ];
 
     return fields.map(field => {
@@ -58,11 +64,29 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
           case 'company':
             value = product.company;
             break;
+          case 'version':
+            value = product.version;
+            break;
+          case 'algorithm':
+            // Extract algorithm info from description or features
+            const algoInfo = [];
+            if (product.description?.toLowerCase().includes('deep learning')) algoInfo.push('Deep Learning');
+            if (product.description?.toLowerCase().includes('machine learning')) algoInfo.push('Machine Learning');
+            if (product.description?.toLowerCase().includes('ai')) algoInfo.push('Artificial Intelligence');
+            if (product.description?.toLowerCase().includes('neural network')) algoInfo.push('Neural Network');
+            if (product.description?.toLowerCase().includes('cnn') || product.description?.toLowerCase().includes('convolutional')) algoInfo.push('CNN');
+            if (product.description?.toLowerCase().includes('u-net')) algoInfo.push('U-Net');
+            if (product.technology?.integration) algoInfo.push(...product.technology.integration);
+            value = algoInfo.length > 0 ? algoInfo.join(', ') : 'Not specified';
+            break;
           case 'description':
             value = product.description;
             break;
           case 'category':
             value = product.category;
+            break;
+          case 'secondaryCategories':
+            value = product.secondaryCategories;
             break;
           case 'certification':
             value = product.certification;
@@ -72,6 +96,12 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
             break;
           case 'anatomicalLocation':
             value = product.anatomicalLocation;
+            break;
+          case 'processingTime':
+            value = product.technology?.processingTime;
+            break;
+          case 'guidelines':
+            value = product.guidelines?.map(g => `${g.name} (${g.compliance || 'Not specified'})`);
             break;
           case 'releaseDate':
             value = product.releaseDate;
@@ -99,6 +129,17 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
             break;
           case 'clinicalEvidence':
             value = product.clinicalEvidence;
+            break;
+          case 'supportedStructures':
+            if (Array.isArray(product.supportedStructures)) {
+              if (typeof product.supportedStructures[0] === 'string') {
+                value = product.supportedStructures;
+              } else {
+                value = product.supportedStructures.map((s: any) => s.name || s).filter(Boolean);
+              }
+            } else {
+              value = product.supportedStructures;
+            }
             break;
           default:
             value = product[field.key as keyof ProductDetails];
@@ -168,10 +209,34 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
             return <Badge variant="outline">{value}</Badge>;
           }
 
-          if (field === 'Key Features' && value !== 'N/A') {
+          if ((field === 'Key Features' || field === 'Additional Features' || field === 'Supported Structures') && value !== 'N/A') {
             return (
               <div className="max-w-xs">
-                <div className="text-sm line-clamp-3">{value}</div>
+                <div className="text-sm line-clamp-4">{value}</div>
+              </div>
+            );
+          }
+
+          if (field === 'Version/Model' && value !== 'N/A') {
+            return <Badge variant="outline" className="font-mono">{value}</Badge>;
+          }
+
+          if (field === 'Algorithm/Technology' && value !== 'N/A') {
+            return (
+              <div className="max-w-xs">
+                <div className="text-sm font-medium">{value}</div>
+              </div>
+            );
+          }
+
+          if (field === 'Guidelines Compliance' && value !== 'N/A') {
+            return (
+              <div className="max-w-xs space-y-1">
+                {value.split(', ').map((guideline: string, idx: number) => (
+                  <Badge key={idx} variant="secondary" className="text-xs block w-fit">
+                    {guideline}
+                  </Badge>
+                ))}
               </div>
             );
           }

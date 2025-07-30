@@ -14,6 +14,7 @@ export const getAllOptions = (field: keyof Product): string[] => {
         "Image Enhancement",
         "Image Synthesis",
         "Auto-Contouring",
+        "Tracking",
         "Treatment Planning",
         "Clinical Prediction",
         "Registration",

@@ -37,6 +37,11 @@ const categoryInfo: Record<string, { icon: React.ElementType, description: strin
     description: "Deep learning-driven automatic segmentation of organs at risk and target volumes", 
     color: "bg-blue-100" 
   },
+  "Tracking": { 
+    icon: Monitor, 
+    description: "Real-time motion tracking and synchronization during treatment delivery", 
+    color: "bg-emerald-100" 
+  },
   "Treatment Planning": { 
     icon: Brain, 
     description: "DL-assisted creation and optimization of radiation treatment plans", 
@@ -78,6 +83,7 @@ const TaskTaxonomy = ({ categories, onCategoryClick, filterType = 'task' }: Task
     "Image Enhancement",
     "Image Synthesis",
     "Auto-Contouring",
+    "Tracking",
     "Treatment Planning",
     "Clinical Prediction",
     "Registration",

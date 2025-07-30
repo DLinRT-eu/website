@@ -19,7 +19,7 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
     "description": "Developer of radiotherapy systems with AI-enhanced imaging capabilities.",
     "website": "https://www.accuray.com/",
     "productIds": [
-      "accuray-clearrt", 
+      "accuray-synchrony",
       "accuray-synchrony-image"
     ],
     "category": "Radiotherapy Equipment",

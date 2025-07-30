@@ -12,6 +12,7 @@ import { CLINICAL_PREDICTION_PRODUCTS } from "./products/clinical-prediction";
 import { RECONSTRUCTION_PRODUCTS } from "./products/reconstruction";
 import { IMAGE_ENHANCEMENT_PRODUCTS } from "./products/image-enhancement";
 import { PERFORMANCE_MONITOR_PRODUCTS } from "./products/performance-monitor";
+import { TRACKING_PRODUCTS } from "./products/tracking";
 import { 
   ALL_INITIATIVES, 
   CHALLENGE_INITIATIVES, 
@@ -28,7 +29,8 @@ export const ALL_PRODUCTS: ProductDetails[] = [
   ...CLINICAL_PREDICTION_PRODUCTS,
   ...RECONSTRUCTION_PRODUCTS,
   ...IMAGE_ENHANCEMENT_PRODUCTS,
-  ...PERFORMANCE_MONITOR_PRODUCTS
+  ...PERFORMANCE_MONITOR_PRODUCTS,
+  ...TRACKING_PRODUCTS
 ];
 
 // Export everything
@@ -43,6 +45,7 @@ export {
   RECONSTRUCTION_PRODUCTS,
   IMAGE_ENHANCEMENT_PRODUCTS,
   PERFORMANCE_MONITOR_PRODUCTS,
+  TRACKING_PRODUCTS,
   ALL_INITIATIVES,
   CHALLENGE_INITIATIVES, 
   DATASET_INITIATIVES,

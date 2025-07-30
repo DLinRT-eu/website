@@ -111,11 +111,22 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
       }
       return false;
     };
-    
-    // Helper function to wrap text and return lines
-    const wrapText = (text: string, maxWidth: number): string[] => {
+
+    // Helper function to detect if text is a URL
+    const isURL = (text: string): boolean => {
+      try {
+        new URL(text);
+        return true;
+      } catch {
+        return text.startsWith('http://') || text.startsWith('https://') || text.startsWith('www.');
+      }
+    };
+
+    // Helper function to wrap text and return lines with URL handling
+    const wrapText = (text: string, maxWidth: number): { lines: string[], isUrl: boolean[] } => {
       const words = text.split(' ');
       const lines: string[] = [];
+      const isUrl: boolean[] = [];
       let currentLine = '';
       
       for (const word of words) {
@@ -127,19 +138,35 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
         } else {
           if (currentLine) {
             lines.push(currentLine);
+            isUrl.push(isURL(currentLine));
             currentLine = word;
           } else {
             // Word is too long, split it
             lines.push(word);
+            isUrl.push(isURL(word));
           }
         }
       }
       
       if (currentLine) {
         lines.push(currentLine);
+        isUrl.push(isURL(currentLine));
       }
       
-      return lines;
+      return { lines, isUrl };
+    };
+
+    // Helper function to add clickable link
+    const addClickableLink = (text: string, x: number, y: number, width: number, height: number) => {
+      let url = text.trim();
+      if (!url.startsWith('http://') && !url.startsWith('https://')) {
+        url = 'https://' + url.replace(/^www\./, '');
+      }
+      try {
+        doc.link(x, y - height + 1, width, height, { url });
+      } catch (error) {
+        console.warn('Could not create link:', error);
+      }
     };
     
     // Helper function to load company logos
@@ -209,22 +236,22 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
       // Product name with text wrapping
       doc.setFontSize(9);
       doc.setFont('helvetica', 'bold');
-      const productNameLines = wrapText(product.name, productColumnWidth - 2);
-      productNameLines.forEach((line, lineIndex) => {
+      const productNameWrapped = wrapText(product.name, productColumnWidth - 2);
+      productNameWrapped.lines.forEach((line, lineIndex) => {
         doc.text(line, currentX, yPosition + 8 + (lineIndex * 3));
       });
       
       // Company name
       doc.setFontSize(7);
       doc.setFont('helvetica', 'normal');
-      const companyNameLines = wrapText(product.company, productColumnWidth - 2);
-      const companyStartY = yPosition + 8 + (productNameLines.length * 3) + 2;
-      companyNameLines.forEach((line, lineIndex) => {
+      const companyNameWrapped = wrapText(product.company, productColumnWidth - 2);
+      const companyStartY = yPosition + 8 + (productNameWrapped.lines.length * 3) + 2;
+      companyNameWrapped.lines.forEach((line, lineIndex) => {
         doc.text(line, currentX, companyStartY + (lineIndex * 2.5));
       });
     }
     
-    yPosition += Math.max(25, 8 + (3 * 3) + 5); // Dynamic spacing based on text
+    yPosition += Math.max(30, 8 + (3 * 3) + 8); // Increased spacing for better layout
     
     // Table content
     doc.setFontSize(8);
@@ -235,22 +262,22 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
       
       // Check field name height
       doc.setFont('helvetica', 'bold');
-      const fieldLines = wrapText(row.field, fieldColumnWidth - 2);
-      maxRowHeight = Math.max(maxRowHeight, fieldLines.length * 3);
+      const fieldWrapped = wrapText(row.field, fieldColumnWidth - 2);
+      maxRowHeight = Math.max(maxRowHeight, fieldWrapped.lines.length * 3);
       
       // Check product values height
       doc.setFont('helvetica', 'normal');
       for (let i = 0; i < products.length; i++) {
         const value = row[`product_${i}`] || 'N/A';
-        const valueLines = wrapText(String(value), productColumnWidth - 2);
-        maxRowHeight = Math.max(maxRowHeight, valueLines.length * 3);
+        const valueWrapped = wrapText(String(value), productColumnWidth - 2);
+        maxRowHeight = Math.max(maxRowHeight, valueWrapped.lines.length * 3);
       }
       
-      checkPageBreak(maxRowHeight + 2);
+      checkPageBreak(maxRowHeight + 4); // Added more spacing
       
       // Field name
       doc.setFont('helvetica', 'bold');
-      fieldLines.forEach((line, lineIndex) => {
+      fieldWrapped.lines.forEach((line, lineIndex) => {
         doc.text(line, margin, yPosition + (lineIndex * 3));
       });
       
@@ -261,19 +288,34 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
         const value = row[`product_${i}`] || 'N/A';
         const currentX = margin + fieldColumnWidth + 5 + (i * productColumnWidth);
         
-        const valueLines = wrapText(String(value), productColumnWidth - 2);
-        valueLines.forEach((line, lineIndex) => {
-          doc.text(line, currentX, yPosition + (lineIndex * 3));
+        // Ensure we don't go beyond page boundaries
+        if (currentX + productColumnWidth > pageWidth - margin) {
+          continue; // Skip if it would overflow
+        }
+        
+        const valueWrapped = wrapText(String(value), productColumnWidth - 2);
+        valueWrapped.lines.forEach((line, lineIndex) => {
+          const lineY = yPosition + (lineIndex * 3);
+          doc.text(line, currentX, lineY);
+          
+          // Add clickable link if it's a URL
+          if (valueWrapped.isUrl[lineIndex]) {
+            doc.setTextColor(0, 0, 255); // Blue color for URLs
+            doc.text(line, currentX, lineY);
+            const lineWidth = doc.getTextWidth(line);
+            addClickableLink(line, currentX, lineY, lineWidth, 3);
+            doc.setTextColor(0, 0, 0); // Reset to black
+          }
         });
       }
       
-      yPosition += maxRowHeight + 2;
+      yPosition += maxRowHeight + 4; // Increased spacing between rows
       
-      // Add separator line every 5 rows
+      // Add separator line every 5 rows with more spacing
       if (comparisonData.indexOf(row) % 5 === 4) {
         doc.setDrawColor(200, 200, 200);
-        doc.line(margin, yPosition + 1, pageWidth - margin, yPosition + 1);
-        yPosition += 3;
+        doc.line(margin, yPosition + 2, pageWidth - margin, yPosition + 2);
+        yPosition += 6; // More space after separator
       }
     });
     

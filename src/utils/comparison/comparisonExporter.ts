@@ -112,6 +112,36 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
       return false;
     };
     
+    // Helper function to wrap text and return lines
+    const wrapText = (text: string, maxWidth: number): string[] => {
+      const words = text.split(' ');
+      const lines: string[] = [];
+      let currentLine = '';
+      
+      for (const word of words) {
+        const testLine = currentLine ? `${currentLine} ${word}` : word;
+        const lineWidth = doc.getTextWidth(testLine);
+        
+        if (lineWidth <= maxWidth) {
+          currentLine = testLine;
+        } else {
+          if (currentLine) {
+            lines.push(currentLine);
+            currentLine = word;
+          } else {
+            // Word is too long, split it
+            lines.push(word);
+          }
+        }
+      }
+      
+      if (currentLine) {
+        lines.push(currentLine);
+      }
+      
+      return lines;
+    };
+    
     // Helper function to load company logos
     const addLogo = async (logoUrl: string, x: number, y: number, width: number, height: number) => {
       try {
@@ -148,72 +178,96 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
     doc.text(`Comparing ${products.length} products`, margin, yPosition);
     yPosition += 15;
     
+    // Calculate proper column width ensuring all columns fit
+    const fieldColumnWidth = 50; // Fixed width for field column
+    const availableWidth = contentWidth - fieldColumnWidth - 5; // 5mm gap
+    const productColumnWidth = Math.floor(availableWidth / products.length);
+    
     // Product headers with logos
-    const columnWidth = Math.min(contentWidth / (products.length + 1), 60);
-    let xPosition = margin + columnWidth + 5;
+    let xPosition = margin + fieldColumnWidth + 5;
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
     
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
+      const currentX = xPosition + (i * productColumnWidth);
+      
+      // Ensure logo doesn't go beyond page boundary
+      const logoX = Math.min(currentX, pageWidth - margin - 20);
       
       // Add logo if available
       if (product.company) {
         const logoUrl = `/logos/${product.company.toLowerCase().replace(/\s+/g, '-')}.png`;
         try {
-          await addLogo(logoUrl, xPosition, yPosition - 5, 15, 10);
+          await addLogo(logoUrl, logoX, yPosition - 5, 15, 10);
         } catch (error) {
           // Logo loading failed, continue without logo
         }
       }
       
-      // Product name (truncated if too long)
-      const productName = product.name.length > 15 ? product.name.substring(0, 12) + '...' : product.name;
-      doc.text(productName, xPosition, yPosition + 8);
+      // Product name with text wrapping
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      const productNameLines = wrapText(product.name, productColumnWidth - 2);
+      productNameLines.forEach((line, lineIndex) => {
+        doc.text(line, currentX, yPosition + 8 + (lineIndex * 3));
+      });
       
       // Company name
-      doc.setFontSize(8);
+      doc.setFontSize(7);
       doc.setFont('helvetica', 'normal');
-      const companyName = product.company.length > 15 ? product.company.substring(0, 12) + '...' : product.company;
-      doc.text(companyName, xPosition, yPosition + 12);
-      
-      xPosition += columnWidth;
-      doc.setFontSize(10);
-      doc.setFont('helvetica', 'bold');
+      const companyNameLines = wrapText(product.company, productColumnWidth - 2);
+      const companyStartY = yPosition + 8 + (productNameLines.length * 3) + 2;
+      companyNameLines.forEach((line, lineIndex) => {
+        doc.text(line, currentX, companyStartY + (lineIndex * 2.5));
+      });
     }
     
-    yPosition += 20;
+    yPosition += Math.max(25, 8 + (3 * 3) + 5); // Dynamic spacing based on text
     
     // Table content
-    doc.setFontSize(9);
+    doc.setFontSize(8);
     
     comparisonData.forEach((row) => {
-      checkPageBreak(8);
+      // Calculate max height needed for this row
+      let maxRowHeight = 4;
+      
+      // Check field name height
+      doc.setFont('helvetica', 'bold');
+      const fieldLines = wrapText(row.field, fieldColumnWidth - 2);
+      maxRowHeight = Math.max(maxRowHeight, fieldLines.length * 3);
+      
+      // Check product values height
+      doc.setFont('helvetica', 'normal');
+      for (let i = 0; i < products.length; i++) {
+        const value = row[`product_${i}`] || 'N/A';
+        const valueLines = wrapText(String(value), productColumnWidth - 2);
+        maxRowHeight = Math.max(maxRowHeight, valueLines.length * 3);
+      }
+      
+      checkPageBreak(maxRowHeight + 2);
       
       // Field name
       doc.setFont('helvetica', 'bold');
-      const fieldText = row.field.length > 20 ? row.field.substring(0, 17) + '...' : row.field;
-      doc.text(fieldText, margin, yPosition);
+      fieldLines.forEach((line, lineIndex) => {
+        doc.text(line, margin, yPosition + (lineIndex * 3));
+      });
       
       // Values for each product
-      xPosition = margin + columnWidth + 5;
       doc.setFont('helvetica', 'normal');
       
       for (let i = 0; i < products.length; i++) {
         const value = row[`product_${i}`] || 'N/A';
-        let displayValue = String(value);
+        const currentX = margin + fieldColumnWidth + 5 + (i * productColumnWidth);
         
-        // Truncate long text
-        if (displayValue.length > 25) {
-          displayValue = displayValue.substring(0, 22) + '...';
-        }
-        
-        doc.text(displayValue, xPosition, yPosition);
-        xPosition += columnWidth;
+        const valueLines = wrapText(String(value), productColumnWidth - 2);
+        valueLines.forEach((line, lineIndex) => {
+          doc.text(line, currentX, yPosition + (lineIndex * 3));
+        });
       }
       
-      yPosition += 6;
+      yPosition += maxRowHeight + 2;
       
       // Add separator line every 5 rows
       if (comparisonData.indexOf(row) % 5 === 4) {

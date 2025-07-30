@@ -302,10 +302,16 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
         
         // Special handling for supported structures
         if (row.field === 'Supported Structures' && value !== 'N/A') {
-          const product = products[i];
-          if (product?.supportedStructures && Array.isArray(product.supportedStructures)) {
-            const { groups, ungrouped } = parseAndGroupStructures(product.supportedStructures);
-            value = formatGroupedStructuresForPDF(groups, ungrouped);
+          // Check if value is already formatted (contains model names with colons)
+          const isAlreadyFormatted = typeof value === 'string' && value.includes(':');
+          
+          if (!isAlreadyFormatted) {
+            // Only re-process if the value isn't already formatted
+            const product = products[i];
+            if (product?.supportedStructures && Array.isArray(product.supportedStructures)) {
+              const { groups, ungrouped } = parseAndGroupStructures(product.supportedStructures);
+              value = formatGroupedStructuresForPDF(groups, ungrouped);
+            }
           }
         }
         

@@ -21,16 +21,24 @@ export const parseAndGroupStructures = (structures: string[] | any[]): ParsedStr
   structures.forEach(structure => {
     const structureName = typeof structure === 'string' ? structure : structure?.name || String(structure);
     
+    // Skip empty or invalid structure names
+    if (!structureName || structureName.trim() === '') {
+      return;
+    }
+    
     // Check if structure follows the "Model: Structure" pattern
     const colonIndex = structureName.indexOf(':');
     if (colonIndex > 0 && colonIndex < structureName.length - 1) {
       const modelName = structureName.substring(0, colonIndex).trim();
       const structureOnly = structureName.substring(colonIndex + 1).trim();
       
-      if (!groups.has(modelName)) {
-        groups.set(modelName, new Set());
+      // Avoid duplicate model names in structure names
+      if (structureOnly && !structureOnly.startsWith(modelName)) {
+        if (!groups.has(modelName)) {
+          groups.set(modelName, new Set());
+        }
+        groups.get(modelName)!.add(structureOnly);
       }
-      groups.get(modelName)!.add(structureOnly);
     } else {
       // No model prefix found, add to ungrouped
       ungrouped.push(structureName);

@@ -76,7 +76,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.united-imaging.com/",
     productUrl: "https://eu.united-imaging.com/en/product-service/products/mr/uaifi-technology",
     anatomicalLocation: ["Whole body"],
-    modality: "MR",
+    modality: "MRI",
     diseaseTargeted: ["Cancer", "Cardiovascular disease", "Pulmonary disorders"],
     releaseDate: "2020-05-05",
     version: "2.0",

@@ -66,7 +66,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
   },
   {
     id: "philips-compressed-sense",
-    name: "Compressed SENSE",
+    name: "SmartSpeed",
     company: "Philips",
     category: "Reconstruction",
     description: "AI-driven MRI acceleration technology using deep learning reconstruction algorithms to reduce scan times while maintaining image quality.",

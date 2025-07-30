@@ -18,8 +18,8 @@ export const parseAndGroupStructures = (structures: string[] | any[]): ParsedStr
   const groups: Map<string, Set<string>> = new Map();
   const ungrouped: string[] = [];
 
-  structures.forEach(structure => {
-    const structureName = typeof structure === 'string' ? structure : structure?.name || String(structure);
+  structures.forEach((structure: any) => {
+    const structureName = typeof structure === 'string' ? structure : (structure?.name || String(structure));
     
     // Skip empty or invalid structure names
     if (!structureName || structureName.trim() === '') {

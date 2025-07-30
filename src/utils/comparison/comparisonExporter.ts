@@ -1,6 +1,7 @@
 import { ProductDetails } from "@/types/productDetails";
 import * as XLSX from 'xlsx';
 import jsPDF from 'jspdf';
+import { parseAndGroupStructures, formatGroupedStructuresForPDF } from '@/utils/structureGrouping';
 
 export interface ComparisonRow {
   field: string;
@@ -291,12 +292,21 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
       doc.setFont('helvetica', 'normal');
       
       for (let i = 0; i < products.length; i++) {
-        const value = row[`product_${i}`] || 'N/A';
+        let value = row[`product_${i}`] || 'N/A';
         const currentX = margin + fieldColumnWidth + 5 + (i * productColumnWidth);
         
         // Ensure we don't go beyond page boundaries
         if (currentX + productColumnWidth > pageWidth - margin) {
           continue; // Skip if it would overflow
+        }
+        
+        // Special handling for supported structures
+        if (row.field === 'Supported Structures' && value !== 'N/A') {
+          const product = products[i];
+          if (product?.supportedStructures && Array.isArray(product.supportedStructures)) {
+            const { groups, ungrouped } = parseAndGroupStructures(product.supportedStructures);
+            value = formatGroupedStructuresForPDF(groups, ungrouped);
+          }
         }
         
         const valueWrapped = wrapText(String(value), productColumnWidth - 2);

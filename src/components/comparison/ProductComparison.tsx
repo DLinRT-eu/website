@@ -7,6 +7,7 @@ import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Download, ExternalLink } from 'lucide-react';
 import { exportComparisonToExcel, exportComparisonToCSV, exportComparisonToPDF } from '@/utils/comparison/comparisonExporter';
+import StructuredDisplay from './StructuredDisplay';
 
 interface ProductComparisonProps {
   products: ProductDetails[];
@@ -209,7 +210,20 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
             return <Badge variant="outline">{value}</Badge>;
           }
 
-          if ((field === 'Key Features' || field === 'Additional Features' || field === 'Supported Structures') && value !== 'N/A') {
+          if (field === 'Supported Structures' && value !== 'N/A') {
+            // Get the original product data for structured display
+            const originalProduct = products[index];
+            if (originalProduct?.supportedStructures) {
+              return <StructuredDisplay structures={originalProduct.supportedStructures} compact />;
+            }
+            return (
+              <div className="max-w-xs">
+                <div className="text-sm line-clamp-4">{value}</div>
+              </div>
+            );
+          }
+
+          if ((field === 'Key Features' || field === 'Additional Features') && value !== 'N/A') {
             return (
               <div className="max-w-xs">
                 <div className="text-sm line-clamp-4">{value}</div>

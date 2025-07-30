@@ -69,7 +69,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     name: "uAIFI on uMR",
     company: "United Imaging",
     category: "Reconstruction",
-    description: "Deep learning-based MRI reconstruction that reduces acquisition time increasing image quality.",
+    description: "Deep learning-based MRI reconstruction that reduces acquisition time while increasing image quality.",
     features: ["AI-powered", "Deep learning reconstruction"],
     certification: "CE Mark",
     logoUrl: "/logos/unitedimaging.png",

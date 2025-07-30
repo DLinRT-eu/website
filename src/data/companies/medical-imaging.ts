@@ -72,6 +72,7 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
     "website": "https://www.united-imaging.com/",
     "productIds": [
       "united-uai-vision-recon", 
+      "united-uaifi-umr",
       "united-hd-tof",
       "united-ucs-ai",
       "united-uvision-ai"

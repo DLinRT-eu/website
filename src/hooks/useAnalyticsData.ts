@@ -1,7 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { subDays, format } from 'date-fns';
 import analyticsTracker from '@/services/analytics';
-import { DailyVisitData } from '@/services/analytics/types';
+import { DailyVisitData, TopPageData } from '@/services/analytics/types';
 import { useToast } from '@/hooks/use-toast';
 
 export const useAnalyticsData = () => {
@@ -11,7 +11,7 @@ export const useAnalyticsData = () => {
   });
   const [chartView, setChartView] = useState<'daily' | 'weekly' | 'monthly'>('daily');
   const [analyticsData, setAnalyticsData] = useState<Record<string, DailyVisitData>>({});
-  const [topPages, setTopPages] = useState<any[]>([]);
+  const [topPages, setTopPages] = useState<TopPageData[]>([]);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
 

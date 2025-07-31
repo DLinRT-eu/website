@@ -19,7 +19,10 @@ const CookieConsent = () => {
   const handleAcceptAll = () => {
     setCookieConsent({ analytics: true });
     setShowBanner(false);
-    // Reload to reinitialize analytics with cookies
+    // Reinitialize analytics with new consent
+    const analyticsTracker = require('@/services/analytics').default;
+    analyticsTracker.reinitialize();
+    // Reload to ensure all components are properly updated
     window.location.reload();
   };
 
@@ -36,7 +39,10 @@ const CookieConsent = () => {
     setShowSettings(false);
     if (accepted !== undefined) {
       setShowBanner(false);
-      // Reload to reinitialize analytics
+      // Reinitialize analytics with new consent
+      const analyticsTracker = require('@/services/analytics').default;
+      analyticsTracker.reinitialize();
+      // Reload to ensure all components are properly updated
       window.location.reload();
     }
   };

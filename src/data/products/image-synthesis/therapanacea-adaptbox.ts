@@ -19,7 +19,7 @@ export const THERAPANACEA_ADAPTBOX_PRODUCTS: ProductDetails[] = [
     ],
     category: "Image Synthesis",
     secondaryCategories: ["Auto-Contouring"],
-    certification: "CE",
+    certification: "CE & FDA",
     logoUrl: "/logos/therapanacea.png",
     website: "https://www.therapanacea.eu/our-products/adaptbox/",
     anatomicalLocation: ["Pelvis"],
@@ -28,6 +28,7 @@ export const THERAPANACEA_ADAPTBOX_PRODUCTS: ProductDetails[] = [
     diseaseTargeted: ["Prostate Cancer"],
     keyFeatures: [
       "CBCT-based contouring",
+      "Dose calculation on augmented CBCT",
       "Clinical workflow integration",
       "Rapid processing for adaptive RT",
       "CBCT image enhancement"
@@ -51,13 +52,13 @@ export const THERAPANACEA_ADAPTBOX_PRODUCTS: ProductDetails[] = [
         class: "IIa",
         type: "Medical Device"
       },
-      fda: "Not available",
+      fda: "510(k) Cleared",
       intendedUseStatement: "For automatic segmentation of male pelvic structures in CBCT images for adaptive radiation therapy planning."
     },
     market: {
       onMarketSince: "2023",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 8,
+      countriesPresent: "Not available",
       payingCustomers: "Multiple centers in Europe",
       researchUsers: "Several research institutions"
     },
@@ -70,6 +71,6 @@ export const THERAPANACEA_ADAPTBOX_PRODUCTS: ProductDetails[] = [
     lastUpdated: "2024-04-26",
     lastRevised: "2025-05-12",
     source: "automatically retrieved and verified",
-    lastVerified: "2025-05-27"
+    lastVerified: "2025-08-01"
   }
 ];

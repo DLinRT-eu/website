@@ -57,7 +57,7 @@ export const PHILIPS_MRCAT_BRAIN_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: -,
+      countriesPresent: 45,
       payingCustomers: "Cancer centers worldwide",
       researchUsers: "Academic institutions globally"
     },

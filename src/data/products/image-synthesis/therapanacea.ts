@@ -11,7 +11,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     description: "Advanced MR simulation solution that enables synthetic CT generation from MR images for radiation therapy planning.",
     features: ["MR-only simulation", "Synthetic CT generation", "Clinical workflow integration"],
     category: "Image Synthesis",
-    certification: "CE",
+    certification: "CE & FDA",
     logoUrl: "/logos/therapanacea.png",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/therapanacea.ts",
     website: "https://www.therapanacea.eu/our-products/mrbox/",
@@ -39,13 +39,13 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
         class: "IIa",
         type: "Medical Device"
       },
-      fda: "Not available",
+      fda: "510(k) Cleared",
       intendedUseStatement: "For generating synthetic CT datasets from MR images for radiation therapy planning."
     },
     market: {
-      onMarketSince: "2019",
+      onMarketSince: "2022",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 20,
+      countriesPresent: -,
       payingCustomers: "Major hospitals and cancer centers in Europe",
       researchUsers: "Academic medical centers globally"
     },
@@ -55,8 +55,8 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2023-04-25",
-    lastUpdated: "2024-02-28",
-    lastRevised: "2025-05-12",
+    lastUpdated: "2024-08-06",
+    lastRevised: "2025-08-06",
     source: "Automatically retrieved and revised"
   }
 ];

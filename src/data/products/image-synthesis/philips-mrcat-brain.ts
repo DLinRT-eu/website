@@ -57,7 +57,7 @@ export const PHILIPS_MRCAT_BRAIN_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 45,
+      countriesPresent: -,
       payingCustomers: "Cancer centers worldwide",
       researchUsers: "Academic institutions globally"
     },
@@ -68,7 +68,7 @@ export const PHILIPS_MRCAT_BRAIN_PRODUCTS: ProductDetails[] = [
     version: "1.0",
     releaseDate: "2020-01-20",
     lastUpdated: "2024-01-25",
-    lastRevised: "2025-05-12",
+    lastRevised: "2025-08-06",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Validated in clinical studies showing equivalent treatment planning accuracy compared to traditional CT-based planning"
   }

@@ -126,12 +126,12 @@ const ModalityDistributionChart: React.FC<ModalityDistributionChartProps> = ({
                   cursor="pointer"
                   fillOpacity={0.9}
                 >
-                  {validatedModalityData.map((entry, index) => (
-                    <Cell 
-                      key={`cell-${index}`} 
-                      fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : getModalityColor(entry.name))} 
-                    />
-                  ))}
+                   {validatedModalityData.map((entry, index) => (
+                     <Cell 
+                       key={`cell-${index}`} 
+                       fill={entry.isSelected ? '#F43F5E' : (entry.isFiltered ? '#FFC107' : getModalityColor(entry.name))} 
+                     />
+                   ))}
                 </Bar>
               </BarChart>
             </ResponsiveContainer>

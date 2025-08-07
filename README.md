@@ -9,6 +9,17 @@
 
 DLinRT.eu is an open, community-driven initiative to catalog deep learning solutions in radiotherapy. Our goal is to provide a comprehensive, transparent, and reliable resource for clinicians, researchers, and industry professionals seeking information about AI-powered tools in radiation oncology.
 
+## Table of Contents
+
+1. [Features](#features)
+2. [Contributing](#contributing)
+3. [Documentation](#documentation)
+4. [Code of Conduct](#code-of-conduct)
+5. [Security](#security)
+6. [License](#license)
+
+---
+
 ## Features
 
 - **Comprehensive Database**: Explore a wide range of deep learning products used in radiotherapy.

@@ -4,6 +4,20 @@ Welcome!
 Thank you for considering contributing to our community-driven resource on **Commercial Solutions in Radiotherapy**. This project relies on accurate, objective, and up-to-date information.  
 Please review the following guidelines carefully before submitting your contribution.
 
+## Table of Contents
+
+1. [Before You Start](#before-you-start)
+2. [How to Contribute](#how-to-contribute)
+   - [Fork and Clone the Repository](#1-fork-and-clone-the-repository)
+   - [Create a Branch](#2-create-a-branch)
+   - [Revise and Update Carefully](#3-revise-and-update-carefully)
+   - [Writing Standards](#4-writing-standards)
+   - [Submit a Pull Request](#5-submit-a-pull-request)
+3. [Pull Request Review Process](#pull-request-review-process)
+4. [Important Notes](#important-notes)
+5. [Code of Conduct](#code-of-conduct)
+6. [Questions?](#questions)
+
 ---
 
 ## Before You Start

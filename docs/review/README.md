@@ -1,5 +1,19 @@
 # DLinRT.eu Product Documentation
 
+## Table of Contents
+
+1. [Quick Start](#quick-start)
+2. [Review Status](#review-status)
+3. [Product Structure](#product-structure)
+   - [Multi-Category Support](#multi-category-support)
+   - [Versioning Support](#versioning-support)
+4. [Structure Classification](#structure-classification)
+   - [Laterality Handling](#laterality-handling)
+5. [Hidden Administrative Pages](#hidden-administrative-pages)
+6. [Need Help?](#need-help)
+
+---
+
 ## Quick Start
 
 1. **Reviewing Products**

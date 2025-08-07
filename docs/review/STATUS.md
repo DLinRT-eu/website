@@ -2,6 +2,22 @@
 
 Current status of product reviews on DLinRT.eu.
 
+## Table of Contents
+
+1. [Review Legend](#review-legend)
+   - [Status Indicators](#status-indicators)
+2. [Review Priority](#review-priority)
+3. [Products](#products)
+   - [Auto-Contouring](#auto-contouring)
+   - [Image Enhancement](#image-enhancement)
+   - [Image Synthesis](#image-synthesis)
+   - [Registration](#registration)
+   - [Treatment Planning](#treatment-planning)
+   - [Reconstruction](#reconstruction)
+   - [Performance Monitor](#performance-monitor)
+
+---
+
 ## Review Legend
 
 ### Status Indicators

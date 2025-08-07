@@ -5,6 +5,14 @@
 > - [Review Guide](./docs/review/GUIDE.md)
 > - [Product Documentation](./docs/review/README.md)
 
+## Table of Contents
+
+1. [Initial Verification Request](#initial-verification-request)
+2. [Follow-up Template](#follow-up-template)
+3. [Update Confirmation](#update-confirmation)
+
+---
+
 ## Initial Verification Request
 
 Subject: DLinRT.eu Product Information Verification Request - [Product Name]

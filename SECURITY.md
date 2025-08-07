@@ -1,5 +1,16 @@
 # Security Policy
 
+## Table of Contents
+
+1. [Reporting Vulnerabilities](#reporting-vulnerabilities)
+   - [How to Report](#how-to-report)
+2. [Scope](#scope)
+3. [Out of Scope](#out-of-scope)
+4. [Disclosure Policy](#disclosure-policy)
+5. [Thank you!](#thank-you)
+
+---
+
 ## Reporting Vulnerabilities
 
 We take security, accuracy, and integrity very seriously.

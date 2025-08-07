@@ -32,17 +32,20 @@ export const LOCATION_COLORS: Record<string, string> = {
 export const MODALITY_COLORS: Record<string, string> = {
   'CT': '#0EA5E9',           // Bright Ocean Blue
   'MRI': '#10B981',          // Emerald Green
-  'PET': '#8B5CF6',          // Vivid Purple
-  'PET/CT': '#F59E0B',       // Orange (same as Brain)
-  'CBCT': '#6366F1',         // Indigo (same as Pelvis)
-  'SPECT': '#F59E0B',        // Amber
-  'X-ray': '#F43F5E',        // Vibrant Red
-  'Ultrasound': '#14B8A6',   // Teal
+  'CBCT': '#8B5CF6',         // Vivid Purple
+  'PET': '#F43F5E',          // Vibrant Red
+  'PET/CT': '#F59E0B',       // Amber/Orange
+  'X-ray': '#64748B',        // Slate Gray
   'LINAC': '#6366F1',        // Indigo
-  'MRI-LINAC': '#EC4899',    // Pink
-  'RT Struct': '#8B5CF6',    // Vivid Purple
-  'Multi-modal': '#6366F1',  // Indigo
-  'Agnostic': '#EC4899',     // Pink
+  'RT Struct': '#EC4899',    // Pink
+  'SPECT': '#14B8A6',        // Teal
+  'MRI-LINAC': '#A855F7',    // Purple-500
+  'Ultrasound': '#84CC16',   // Lime
+  'Multi-modal': '#6B7280',  // Gray-500
+  'Agnostic': '#9CA3AF',     // Gray-400
+  'EPID': '#F97316',         // Orange
+  'VMAT': '#06B6D4',         // Cyan
+  'IMRT': '#8B5A2B',         // Brown
 };
 
 // Fixed mapping of tasks/categories to colors (matching TaskTaxonomy colors)

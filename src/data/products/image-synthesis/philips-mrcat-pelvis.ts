@@ -20,7 +20,7 @@ export const PHILIPS_MRCAT_PELVIS_PRODUCTS: ProductDetails[] = [
     category: "Image Synthesis",
     certification: "CE Mark, FDA Cleared",
     logoUrl: "/logos/philips.png",
-    website: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
+    website: "https://www.philips.ie/healthcare/product/HCNMRF266/mrcat-pelvis-mr-rt-clinical-application",
     anatomicalLocation: ["Pelvis"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
@@ -57,7 +57,7 @@ export const PHILIPS_MRCAT_PELVIS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 45,
+      countriesPresent: -,
       payingCustomers: "Cancer centers worldwide",
       researchUsers: "Academic institutions globally"
     },
@@ -67,8 +67,8 @@ export const PHILIPS_MRCAT_PELVIS_PRODUCTS: ProductDetails[] = [
     },
     version: "2.0",
     releaseDate: "2019-05-21",
-    lastUpdated: "2024-01-25",
-    lastRevised: "2025-05-12",
+    lastUpdated: "2025-08-08",
+    lastRevised: "2025-08-08",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Clinical validation studies demonstrate dosimetric equivalence to CT-based planning for pelvic radiation therapy"
   }

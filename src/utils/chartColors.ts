@@ -65,11 +65,22 @@ export const TASK_COLORS: Record<string, string> = {
 export const getModalityColor = (modality: string | string[]): string => {
   if (!modality) return '#64748B'; // Gray fallback
   
-  const modalityStr = Array.isArray(modality) ? modality.join(', ') : modality;
-  const normalizedModality = modalityStr.toLowerCase();
+  // Prefer single modality value when array is provided
+  const modalityStr = Array.isArray(modality) ? (modality[0] ?? '') : modality;
+  const normalizedModality = modalityStr.trim().toLowerCase();
   
-  // Check for exact matches first
+  if (!normalizedModality) return '#64748B';
+  
+  // 1) Exact match first to avoid collisions (e.g., CT vs CBCT, PET/CT vs CT)
   for (const [key, color] of Object.entries(MODALITY_COLORS)) {
+    if (normalizedModality === key.toLowerCase()) {
+      return color;
+    }
+  }
+  
+  // 2) Then do partial matches, prioritizing longer keys to avoid substring issues
+  const sortedEntries = Object.entries(MODALITY_COLORS).sort((a, b) => b[0].length - a[0].length);
+  for (const [key, color] of sortedEntries) {
     if (normalizedModality.includes(key.toLowerCase())) {
       return color;
     }

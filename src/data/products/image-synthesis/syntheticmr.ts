@@ -16,7 +16,7 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
       "Quantitative tissue mapping"
     ],
     category: "Image Synthesis",
-    certification: "CE Mark",
+    certification: "CE & FDA",
     logoUrl: "/logos/syntheticMRI.png",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/syntheticmr.ts",
     website: "https://syntheticmr.com/products/symri-neuro/",
@@ -53,9 +53,9 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
       intendedUseStatement: "For use in generating synthetic MR contrasts and quantitative tissue maps from a single MRI acquisition to support clinical diagnosis."
     },
     market: {
-      onMarketSince: "2018",
+      onMarketSince: "2023",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 25,
+      countriesPresent: -,
       payingCustomers: "Major hospitals and imaging centers globally",
       researchUsers: "Research institutions worldwide"
     },
@@ -65,8 +65,8 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
     },
     version: "3.0",
     releaseDate: "2023-09-01",
-    lastUpdated: "2024-03-15",
-    lastRevised: "2025-07-28",
+    lastUpdated: "2024-08-08",
+    lastRevised: "2025-08-08",
     source: "Automatically retrieved and revised"
   }
 ];

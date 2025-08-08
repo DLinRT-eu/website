@@ -10,15 +10,20 @@ export const sanitizeString = (input: string, maxLength: number = 100): string =
   if (typeof input !== 'string') {
     return '';
   }
-  
+
   // Remove HTML tags, script tags, and other potentially dangerous content
-  const sanitized = input
-    .replace(/<[^>]*>/g, '') // Remove HTML tags
-    .replace(/javascript:/gi, '') // Remove javascript: protocol
-    .replace(/on\w+\s*=/gi, '') // Remove event handlers like onclick=
-    .replace(/[<>'"]/g, '') // Remove quotes and angle brackets
-    .trim();
-  
+  let sanitized = input;
+  let previous;
+  do {
+    previous = sanitized;
+    sanitized = sanitized
+      .replace(/<[^>]*>/g, '') // Remove HTML tags
+      .replace(/javascript:/gi, '') // Remove javascript: protocol
+      .replace(/on\w+\s*=/gi, '') // Remove event handlers like onclick=
+      .replace(/[<>'"]/g, '') // Remove quotes and angle brackets
+      .trim();
+  } while (sanitized !== previous);
+
   // Limit length to prevent extremely long strings
   return sanitized.length > maxLength ? sanitized.substring(0, maxLength) + '...' : sanitized;
 };

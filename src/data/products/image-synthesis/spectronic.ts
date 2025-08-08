@@ -13,7 +13,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     features: ["MR-only workflow", "Deep learning based", "Fast processing", "Synthetic CT generation", "Auto-segmentation"],
     category: "Image Synthesis",
     secondaryCategories: ["Auto-Contouring"],
-    certification: "CE",
+    certification: "CE Mark, FDA Cleared",
     logoUrl: "/logos/spectronic-medical.jpg",
     website: "https://spectronicmedical.com/mriplanner",
     anatomicalLocation: ["Pelvis", "Brain", "Head & Neck"],
@@ -58,13 +58,13 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
         class: "IIa",
         type: "Medical Device"
       },
-      fda: "510(k) cleared",
+      fda: "510(k) Cleared",
       intendedUseStatement: "For generating synthetic CT and structure sets from MRI for radiation therapy planning."
     },
     market: {
-      onMarketSince: "2017",
+      onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 15,
+      countriesPresent: -,
       payingCustomers: "Multiple clinics in Europe",
       researchUsers: "Research institutions internationally"
     },
@@ -74,8 +74,8 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     },
     version: "3.2",
     releaseDate: "2023-07-10",
-    lastUpdated: "2024-01-25",
-    lastRevised: "2025-05-12",
+    lastUpdated: "2025-08-08",
+    lastRevised: "2025-08-08",
     source: "Automatically retrieved and revised"
   }
 ];

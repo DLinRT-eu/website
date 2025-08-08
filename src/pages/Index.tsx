@@ -40,7 +40,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white">
       <SEO 
-        title="DLinRT - AI Products Database for Radiotherapy"
+        title="DLinRT - Deep learning-based products database for radiotherapy"
         description="Search and explore deep learning products for auto-contouring, treatment planning, and imaging in radiation oncology."
         canonical="https://dlinrt.eu/"
         structuredData={structuredData}
@@ -75,7 +75,7 @@ const Index = () => {
                 Stay informed about the latest developments in the field through our <Link to="/news" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">news section</Link>, which covers 
                 product updates, research breakthroughs, and industry announcements. For questions, feedback, or 
                 collaboration opportunities, our <Link to="/support" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">support team</Link> is ready to assist you in navigating 
-                the evolving landscape of AI in radiotherapy.
+                the evolving landscape of deep learning in radiotherapy.
               </p>
             </div>
           </div>

@@ -20,7 +20,7 @@ export const PHILIPS_MRCAT_BRAIN_PRODUCTS: ProductDetails[] = [
     category: "Image Synthesis",
     certification: "CE Mark, FDA Cleared",
     logoUrl: "/logos/philips.png",
-    website: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
+    website: "https://www.philips.ie/healthcare/product/HCNMRF320/mrcat-brain-mr-rt-clinical-application",
     anatomicalLocation: ["Brain"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
@@ -67,8 +67,8 @@ export const PHILIPS_MRCAT_BRAIN_PRODUCTS: ProductDetails[] = [
     },
     version: "1.0",
     releaseDate: "2020-01-20",
-    lastUpdated: "2024-01-25",
-    lastRevised: "2025-08-06",
+    lastUpdated: "2024-08-08",
+    lastRevised: "2025-08-08",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Validated in clinical studies showing equivalent treatment planning accuracy compared to traditional CT-based planning"
   }

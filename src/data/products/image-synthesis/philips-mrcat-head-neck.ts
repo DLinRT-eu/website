@@ -57,7 +57,7 @@ export const PHILIPS_MRCAT_HEAD_NECK_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: -,
+      countriesPresent: 0,
       payingCustomers: "Cancer centers worldwide",
       researchUsers: "Academic institutions globally"
     },

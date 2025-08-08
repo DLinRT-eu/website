@@ -57,7 +57,7 @@ export const PHILIPS_MRCAT_PELVIS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: -,
+      countriesPresent: 0,
       payingCustomers: "Cancer centers worldwide",
       researchUsers: "Academic institutions globally"
     },

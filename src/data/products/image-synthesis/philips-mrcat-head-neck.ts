@@ -20,7 +20,7 @@ export const PHILIPS_MRCAT_HEAD_NECK_PRODUCTS: ProductDetails[] = [
     category: "Image Synthesis",
     certification: "CE Mark, FDA Cleared",
     logoUrl: "/logos/philips.png",
-    website: "https://www.philips.com/a-w/about/news/archive/standard/news/press/2020/20200929-philips-advances-oncology-solutions.html",
+    website: "https://www.philips.ie/healthcare/solutions/magnetic-resonance/therapy-systems/mr-rt",
     anatomicalLocation: ["Head", "Neck"],
     modality: "MRI",
     subspeciality: "Radiation Oncology",
@@ -57,7 +57,7 @@ export const PHILIPS_MRCAT_HEAD_NECK_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 45,
+      countriesPresent: -,
       payingCustomers: "Cancer centers worldwide",
       researchUsers: "Academic institutions globally"
     },
@@ -67,8 +67,8 @@ export const PHILIPS_MRCAT_HEAD_NECK_PRODUCTS: ProductDetails[] = [
     },
     version: "1.5",
     releaseDate: "2022-10-20",
-    lastUpdated: "2024-01-25",
-    lastRevised: "2025-05-12",
+    lastUpdated: "2024-08-08",
+    lastRevised: "2025-08-08",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Clinical studies demonstrate comparable treatment planning accuracy to CT-based workflows for head and neck radiation therapy"
   }

@@ -14,8 +14,8 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     certification: "CE & FDA",
     logoUrl: "/logos/siemens.png",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-synthesis/siemens.ts",
-    website: "https://www.siemens-healthineers.com/magnetic-resonance-imaging/clinical-specialities/synthetic-ct",
-    anatomicalLocation: ["Brain", "Pelvis", "Head & Neck"],
+    website: "https://www.siemens-healthineers.com/radiotherapy/software-solutions/syngovia-rt-image-suite",
+    anatomicalLocation: ["Brain", "Pelvis"],
     modality: ["MRI"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
@@ -43,9 +43,9 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
       intendedUseStatement: "For creating synthetic CT datasets from MR images to be used in radiation therapy planning."
     },
     market: {
-      onMarketSince: "2018",
+      onMarketSince: "2015",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 35,
+      countriesPresent: 0,
       payingCustomers: "Major healthcare institutions",
       researchUsers: "Research centers globally"
     },
@@ -53,9 +53,9 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
       model: ["Perpetual license", "Service contract"],
       basedOn: ["Module selection", "Institution size"]
     },
-    version: "VB60",
-    releaseDate: "2023-09-20",
-    lastUpdated: "2024-03-15",
-    lastRevised: "2025-05-12"
+    version: "VB80",
+    releaseDate: "2024-09-20",
+    lastUpdated: "2025-08-11",
+    lastRevised: "2025-08-11"
   }
 ];

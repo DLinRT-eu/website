@@ -12,6 +12,7 @@ import { ReviewDashboardHeader } from '@/components/dashboard/ReviewDashboardHea
 import { ReviewDashboardAlerts } from '@/components/dashboard/ReviewDashboardAlerts';
 import { useReviewData } from '@/hooks/useReviewData';
 import { ALL_PRODUCTS } from '@/data';
+import { runUrlValidation } from '@/utils/urlValidation';
 
 import SEO from '@/components/SEO';
 
@@ -39,6 +40,11 @@ const ReviewDashboard = () => {
     "description": "Internal dashboard for tracking product information quality, review status, and maintenance tasks for the Deep Learning in Radiotherapy database.",
     "url": "https://dlinrt.eu/review"
   };
+
+  // Run URL validation on mount (logs a report to console)
+  React.useEffect(() => {
+    runUrlValidation(ALL_PRODUCTS);
+  }, []);
 
   // Handle filter changes
   const handleFilterChange = (type: string, value: string | null) => {

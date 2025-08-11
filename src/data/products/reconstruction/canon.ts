@@ -13,6 +13,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/canon.jpg", 
     companyUrl: "https://global.medical.canon/",
     productUrl: "https://global.medical.canon/products/computed-tomography/aice",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/canon.ts",
     anatomicalLocation: ["Whole body"],
     modality: "CT",
     diseaseTargeted: ["Cancer", "Cardiovascular disease", "Trauma"],

@@ -7,7 +7,7 @@ export const SUN_NUCLEAR_PRODUCTS: ProductDetails[] = [
     company: "Sun Nuclear",
     companyUrl: "https://www.sunnuclear.com/",
     productUrl: "https://oncospace.com/",
-    githubUrl: "https://github.com/DLinRT-eu/website/blob/main/src/data/products/treatment-planning/sun-nuclear.ts",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/treatment-planning/sun-nuclear.ts",
     description: "Cloud-based, AI-powered solution that uses machine learning models to derive achievable, best-practice dosimetric goals for plan optimization and evaluation in radiation therapy.",
     features: [
       "Machine learning-derived dosimetric goals",

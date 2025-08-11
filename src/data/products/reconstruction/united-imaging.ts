@@ -13,6 +13,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/unitedimaging.png",
     companyUrl: "https://www.united-imaging.com/",
     productUrl: "https://www.united-imaging.com/en/products/ct",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/united-imaging.ts",
     anatomicalLocation: ["Whole body"],
     modality: "CT",
     diseaseTargeted: ["Cancer", "Cardiovascular disease", "Pulmonary disorders"],

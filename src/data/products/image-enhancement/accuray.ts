@@ -13,6 +13,7 @@ export const ACCURAY_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/accuray.png",
     companyUrl: "https://www.accuray.com/",
     productUrl: "https://www.accuray.com/treatment-delivery/synchrony/",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-enhancement/accuray.ts",
     anatomicalLocation: ["Thorax", "Abdomen", "Pelvis"],
     modality: ["CBCT", "X-ray"],
     diseaseTargeted: ["Cancer"],

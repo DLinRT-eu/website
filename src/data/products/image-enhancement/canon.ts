@@ -13,6 +13,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/canon.jpg",
     companyUrl: "https://global.medical.canon/",
     productUrl: "https://global.medical.canon/products/healthcare-it/vitrea-advanced-visualization",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-enhancement/canon.ts",
     anatomicalLocation: ["Whole body"],
     modality: ["CT", "MRI", "PET"],
     diseaseTargeted: ["Oncological diseases", "Cardiovascular disorders", "Neurological conditions"],

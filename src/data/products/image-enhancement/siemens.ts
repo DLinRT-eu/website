@@ -13,6 +13,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     logoUrl: "/logos/siemens.png",
     companyUrl: "https://www.siemens-healthineers.com",
     productUrl: "https://www.siemens-healthineers.com/computed-tomography/technologies/dual-energy",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-enhancement/siemens.ts",
     anatomicalLocation: ["Whole body"],
     modality: "CT",
     diseaseTargeted: ["Cancer", "Vascular disease", "Renal calculi"],

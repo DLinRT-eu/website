@@ -9,6 +9,7 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     company: "Therapanacea",
     companyUrl: "https://www.therapanacea.eu/",
     productUrl: "https://www.therapanacea.eu/our-products/annotate/",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/therapanacea.ts",
     description: "AI-powered auto-segmentation solution for radiation therapy planning with advanced deep learning algorithms for CT, MRI, and CBCT.",
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Fast processing", "Multi-modality support"],
     category: "Auto-Contouring",

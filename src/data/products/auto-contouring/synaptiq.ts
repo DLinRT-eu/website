@@ -8,6 +8,7 @@ export const SYNAPTIQ_PRODUCTS: ProductDetails[] = [
     company: "Synaptiq",
     companyUrl: "https://synaptiq.io/",
     productUrl: "https://synaptiq.io/product/",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/synaptiq.ts",
     description: "AI-powered solution for radiation therapy planning with advanced auto-contouring capabilities for multiple anatomical sites.",
     features: ["Deep learning segmentation", "Multiple anatomical sites", "Clinical workflow integration"],
     category: "Auto-Contouring",

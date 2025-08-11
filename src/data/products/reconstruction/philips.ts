@@ -61,7 +61,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     lastVerified: "2024-12-01",
     lastUpdated: "2025-01-15",
     lastRevised: "2025-05-05",
-    source: "Automatically retrieved"
+    source: "Automatically retrieved",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/philips.ts"
 
   },
   {

@@ -10,16 +10,16 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
   githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/manteia-acculearning.ts",
   description: "Localized deep learning platform for clinics to build/train custom AI models for radiation therapy using institutional data.",
   features: [
-    "Small-sample adaptive training (10-50 cases)",
+    "Small-sample adaptive training (10-30 cases)",
     "Manteia ecosystem integration",
     "Site-specific model optimization",
     "Transfer learning from base models",
     "Model version control"
   ],
   category: "Model Training",
-  certification: "CE & FDA",
+  certification: "For research use. Clinical deployment requires separate validation",
   logoUrl: "/logos/manteia.png",
-  website: "https://www.manteiatech.com/",
+  website: "https://www.manteiamedical.com/acculearning",
   anatomicalLocation: ["All Sites"],
   modality: ["CT","MRI","CBCT"],
   subspeciality: "Radiation Oncology AI",
@@ -52,10 +52,10 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
     intendedUseStatement: "For research use; clinical deployment requires separate validation."
   },
   market: {
-    onMarketSince: "2023",
+    onMarketSince: "2017",
     distributionChannels: ["Direct sales", "OEM partnerships"], // Added proper format
-    countriesPresent: 12, // Added a numeric value
-    payingCustomers: "50+ institutions", // Added string value
+    countriesPresent: 0, // Added a numeric value
+    payingCustomers: "institutions", // Added string value
     researchUsers: "Institutional R&D, Clinical trial groups" // Fixed to be a string rather than array
   },
   pricing: {
@@ -74,10 +74,10 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
     "Rare structures: Brachytherapy applicators",
     "Institutional variants: LN levels"
   ],
-  version: "1.2",
-  releaseDate: "2024-01-15",
-  lastRevised: "2025-05-12",
-  lastUpdated: "2025-04-16",
+  version: "N/D",
+  releaseDate: "2017-01-01",
+  lastRevised: "2025-08-11",
+  lastUpdated: "2025-08-11",
   source: "Automatically retrieved and revised"
 }
 ];

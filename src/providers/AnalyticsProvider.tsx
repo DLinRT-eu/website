@@ -15,7 +15,16 @@ const AnalyticsContext = createContext<AnalyticsContextType>({
 export const useAnalytics = () => useContext(AnalyticsContext);
 
 export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const location = useLocation();
+  let location;
+  
+  // Safely get location - only if we're in a Router context
+  try {
+    location = useLocation();
+  } catch (error) {
+    // If useLocation fails, we're not in a Router context
+    console.warn('AnalyticsProvider not in Router context:', error);
+    location = null;
+  }
 
   // Initialize analytics and run migration once
   useEffect(() => {
@@ -30,8 +39,10 @@ export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     initializeAnalytics();
   }, []);
 
-  // Track page views
+  // Track page views - only if location is available
   useEffect(() => {
+    if (!location) return;
+    
     const trackPageView = async () => {
       const path = location.pathname;
       const title = document.title;

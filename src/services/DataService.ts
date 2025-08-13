@@ -176,6 +176,64 @@ class DataService {
       return true;
     });
   }
+
+  // Presentation data methods
+  getPresentationData() {
+    const products = this.getAllProducts();
+    const companies = this.getAllCompanies();
+    
+    // Get unique categories
+    const categories = [...new Set(products.map(p => p.category))];
+    
+    // Category breakdown
+    const categoryBreakdown = categories.map(category => ({
+      name: category,
+      count: products.filter(p => p.category === category).length
+    }));
+    
+    // Modality breakdown
+    const modalities = [...new Set(products.flatMap(p => 
+      Array.isArray(p.modality) ? p.modality : (p.modality ? [p.modality] : [])
+    ))];
+    const modalityBreakdown = modalities.map(modality => ({
+      name: modality,
+      count: products.filter(p => {
+        const productModalities = Array.isArray(p.modality) ? p.modality : (p.modality ? [p.modality] : []);
+        return productModalities.includes(modality);
+      }).length
+    }));
+    
+    // Location breakdown
+    const locations = [...new Set(products.flatMap(p => p.anatomicalLocation || []))];
+    const locationBreakdown = locations.map(location => ({
+      name: location,
+      count: products.filter(p => p.anatomicalLocation?.includes(location)).length
+    }));
+    
+    // Certification breakdown
+    const certifications = [...new Set(products.map(p => p.certification).filter(Boolean))];
+    const certificationBreakdown = certifications.map(cert => ({
+      name: cert!,
+      count: products.filter(p => p.certification === cert).length
+    }));
+    
+    // Company logos
+    const companyLogos = companies.map(company => ({
+      name: company.name,
+      logo: company.logoUrl ? company.logoUrl : ""
+    }));
+    
+    return {
+      totalCompanies: companies.length,
+      totalProducts: products.length,
+      totalCategories: categories.length,
+      companyLogos,
+      categoryBreakdown,
+      modalityBreakdown,
+      locationBreakdown,
+      certificationBreakdown
+    };
+  }
 }
 
 // Create a singleton instance

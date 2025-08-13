@@ -15,6 +15,7 @@ import ProductDetails from "./pages/ProductDetails";
 import Companies from "./pages/Companies";
 import News from "./pages/News";
 import Support from "./pages/Support";
+import ExportPresentation from "./pages/ExportPresentation";
 import NewsDetail from "./pages/NewsDetail";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
@@ -72,6 +73,7 @@ const App = () => (
             <Route path="category/auto-contouring" element={<AutoContouringPage />} />
             <Route path="category/treatment-planning" element={<TreatmentPlanningPage />} />
             <Route path="category/image-synthesis" element={<ImageSynthesisPage />} />
+            <Route path="export-presentation" element={<ExportPresentation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <CookieConsent />

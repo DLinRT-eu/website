@@ -66,13 +66,14 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Logo
+    // Logo - larger and more prominent
     slide.addImage({
       path: "/LogoDLinRT.eu.png",
-      x: 5.5,
-      y: 5.5,
-      w: 1,
-      h: 1
+      x: 4.5,
+      y: 5,
+      w: 3,
+      h: 2,
+      sizing: { type: "contain", w: 3, h: 2 }
     });
   }
 
@@ -203,30 +204,31 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     // Title
-    slide.addText("Partner Companies", {
+    slide.addText("Our Partner Companies", {
       x: 0.5,
       y: 0.5,
       w: 11,
       h: 1,
-      fontSize: 32,
+      fontSize: 36,
       color: this.brandColors.primary,
       bold: true,
       fontFace: "Inter"
     });
     
-    // Grid of logos (6 columns, multiple rows)
-    const cols = 6;
-    const logoWidth = 1.8;
-    const logoHeight = 1.2;
-    const startX = 0.5;
-    const startY = 2;
-    const spacing = 2;
+    // Grid of logos (4 columns for larger logos)
+    const cols = 4;
+    const logoWidth = 2.5;
+    const logoHeight = 1.8;
+    const startX = 0.8;
+    const startY = 1.8;
+    const spacingX = 2.8;
+    const spacingY = 2.2;
     
-    data.companyLogos.slice(0, 24).forEach((company, index) => {
+    data.companyLogos.slice(0, 20).forEach((company, index) => {
       const row = Math.floor(index / cols);
       const col = index % cols;
-      const x = startX + (col * spacing);
-      const y = startY + (row * 1.5);
+      const x = startX + (col * spacingX);
+      const y = startY + (row * spacingY);
       
       if (company.logo) {
         slide.addImage({
@@ -244,9 +246,9 @@ export class PptxExporter {
         x,
         y: y + logoHeight + 0.1,
         w: logoWidth,
-        h: 0.3,
-        fontSize: 8,
-        color: this.brandColors.text,
+        h: 0.4,
+        fontSize: 11,
+        color: this.brandColors.secondary,
         align: "center",
         fontFace: "Inter"
       });
@@ -258,12 +260,12 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     // Title
-    slide.addText("Product Categories", {
+    slide.addText("AI Solution Categories in Radiotherapy", {
       x: 0.5,
       y: 0.5,
       w: 11,
       h: 1,
-      fontSize: 32,
+      fontSize: 36,
       color: this.brandColors.primary,
       bold: true,
       fontFace: "Inter"
@@ -276,38 +278,40 @@ export class PptxExporter {
       values: [item.count]
     }));
     
-    // Add chart
+    // Add larger chart
     slide.addChart("pie", chartData, {
-      x: 1,
-      y: 2,
-      w: 6,
-      h: 4,
+      x: 0.5,
+      y: 1.8,
+      w: 8,
+      h: 5,
       showTitle: false,
       showLegend: true,
-      legendPos: "r"
+      legendPos: "r",
+      chartColors: ["#00A6D6", "#6B7280", "#F59E0B", "#10B981", "#EF4444", "#8B5CF6"]
     });
     
     // Add table with details
     const tableData = [
       [
-        { text: "Category", options: { bold: true } },
-        { text: "Count", options: { bold: true } },
-        { text: "Percentage", options: { bold: true } }
+        { text: "Category", options: { bold: true, fontSize: 14 } },
+        { text: "Products", options: { bold: true, fontSize: 14 } },
+        { text: "Share", options: { bold: true, fontSize: 14 } }
       ],
       ...data.categoryBreakdown.map(item => [
-        { text: item.name, options: {} },
-        { text: item.count.toString(), options: {} },
-        { text: `${Math.round((item.count / data.totalProducts) * 100)}%`, options: {} }
+        { text: item.name, options: { fontSize: 12 } },
+        { text: item.count.toString(), options: { fontSize: 12 } },
+        { text: `${Math.round((item.count / data.totalProducts) * 100)}%`, options: { fontSize: 12 } }
       ])
     ];
     
     slide.addTable(tableData, {
-      x: 7.5,
-      y: 2,
-      w: 4,
-      h: 4,
+      x: 9,
+      y: 1.8,
+      w: 3,
+      h: 5,
       fontSize: 12,
-      fontFace: "Inter"
+      fontFace: "Inter",
+      border: { pt: 1, color: this.brandColors.secondary }
     });
   }
 

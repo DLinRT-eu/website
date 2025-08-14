@@ -191,6 +191,18 @@ class DataService {
       count: products.filter(p => p.category === category).length
     }));
     
+    // Products by category
+    const productsByCategory = categories.map(category => ({
+      category,
+      products: products.filter(p => p.category === category).map(product => ({
+        name: product.name,
+        company: product.company,
+        modality: Array.isArray(product.modality) ? product.modality.join(', ') : product.modality,
+        certification: product.certification,
+        companyLogo: companies.find(c => c.name === product.company)?.logoUrl || ""
+      }))
+    }));
+    
     // Modality breakdown
     const modalities = [...new Set(products.flatMap(p => 
       Array.isArray(p.modality) ? p.modality : (p.modality ? [p.modality] : [])
@@ -222,6 +234,36 @@ class DataService {
       name: company.name,
       logo: company.logoUrl ? company.logoUrl : ""
     }));
+
+    // Analytics data (mock data for presentation)
+    const analyticsData = {
+      totalViews: 15420,
+      uniqueVisitors: 8930,
+      averageSessionDuration: "3:24",
+      topPages: [
+        { page: "Products Directory", views: 4250 },
+        { page: "Auto-contouring Solutions", views: 2840 },
+        { page: "Treatment Planning", views: 1960 },
+        { page: "Company Profiles", views: 1530 },
+        { page: "Image Synthesis", views: 1210 }
+      ],
+      trafficTrends: [
+        { month: "Jan", visitors: 1200 },
+        { month: "Feb", visitors: 1450 },
+        { month: "Mar", visitors: 1680 },
+        { month: "Apr", visitors: 1920 },
+        { month: "May", visitors: 2150 },
+        { month: "Jun", visitors: 2380 }
+      ]
+    };
+
+    // Contact and engagement info
+    const contactInfo = {
+      email: "info@dlinrt.eu",
+      githubUrl: "https://github.com/DLinRT-eu/website",
+      newsletterSignups: 1240,
+      rssSubscribers: 385
+    };
     
     return {
       totalCompanies: companies.length,
@@ -229,9 +271,12 @@ class DataService {
       totalCategories: categories.length,
       companyLogos,
       categoryBreakdown,
+      productsByCategory,
       modalityBreakdown,
       locationBreakdown,
-      certificationBreakdown
+      certificationBreakdown,
+      analyticsData,
+      contactInfo
     };
   }
 }

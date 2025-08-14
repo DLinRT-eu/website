@@ -7,9 +7,32 @@ export interface PresentationData {
   totalCategories: number;
   companyLogos: Array<{ name: string; logo: string }>;
   categoryBreakdown: Array<{ name: string; count: number }>;
+  productsByCategory: Array<{
+    category: string;
+    products: Array<{
+      name: string;
+      company: string;
+      modality: string;
+      certification: string;
+      companyLogo: string;
+    }>;
+  }>;
   modalityBreakdown: Array<{ name: string; count: number }>;
   locationBreakdown: Array<{ name: string; count: number }>;
   certificationBreakdown: Array<{ name: string; count: number }>;
+  analyticsData: {
+    totalViews: number;
+    uniqueVisitors: number;
+    averageSessionDuration: string;
+    topPages: Array<{ page: string; views: number }>;
+    trafficTrends: Array<{ month: string; visitors: number }>;
+  };
+  contactInfo: {
+    email: string;
+    githubUrl: string;
+    newsletterSignups: number;
+    rssSubscribers: number;
+  };
 }
 
 export class PptxExporter {
@@ -66,14 +89,14 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Logo - larger and more prominent
+    // Logo - appropriately sized
     slide.addImage({
       path: "/LogoDLinRT.eu.png",
-      x: 4.5,
+      x: 5,
       y: 5,
-      w: 3,
-      h: 2,
-      sizing: { type: "contain", w: 3, h: 2 }
+      w: 2,
+      h: 1.5,
+      sizing: { type: "contain", w: 2, h: 1.5 }
     });
   }
 
@@ -215,16 +238,16 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Grid of logos (6 columns for website-consistent sizing)
-    const cols = 6;
-    const logoWidth = 1.2;
-    const logoHeight = 0.9;
-    const startX = 0.5;
+    // Grid of logos (8 columns for compact website-style layout)
+    const cols = 8;
+    const logoWidth = 0.8;
+    const logoHeight = 0.6;
+    const startX = 0.4;
     const startY = 1.8;
-    const spacingX = 1.6;
-    const spacingY = 1.4;
+    const spacingX = 1.2;
+    const spacingY = 1.1;
     
-    data.companyLogos.slice(0, 30).forEach((company, index) => {
+    data.companyLogos.slice(0, 40).forEach((company, index) => {
       const row = Math.floor(index / cols);
       const col = index % cols;
       const x = startX + (col * spacingX);
@@ -278,12 +301,12 @@ export class PptxExporter {
       values: [item.count]
     }));
     
-    // Add appropriately sized chart
+    // Add compact chart
     slide.addChart("pie", chartData, {
       x: 1,
       y: 2.2,
-      w: 5.5,
-      h: 3.5,
+      w: 4.5,
+      h: 3,
       showTitle: false,
       showLegend: true,
       legendPos: "r",
@@ -305,10 +328,10 @@ export class PptxExporter {
     ];
     
     slide.addTable(tableData, {
-      x: 7,
+      x: 6,
       y: 2.2,
-      w: 4.5,
-      h: 3.5,
+      w: 5,
+      h: 3,
       fontSize: 12,
       fontFace: "Inter",
       border: { pt: 1, color: this.brandColors.secondary }
@@ -353,6 +376,304 @@ export class PptxExporter {
     });
   }
 
+  private addProductGridSlides(data: PresentationData) {
+    data.productsByCategory.forEach(categoryData => {
+      const slide = this.pptx.addSlide();
+      slide.background = { color: this.brandColors.background };
+      
+      // Title
+      slide.addText(`${categoryData.category} Solutions`, {
+        x: 0.5,
+        y: 0.5,
+        w: 11,
+        h: 1,
+        fontSize: 28,
+        color: this.brandColors.primary,
+        bold: true,
+        fontFace: "Inter"
+      });
+      
+      // Product grid (4 columns)
+      const cols = 4;
+      const cardWidth = 2.5;
+      const cardHeight = 1.5;
+      const startX = 0.5;
+      const startY = 1.8;
+      const spacingX = 2.8;
+      const spacingY = 2;
+      
+      categoryData.products.slice(0, 12).forEach((product, index) => {
+        const row = Math.floor(index / cols);
+        const col = index % cols;
+        const x = startX + (col * spacingX);
+        const y = startY + (row * spacingY);
+        
+        // Product card background
+        slide.addShape("roundRect", {
+          x,
+          y,
+          w: cardWidth,
+          h: cardHeight,
+          fill: { color: this.brandColors.accent },
+          line: { color: this.brandColors.secondary, width: 1 }
+        });
+        
+        // Company logo (small)
+        if (product.companyLogo) {
+          slide.addImage({
+            path: product.companyLogo,
+            x: x + 0.1,
+            y: y + 0.1,
+            w: 0.4,
+            h: 0.3,
+            sizing: { type: "contain", w: 0.4, h: 0.3 }
+          });
+        }
+        
+        // Product name
+        slide.addText(product.name, {
+          x: x + 0.1,
+          y: y + 0.5,
+          w: cardWidth - 0.2,
+          h: 0.4,
+          fontSize: 11,
+          color: this.brandColors.text,
+          bold: true,
+          fontFace: "Inter"
+        });
+        
+        // Company name
+        slide.addText(product.company, {
+          x: x + 0.1,
+          y: y + 0.9,
+          w: cardWidth - 0.2,
+          h: 0.3,
+          fontSize: 9,
+          color: this.brandColors.secondary,
+          fontFace: "Inter"
+        });
+        
+        // Certification status
+        if (product.certification) {
+          slide.addText(product.certification, {
+            x: x + 0.1,
+            y: y + 1.2,
+            w: cardWidth - 0.2,
+            h: 0.2,
+            fontSize: 8,
+            color: this.brandColors.primary,
+            fontFace: "Inter"
+          });
+        }
+      });
+    });
+  }
+
+  private addAnalyticsOverviewSlide(data: PresentationData) {
+    const slide = this.pptx.addSlide();
+    slide.background = { color: this.brandColors.background };
+    
+    // Title
+    slide.addText("Platform Analytics & Engagement", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    // Analytics stats cards
+    const stats = [
+      { label: "Total Views", value: data.analyticsData.totalViews.toLocaleString(), x: 1 },
+      { label: "Unique Visitors", value: data.analyticsData.uniqueVisitors.toLocaleString(), x: 4 },
+      { label: "Avg. Session", value: data.analyticsData.averageSessionDuration, x: 7 }
+    ];
+    
+    stats.forEach(stat => {
+      // Card background
+      slide.addShape("roundRect", {
+        x: stat.x,
+        y: 2,
+        w: 2.5,
+        h: 1.5,
+        fill: { color: this.brandColors.accent },
+        line: { color: this.brandColors.secondary, width: 1 }
+      });
+      
+      // Value
+      slide.addText(stat.value, {
+        x: stat.x,
+        y: 2.3,
+        w: 2.5,
+        h: 0.6,
+        fontSize: 24,
+        color: this.brandColors.primary,
+        bold: true,
+        align: "center",
+        fontFace: "Inter"
+      });
+      
+      // Label
+      slide.addText(stat.label, {
+        x: stat.x,
+        y: 2.9,
+        w: 2.5,
+        h: 0.4,
+        fontSize: 12,
+        color: this.brandColors.secondary,
+        align: "center",
+        fontFace: "Inter"
+      });
+    });
+    
+    // Top pages table
+    const tableData = [
+      [
+        { text: "Most Viewed Pages", options: { bold: true, fontSize: 14 } },
+        { text: "Views", options: { bold: true, fontSize: 14 } }
+      ],
+      ...data.analyticsData.topPages.map(page => [
+        { text: page.page, options: { fontSize: 12 } },
+        { text: page.views.toLocaleString(), options: { fontSize: 12 } }
+      ])
+    ];
+    
+    slide.addTable(tableData, {
+      x: 1,
+      y: 4,
+      w: 6,
+      h: 2.5,
+      fontSize: 12,
+      fontFace: "Inter",
+      border: { pt: 1, color: this.brandColors.secondary }
+    });
+    
+    // Traffic trends chart
+    const trendData = [{
+      name: "Monthly Visitors",
+      labels: data.analyticsData.trafficTrends.map(t => t.month),
+      values: data.analyticsData.trafficTrends.map(t => t.visitors)
+    }];
+    
+    slide.addChart("line", trendData, {
+      x: 7.5,
+      y: 4,
+      w: 4,
+      h: 2.5,
+      showTitle: false,
+      showLegend: false,
+      chartColors: [this.brandColors.primary]
+    });
+  }
+
+  private addContactEngagementSlide(data: PresentationData) {
+    const slide = this.pptx.addSlide();
+    slide.background = { color: this.brandColors.background };
+    
+    // Title
+    slide.addText("Get Involved & Stay Connected", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    // Newsletter section
+    slide.addText("📧 Newsletter", {
+      x: 1,
+      y: 2,
+      w: 5,
+      h: 0.6,
+      fontSize: 20,
+      color: this.brandColors.text,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    slide.addText(`${data.contactInfo.newsletterSignups} subscribers\nStay updated with latest AI solutions and research`, {
+      x: 1,
+      y: 2.7,
+      w: 5,
+      h: 1,
+      fontSize: 14,
+      color: this.brandColors.secondary,
+      fontFace: "Inter"
+    });
+    
+    // GitHub section
+    slide.addText("💻 Contribute", {
+      x: 6.5,
+      y: 2,
+      w: 5,
+      h: 0.6,
+      fontSize: 20,
+      color: this.brandColors.text,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    slide.addText(`GitHub: ${data.contactInfo.githubUrl}\nHelp improve our open-source platform`, {
+      x: 6.5,
+      y: 2.7,
+      w: 5,
+      h: 1,
+      fontSize: 14,
+      color: this.brandColors.secondary,
+      fontFace: "Inter"
+    });
+    
+    // Contact section
+    slide.addText("📬 Contact Us", {
+      x: 1,
+      y: 4.2,
+      w: 5,
+      h: 0.6,
+      fontSize: 20,
+      color: this.brandColors.text,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    slide.addText(`Email: ${data.contactInfo.email}\nFor partnerships, questions, or suggestions`, {
+      x: 1,
+      y: 4.9,
+      w: 5,
+      h: 1,
+      fontSize: 14,
+      color: this.brandColors.secondary,
+      fontFace: "Inter"
+    });
+    
+    // Review process
+    slide.addText("📝 Review Process", {
+      x: 6.5,
+      y: 4.2,
+      w: 5,
+      h: 0.6,
+      fontSize: 20,
+      color: this.brandColors.text,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    slide.addText("Help validate AI solutions through our\npeer-review process and quality assurance", {
+      x: 6.5,
+      y: 4.9,
+      w: 5,
+      h: 1,
+      fontSize: 14,
+      color: this.brandColors.secondary,
+      fontFace: "Inter"
+    });
+  }
+
   public async generatePresentation(data: PresentationData): Promise<void> {
     // Add all slides
     this.addTitleSlide();
@@ -360,6 +681,9 @@ export class PptxExporter {
     this.addOverviewSlide(data);
     this.addCompanyLogosSlide(data);
     this.addCategoryBreakdownSlide(data);
+    this.addProductGridSlides(data);
+    this.addAnalyticsOverviewSlide(data);
+    this.addContactEngagementSlide(data);
     this.addGovernanceSlide();
     
     // Generate and download

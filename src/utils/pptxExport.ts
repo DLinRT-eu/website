@@ -215,16 +215,16 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Grid of logos (4 columns for larger logos)
-    const cols = 4;
-    const logoWidth = 2.5;
-    const logoHeight = 1.8;
-    const startX = 0.8;
+    // Grid of logos (6 columns for website-consistent sizing)
+    const cols = 6;
+    const logoWidth = 1.2;
+    const logoHeight = 0.9;
+    const startX = 0.5;
     const startY = 1.8;
-    const spacingX = 2.8;
-    const spacingY = 2.2;
+    const spacingX = 1.6;
+    const spacingY = 1.4;
     
-    data.companyLogos.slice(0, 20).forEach((company, index) => {
+    data.companyLogos.slice(0, 30).forEach((company, index) => {
       const row = Math.floor(index / cols);
       const col = index % cols;
       const x = startX + (col * spacingX);
@@ -278,12 +278,12 @@ export class PptxExporter {
       values: [item.count]
     }));
     
-    // Add larger chart
+    // Add appropriately sized chart
     slide.addChart("pie", chartData, {
-      x: 0.5,
-      y: 1.8,
-      w: 8,
-      h: 5,
+      x: 1,
+      y: 2.2,
+      w: 5.5,
+      h: 3.5,
       showTitle: false,
       showLegend: true,
       legendPos: "r",
@@ -305,10 +305,10 @@ export class PptxExporter {
     ];
     
     slide.addTable(tableData, {
-      x: 9,
-      y: 1.8,
-      w: 3,
-      h: 5,
+      x: 7,
+      y: 2.2,
+      w: 4.5,
+      h: 3.5,
       fontSize: 12,
       fontFace: "Inter",
       border: { pt: 1, color: this.brandColors.secondary }

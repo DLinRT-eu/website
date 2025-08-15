@@ -89,14 +89,14 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Logo - appropriately sized
+    // Logo - smaller and centered
     slide.addImage({
       path: "/LogoDLinRT.eu.png",
-      x: 5,
+      x: 5.5,
       y: 5,
-      w: 2,
-      h: 1.5,
-      sizing: { type: "contain", w: 2, h: 1.5 }
+      w: 1,
+      h: 0.8,
+      sizing: { type: "contain", w: 1, h: 0.8 }
     });
   }
 
@@ -238,16 +238,16 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Grid of logos (8 columns for compact website-style layout)
-    const cols = 8;
-    const logoWidth = 0.8;
-    const logoHeight = 0.6;
-    const startX = 0.4;
+    // Grid of logos (10 columns for maximum fit)
+    const cols = 10;
+    const logoWidth = 0.5;
+    const logoHeight = 0.4;
+    const startX = 0.5;
     const startY = 1.8;
-    const spacingX = 1.2;
-    const spacingY = 1.1;
+    const spacingX = 1.1;
+    const spacingY = 0.9;
     
-    data.companyLogos.slice(0, 40).forEach((company, index) => {
+    data.companyLogos.slice(0, 50).forEach((company, index) => {
       const row = Math.floor(index / cols);
       const col = index % cols;
       const x = startX + (col * spacingX);
@@ -418,15 +418,15 @@ export class PptxExporter {
           line: { color: this.brandColors.secondary, width: 1 }
         });
         
-        // Company logo (small)
+        // Company logo (smaller for product cards)
         if (product.companyLogo) {
           slide.addImage({
             path: product.companyLogo,
             x: x + 0.1,
             y: y + 0.1,
-            w: 0.4,
-            h: 0.3,
-            sizing: { type: "contain", w: 0.4, h: 0.3 }
+            w: 0.3,
+            h: 0.2,
+            sizing: { type: "contain", w: 0.3, h: 0.2 }
           });
         }
         

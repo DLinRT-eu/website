@@ -1,3 +1,4 @@
+import sanitizeHtml from 'sanitize-html';
 /**
  * Chart Data Validation and Sanitization Utilities
  * Provides security measures for chart components to prevent XSS and data injection attacks
@@ -11,18 +12,8 @@ export const sanitizeString = (input: string, maxLength: number = 100): string =
     return '';
   }
 
-  // Remove HTML tags, script tags, and other potentially dangerous content
-  let sanitized = input;
-  let previous;
-  do {
-    previous = sanitized;
-    sanitized = sanitized
-      .replace(/<[^>]*>/g, '') // Remove HTML tags
-      .replace(/javascript:/gi, '') // Remove javascript: protocol
-      .replace(/on\w+\s*=/gi, '') // Remove event handlers like onclick=
-      .replace(/[<>'"]/g, '') // Remove quotes and angle brackets
-      .trim();
-  } while (sanitized !== previous);
+  // Use sanitize-html to remove all unsafe HTML tags and attributes
+  let sanitized = sanitizeHtml(input, { allowedTags: [], allowedAttributes: {} }).trim();
 
   // Limit length to prevent extremely long strings
   return sanitized.length > maxLength ? sanitized.substring(0, maxLength) + '...' : sanitized;

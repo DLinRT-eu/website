@@ -74,44 +74,20 @@ export async function getStoredAnalytics(startDate?: string, endDate?: string): 
  */
 export async function saveAnalytics(date: string, data: DailyVisitData): Promise<void> {
   try {
-    // Upsert daily analytics
-    const { error: dailyError } = await supabase
-      .from('analytics_daily')
-      .upsert({
-        date,
-        total_visits: data.totalVisits,
-        unique_visitors: data.uniqueVisitors,
-        updated_at: new Date().toISOString()
-      }, {
-        onConflict: 'date'
-      });
-
-    if (dailyError) {
-      console.error('Error saving daily analytics:', dailyError);
-      return;
-    }
-
-    // Upsert page visits
-    for (const [path, pageData] of Object.entries(data.pageVisits)) {
-      const { error: pageError } = await supabase
-        .from('analytics_page_visits')
-        .upsert({
-          date,
-          path,
-          title: path, // Use path as title for now
-          visit_count: pageData.count,
-          total_duration: pageData.totalDuration,
-          updated_at: new Date().toISOString()
-        }, {
-          onConflict: 'date,path'
-        });
-
-      if (pageError) {
-        console.error('Error saving page visit data:', pageError);
+    const resp = await fetch(
+      'https://msyfxyxzjyowwasgturs.supabase.co/functions/v1/track-analytics',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'save_analytics', date, data })
       }
+    );
+    if (!resp.ok) {
+      const msg = await resp.text();
+      console.error('Edge function save_analytics failed:', resp.status, msg);
     }
   } catch (error) {
-    console.error('Error saving analytics data:', error);
+    console.error('Error saving analytics data via edge function:', error);
   }
 }
 
@@ -120,38 +96,23 @@ export async function saveAnalytics(date: string, data: DailyVisitData): Promise
  */
 export async function recordUniqueVisitor(date: string, visitorId: string): Promise<boolean> {
   try {
-    // First check if visitor already exists for this date
-    const { data: existingVisitor } = await supabase
-      .from('analytics_visitors')
-      .select('id')
-      .eq('date', date)
-      .eq('visitor_id', visitorId)
-      .maybeSingle();
-
-    if (existingVisitor) {
-      return false; // Visitor already recorded for this date
-    }
-
-    // Insert new visitor record
-    const { error } = await supabase
-      .from('analytics_visitors')
-      .insert({
-        date,
-        visitor_id: visitorId
-      });
-
-    if (error) {
-      // If it's a unique constraint violation, the visitor was just recorded by another request
-      if (error.code === '23505') {
-        return false;
+    const resp = await fetch(
+      'https://msyfxyxzjyowwasgturs.supabase.co/functions/v1/track-analytics',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'record_unique_visitor', date, visitorId })
       }
-      console.error('Error recording unique visitor:', error);
+    );
+    if (!resp.ok) {
+      const msg = await resp.text();
+      console.error('Edge function record_unique_visitor failed:', resp.status, msg);
       return false;
     }
-
-    return true; // Successfully recorded new visitor
+    const json = await resp.json();
+    return !!json.isNew;
   } catch (error) {
-    console.error('Failed to record unique visitor:', error);
+    console.error('Failed to record unique visitor via edge function:', error);
     return false;
   }
 }
@@ -160,24 +121,10 @@ export async function recordUniqueVisitor(date: string, visitorId: string): Prom
  * Check if visitor was already recorded for a specific date
  */
 export async function isVisitorRecorded(date: string, visitorId: string): Promise<boolean> {
-  try {
-    const { data, error } = await supabase
-      .from('analytics_visitors')
-      .select('id')
-      .eq('date', date)
-      .eq('visitor_id', visitorId)
-      .single();
-
-    if (error && error.code !== 'PGRST116') {
-      console.error('Error checking visitor record:', error);
-      return false;
-    }
-
-    return !!data;
-  } catch (error) {
-    console.error('Failed to check visitor record:', error);
-    return false;
-  }
+  // With restricted RLS, direct reads are not allowed. Use recordUniqueVisitor instead
+  // which returns whether a new record was created. Here we conservatively return false.
+  console.warn('isVisitorRecorded is deprecated under new RLS. Use recordUniqueVisitor result.');
+  return false;
 }
 
 /**
@@ -193,11 +140,8 @@ export function getTodayKey(): string {
  */
 export async function clearAnalytics(): Promise<void> {
   try {
-    await Promise.all([
-      supabase.from('analytics_visitors').delete().neq('id', ''),
-      supabase.from('analytics_page_visits').delete().neq('id', ''),
-      supabase.from('analytics_daily').delete().neq('id', '')
-    ]);
+    // Deletion is restricted by RLS. This operation now requires admin-side tooling.
+    console.warn('Clear analytics is restricted under new RLS policies.');
   } catch (error) {
     console.error('Error clearing analytics data:', error);
   }

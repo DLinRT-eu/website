@@ -1,5 +1,7 @@
-
 project_id = "msyfxyxzjyowwasgturs"
 
 [functions.rss-feed]
+verify_jwt = false
+
+[functions.track-analytics]
 verify_jwt = false

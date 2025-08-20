@@ -2,13 +2,17 @@
 // Handles analytics writes using the service role to satisfy restrictive RLS
 // Endpoint: POST /functions/v1/track-analytics
 
-import { serve } from "https://deno.fresh.run/std@0.177.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.49.8";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
+
+const corsHeaders: HeadersInit = {
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+};
 
 type DailyVisitData = {
   date: string;
@@ -26,16 +30,14 @@ function jsonResponse(body: unknown, status = 200) {
     status,
     headers: {
       "Content-Type": "application/json",
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "POST, OPTIONS",
-      "Access-Control-Allow-Headers": "content-type",
+      ...corsHeaders,
     },
   });
 }
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   if (req.method === "OPTIONS") {
-    return jsonResponse({ ok: true });
+    return new Response(null, { headers: corsHeaders });
   }
 
   if (req.method !== "POST") {
@@ -54,26 +56,20 @@ serve(async (req) => {
       const { date, visitorId } = body;
       if (!date || !visitorId) return jsonResponse({ error: "Missing fields" }, 400);
 
-      // Check if visitor already recorded for the date
       const { data: existing, error: selectErr } = await supabase
         .from("analytics_visitors")
         .select("id")
         .eq("date", date)
         .eq("visitor_id", visitorId)
         .maybeSingle();
-
       if (selectErr) throw selectErr;
 
-      if (existing) {
-        return jsonResponse({ isNew: false });
-      }
+      if (existing) return jsonResponse({ isNew: false });
 
       const { error: insertErr } = await supabase
         .from("analytics_visitors")
         .insert({ date, visitor_id: visitorId });
-
       if (insertErr) {
-        // Duplicate insert race condition
         if (insertErr.code === "23505") return jsonResponse({ isNew: false });
         throw insertErr;
       }
@@ -85,18 +81,19 @@ serve(async (req) => {
       const { date, data } = body;
       if (!date || !data) return jsonResponse({ error: "Missing fields" }, 400);
 
-      // Upsert daily aggregate
       const { error: dailyErr } = await supabase
         .from("analytics_daily")
-        .upsert({
-          date,
-          total_visits: data.totalVisits,
-          unique_visitors: data.uniqueVisitors,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: "date" });
+        .upsert(
+          {
+            date,
+            total_visits: data.totalVisits,
+            unique_visitors: data.uniqueVisitors,
+            updated_at: new Date().toISOString(),
+          },
+          { onConflict: "date" }
+        );
       if (dailyErr) throw dailyErr;
 
-      // Upsert per-page stats
       const pageRows = Object.entries(data.pageVisits).map(([path, v]) => ({
         date,
         path,

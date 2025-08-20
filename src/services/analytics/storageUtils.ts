@@ -74,17 +74,11 @@ export async function getStoredAnalytics(startDate?: string, endDate?: string): 
  */
 export async function saveAnalytics(date: string, data: DailyVisitData): Promise<void> {
   try {
-    const resp = await fetch(
-      'https://msyfxyxzjyowwasgturs.supabase.co/functions/v1/track-analytics',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'save_analytics', date, data })
-      }
-    );
-    if (!resp.ok) {
-      const msg = await resp.text();
-      console.error('Edge function save_analytics failed:', resp.status, msg);
+    const { data: resp, error } = await supabase.functions.invoke('track-analytics', {
+      body: { action: 'save_analytics', date, data },
+    });
+    if (error) {
+      console.error('Edge function save_analytics failed:', error);
     }
   } catch (error) {
     console.error('Error saving analytics data via edge function:', error);
@@ -96,21 +90,14 @@ export async function saveAnalytics(date: string, data: DailyVisitData): Promise
  */
 export async function recordUniqueVisitor(date: string, visitorId: string): Promise<boolean> {
   try {
-    const resp = await fetch(
-      'https://msyfxyxzjyowwasgturs.supabase.co/functions/v1/track-analytics',
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'record_unique_visitor', date, visitorId })
-      }
-    );
-    if (!resp.ok) {
-      const msg = await resp.text();
-      console.error('Edge function record_unique_visitor failed:', resp.status, msg);
+    const { data: resp, error } = await supabase.functions.invoke('track-analytics', {
+      body: { action: 'record_unique_visitor', date, visitorId },
+    });
+    if (error) {
+      console.error('Edge function record_unique_visitor failed:', error);
       return false;
     }
-    const json = await resp.json();
-    return !!json.isNew;
+    return !!(resp as any)?.isNew;
   } catch (error) {
     console.error('Failed to record unique visitor via edge function:', error);
     return false;

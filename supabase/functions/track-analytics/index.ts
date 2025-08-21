@@ -9,10 +9,48 @@ const SERVICE_ROLE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 
 const supabase = createClient(SUPABASE_URL, SERVICE_ROLE_KEY);
 
-const corsHeaders: HeadersInit = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+// Rate limiting store (in-memory for this instance)
+const rateLimitStore = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW = 60000; // 1 minute
+const RATE_LIMIT_MAX_REQUESTS = 30; // Max 30 requests per minute per IP
+
+// Allowed origins for security
+const ALLOWED_ORIGINS = [
+  "https://dlinrt.eu",
+  "https://www.dlinrt.eu",
+  "http://localhost:5173", // Local development
+  "http://localhost:3000"  // Alternative local port
+];
+
+function getCorsHeaders(origin: string | null): HeadersInit {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  };
+}
+
+function checkRateLimit(clientIp: string): boolean {
+  const now = Date.now();
+  const key = `track_analytics_${clientIp}`;
+  
+  if (!rateLimitStore.has(key)) {
+    rateLimitStore.set(key, []);
+  }
+  
+  const requests = rateLimitStore.get(key)!;
+  // Remove old requests outside the window
+  const validRequests = requests.filter(timestamp => now - timestamp < RATE_LIMIT_WINDOW);
+  
+  if (validRequests.length >= RATE_LIMIT_MAX_REQUESTS) {
+    console.warn(`Rate limit exceeded for IP: ${clientIp}`);
+    return false;
+  }
+  
+  validRequests.push(now);
+  rateLimitStore.set(key, validRequests);
+  return true;
+}
 
 type DailyVisitData = {
   date: string;
@@ -25,36 +63,54 @@ type RequestBody =
   | { action: "save_analytics"; date: string; data: DailyVisitData }
   | { action: "record_unique_visitor"; date: string; visitorId: string };
 
-function jsonResponse(body: unknown, status = 200) {
+function jsonResponse(body: unknown, status = 200, headers: HeadersInit = {}) {
   return new Response(JSON.stringify(body), {
     status,
     headers: {
       "Content-Type": "application/json",
-      ...corsHeaders,
+      ...headers,
     },
   });
 }
 
 Deno.serve(async (req) => {
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
+  
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
   }
 
   if (req.method !== "POST") {
-    return jsonResponse({ error: "Method not allowed" }, 405);
+    return jsonResponse({ error: "Method not allowed" }, 405, corsHeaders);
+  }
+
+  // Rate limiting by IP
+  const clientIp = req.headers.get("x-forwarded-for") || "unknown";
+  if (!checkRateLimit(clientIp)) {
+    return jsonResponse({ error: "Rate limit exceeded" }, 429, corsHeaders);
   }
 
   let body: RequestBody;
   try {
-    body = await req.json();
+    const text = await req.text();
+    if (text.length > 10000) { // Cap payload size
+      return jsonResponse({ error: "Payload too large" }, 413, corsHeaders);
+    }
+    body = JSON.parse(text);
   } catch (_e) {
-    return jsonResponse({ error: "Invalid JSON" }, 400);
+    return jsonResponse({ error: "Invalid JSON" }, 400, corsHeaders);
   }
 
   try {
     if (body.action === "record_unique_visitor") {
       const { date, visitorId } = body;
-      if (!date || !visitorId) return jsonResponse({ error: "Missing fields" }, 400);
+      if (!date || !visitorId || typeof date !== 'string' || typeof visitorId !== 'string') {
+        return jsonResponse({ error: "Missing or invalid fields" }, 400, corsHeaders);
+      }
+      if (date.length > 50 || visitorId.length > 200) { // Reasonable limits
+        return jsonResponse({ error: "Field values too long" }, 400, corsHeaders);
+      }
 
       const { data: existing, error: selectErr } = await supabase
         .from("analytics_visitors")
@@ -64,22 +120,24 @@ Deno.serve(async (req) => {
         .maybeSingle();
       if (selectErr) throw selectErr;
 
-      if (existing) return jsonResponse({ isNew: false });
+      if (existing) return jsonResponse({ isNew: false }, 200, corsHeaders);
 
       const { error: insertErr } = await supabase
         .from("analytics_visitors")
         .insert({ date, visitor_id: visitorId });
       if (insertErr) {
-        if (insertErr.code === "23505") return jsonResponse({ isNew: false });
+        if (insertErr.code === "23505") return jsonResponse({ isNew: false }, 200, corsHeaders);
         throw insertErr;
       }
 
-      return jsonResponse({ isNew: true });
+      return jsonResponse({ isNew: true }, 200, corsHeaders);
     }
 
     if (body.action === "save_analytics") {
       const { date, data } = body;
-      if (!date || !data) return jsonResponse({ error: "Missing fields" }, 400);
+      if (!date || !data || typeof date !== 'string' || typeof data !== 'object') {
+        return jsonResponse({ error: "Missing or invalid fields" }, 400, corsHeaders);
+      }
 
       const { error: dailyErr } = await supabase
         .from("analytics_daily")
@@ -110,12 +168,12 @@ Deno.serve(async (req) => {
         if (pageErr) throw pageErr;
       }
 
-      return jsonResponse({ ok: true });
+      return jsonResponse({ ok: true }, 200, corsHeaders);
     }
 
-    return jsonResponse({ error: "Unknown action" }, 400);
+    return jsonResponse({ error: "Unknown action" }, 400, corsHeaders);
   } catch (e) {
     console.error("track-analytics error", e);
-    return jsonResponse({ error: "Internal error" }, 500);
+    return jsonResponse({ error: "Internal error" }, 500, corsHeaders);
   }
 });

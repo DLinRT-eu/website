@@ -8,11 +8,24 @@ interface SecurityEvent {
 
 export const useSecurityMonitoring = () => {
   const logSecurityEvent = useCallback((event: SecurityEvent) => {
-    // Log security events for monitoring
+    // Log security events for monitoring - avoid logging PII in production
+    const sanitizedDetails = { ...event.details };
+    
+    // Remove potentially sensitive information from logs
+    if (sanitizedDetails.email) {
+      sanitizedDetails.email = '[REDACTED]';
+    }
+    if (sanitizedDetails.name) {
+      sanitizedDetails.name = '[REDACTED]';
+    }
+    if (sanitizedDetails.message) {
+      sanitizedDetails.message = '[REDACTED]';
+    }
+    
     console.warn(`[SECURITY] ${event.type}:`, {
-      ...event.details,
+      ...sanitizedDetails,
       timestamp: event.timestamp.toISOString(),
-      userAgent: navigator.userAgent,
+      userAgent: navigator.userAgent.substring(0, 100), // Limit user agent length
       url: window.location.href
     });
 

@@ -24,7 +24,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
-import Analytics from "./pages/Analytics";
+
 import SecurityCertifications from "./pages/SecurityCertifications";
 import AutoContouringPage from "./pages/categories/AutoContouring";
 import TreatmentPlanningPage from "./pages/categories/TreatmentPlanning";
@@ -62,7 +62,7 @@ const App = () => (
             <Route path="support" element={<Support />} />
             <Route path="news/:id" element={<NewsDetail />} />
             <Route path="dashboard" element={<Dashboard />} />
-            <Route path="analytics" element={<Analytics />} />
+            
             <Route path="timeline" element={<Timeline />} />
             <Route path="review" element={<ReviewDashboard />} />
             <Route path="review/:id" element={<ProductReview />} />

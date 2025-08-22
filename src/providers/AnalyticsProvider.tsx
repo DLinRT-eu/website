@@ -1,8 +1,7 @@
 
 import React, { createContext, useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import analyticsTracker from "@/services/analytics";
-import { migrateAnalyticsData } from "@/services/analytics/storageUtils";
+// Analytics services removed - provider preserved for cookie consent compatibility
 
 type AnalyticsContextType = {
   trackEvent: (eventName: string, eventData?: Record<string, any>) => void;
@@ -26,41 +25,7 @@ export const AnalyticsProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     location = null;
   }
 
-  // Initialize analytics and run migration once
-  useEffect(() => {
-    const initializeAnalytics = async () => {
-      try {
-        await migrateAnalyticsData();
-      } catch (error) {
-        console.warn('Analytics migration failed:', error);
-      }
-    };
-    
-    initializeAnalytics();
-  }, []);
-
-  // Track page views - only if location is available
-  useEffect(() => {
-    if (!location) return;
-    
-    const trackPageView = async () => {
-      const path = location.pathname;
-      const title = document.title;
-      
-      try {
-        await analyticsTracker.trackPageView(path, title);
-      } catch (error) {
-        console.warn('Failed to track page view:', error);
-      }
-    };
-
-    trackPageView();
-    
-    // Cleanup function - called when component unmounts or location changes
-    return () => {
-      analyticsTracker.endPageVisit();
-    };
-  }, [location]);
+  // Analytics tracking disabled - preserving provider for cookie consent compatibility
 
   // Custom event tracking
   const trackEvent = (eventName: string, eventData?: Record<string, any>) => {

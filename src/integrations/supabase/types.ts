@@ -95,39 +95,6 @@ export type Database = {
         }
         Relationships: []
       }
-      newsletter_subscribers: {
-        Row: {
-          consent_given: boolean
-          created_at: string
-          email: string
-          first_name: string
-          id: string
-          last_name: string
-          unsubscribed_at: string | null
-          updated_at: string
-        }
-        Insert: {
-          consent_given?: boolean
-          created_at?: string
-          email: string
-          first_name: string
-          id?: string
-          last_name: string
-          unsubscribed_at?: string | null
-          updated_at?: string
-        }
-        Update: {
-          consent_given?: boolean
-          created_at?: string
-          email?: string
-          first_name?: string
-          id?: string
-          last_name?: string
-          unsubscribed_at?: string | null
-          updated_at?: string
-        }
-        Relationships: []
-      }
     }
     Views: {
       analytics_summary: {

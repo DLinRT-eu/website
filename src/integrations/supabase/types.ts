@@ -95,8 +95,56 @@ export type Database = {
         }
         Relationships: []
       }
+      security_events: {
+        Row: {
+          created_at: string
+          details: Json | null
+          event_type: string
+          id: string
+          ip_hash: string | null
+          notes: string | null
+          resolved_at: string | null
+          severity: string
+          url: string | null
+          user_agent_hash: string | null
+        }
+        Insert: {
+          created_at?: string
+          details?: Json | null
+          event_type: string
+          id?: string
+          ip_hash?: string | null
+          notes?: string | null
+          resolved_at?: string | null
+          severity?: string
+          url?: string | null
+          user_agent_hash?: string | null
+        }
+        Update: {
+          created_at?: string
+          details?: Json | null
+          event_type?: string
+          id?: string
+          ip_hash?: string | null
+          notes?: string | null
+          resolved_at?: string | null
+          severity?: string
+          url?: string | null
+          user_agent_hash?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
+      analytics_public: {
+        Row: {
+          month: string | null
+          total_entries: number | null
+          total_unique_visitors: number | null
+          total_visits: number | null
+        }
+        Relationships: []
+      }
       analytics_summary: {
         Row: {
           created_at: string | null
@@ -126,6 +174,14 @@ export type Database = {
       cleanup_old_analytics_data: {
         Args: Record<PropertyKey, never>
         Returns: undefined
+      }
+      cleanup_old_security_events: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
+      hash_ip: {
+        Args: { ip_address: string }
+        Returns: string
       }
       schedule_analytics_cleanup: {
         Args: Record<PropertyKey, never>

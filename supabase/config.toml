@@ -5,3 +5,6 @@ verify_jwt = false
 
 [functions.track-analytics]
 verify_jwt = false
+
+[functions.track-security-event]
+verify_jwt = false

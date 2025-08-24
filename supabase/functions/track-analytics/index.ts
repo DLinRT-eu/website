@@ -112,11 +112,17 @@ Deno.serve(async (req) => {
         return jsonResponse({ error: "Field values too long" }, 400, corsHeaders);
       }
 
+      // Hash visitor ID for privacy
+      const { data: hashedVisitorId } = await supabase.rpc('hash_ip', { 
+        ip_address: visitorId 
+      });
+      const finalVisitorId = hashedVisitorId || visitorId;
+
       const { data: existing, error: selectErr } = await supabase
         .from("analytics_visitors")
         .select("id")
         .eq("date", date)
-        .eq("visitor_id", visitorId)
+        .eq("visitor_id", finalVisitorId)
         .maybeSingle();
       if (selectErr) throw selectErr;
 
@@ -124,7 +130,7 @@ Deno.serve(async (req) => {
 
       const { error: insertErr } = await supabase
         .from("analytics_visitors")
-        .insert({ date, visitor_id: visitorId });
+        .insert({ date, visitor_id: finalVisitorId });
       if (insertErr) {
         if (insertErr.code === "23505") return jsonResponse({ isNew: false }, 200, corsHeaders);
         throw insertErr;

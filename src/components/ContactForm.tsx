@@ -32,7 +32,7 @@ type FormValues = z.infer<typeof formSchema>;
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const { checkRateLimit, logSecurityEvent } = useSecurityMonitoring();
+  const { checkRateLimit, logSecurityEvent, detectSuspiciousActivity } = useSecurityMonitoring();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),

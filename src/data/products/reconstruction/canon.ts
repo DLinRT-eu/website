@@ -62,7 +62,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     clinicalEvidence: "Multiple clinical studies demonstrating excellent image quality at ultra-low-dose settings across various clinical applications",
     lastVerified: "2024-11-05",
     lastUpdated: "2025-01-15",
-    lastRevised: "2025-05-05",
+    lastRevised: "2025-08-26",
     source: "Automatically retrieved"
 
   },

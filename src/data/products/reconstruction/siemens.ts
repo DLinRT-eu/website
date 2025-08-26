@@ -12,7 +12,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     certification: "CE Mark",
     logoUrl: "/logos/siemens.png",
     companyUrl: "https://www.siemens-healthineers.com",
-    productUrl: "https://www.siemens-healthineers.com/computed-tomography/technologies/admire",
+    productUrl: "https://www.siemens-healthineers.com/en-us/computed-tomography/ct-technologies-and-innovations/admire",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/siemens.ts",
     anatomicalLocation: ["Whole body"],
     modality: "CT",

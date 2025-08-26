@@ -12,7 +12,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     certification: "CE Mark",
     logoUrl: "/logos/philips.png",
     companyUrl: "https://www.philips.com/healthcare",
-    productUrl: "https://www.philips.com/healthcare/solutions/computed-tomography/ct-clinical-solutions",
+    productUrl: "https://www.philips.com/healthcare/technology/ct-smart-workflow",
     anatomicalLocation: ["Whole body"],
     modality: "CT",
     diseaseTargeted: ["Cancer", "Cardiac conditions", "Neurological disorders"],

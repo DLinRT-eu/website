@@ -19,29 +19,8 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     modality: ["RT Plan"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: ["DL-driven plan optimization", "Quality metrics", "Automated planning"],
+    keyFeatures: ["DL-driven plan optimization", "Full workflow automatin from dose prediction to final plan", "Auto-planning models validated on standard protocols", "Customizable to your clinical goals"],
     guidelines: [
-      {
-        name: "AAPM TG-275",
-        version: "2022",
-        reference: "https://doi.org/10.1002/mp.15419",
-        url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
-        compliance: "full"
-      },
-      {
-        name: "ICRU Report 83",
-        version: "2010",
-        reference: "https://doi.org/10.1093/jicru/ndq001",
-        url: "https://icru.org/home/reports/prescribing-recording-and-reporting-photon-beam-intensity-modulated-radiation-therapy-imrt-report-83",
-        compliance: "full"
-      },
-      {
-        name: "IAEA TRS-430",
-        version: "2004",
-        reference: "https://www.iaea.org/publications/6789/commissioning-and-quality-assurance-of-computerized-planning-systems-for-radiation-treatment-of-cancer",
-        url: "https://www.iaea.org/publications/6789/commissioning-and-quality-assurance-of-computerized-planning-systems-for-radiation-treatment-of-cancer",
-        compliance: "partial"
-      }
     ],
     technicalSpecifications: {
       population: "Adult patients",
@@ -79,7 +58,7 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     version: "3.0",
     releaseDate: "2023-12-01",
     lastUpdated: "2024-04-15",
-    lastRevised: "2025-05-12",
+    lastRevised: "2025-08-26",
     source: "Automatically retrieved and revised"
   }
 ];

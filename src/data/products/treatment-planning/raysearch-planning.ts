@@ -19,7 +19,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     modality: ["CT"],
     subspeciality: "Radiation Oncology",
     diseaseTargeted: ["Multiple Cancer Types"],
-    keyFeatures: ["Multi-criteria optimization", "Adaptive planning", "Advanced dose calculation"],
+    keyFeatures: ["Auto-planning with deep learning driven dose prediction", "Customizable post-processing to match your protocols, clinical goals, and machines", "Models validated against common radiotherapy protocols"],
     technicalSpecifications: {
       population: "Adult and pediatric patients",
       input: ["CT", "Structure sets", "Prescriptions"],
@@ -56,7 +56,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     version: "12.0",
     releaseDate: "2023-12-01",
     lastUpdated: "2025-05-01",
-    lastRevised: "2025-05-29",
+    lastRevised: "2025-08-26",
     source: "Automatically retrieved and revised"
   }
 ];

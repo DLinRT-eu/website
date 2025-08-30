@@ -123,6 +123,7 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     clinicalEvidence: "Multiple clinical evaluations showing improved diagnostic confidence and time efficiency across various imaging applications",
     lastVerified: "2024-11-10",
     lastRevised: "2025-05-05",
-    lastUpdated: "2025-01-15"
+    lastUpdated: "2025-01-15",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-enhancement/siemens.ts"
   }
 ];

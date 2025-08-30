@@ -126,7 +126,8 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     lastVerified: "2024-10-20",
     lastUpdated: "2025-01-10",
     lastRevised: "2025-05-05",
-    source: "Automatically retrieved"
+    source: "Automatically retrieved",
+    githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/canon.ts"
     
   }
 ];

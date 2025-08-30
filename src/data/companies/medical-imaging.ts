@@ -46,8 +46,7 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "directorgans",
       "siemens-admire",
       "siemens-deep-resolve",
-      "siemens-dual-energy-optimizer",
-      "siemens-clara-train-image"
+      "siemens-dual-energy-optimizer"
     ],
     "category": "Medical Imaging",
     "logoUrl": "/logos/siemens.png"

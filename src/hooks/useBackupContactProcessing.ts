@@ -19,7 +19,8 @@ export const useBackupContactProcessing = () => {
   const storeContactLocally = useCallback(async (contactData: ContactData): Promise<boolean> => {
     try {
       // Store in Supabase as backup - create a simple contacts table if needed
-      const { error } = await supabase
+      // Using any-cast until Supabase types include 'contact_submissions'
+      const { error } = await (supabase as any)
         .from('contact_submissions')
         .insert({
           name: contactData.name,
@@ -29,7 +30,7 @@ export const useBackupContactProcessing = () => {
           status: 'pending',
           submission_method: 'backup_storage',
           created_at: new Date().toISOString()
-        });
+        } as any);
 
       if (error) {
         console.error('Backup storage failed:', error);
@@ -144,7 +145,8 @@ export const useBackupContactProcessing = () => {
 
     // Check local storage capability
     try {
-      const { error } = await supabase
+      // any-cast until Supabase types include 'contact_submissions'
+      const { error } = await (supabase as any)
         .from('contact_submissions')
         .select('id')
         .limit(1);

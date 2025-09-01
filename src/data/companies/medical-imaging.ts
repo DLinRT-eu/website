@@ -44,7 +44,6 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "siemens-syngo-ct", 
       "siemens-ai-rad-companion", 
       "directorgans",
-      "siemens-admire",
       "siemens-deep-resolve",
       "siemens-dual-energy-optimizer"
     ],

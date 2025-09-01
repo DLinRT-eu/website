@@ -20,10 +20,6 @@ export const useCompanyData = (
       const hasId = p.id || '';
       const isIncluded = company.productIds.includes(hasId);
       
-      // Debug logging for inconsistent company numbers
-      if (company.name === "Siemens Healthineers" && !isIncluded && hasId) {
-        console.log(`Siemens product not matched: ${hasId}, productIds:`, company.productIds);
-      }
       
       return isIncluded;
     });

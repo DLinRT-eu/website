@@ -31,7 +31,7 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
   },
   {
     "id": "airs-medical",
-    "name": "Airs Medical",
+    "name": "AIRS Medical",
     "description": "AI company focused on enhancing medical imaging efficiency and quality.",
     "website": "https://airsmed.com/",
     "productIds": [

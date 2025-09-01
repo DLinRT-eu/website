@@ -58,6 +58,7 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
     "productIds": [
       "canon-aice-ct", 
       "canon-aice-mr",
+      "canon-piqe",
       "canon-advanced-vis-ai"
     ],
     "category": "Medical Imaging",

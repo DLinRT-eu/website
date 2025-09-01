@@ -28,7 +28,7 @@ const checkRateLimit = (clientFingerprint: string): boolean => {
 };
 
 interface SecurityEventData {
-  event_type: 'form_submission_failed' | 'unusual_activity' | 'rate_limit_exceeded' | 'suspicious_request' | 'repeated_failures';
+  event_type: 'form_submission_failed' | 'unusual_activity' | 'rate_limit_exceeded' | 'suspicious_request' | 'repeated_failures' | 'bot_detection' | 'malicious_payload' | 'authentication_failure';
   severity: 'low' | 'medium' | 'high' | 'critical';
   details: Record<string, any>;
   user_agent: string;

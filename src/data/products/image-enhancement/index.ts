@@ -9,7 +9,7 @@ import { AIRS_MEDICAL_PRODUCTS } from "./airs-medical";
 import { UNITED_IMAGING_PRODUCTS } from "./united-imaging";
 import { SUBTLE_MEDICAL_PRODUCTS } from "./subtle-medical";
 import { SUBTLE_MEDICAL_GAD_PRODUCTS } from "./subtle-medical-gad";
-import { ACCURAY_PRODUCTS } from "./accuray";
+
 
 export const IMAGE_ENHANCEMENT_PRODUCTS: ProductDetails[] = [
   ...PHILIPS_INTELLISPACE_PRODUCTS,
@@ -21,5 +21,5 @@ export const IMAGE_ENHANCEMENT_PRODUCTS: ProductDetails[] = [
   ...UNITED_IMAGING_PRODUCTS,
   ...SUBTLE_MEDICAL_PRODUCTS,
   ...SUBTLE_MEDICAL_GAD_PRODUCTS,
-  ...ACCURAY_PRODUCTS
+  
 ];

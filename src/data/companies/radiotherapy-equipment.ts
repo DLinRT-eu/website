@@ -20,7 +20,7 @@ export const RADIOTHERAPY_EQUIPMENT_COMPANIES: CompanyDetails[] = [
     "website": "https://www.accuray.com/",
     "productIds": [
       "accuray-synchrony",
-      "accuray-synchrony-image"
+      
     ],
     "category": "Radiotherapy Equipment",
     "logoUrl": "/logos/accuray.png"

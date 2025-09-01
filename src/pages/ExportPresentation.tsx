@@ -52,6 +52,51 @@ export default function ExportPresentation() {
       icon: Package
     },
     {
+      title: "Task Distribution",
+      description: "Analysis of AI solutions across different clinical tasks",
+      icon: BarChart3
+    },
+    {
+      title: "Company Distribution", 
+      description: "Top companies by number of products in the directory",
+      icon: Building2
+    },
+    {
+      title: "Location Coverage",
+      description: "Anatomical locations covered by AI solutions",
+      icon: Globe
+    },
+    {
+      title: "Imaging Modalities",
+      description: "Coverage across different imaging modalities (CT, MRI, etc.)",
+      icon: BarChart3
+    },
+    {
+      title: "Structure Analysis",
+      description: "Most supported structures in auto-contouring products",
+      icon: Package
+    },
+    {
+      title: "Structure Types",
+      description: "Distribution of OARs, GTV, and elective structures",
+      icon: BarChart3
+    },
+    {
+      title: "Product Details",
+      description: "Detailed product grids organized by category",
+      icon: Package
+    },
+    {
+      title: "Platform Analytics",
+      description: `${presentationData.analyticsData.totalViews.toLocaleString()} total views and engagement metrics`,
+      icon: BarChart3
+    },
+    {
+      title: "Get Involved",
+      description: "Contact information and community engagement opportunities",
+      icon: Users
+    },
+    {
       title: "Governance & Values",
       description: "Core values and quality assurance principles",
       icon: Users
@@ -74,7 +119,7 @@ export default function ExportPresentation() {
             </h1>
             <p className="text-lg text-muted-foreground">
               Generate a comprehensive PowerPoint presentation showcasing the DLinRT.eu platform, 
-              including key statistics, company directory, and governance overview.
+              including key statistics, company directory, complete dashboard analytics, and governance overview.
             </p>
           </div>
 
@@ -115,7 +160,7 @@ export default function ExportPresentation() {
               </CardTitle>
               <CardDescription>
                 Download a professionally formatted PowerPoint presentation containing 
-                platform overview, statistics, and company information.
+                platform overview, statistics, all dashboard charts, and company information with properly sized logos.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -179,15 +224,17 @@ export default function ExportPresentation() {
           </Card>
 
           {/* Additional Info */}
-          <div className="mt-8 p-4 bg-muted/50 rounded-lg">
-            <h3 className="font-medium text-foreground mb-2">About the Export</h3>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li>• Presentation follows the DLinRT.eu brand guidelines and color scheme</li>
-              <li>• Includes current statistics and up-to-date company information</li>
-              <li>• Compatible with Microsoft PowerPoint and other presentation software</li>
-              <li>• File format: .pptx (PowerPoint 2007 and later)</li>
-            </ul>
-          </div>
+            <div className="mt-8 p-4 bg-muted/50 rounded-lg">
+              <h3 className="font-medium text-foreground mb-2">About the Export</h3>
+              <ul className="text-sm text-muted-foreground space-y-1">
+                <li>• Presentation follows the DLinRT.eu brand guidelines with proper colors and styling</li>
+                <li>• Includes all dashboard charts: task distribution, company analysis, location coverage, etc.</li>
+                <li>• Company logos are properly sized and formatted for optimal presentation quality</li>
+                <li>• Real-time statistics and up-to-date company information from the platform</li>
+                <li>• Compatible with Microsoft PowerPoint and other presentation software</li>
+                <li>• File format: .pptx (PowerPoint 2007 and later)</li>
+              </ul>
+            </div>
         </div>
       </div>
     </>

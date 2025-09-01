@@ -1,5 +1,6 @@
 import PptxGenJS from "pptxgenjs";
 import dataService from "@/services/DataService";
+import { transformTaskData, transformLocationData, transformModalityData, transformStructureData, transformStructureTypeData } from "@/utils/chartDataTransformation";
 
 export interface PresentationData {
   totalCompanies: number;
@@ -20,6 +21,17 @@ export interface PresentationData {
   modalityBreakdown: Array<{ name: string; count: number }>;
   locationBreakdown: Array<{ name: string; count: number }>;
   certificationBreakdown: Array<{ name: string; count: number }>;
+  taskData: Array<{ name: string; value: number; fill: string }>;
+  companyData: Array<{ name: string; value: number; products: string[] }>;
+  structureData: Array<{ name: string; value: number }>;
+  structureTypeData: Array<{ 
+    productName: string; 
+    companyName: string; 
+    OARs: number; 
+    GTV: number; 
+    Elective: number; 
+    total: number 
+  }>;
   analyticsData: {
     totalViews: number;
     uniqueVisitors: number;
@@ -38,11 +50,13 @@ export interface PresentationData {
 export class PptxExporter {
   private pptx: PptxGenJS;
   private brandColors = {
-    primary: "#00A6D6",
-    secondary: "#6B7280",
-    accent: "#F3F4F6",
-    text: "#111827",
-    background: "#FFFFFF"
+    primary: "#1c2937", // hsl(222.2 47.4% 11.2%) converted to hex
+    primaryLight: "#3b82f6", // For charts and accents
+    secondary: "#64748b", // muted-foreground equivalent
+    accent: "#f1f5f9", // secondary background
+    text: "#0f172a", // foreground
+    background: "#ffffff", // background
+    muted: "#f8fafc" // muted background
   };
 
   constructor() {
@@ -238,16 +252,24 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Grid of logos (10 columns for maximum fit)
-    const cols = 10;
-    const logoWidth = 0.5;
-    const logoHeight = 0.4;
-    const startX = 0.5;
-    const startY = 1.8;
-    const spacingX = 1.1;
-    const spacingY = 0.9;
+    // Responsive grid calculation based on number of logos
+    const logosToShow = data.companyLogos.slice(0, 60);
+    const totalLogos = logosToShow.length;
+    const cols = Math.min(8, Math.ceil(Math.sqrt(totalLogos * 1.2)));
+    const rows = Math.ceil(totalLogos / cols);
     
-    data.companyLogos.slice(0, 50).forEach((company, index) => {
+    // Dynamic sizing based on available space
+    const availableWidth = 11;
+    const availableHeight = 5.5; // Leave space for title and margins
+    const logoMaxWidth = Math.min(1.2, (availableWidth - 0.5) / cols);
+    const logoMaxHeight = Math.min(0.8, availableHeight / (rows * 1.5));
+    
+    const startX = 0.5 + (availableWidth - (cols * logoMaxWidth)) / 2;
+    const startY = 1.8;
+    const spacingX = logoMaxWidth;
+    const spacingY = logoMaxHeight * 1.4;
+    
+    logosToShow.forEach((company, index) => {
       const row = Math.floor(index / cols);
       const col = index % cols;
       const x = startX + (col * spacingX);
@@ -258,19 +280,19 @@ export class PptxExporter {
           path: company.logo,
           x,
           y,
-          w: logoWidth,
-          h: logoHeight,
-          sizing: { type: "contain", w: logoWidth, h: logoHeight }
+          w: logoMaxWidth * 0.8,
+          h: logoMaxHeight * 0.8,
+          sizing: { type: "contain", w: logoMaxWidth * 0.8, h: logoMaxHeight * 0.8 }
         });
       }
       
-      // Company name
+      // Company name (smaller and positioned below logo)
       slide.addText(company.name, {
-        x,
-        y: y + logoHeight + 0.1,
-        w: logoWidth,
-        h: 0.4,
-        fontSize: 11,
+        x: x - logoMaxWidth * 0.1,
+        y: y + logoMaxHeight * 0.85,
+        w: logoMaxWidth,
+        h: logoMaxHeight * 0.4,
+        fontSize: Math.max(8, Math.min(10, logoMaxHeight * 15)),
         color: this.brandColors.secondary,
         align: "center",
         fontFace: "Inter"
@@ -310,7 +332,7 @@ export class PptxExporter {
       showTitle: false,
       showLegend: true,
       legendPos: "r",
-      chartColors: ["#00A6D6", "#6B7280", "#F59E0B", "#10B981", "#EF4444", "#8B5CF6"]
+      chartColors: [this.brandColors.primaryLight, this.brandColors.secondary, "#F59E0B", "#10B981", "#EF4444", "#8B5CF6"]
     });
     
     // Add table with details
@@ -569,9 +591,213 @@ export class PptxExporter {
     });
   }
 
-  private addContactEngagementSlide(data: PresentationData) {
+  // Dashboard chart slides
+  private addTaskDistributionSlide(data: PresentationData) {
     const slide = this.pptx.addSlide();
     slide.background = { color: this.brandColors.background };
+    
+    slide.addText("Task Distribution Analysis", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    // Chart data for PPTX
+    const chartData = [{
+      name: "Products by Task",
+      labels: data.taskData.map(item => item.name),
+      values: data.taskData.map(item => item.value)
+    }];
+    
+    slide.addChart("bar", chartData, {
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 4.5,
+      showTitle: false,
+      showLegend: false,
+      chartColors: data.taskData.map(item => item.fill)
+    });
+  }
+
+  private addCompanyDistributionSlide(data: PresentationData) {
+    const slide = this.pptx.addSlide();
+    slide.background = { color: this.brandColors.background };
+    
+    slide.addText("Company Distribution Analysis", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    const topCompanies = data.companyData.slice(0, 15);
+    const chartData = [{
+      name: "Products by Company",
+      labels: topCompanies.map(item => item.name),
+      values: topCompanies.map(item => item.value)
+    }];
+    
+    slide.addChart("bar", chartData, {
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 4.5,
+      showTitle: false,
+      showLegend: false,
+      chartColors: [this.brandColors.primaryLight]
+    });
+  }
+
+  private addLocationAnalysisSlide(data: PresentationData) {
+    const slide = this.pptx.addSlide();
+    slide.background = { color: this.brandColors.background };
+    
+    slide.addText("Anatomical Location Coverage", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    const topLocations = data.locationBreakdown.slice(0, 12);
+    const chartData = [{
+      name: "Products by Location",
+      labels: topLocations.map(item => item.name),
+      values: topLocations.map(item => item.count)
+    }];
+    
+    slide.addChart("pie", chartData, {
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 4.5,
+      showTitle: false,
+      showLegend: true,
+      legendPos: "r",
+      chartColors: [this.brandColors.primaryLight, this.brandColors.secondary, "#F59E0B", "#10B981", "#EF4444", "#8B5CF6", "#EC4899", "#06B6D4", "#84CC16", "#F97316", "#A855F7", "#EAB308"]
+    });
+  }
+
+  private addModalityAnalysisSlide(data: PresentationData) {
+    const slide = this.pptx.addSlide();
+    slide.background = { color: this.brandColors.background };
+    
+    slide.addText("Imaging Modality Coverage", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    const chartData = [{
+      name: "Products by Modality",
+      labels: data.modalityBreakdown.map(item => item.name),
+      values: data.modalityBreakdown.map(item => item.count)
+    }];
+    
+    slide.addChart("bar", chartData, {
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 4.5,
+      showTitle: false,
+      showLegend: false,
+      chartColors: [this.brandColors.primaryLight]
+    });
+  }
+
+  private addStructureAnalysisSlide(data: PresentationData) {
+    const slide = this.pptx.addSlide();
+    slide.background = { color: this.brandColors.background };
+    
+    slide.addText("Auto-Contouring: Supported Structures", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    const topStructures = data.structureData.slice(0, 15);
+    const chartData = [{
+      name: "Structures Supported",
+      labels: topStructures.map(item => item.name),
+      values: topStructures.map(item => item.value)
+    }];
+    
+    slide.addChart("bar", chartData, {
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 4.5,
+      showTitle: false,
+      showLegend: false,
+      chartColors: [this.brandColors.primaryLight]
+    });
+  }
+
+  private addStructureTypeAnalysisSlide(data: PresentationData) {
+    const slide = this.pptx.addSlide();
+    slide.background = { color: this.brandColors.background };
+    
+    slide.addText("Auto-Contouring: Structure Type Distribution", {
+      x: 0.5,
+      y: 0.5,
+      w: 11,
+      h: 1,
+      fontSize: 32,
+      color: this.brandColors.primary,
+      bold: true,
+      fontFace: "Inter"
+    });
+    
+    // Aggregate data for stacked chart
+    const totalOARs = data.structureTypeData.reduce((sum, item) => sum + item.OARs, 0);
+    const totalGTV = data.structureTypeData.reduce((sum, item) => sum + item.GTV, 0);
+    const totalElective = data.structureTypeData.reduce((sum, item) => sum + item.Elective, 0);
+    
+    const chartData = [{
+      name: "Structure Types",
+      labels: ["OARs", "GTV", "Elective"],
+      values: [totalOARs, totalGTV, totalElective]
+    }];
+    
+    slide.addChart("pie", chartData, {
+      x: 1,
+      y: 2,
+      w: 10,
+      h: 4.5,
+      showTitle: false,
+      showLegend: true,
+      legendPos: "r",
+      chartColors: [this.brandColors.primaryLight, this.brandColors.secondary, "#F59E0B"]
+     });
+   }
+
+   private addContactEngagementSlide(data: PresentationData) {
+     const slide = this.pptx.addSlide();
+     slide.background = { color: this.brandColors.background };
     
     // Title
     slide.addText("Get Involved & Stay Connected", {
@@ -681,6 +907,12 @@ export class PptxExporter {
     this.addOverviewSlide(data);
     this.addCompanyLogosSlide(data);
     this.addCategoryBreakdownSlide(data);
+    this.addTaskDistributionSlide(data);
+    this.addCompanyDistributionSlide(data);
+    this.addLocationAnalysisSlide(data);
+    this.addModalityAnalysisSlide(data);
+    this.addStructureAnalysisSlide(data);
+    this.addStructureTypeAnalysisSlide(data);
     this.addProductGridSlides(data);
     this.addAnalyticsOverviewSlide(data);
     this.addContactEngagementSlide(data);

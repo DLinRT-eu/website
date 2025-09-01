@@ -54,9 +54,9 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
   market: {
     onMarketSince: "2017",
     distributionChannels: ["Direct sales", "OEM partnerships"], // Added proper format
-    countriesPresent: 0, // Added a numeric value
-    payingCustomers: "institutions", // Added string value
-    researchUsers: "Institutional R&D, Clinical trial groups" // Fixed to be a string rather than array
+    
+    
+    
   },
   pricing: {
     model: ["Annual license", "Compute-hour credits"],

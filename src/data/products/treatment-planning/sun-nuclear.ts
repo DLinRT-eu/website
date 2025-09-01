@@ -56,7 +56,7 @@ export const SUN_NUCLEAR_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021-09-15",
       distributionChannels: ["Direct Sales", "Cloud Platform"],
-      countriesPresent: 1,
+      
       payingCustomers: "Contact vendor",
       researchUsers: "Multiple academic centers"
     },

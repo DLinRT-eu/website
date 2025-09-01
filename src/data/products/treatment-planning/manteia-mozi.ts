@@ -47,9 +47,9 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Cloud platform"],
-      countriesPresent: 20,
-      payingCustomers: "Multiple clinical sites globally",
-      researchUsers: "Research institutions"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

@@ -51,7 +51,7 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 15,
+      
       payingCustomers: "Multiple cancer centers across Europe",
       researchUsers: "Academic institutions in Europe and Asia"
     },

@@ -50,9 +50,9 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Integrated in new CT systems"],
-      countriesPresent: 45,
-      payingCustomers: "600+",
-      researchUsers: "80+"
+      
+      
+      
     },
     pricing: {
       model: ["One-time purchase", "Software subscription"],
@@ -113,9 +113,9 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Integrated in new MR systems", "Upgrade for compatible systems"],
-      countriesPresent: 55,
-      payingCustomers: "700+",
-      researchUsers: "120+"
+      
+      
+      
     },
     pricing: {
       model: ["One-time purchase", "Subscription available"],

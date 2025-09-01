@@ -51,9 +51,9 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 30,
-      payingCustomers: "200+",
-      researchUsers: "50+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Volume-based"],
@@ -113,9 +113,9 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 35,
-      payingCustomers: "250+",
-      researchUsers: "60+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Volume-based"],

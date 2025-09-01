@@ -79,9 +79,9 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 12,
-      payingCustomers: "30+",
-      researchUsers: "15+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

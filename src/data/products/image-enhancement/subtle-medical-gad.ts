@@ -51,9 +51,9 @@ export const SUBTLE_MEDICAL_GAD_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Research partnerships", "Early access program"],
-      countriesPresent: 10,
-      payingCustomers: "Research use only",
-      researchUsers: "40+"
+      
+      
+      
     },
     pricing: {
       model: ["Research license"],

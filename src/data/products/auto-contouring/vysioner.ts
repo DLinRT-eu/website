@@ -63,9 +63,9 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 15,
-      payingCustomers: "Multiple clinical sites globally",
-      researchUsers: "Research institutions"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

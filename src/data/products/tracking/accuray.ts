@@ -54,9 +54,9 @@ export const ACCURAY_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2018",
       distributionChannels: ["Integrated with Accuray systems"],
-      countriesPresent: 40,
-      payingCustomers: "300+",
-      researchUsers: "50+"
+      
+      
+      
     },
     pricing: {
       model: ["System integration", "Service contract"],

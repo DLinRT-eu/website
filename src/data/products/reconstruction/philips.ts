@@ -49,9 +49,9 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Integrated in new CT systems"],
-      countriesPresent: 50,
-      payingCustomers: "750+",
-      researchUsers: "50+"
+      
+      
+      
     },
     pricing: {
       model: ["One-time purchase", "Subscription available"],
@@ -113,9 +113,9 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated in Philips MRI systems", "Software upgrade"],
-      countriesPresent: 60,
-      payingCustomers: "800+",
-      researchUsers: "100+"
+      
+      
+      
     },
     pricing: {
       model: ["One-time purchase", "Subscription available"],

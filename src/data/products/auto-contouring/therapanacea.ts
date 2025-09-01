@@ -46,9 +46,9 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 12,
-      payingCustomers: "Multiple clinical sites in Europe",
-      researchUsers: "Research institutions"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

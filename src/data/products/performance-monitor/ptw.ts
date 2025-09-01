@@ -56,9 +56,9 @@ export const PTW_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 30,
-      payingCustomers: "Hospitals and radiotherapy centers worldwide",
-      researchUsers: "Research institutions internationally"
+      
+      
+      
     },
     pricing: {
       model: ["Perpetual license", "Support contract"],

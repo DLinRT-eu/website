@@ -70,9 +70,9 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 20,
-      payingCustomers: "Multiple clinical sites globally",
-      researchUsers: "Research institutions worldwide"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

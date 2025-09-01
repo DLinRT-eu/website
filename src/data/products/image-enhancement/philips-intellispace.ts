@@ -51,9 +51,9 @@ export const PHILIPS_INTELLISPACE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Enterprise imaging solution", "Standalone module"],
-      countriesPresent: 40,
-      payingCustomers: "450+",
-      researchUsers: "75+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Volume-based"],

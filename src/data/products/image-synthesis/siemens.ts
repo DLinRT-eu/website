@@ -45,9 +45,9 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2015",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 0,
-      payingCustomers: "Major healthcare institutions",
-      researchUsers: "Research centers globally"
+      
+      
+      
     },
     pricing: {
       model: ["Perpetual license", "Service contract"],

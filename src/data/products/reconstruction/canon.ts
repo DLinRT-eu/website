@@ -51,9 +51,9 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated in new CT systems", "Upgrade for compatible systems"],
-      countriesPresent: 40,
-      payingCustomers: "500+",
-      researchUsers: "75+"
+      
+      
+      
     },
     pricing: {
       model: ["System integration", "Subscription options"],
@@ -121,9 +121,9 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Integrated in new MR systems", "Upgrade option"],
-      countriesPresent: 35,
-      payingCustomers: "300+",
-      researchUsers: "60+"
+      
+      
+      
     },
     pricing: {
       model: ["One-time purchase", "System integration"],
@@ -186,9 +186,9 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2023",
       distributionChannels: ["Integrated in new MR systems", "Upgrade option for compatible systems"],
-      countriesPresent: 30,
-      payingCustomers: "200+",
-      researchUsers: "50+"
+      
+      
+      
     },
     pricing: {
       model: ["System integration", "One-time purchase"],

@@ -51,9 +51,9 @@ export const PHILIPS_SMARTDOSE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Integrated solution"],
-      countriesPresent: 35,
-      payingCustomers: "300+",
-      researchUsers: "50+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Per CT system license"],

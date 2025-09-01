@@ -51,7 +51,7 @@ export const MD_ANDERSON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Academic partnerships", "Direct licensing"],
-      countriesPresent: 5,
+      
       payingCustomers: "Cancer centers and academic institutions",
       researchUsers: "Research institutions and clinical partners"
     },

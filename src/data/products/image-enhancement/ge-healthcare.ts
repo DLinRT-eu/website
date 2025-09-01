@@ -51,9 +51,9 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Edison Marketplace"],
-      countriesPresent: 40,
-      payingCustomers: "550+",
-      researchUsers: "80+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Volume-based"],
@@ -112,9 +112,9 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Edison Marketplace"],
-      countriesPresent: 35,
-      payingCustomers: "400+",
-      researchUsers: "90+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "One-time purchase"],

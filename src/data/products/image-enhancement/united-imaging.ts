@@ -51,9 +51,9 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated with uRT systems", "Standalone option"],
-      countriesPresent: 20,
-      payingCustomers: "90+",
-      researchUsers: "25+"
+      
+      
+      
     },
     pricing: {
       model: ["System integration", "Subscription available"],

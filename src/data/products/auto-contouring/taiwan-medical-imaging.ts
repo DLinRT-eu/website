@@ -123,9 +123,9 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2024",
       distributionChannels: ["Direct sales", "Regional partners"],
-      countriesPresent: 8,
-      payingCustomers: "Multiple medical centers in Asia-Pacific",
-      researchUsers: "Research hospitals and academic institutions"
+      
+      
+      
     },
     pricing: {
       model: ["Annual subscription", "Per-case licensing"],

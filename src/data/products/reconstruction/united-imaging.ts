@@ -51,9 +51,6 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Integrated in CT systems"],
-      countriesPresent: 25,
-      payingCustomers: "200+",
-      researchUsers: "40+"
     },
     pricing: {
       model: ["System integration", "Subscription options"],
@@ -112,9 +109,9 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Integrated in MRI systems"],
-      countriesPresent: 25,
-      payingCustomers: "200+",
-      researchUsers: "40+"
+      
+      
+      
     },
     pricing: {
       model: ["System integration", "Subscription options"],
@@ -175,9 +172,9 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated in new PET systems", "Upgrade option"],
-      countriesPresent: 20,
-      payingCustomers: "150+",
-      researchUsers: "35+"
+      
+      
+      
     },
     pricing: {
       model: ["System integration", "One-time purchase"],

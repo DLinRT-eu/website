@@ -56,9 +56,9 @@ export const MVISION_PERFORMANCE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 10,
-      payingCustomers: "Radiation oncology departments worldwide",
-      researchUsers: "Medical physics research groups"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

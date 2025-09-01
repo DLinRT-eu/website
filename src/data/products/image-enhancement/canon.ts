@@ -51,9 +51,9 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated with Vitrea platform", "Standalone module"],
-      countriesPresent: 35,
-      payingCustomers: "300+",
-      researchUsers: "50+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "One-time purchase"],

@@ -51,9 +51,9 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Integrated in dual-energy CT workflow", "Software upgrade"],
-      countriesPresent: 45,
-      payingCustomers: "350+",
-      researchUsers: "60+"
+      
+      
+      
     },
     pricing: {
       model: ["One-time purchase", "Subscription available"],

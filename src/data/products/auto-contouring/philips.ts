@@ -46,9 +46,9 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2015",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 70,
-      payingCustomers: "Major medical centers worldwide",
-      researchUsers: "Academic institutions globally"
+      
+      
+      
     },
     pricing: {
       model: ["Perpetual license", "Service contract"],

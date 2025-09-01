@@ -45,7 +45,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2009",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 40,
+      
       payingCustomers: "Over 800 clinics worldwide",
       researchUsers: "Academic institutions globally"
     },

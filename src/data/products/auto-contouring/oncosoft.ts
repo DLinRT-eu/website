@@ -331,9 +331,9 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
   market: {
     onMarketSince: "2022",
     distributionChannels: ["Direct sales", "Partner distributors"],
-    countriesPresent: 15,
-    payingCustomers: "50+",
-    researchUsers: "100+"
+    
+    
+    
   },
   // Pricing Information
   pricing: {

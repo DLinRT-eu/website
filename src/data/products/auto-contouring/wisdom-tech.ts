@@ -122,9 +122,9 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 1,
-      payingCustomers: "Multiple clinical sites in China",
-      researchUsers: "Research institutions in China"
+      
+      
+      
     },
     pricing: {
       model: ["Perpetual license"],

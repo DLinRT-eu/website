@@ -50,9 +50,9 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Integrated with Elekta systems", "Software upgrade"],
-      countriesPresent: 40,
-      payingCustomers: "300+",
-      researchUsers: "50+"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "System integrated license"],

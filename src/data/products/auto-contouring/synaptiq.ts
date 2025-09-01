@@ -111,9 +111,9 @@ export const SYNAPTIQ_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 8,
-      payingCustomers: "Multiple clinical sites in Europe",
-      researchUsers: "Research institutions"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

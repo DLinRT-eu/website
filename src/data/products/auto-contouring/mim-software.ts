@@ -46,9 +46,9 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 40,
-      payingCustomers: "Major medical centers worldwide",
-      researchUsers: "Academic institutions"
+      
+      
+      
     },
     pricing: {
       model: ["Perpetual license", "Subscription"],

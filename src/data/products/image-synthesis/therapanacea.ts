@@ -45,9 +45,9 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales"],
-      countriesPresent: 0,
-      payingCustomers: "Major hospitals and cancer centers in Europe",
-      researchUsers: "Academic medical centers globally"
+      
+      
+      
     },
     pricing: {
       model: ["Perpetual license", "Service contract"],

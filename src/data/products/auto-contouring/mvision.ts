@@ -70,9 +70,9 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2018",
       distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 25,
-      payingCustomers: "Multiple clinical sites globally",
-      researchUsers: "Research institutions"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

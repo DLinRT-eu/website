@@ -124,9 +124,9 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2017",
       distributionChannels: ["Direct sales", "Cloud platform"],
-      countriesPresent: 30,
-      payingCustomers: "Multiple clinical sites globally",
-      researchUsers: "Research institutions worldwide"
+      
+      
+      
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

@@ -7,6 +7,7 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
     name: "PixelShine",
     company: "AlgoMedica",
     category: "Image Enhancement",
+    certification: "FDA Cleared",
     description:
       "Deep-learning CT denoising that enhances image quality and supports low-radiation protocols; vendor-agnostic across CT scanners.",
     features: [

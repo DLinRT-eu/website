@@ -28,7 +28,7 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "philips-mrcat-brain",
       "philips-mrcat-pelvis",
       "philips-smartct-ai-reconstruction",
-      "philips-compressed-sense",
+      "philips-smartspeed-ai",
       "philips-intellispace-ai-enhancement",
       "philips-smartdose-ct-enhancement"
     ],

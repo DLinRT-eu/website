@@ -32,7 +32,14 @@ class DataService {
   }
 
   getProductById(id: string): ProductDetails | undefined {
-    return ALL_PRODUCTS.find(product => product.id === id && 
+    // Handle legacy ID mapping
+    const legacyIdMapping: Record<string, string> = {
+      "philips-compressed-sense": "philips-smartspeed-ai"
+    };
+    
+    const actualId = legacyIdMapping[id] || id;
+    
+    return ALL_PRODUCTS.find(product => product.id === actualId && 
       hasRegulatoryApproval(product));
   }
 

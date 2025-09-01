@@ -63,7 +63,7 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
     releaseDate: "2023-01-15",
     lastUpdated: "2024-02-10",
     lastVerified: "2025-05-12",
-    lastRevised: "2025-05-27",
+    lastRevised: "2025-08-26",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Validated in multiple clinical sites with demonstrated time savings and plan quality comparable to expert planners"
   }

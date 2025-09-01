@@ -143,9 +143,6 @@ The following guidelines are commonly referenced in radiotherapy AI products:
 | `market` | object | No | Market presence and availability |
 | `market.onMarketSince` | string | No | When the product became commercially available |
 | `market.distributionChannels` | string[] | No | How the product is distributed |
-| `market.countriesPresent` | number | No | Number of countries where available |
-| `market.payingCustomers` | string | No | Information about paying customer base |
-| `market.researchUsers` | string | No | Information about research user base |
 
 ### Pricing Information
 

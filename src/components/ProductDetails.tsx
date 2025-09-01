@@ -9,8 +9,7 @@ import GeneralInformationDetails from "./product/GeneralInformationDetails";
 import ProductFeaturesDetails from "./product/ProductFeaturesDetails";
 import TechnicalSpecificationsDetails from "./product/TechnicalSpecificationsDetails";
 import RegulatoryInformationDetails from "./product/RegulatoryInformationDetails";
-import MarketInformationDetails from "./product/MarketInformationDetails";
-import PricingInformationDetails from "./product/PricingInformationDetails";
+import MarketPricingDetails from "./product/MarketPricingDetails";
 import ContactInformation from "./product/ContactInformation";
 import SupportedStructures from "./product/SupportedStructures";
 import ProductRevisionStatus from "./ProductRevisionStatus";
@@ -91,8 +90,7 @@ const ProductDetails = ({ product }: ProductDetailsProps) => {
           <EvidenceLimitationsDetails product={product} />
           <GuidelinesDetails product={product} />
           <RegulatoryInformationDetails product={product} />
-          <MarketInformationDetails product={product} />
-          <PricingInformationDetails product={product} />
+          <MarketPricingDetails product={product} />
         </div>
         
         <div className="space-y-6">

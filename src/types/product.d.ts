@@ -62,9 +62,6 @@ export interface Product {
   market?: {
     onMarketSince?: string;
     distributionChannels?: string[];
-    countriesPresent?: number;
-    payingCustomers?: string;
-    researchUsers?: string;
   };
   pricing?: {
     model?: string[];

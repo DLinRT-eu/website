@@ -137,8 +137,7 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
         "N/A",
       fdaDetails: product.regulatory?.fda || "N/A",
       intendedUseStatement: product.regulatory?.intendedUseStatement || "N/A",
-      marketPresence: product.market?.countriesPresent ? 
-        `${product.market.countriesPresent} countries` : "N/A",
+      marketPresence: product.market?.onMarketSince || "N/A",
     },
     contact: {
       website: product.website || "N/A",

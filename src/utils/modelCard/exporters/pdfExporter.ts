@@ -185,9 +185,6 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
     if (product.market?.distributionChannels) {
       addField('Distribution Channels', product.market.distributionChannels.join('; '));
     }
-    if (product.market?.payingCustomers) {
-      addField('Paying Customers', product.market.payingCustomers);
-    }
     
     // Pricing Information Section
     if (product.pricing) {

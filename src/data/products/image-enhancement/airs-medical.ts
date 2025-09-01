@@ -50,10 +50,7 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2021",
-      distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 25,
-      payingCustomers: "150+",
-      researchUsers: "40+"
+      distributionChannels: ["Direct sales", "Distribution partners"]
     },
     pricing: {
       model: ["Subscription", "Volume-based"],
@@ -112,10 +109,7 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2022",
-      distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 15,
-      payingCustomers: "80+",
-      researchUsers: "30+"
+      distributionChannels: ["Direct sales", "Distribution partners"]
     },
     pricing: {
       model: ["Subscription", "Volume-based"],

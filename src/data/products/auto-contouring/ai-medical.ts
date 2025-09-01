@@ -52,10 +52,7 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2020",
-      distributionChannels: ["Direct sales", "Distribution partners"],
-      countriesPresent: 15,
-      payingCustomers: "Multiple clinical sites",
-      researchUsers: "Research institutions"
+      distributionChannels: ["Direct sales", "Distribution partners"]
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

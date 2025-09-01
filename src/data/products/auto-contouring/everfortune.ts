@@ -45,10 +45,7 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2021",
-      distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 8,
-      payingCustomers: "Multiple clinical sites in Asia",
-      researchUsers: "Research institutions"
+      distributionChannels: ["Direct sales", "Partnerships"]
     },
     pricing: {
       model: ["Subscription"],

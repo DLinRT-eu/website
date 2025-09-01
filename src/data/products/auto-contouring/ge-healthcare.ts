@@ -44,10 +44,7 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2018",
-      distributionChannels: ["Direct sales"],
-      countriesPresent: 60,
-      payingCustomers: "Major medical centers worldwide",
-      researchUsers: "Academic institutions"
+      distributionChannels: ["Direct sales"]
     },
     pricing: {
       model: ["Perpetual license", "Service contract"],

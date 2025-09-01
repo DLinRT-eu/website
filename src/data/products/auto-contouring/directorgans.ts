@@ -45,10 +45,7 @@ export const DIRECTORGANS_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2021",
-      distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 10,
-      payingCustomers: "Clinical sites in Europe",
-      researchUsers: "Research institutions"
+      distributionChannels: ["Direct sales", "Partnerships"]
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

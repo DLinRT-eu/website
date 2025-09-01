@@ -56,10 +56,7 @@ const rawProduct: ProductDetails = {
   },
   market: {
     onMarketSince: "2019",
-    distributionChannels: ["Direct sales", "Distribution partners"],
-    countriesPresent: 20,
-    payingCustomers: "Multiple clinical sites globally",
-    researchUsers: "Research institutions"
+    distributionChannels: ["Direct sales", "Distribution partners"]
   },
   pricing: {
     model: ["Perpetual license", "Subscription"],

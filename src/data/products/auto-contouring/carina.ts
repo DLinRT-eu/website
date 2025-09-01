@@ -45,10 +45,7 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2021",
-      distributionChannels: ["Direct sales", "Partnerships"],
-      countriesPresent: 10,
-      payingCustomers: "Multiple clinical sites in Europe",
-      researchUsers: "Academic institutions"
+      distributionChannels: ["Direct sales", "Partnerships"]
     },
     pricing: {
       model: ["-"],

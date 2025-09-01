@@ -44,10 +44,7 @@ export const RAYSEARCH_PLANNING_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2009",
-      distributionChannels: ["Direct sales"],
-      
-      payingCustomers: "Over 800 clinics worldwide",
-      researchUsers: "Academic institutions globally"
+      distributionChannels: ["Direct sales"]
     },
     pricing: {
       model: ["Perpetual license", "Service contract"],

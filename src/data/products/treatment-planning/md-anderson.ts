@@ -50,10 +50,7 @@ export const MD_ANDERSON_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2020",
-      distributionChannels: ["Academic partnerships", "Direct licensing"],
-      
-      payingCustomers: "Cancer centers and academic institutions",
-      researchUsers: "Research institutions and clinical partners"
+      distributionChannels: ["Academic partnerships", "Direct licensing"]
     },
     pricing: {
       model: ["Academic licensing", "Commercial licensing"],

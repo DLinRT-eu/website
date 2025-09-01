@@ -50,10 +50,7 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
     },
     market: {
       onMarketSince: "2021",
-      distributionChannels: ["Direct sales", "Partnerships"],
-      
-      payingCustomers: "Multiple cancer centers across Europe",
-      researchUsers: "Academic institutions in Europe and Asia"
+      distributionChannels: ["Direct sales", "Partnerships"]
     },
     pricing: {
       model: ["Subscription", "Pay-per-use"],

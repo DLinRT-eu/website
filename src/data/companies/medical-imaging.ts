@@ -88,5 +88,16 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
     ],
     "category": "Medical Imaging",
     "logoUrl": "/logos/Taiwan_MedImag.svg"
+  },
+  {
+    "id": "algomedica",
+    "name": "AlgoMedica",
+    "description": "Medical imaging AI company specializing in CT scan enhancement and radiation dose reduction; creator of PixelShine.",
+    "website": "https://www.algomedica.com/",
+    "productIds": [
+      "algomedica-pixelshine"
+    ],
+    "category": "Medical Imaging",
+    "logoUrl": "/logos/algomedica.png"
   }
 ];

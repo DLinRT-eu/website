@@ -8,6 +8,7 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
     company: "AlgoMedica",
     category: "Image Enhancement",
     certification: "FDA Cleared",
+    releaseDate: "2016-09-19",
     description:
       "Deep-learning CT denoising that enhances image quality and supports low-radiation protocols; vendor-agnostic across CT scanners.",
     logoUrl: "/logos/algomedica.png",

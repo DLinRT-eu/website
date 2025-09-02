@@ -48,7 +48,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-const MaintenanceTeam = () => {
+const About = () => {
   const [shuffledTeamMembers, setShuffledTeamMembers] = useState(TEAM_MEMBERS);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const MaintenanceTeam = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "AboutPage",
-    "name": "About DLinRT.eu & Maintenance Team",
+    "name": "About DLinRT.eu & Team",
     "description": "Learn about our mission, goals, and meet the experts who maintain the DLinRT products finder",
     "url": "https://dlinrt.eu/about",
     "isPartOf": {
@@ -68,7 +68,7 @@ const MaintenanceTeam = () => {
     },
     "about": {
       "@type": "Organization",
-      "name": "DLinRT Maintenance Team",
+      "name": "DLinRT Team",
       "member": shuffledTeamMembers.map(member => ({
         "@type": "Person",
         "name": member.name,
@@ -97,4 +97,4 @@ const MaintenanceTeam = () => {
   );
 };
 
-export default MaintenanceTeam;
+export default About;

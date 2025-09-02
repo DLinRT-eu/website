@@ -24,7 +24,7 @@ const CoreValuesSection = () => {
       title: "Security & Privacy",
       description: "Protecting user data with enterprise-grade security measures and transparent privacy practices.",
       hasLink: true,
-      linkTo: "/security-monitoring",
+      linkTo: "/security",
       icon: Shield
     }
   ];

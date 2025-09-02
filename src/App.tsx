@@ -8,7 +8,7 @@ import CookieConsent from "./components/CookieConsent";
 import Header from "./components/Header";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import MaintenanceTeam from "./pages/MaintenanceTeam";
+import About from "./pages/About";
 import Donate from "./pages/Donate";
 import ProductDetails from "./pages/ProductDetails";
 import Companies from "./pages/Companies";
@@ -25,6 +25,7 @@ import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
 
+import Security from "./pages/Security";
 import SecurityCertifications from "./pages/SecurityCertifications";
 import SecurityMonitoring from "./pages/SecurityMonitoring";
 import AutoContouringPage from "./pages/categories/AutoContouring";
@@ -55,7 +56,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="products" element={<Products />} />
             <Route path="initiatives" element={<Initiatives />} />
-            <Route path="about" element={<MaintenanceTeam />} />
+            <Route path="/about" element={<About />} />
             <Route path="donate" element={<Donate />} />
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="companies" element={<Companies />} />
@@ -69,8 +70,9 @@ const App = () => (
             <Route path="review/:id" element={<ProductReview />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-use" element={<TermsOfUse />} />
-            <Route path="security" element={<SecurityCertifications />} />
-            <Route path="security-monitoring" element={<SecurityMonitoring />} />
+            <Route path="/security" element={<Security />} />
+            <Route path="/security-certifications" element={<SecurityCertifications />} />
+            <Route path="/security-monitoring" element={<SecurityMonitoring />} />
             <Route path="category/auto-contouring" element={<AutoContouringPage />} />
             <Route path="category/treatment-planning" element={<TreatmentPlanningPage />} />
             <Route path="category/image-synthesis" element={<ImageSynthesisPage />} />

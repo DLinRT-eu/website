@@ -25,7 +25,6 @@ import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
 
-import Security from "./pages/Security";
 import SecurityCertifications from "./pages/SecurityCertifications";
 import SecurityMonitoring from "./pages/SecurityMonitoring";
 import AutoContouringPage from "./pages/categories/AutoContouring";
@@ -70,8 +69,8 @@ const App = () => (
             <Route path="review/:id" element={<ProductReview />} />
             <Route path="privacy-policy" element={<PrivacyPolicy />} />
             <Route path="terms-of-use" element={<TermsOfUse />} />
-            <Route path="/security" element={<Security />} />
             <Route path="/security-certifications" element={<SecurityCertifications />} />
+            <Route path="/security" element={<SecurityCertifications />} />
             <Route path="/security-monitoring" element={<SecurityMonitoring />} />
             <Route path="category/auto-contouring" element={<AutoContouringPage />} />
             <Route path="category/treatment-planning" element={<TreatmentPlanningPage />} />

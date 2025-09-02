@@ -35,7 +35,7 @@ const Footer = () => {
               >
                 Cookie Settings
               </button>
-              <Link to="/security" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
+              <Link to="/security-certifications" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
                 Security
               </Link>
               <a href="https://github.com/DLinRT-eu/website" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">

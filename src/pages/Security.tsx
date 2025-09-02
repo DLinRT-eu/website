@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import SEO from '@/components/SEO';
 import Footer from '@/components/Footer';
 
-const SecurityCertifications = () => {
+const Security = () => {
   const securityFeatures = [
     {
       icon: Lock,
@@ -65,7 +65,7 @@ const SecurityCertifications = () => {
       <SEO
         title="Security & Certifications - SSL, GDPR, Data Protection | DLinRT.eu"
         description="Comprehensive security measures, SSL/TLS certificates, GDPR compliance, and data protection standards for DLinRT.eu. Learn about our EU-hosted infrastructure and security monitoring."
-        canonical="/security-certifications"
+        canonical="/security"
       />
       
       <main className="container mx-auto px-4 py-8">
@@ -316,7 +316,7 @@ const SecurityCertifications = () => {
               If you discover a security vulnerability or have security-related concerns, please contact our security team.
             </p>
             <div className="space-y-2">
-              <p><strong>Security Email:</strong> security@dlinrt.eu</p>
+              <p><strong>Security Email:</strong> info@dlinrt.eu</p>
               <p><strong>Response Time:</strong> Within 24 hours for critical issues</p>
               <p><strong>PGP Key:</strong> Available upon request</p>
             </div>
@@ -329,4 +329,4 @@ const SecurityCertifications = () => {
   );
 };
 
-export default SecurityCertifications;
+export default Security;

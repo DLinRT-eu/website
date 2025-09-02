@@ -27,7 +27,13 @@ export const standardizeDates = (product: ProductDetails): ProductDetails => {
  */
 export const standardizeBasicInfo = (product: ProductDetails): ProductDetails => {
   // Ensure features list has 3-5 items with consistent formatting
-  const standardizedFeatures = product.features.slice(0, 5);
+  const featuresSource = Array.isArray(product.features)
+    ? product.features
+    : Array.isArray(product.keyFeatures)
+      ? product.keyFeatures!
+      : [] as string[];
+
+  const standardizedFeatures = featuresSource.slice(0, 5);
   while (standardizedFeatures.length < 3) {
     standardizedFeatures.push("Feature not specified");
   }

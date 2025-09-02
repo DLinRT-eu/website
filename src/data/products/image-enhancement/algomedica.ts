@@ -36,7 +36,12 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
       deployment: ["On-premise", "Edge device", "Cloud (optional)"]
     },
     regulatory: {
-      fda: "510(k) Cleared (K161625)",
+      ce: {
+        status: "CE Marked",
+        class: "Class IIa",
+        type: "MDD"
+      },
+      fda: "510(k) Cleared (K161625); Class II; Regulation Number: 21 CFR 892.2050; Product Code: LLZ",
       intendedUseStatement:
         "Intended for use in de-noising CT datasets to improve image quality at reduced radiation dose to support clinical interpretation."
     },

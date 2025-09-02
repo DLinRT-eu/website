@@ -254,8 +254,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.error("Error in subscribe-newsletter function:", error);
     return new Response(
       JSON.stringify({ 
-        error: "Failed to subscribe to newsletter", 
-        details: error.message 
+        error: "Failed to subscribe to newsletter"
       }),
       {
         status: 500,

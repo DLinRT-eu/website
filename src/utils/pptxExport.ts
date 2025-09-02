@@ -80,9 +80,9 @@ export class PptxExporter {
     
     // Title
     slide.addText("DLinRT.eu", {
-      x: 1,
-      y: 2,
-      w: 10,
+      x: 0.8,
+      y: 1.5,
+      w: 11.4,
       h: 1.5,
       fontSize: 48,
       color: this.brandColors.primary,
@@ -93,9 +93,9 @@ export class PptxExporter {
     
     // Subtitle
     slide.addText("Deep Learning in Radiotherapy Directory", {
-      x: 1,
-      y: 3.8,
-      w: 10,
+      x: 0.8,
+      y: 3.2,
+      w: 11.4,
       h: 1,
       fontSize: 24,
       color: this.brandColors.secondary,
@@ -103,14 +103,14 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Logo - smaller and centered
+    // Logo - centered
     slide.addImage({
       path: "/LogoDLinRT.eu.png",
-      x: 5.5,
-      y: 5,
-      w: 1,
-      h: 0.8,
-      sizing: { type: "contain", w: 1, h: 0.8 }
+      x: 5.6,
+      y: 4.5,
+      w: 1.2,
+      h: 1,
+      sizing: { type: "contain", w: 1.2, h: 1 }
     });
   }
 
@@ -120,9 +120,9 @@ export class PptxExporter {
     
     // Title
     slide.addText("Mission & Vision", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -132,9 +132,9 @@ export class PptxExporter {
     
     // Mission
     slide.addText("Mission", {
-      x: 0.5,
+      x: 0.8,
       y: 1.8,
-      w: 5,
+      w: 5.5,
       h: 0.6,
       fontSize: 20,
       color: this.brandColors.text,
@@ -143,10 +143,10 @@ export class PptxExporter {
     });
     
     slide.addText("To create a comprehensive, curated directory of deep learning solutions in radiotherapy, promoting transparency, innovation, and evidence-based adoption.", {
-      x: 0.5,
+      x: 0.8,
       y: 2.5,
-      w: 5,
-      h: 2,
+      w: 5.5,
+      h: 2.5,
       fontSize: 14,
       color: this.brandColors.text,
       fontFace: "Inter"
@@ -154,9 +154,9 @@ export class PptxExporter {
     
     // Vision
     slide.addText("Vision", {
-      x: 6.5,
+      x: 6.8,
       y: 1.8,
-      w: 5,
+      w: 5.4,
       h: 0.6,
       fontSize: 20,
       color: this.brandColors.text,
@@ -165,10 +165,10 @@ export class PptxExporter {
     });
     
     slide.addText("To become the leading global resource for radiotherapy professionals seeking reliable information about AI solutions, fostering collaboration and advancing patient care.", {
-      x: 6.5,
+      x: 6.8,
       y: 2.5,
-      w: 5,
-      h: 2,
+      w: 5.4,
+      h: 2.5,
       fontSize: 14,
       color: this.brandColors.text,
       fontFace: "Inter"
@@ -181,9 +181,9 @@ export class PptxExporter {
     
     // Title
     slide.addText("Platform Overview", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -191,20 +191,20 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Stats cards
+    // Stats cards - better positioned and sized
     const stats = [
-      { label: "Companies", value: data.totalCompanies.toString(), x: 1 },
-      { label: "Products", value: data.totalProducts.toString(), x: 4 },
-      { label: "Categories", value: data.totalCategories.toString(), x: 7 }
+      { label: "Partner Companies", value: data.totalCompanies.toString(), x: 1.5 },
+      { label: "AI Products", value: data.totalProducts.toString(), x: 4.5 },
+      { label: "Clinical Categories", value: data.totalCategories.toString(), x: 7.5 }
     ];
     
     stats.forEach(stat => {
       // Card background
       slide.addShape("roundRect", {
         x: stat.x,
-        y: 2.5,
-        w: 2.5,
-        h: 2,
+        y: 2.2,
+        w: 2.8,
+        h: 2.3,
         fill: { color: this.brandColors.accent },
         line: { color: this.brandColors.secondary, width: 1 }
       });
@@ -212,10 +212,10 @@ export class PptxExporter {
       // Value
       slide.addText(stat.value, {
         x: stat.x,
-        y: 3,
-        w: 2.5,
+        y: 2.7,
+        w: 2.8,
         h: 0.8,
-        fontSize: 36,
+        fontSize: 38,
         color: this.brandColors.primary,
         bold: true,
         align: "center",
@@ -225,14 +225,26 @@ export class PptxExporter {
       // Label
       slide.addText(stat.label, {
         x: stat.x,
-        y: 3.8,
-        w: 2.5,
-        h: 0.5,
+        y: 3.6,
+        w: 2.8,
+        h: 0.6,
         fontSize: 16,
         color: this.brandColors.secondary,
         align: "center",
         fontFace: "Inter"
       });
+    });
+    
+    // Brief description
+    slide.addText("Comprehensive directory of regulatory-approved deep learning solutions in radiotherapy", {
+      x: 0.8,
+      y: 5.2,
+      w: 11.4,
+      h: 1,
+      fontSize: 16,
+      color: this.brandColors.text,
+      align: "center",
+      fontFace: "Inter"
     });
   }
 
@@ -242,30 +254,30 @@ export class PptxExporter {
     
     // Title
     slide.addText("Our Partner Companies", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
-      fontSize: 36,
+      fontSize: 32,
       color: this.brandColors.primary,
       bold: true,
       fontFace: "Inter"
     });
     
     // Responsive grid calculation based on number of logos
-    const logosToShow = data.companyLogos.slice(0, 60);
+    const logosToShow = data.companyLogos.slice(0, 48); // Limit for better layout
     const totalLogos = logosToShow.length;
     const cols = Math.min(8, Math.ceil(Math.sqrt(totalLogos * 1.2)));
     const rows = Math.ceil(totalLogos / cols);
     
-    // Dynamic sizing based on available space
-    const availableWidth = 11;
-    const availableHeight = 5.5; // Leave space for title and margins
-    const logoMaxWidth = Math.min(1.2, (availableWidth - 0.5) / cols);
-    const logoMaxHeight = Math.min(0.8, availableHeight / (rows * 1.5));
+    // Dynamic sizing based on available space - better utilization
+    const availableWidth = 11.4;
+    const availableHeight = 5.8; // More space for content
+    const logoMaxWidth = Math.min(1.3, (availableWidth - 0.5) / cols);
+    const logoMaxHeight = Math.min(0.9, availableHeight / (rows * 1.4));
     
-    const startX = 0.5 + (availableWidth - (cols * logoMaxWidth)) / 2;
-    const startY = 1.8;
+    const startX = 0.8 + (availableWidth - (cols * logoMaxWidth)) / 2;
+    const startY = 1.6;
     const spacingX = logoMaxWidth;
     const spacingY = logoMaxHeight * 1.4;
     
@@ -306,11 +318,11 @@ export class PptxExporter {
     
     // Title
     slide.addText("AI Solution Categories in Radiotherapy", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
-      fontSize: 36,
+      fontSize: 32,
       color: this.brandColors.primary,
       bold: true,
       fontFace: "Inter"
@@ -323,19 +335,19 @@ export class PptxExporter {
       values: [item.count]
     }));
     
-    // Add compact chart
+    // Add larger chart - better positioned
     slide.addChart("pie", chartData, {
-      x: 1,
-      y: 2.2,
-      w: 4.5,
-      h: 3,
+      x: 0.8,
+      y: 1.8,
+      w: 5.5,
+      h: 4.5,
       showTitle: false,
       showLegend: true,
       legendPos: "r",
       chartColors: [this.brandColors.primaryLight, this.brandColors.secondary, "#F59E0B", "#10B981", "#EF4444", "#8B5CF6"]
     });
     
-    // Add table with details
+    // Add table with details - better positioned
     const tableData = [
       [
         { text: "Category", options: { bold: true, fontSize: 14 } },
@@ -350,10 +362,10 @@ export class PptxExporter {
     ];
     
     slide.addTable(tableData, {
-      x: 6,
-      y: 2.2,
-      w: 5,
-      h: 3,
+      x: 6.8,
+      y: 1.8,
+      w: 5.4,
+      h: 4.5,
       fontSize: 12,
       fontFace: "Inter",
       border: { pt: 1, color: this.brandColors.secondary }
@@ -366,9 +378,9 @@ export class PptxExporter {
     
     // Title
     slide.addText("Governance & Values", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -387,10 +399,10 @@ export class PptxExporter {
     
     values.forEach((value, index) => {
       slide.addText(`• ${value}`, {
-        x: 1,
-        y: 2 + (index * 0.8),
-        w: 10,
-        h: 0.6,
+        x: 0.8,
+        y: 2 + (index * 0.9),
+        w: 11.4,
+        h: 0.8,
         fontSize: 16,
         color: this.brandColors.text,
         fontFace: "Inter"
@@ -405,9 +417,9 @@ export class PptxExporter {
       
       // Title
       slide.addText(`${categoryData.category} Solutions`, {
-        x: 0.5,
+        x: 0.8,
         y: 0.5,
-        w: 11,
+        w: 11.4,
         h: 1,
         fontSize: 28,
         color: this.brandColors.primary,
@@ -415,14 +427,14 @@ export class PptxExporter {
         fontFace: "Inter"
       });
       
-      // Product grid (4 columns)
+      // Product grid (4 columns) - better positioned
       const cols = 4;
-      const cardWidth = 2.5;
-      const cardHeight = 1.5;
-      const startX = 0.5;
-      const startY = 1.8;
-      const spacingX = 2.8;
-      const spacingY = 2;
+      const cardWidth = 2.7;
+      const cardHeight = 1.6;
+      const startX = 0.8;
+      const startY = 1.7;
+      const spacingX = 2.9;
+      const spacingY = 2.1;
       
       categoryData.products.slice(0, 12).forEach((product, index) => {
         const row = Math.floor(index / cols);
@@ -497,9 +509,9 @@ export class PptxExporter {
     
     // Title
     slide.addText("Platform Analytics & Engagement", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -507,20 +519,20 @@ export class PptxExporter {
       fontFace: "Inter"
     });
     
-    // Analytics stats cards
+    // Analytics stats cards - better positioned
     const stats = [
-      { label: "Total Views", value: data.analyticsData.totalViews.toLocaleString(), x: 1 },
-      { label: "Unique Visitors", value: data.analyticsData.uniqueVisitors.toLocaleString(), x: 4 },
-      { label: "Avg. Session", value: data.analyticsData.averageSessionDuration, x: 7 }
+      { label: "Total Views", value: data.analyticsData.totalViews.toLocaleString(), x: 1.5 },
+      { label: "Unique Visitors", value: data.analyticsData.uniqueVisitors.toLocaleString(), x: 4.5 },
+      { label: "Avg. Session", value: data.analyticsData.averageSessionDuration, x: 7.5 }
     ];
     
     stats.forEach(stat => {
       // Card background
       slide.addShape("roundRect", {
         x: stat.x,
-        y: 2,
-        w: 2.5,
-        h: 1.5,
+        y: 1.8,
+        w: 2.8,
+        h: 1.8,
         fill: { color: this.brandColors.accent },
         line: { color: this.brandColors.secondary, width: 1 }
       });
@@ -528,9 +540,9 @@ export class PptxExporter {
       // Value
       slide.addText(stat.value, {
         x: stat.x,
-        y: 2.3,
-        w: 2.5,
-        h: 0.6,
+        y: 2.1,
+        w: 2.8,
+        h: 0.7,
         fontSize: 24,
         color: this.brandColors.primary,
         bold: true,
@@ -541,9 +553,9 @@ export class PptxExporter {
       // Label
       slide.addText(stat.label, {
         x: stat.x,
-        y: 2.9,
-        w: 2.5,
-        h: 0.4,
+        y: 2.8,
+        w: 2.8,
+        h: 0.5,
         fontSize: 12,
         color: this.brandColors.secondary,
         align: "center",
@@ -551,7 +563,7 @@ export class PptxExporter {
       });
     });
     
-    // Top pages table
+    // Top pages table - better positioned
     const tableData = [
       [
         { text: "Most Viewed Pages", options: { bold: true, fontSize: 14 } },
@@ -564,16 +576,16 @@ export class PptxExporter {
     ];
     
     slide.addTable(tableData, {
-      x: 1,
+      x: 0.8,
       y: 4,
-      w: 6,
-      h: 2.5,
+      w: 6.5,
+      h: 2.8,
       fontSize: 12,
       fontFace: "Inter",
       border: { pt: 1, color: this.brandColors.secondary }
     });
     
-    // Traffic trends chart
+    // Traffic trends chart - better positioned
     const trendData = [{
       name: "Monthly Visitors",
       labels: data.analyticsData.trafficTrends.map(t => t.month),
@@ -581,10 +593,10 @@ export class PptxExporter {
     }];
     
     slide.addChart("line", trendData, {
-      x: 7.5,
+      x: 7.8,
       y: 4,
-      w: 4,
-      h: 2.5,
+      w: 4.4,
+      h: 2.8,
       showTitle: false,
       showLegend: false,
       chartColors: [this.brandColors.primary]
@@ -597,9 +609,9 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     slide.addText("Task Distribution Analysis", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -615,10 +627,10 @@ export class PptxExporter {
     }];
     
     slide.addChart("bar", chartData, {
-      x: 1,
-      y: 2,
-      w: 10,
-      h: 4.5,
+      x: 0.8,
+      y: 1.8,
+      w: 11.4,
+      h: 5,
       showTitle: false,
       showLegend: false,
       chartColors: data.taskData.map(item => item.fill)
@@ -630,9 +642,9 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     slide.addText("Company Distribution Analysis", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -648,10 +660,10 @@ export class PptxExporter {
     }];
     
     slide.addChart("bar", chartData, {
-      x: 1,
-      y: 2,
-      w: 10,
-      h: 4.5,
+      x: 0.8,
+      y: 1.8,
+      w: 11.4,
+      h: 5,
       showTitle: false,
       showLegend: false,
       chartColors: [this.brandColors.primaryLight]
@@ -663,9 +675,9 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     slide.addText("Anatomical Location Coverage", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -681,10 +693,10 @@ export class PptxExporter {
     }];
     
     slide.addChart("pie", chartData, {
-      x: 1,
-      y: 2,
-      w: 10,
-      h: 4.5,
+      x: 0.8,
+      y: 1.8,
+      w: 11.4,
+      h: 5,
       showTitle: false,
       showLegend: true,
       legendPos: "r",
@@ -697,9 +709,9 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     slide.addText("Imaging Modality Coverage", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -714,10 +726,10 @@ export class PptxExporter {
     }];
     
     slide.addChart("bar", chartData, {
-      x: 1,
-      y: 2,
-      w: 10,
-      h: 4.5,
+      x: 0.8,
+      y: 1.8,
+      w: 11.4,
+      h: 5,
       showTitle: false,
       showLegend: false,
       chartColors: [this.brandColors.primaryLight]
@@ -729,9 +741,9 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     slide.addText("Auto-Contouring: Supported Structures", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -747,10 +759,10 @@ export class PptxExporter {
     }];
     
     slide.addChart("bar", chartData, {
-      x: 1,
-      y: 2,
-      w: 10,
-      h: 4.5,
+      x: 0.8,
+      y: 1.8,
+      w: 11.4,
+      h: 5,
       showTitle: false,
       showLegend: false,
       chartColors: [this.brandColors.primaryLight]
@@ -762,9 +774,9 @@ export class PptxExporter {
     slide.background = { color: this.brandColors.background };
     
     slide.addText("Auto-Contouring: Structure Type Distribution", {
-      x: 0.5,
+      x: 0.8,
       y: 0.5,
-      w: 11,
+      w: 11.4,
       h: 1,
       fontSize: 32,
       color: this.brandColors.primary,
@@ -784,10 +796,10 @@ export class PptxExporter {
     }];
     
     slide.addChart("pie", chartData, {
-      x: 1,
-      y: 2,
-      w: 10,
-      h: 4.5,
+      x: 0.8,
+      y: 1.8,
+      w: 11.4,
+      h: 5,
       showTitle: false,
       showLegend: true,
       legendPos: "r",
@@ -799,105 +811,105 @@ export class PptxExporter {
      const slide = this.pptx.addSlide();
      slide.background = { color: this.brandColors.background };
     
-    // Title
-    slide.addText("Get Involved & Stay Connected", {
-      x: 0.5,
-      y: 0.5,
-      w: 11,
-      h: 1,
-      fontSize: 32,
-      color: this.brandColors.primary,
-      bold: true,
-      fontFace: "Inter"
-    });
-    
-    // Newsletter section
-    slide.addText("📧 Newsletter", {
-      x: 1,
-      y: 2,
-      w: 5,
-      h: 0.6,
-      fontSize: 20,
-      color: this.brandColors.text,
-      bold: true,
-      fontFace: "Inter"
-    });
-    
-    slide.addText(`${data.contactInfo.newsletterSignups} subscribers\nStay updated with latest AI solutions and research`, {
-      x: 1,
-      y: 2.7,
-      w: 5,
-      h: 1,
-      fontSize: 14,
-      color: this.brandColors.secondary,
-      fontFace: "Inter"
-    });
-    
-    // GitHub section
-    slide.addText("💻 Contribute", {
-      x: 6.5,
-      y: 2,
-      w: 5,
-      h: 0.6,
-      fontSize: 20,
-      color: this.brandColors.text,
-      bold: true,
-      fontFace: "Inter"
-    });
-    
-    slide.addText(`GitHub: ${data.contactInfo.githubUrl}\nHelp improve our open-source platform`, {
-      x: 6.5,
-      y: 2.7,
-      w: 5,
-      h: 1,
-      fontSize: 14,
-      color: this.brandColors.secondary,
-      fontFace: "Inter"
-    });
-    
-    // Contact section
-    slide.addText("📬 Contact Us", {
-      x: 1,
-      y: 4.2,
-      w: 5,
-      h: 0.6,
-      fontSize: 20,
-      color: this.brandColors.text,
-      bold: true,
-      fontFace: "Inter"
-    });
-    
-    slide.addText(`Email: ${data.contactInfo.email}\nFor partnerships, questions, or suggestions`, {
-      x: 1,
-      y: 4.9,
-      w: 5,
-      h: 1,
-      fontSize: 14,
-      color: this.brandColors.secondary,
-      fontFace: "Inter"
-    });
-    
-    // Review process
-    slide.addText("📝 Review Process", {
-      x: 6.5,
-      y: 4.2,
-      w: 5,
-      h: 0.6,
-      fontSize: 20,
-      color: this.brandColors.text,
-      bold: true,
-      fontFace: "Inter"
-    });
-    
-    slide.addText("Help validate AI solutions through our\npeer-review process and quality assurance", {
-      x: 6.5,
-      y: 4.9,
-      w: 5,
-      h: 1,
-      fontSize: 14,
-      color: this.brandColors.secondary,
-      fontFace: "Inter"
-    });
+     // Title
+     slide.addText("Get Involved & Stay Connected", {
+       x: 0.8,
+       y: 0.5,
+       w: 11.4,
+       h: 1,
+       fontSize: 32,
+       color: this.brandColors.primary,
+       bold: true,
+       fontFace: "Inter"
+     });
+     
+     // Newsletter section
+     slide.addText("📧 Newsletter", {
+       x: 0.8,
+       y: 1.9,
+       w: 5.5,
+       h: 0.6,
+       fontSize: 20,
+       color: this.brandColors.text,
+       bold: true,
+       fontFace: "Inter"
+     });
+     
+     slide.addText(`${data.contactInfo.newsletterSignups} subscribers\nStay updated with latest AI solutions and research`, {
+       x: 0.8,
+       y: 2.6,
+       w: 5.5,
+       h: 1.2,
+       fontSize: 14,
+       color: this.brandColors.secondary,
+       fontFace: "Inter"
+     });
+     
+     // GitHub section
+     slide.addText("💻 Contribute", {
+       x: 6.8,
+       y: 1.9,
+       w: 5.4,
+       h: 0.6,
+       fontSize: 20,
+       color: this.brandColors.text,
+       bold: true,
+       fontFace: "Inter"
+     });
+     
+     slide.addText(`GitHub: ${data.contactInfo.githubUrl}\nHelp improve our open-source platform`, {
+       x: 6.8,
+       y: 2.6,
+       w: 5.4,
+       h: 1.2,
+       fontSize: 14,
+       color: this.brandColors.secondary,
+       fontFace: "Inter"
+     });
+     
+     // Contact section
+     slide.addText("📬 Contact Us", {
+       x: 0.8,
+       y: 4.2,
+       w: 5.5,
+       h: 0.6,
+       fontSize: 20,
+       color: this.brandColors.text,
+       bold: true,
+       fontFace: "Inter"
+     });
+     
+     slide.addText(`Email: ${data.contactInfo.email}\nFor partnerships, questions, or suggestions`, {
+       x: 0.8,
+       y: 4.9,
+       w: 5.5,
+       h: 1.2,
+       fontSize: 14,
+       color: this.brandColors.secondary,
+       fontFace: "Inter"
+     });
+     
+     // Review process
+     slide.addText("📝 Review Process", {
+       x: 6.8,
+       y: 4.2,
+       w: 5.4,
+       h: 0.6,
+       fontSize: 20,
+       color: this.brandColors.text,
+       bold: true,
+       fontFace: "Inter"
+     });
+     
+     slide.addText("Help validate AI solutions through our\npeer-review process and quality assurance", {
+       x: 6.8,
+       y: 4.9,
+       w: 5.4,
+       h: 1.2,
+       fontSize: 14,
+       color: this.brandColors.secondary,
+       fontFace: "Inter"
+     });
   }
 
   public async generatePresentation(data: PresentationData): Promise<void> {

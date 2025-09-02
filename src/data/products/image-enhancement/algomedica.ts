@@ -40,6 +40,13 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
       intendedUseStatement:
         "Intended for use in de-noising CT datasets to improve image quality at reduced radiation dose to support clinical interpretation."
     },
+    market: {
+      onMarketSince: "2019-05"
+    },
+    pricing: {
+      model: ["One-off payment", "Subscription"],
+      basedOn: ["Number of analyses", "Number of installations", "Number of licensed CT scanners"]
+    },
     lastUpdated: "2025-09-01",
     lastRevised: "2025-09-01"
   }

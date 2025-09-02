@@ -11,7 +11,6 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     productUrl: "https://www.raysearchlabs.com/media/publications/deep-learning-segmentation-model-catalogue/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/raysearch.ts",
     description: "Advanced treatment planning system with machine learning-based auto-segmentation for rapid and consistent contouring.",
-    features: ["Deep learning segmentation", "Integrated planning", "Atlas-based backup"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/raystation.jpg",

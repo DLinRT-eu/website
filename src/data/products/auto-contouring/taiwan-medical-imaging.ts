@@ -62,12 +62,6 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     productUrl: "https://www.taimedimg.tw/en/samd/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/taiwan-medical-imaging.ts",
     description: "Intelligent assistant specialized in interpreting brain MRI images with advanced segmentation capabilities and longitudinal follow-up of GTV for brain metastases treatment planning.",
-    features: [
-      "AI-powered brain MRI interpretation",
-      "Automated brain metastases segmentation", 
-      "Longitudinal GTV tracking and follow-up",
-      "Clinical decision support"
-    ],
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/Taiwan_MedImag.svg",

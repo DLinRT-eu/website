@@ -10,7 +10,6 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     productUrl: "https://mirada-medical.com/product/mirada-dlcexpert-ai-autocontouring/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/mirada.ts",
     description: "Deep learning-based auto-contouring software for radiation oncology providing consistent and rapid contouring of normal tissues.",
-    features: ["Multi-structure contouring", "Consistent results", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/mirada-medical.png",

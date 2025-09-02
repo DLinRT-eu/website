@@ -8,7 +8,6 @@ export const PHILIPS_SMARTDOSE_PRODUCTS: ProductDetails[] = [
     company: "Philips",
     category: "Image Enhancement",
     description: "AI-driven solution for enhancing low-dose CT images to achieve diagnostic quality comparable to standard dose acquisitions.",
-    features: ["Deep learning enhancement", "CT specific", "Dose reduction"],
     certification: "CE Mark",
     logoUrl: "/logos/philips.png",
     companyUrl: "https://www.philips.com/healthcare",

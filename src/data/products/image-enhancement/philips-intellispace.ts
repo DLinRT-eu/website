@@ -8,7 +8,6 @@ export const PHILIPS_INTELLISPACE_PRODUCTS: ProductDetails[] = [
     company: "Philips",
     category: "Image Enhancement",
     description: "AI-powered image enhancement solution that reduces noise and improves clarity in medical images across modalities.",
-    features: ["Deep learning-based", "Multi-modality", "Noise reduction"],
     certification: "CE Mark",
     logoUrl: "/logos/philips.png",
     companyUrl: "https://www.philips.com/healthcare",

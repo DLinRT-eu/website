@@ -10,13 +10,6 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
     certification: "FDA Cleared",
     description:
       "Deep-learning CT denoising that enhances image quality and supports low-radiation protocols; vendor-agnostic across CT scanners.",
-    features: [
-      "Deep learning CT denoising",
-      "Vendor-agnostic (works with images from any CT scanner)",
-      "Supports low-dose acquisition protocols",
-      "Preserves edges and natural image texture",
-      "Compatible with FBP and Iterative Reconstruction (IR)"
-    ],
     logoUrl: "/logos/algomedica.png",
     companyUrl: "https://www.algomedica.com/",
     productUrl: "https://www.algomedica.com/low-radation-ct-scans-algomedica",

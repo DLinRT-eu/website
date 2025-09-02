@@ -11,7 +11,6 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     productUrl: "https://www.usa.philips.com/healthcare/product/HCNMRB780/mrcat-prostate-auto-contouring-mr-rt-clinical-application",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/philips.ts",
     description: "Integrated auto-segmentation solution within the Pinnacle treatment planning system using model-based and atlas-based algorithms.",
-    features: ["Integrated in TPS", "Multiple segmentation methods", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/philips.png",

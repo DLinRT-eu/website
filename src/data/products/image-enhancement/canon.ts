@@ -8,7 +8,6 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     company: "Canon Medical Systems",
     category: "Image Enhancement",
     description: "AI-powered image enhancement solution that improves clarity and detail in medical images across multiple modalities.",
-    features: ["Deep learning enhancement", "Multi-modality", "Integrated workflow"],
     certification: "FDA Cleared",
     logoUrl: "/logos/canon.jpg",
     companyUrl: "https://global.medical.canon/",

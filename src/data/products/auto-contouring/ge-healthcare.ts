@@ -10,7 +10,6 @@ export const GE_HEALTHCARE_PRODUCTS: ProductDetails[] = [
     productUrl: "https://www.gehealthcare.com/products/advanced-visualization/advanced-visualization/auto-segmentation",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/ge-healthcare.ts",
     description: "Integrated auto-segmentation solution within the GE Healthcare ecosystem, providing efficient and accurate organ delineation for radiation therapy planning.",
-    features: ["Integrated workflow", "Multiple anatomical sites", "Advanced algorithms"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/ge_healthcare.png",

@@ -11,7 +11,6 @@ export const DIRECTORGANS_PRODUCTS: ProductDetails[] = [
     productUrl: "https://www.siemens-healthineers.com/nl-be/infrastructure-it/artificial-intelligence/ai-campaign/organs-rt",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/directorgans.ts",
     description: "Specialized AI solution focused exclusively on automatic organ segmentation for radiation therapy planning.",
-    features: ["Deep learning segmentation", "Multiple anatomical sites", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/siemens.png",

@@ -9,13 +9,6 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
     productUrl: "https://www.oncosoft.io/products-eng",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/oncosoft.ts",
     description: "AI-powered auto-contouring solution proven in practice with over 4M contours in treatments for 80K patients, delivering fully automatic, fast, and consistent expert-level accuracy.",
-    features: [
-      "Fully automatic AI-driven contouring",
-      "Fast processing (3 minutes average)",
-      "Expert-level accuracy through peer review",
-      "Multi-anatomical area support",
-      "Consistent contour generation"
-    ],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/oncosoft.png",

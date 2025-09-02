@@ -4,7 +4,7 @@ export interface Product {
   name: string;
   company: string;
   description: string;
-  features: string[];
+  features?: string[];
   category: string;
   certification?: string;
   logoUrl?: string;  // Changed from required to optional

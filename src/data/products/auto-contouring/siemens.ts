@@ -9,7 +9,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     companyUrl: "https://www.siemens-healthineers.com/",
     productUrl: "https://www.siemens-healthineers.com/en-us/digital-health-solutions/ai-rad-companion",
     description: "AI-powered clinical decision support system that includes auto-segmentation capabilities for radiation therapy planning.",
-    features: ["Multi-organ segmentation", "Decision support", "Workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/siemens.png",

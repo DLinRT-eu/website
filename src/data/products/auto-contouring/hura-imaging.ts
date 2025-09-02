@@ -10,7 +10,6 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
     productUrl: "http://www.huraimaging.com/dvtarget/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/hura-imaging.ts",
     description: "AI-powered auto-contouring solution for radiotherapy planning with advanced deep learning segmentation.",
-    features: ["AI-powered segmentation", "Multi-modality support", "Rapid contouring", "PACS integration"],
     category: "Auto-Contouring",
     certification: "CE",
     logoUrl: "/logos/huraimaging.png",

@@ -11,7 +11,6 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     productUrl: "https://www.mvision.ai/ai-contouring/",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/mvision.ts",
     description: "AI-powered auto-contouring solution for radiation therapy planning with deep learning algorithms for accurate organ at risk delineation.",
-    features: ["Deep learning algorithms", "Multi-organ contouring", "Clinical workflow integration"],
     category: "Auto-Contouring",
     certification: "CE & FDA",
     logoUrl: "/logos/mvision-ai.png",

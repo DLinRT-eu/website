@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ExternalLink } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
 import { getModalityColor } from "@/utils/chartColors";
+import { getKeyFeatures } from "@/lib/utils";
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface ProductCardProps {
@@ -12,7 +13,8 @@ interface ProductCardProps {
   name: string;
   company: string;
   description: string;
-  features: string[];
+  features?: string[];
+  keyFeatures?: string[];
   category: string;
   certification?: string;
   logoUrl?: string;
@@ -32,6 +34,7 @@ const ProductCard = ({
   company, 
   description, 
   features, 
+  keyFeatures,
   category, 
   certification,
   logoUrl = "/placeholder.svg",
@@ -45,6 +48,9 @@ const ProductCard = ({
   onSelectionChange
 }: ProductCardProps) => {
   const navigate = useNavigate();
+
+  // Get the unified key features using the utility function
+  const displayFeatures = getKeyFeatures({ features, keyFeatures } as ProductDetails);
 
   const handleCardClick = () => {
     if (!isSelectable) {
@@ -130,14 +136,14 @@ const ProductCard = ({
 
       <CardContent className="py-0 px-4 sm:px-6">
         <p className="text-sm text-gray-700 mb-4 line-clamp-3">{description}</p>
-        {features && features.length > 0 && (
+        {displayFeatures && displayFeatures.length > 0 && (
           <div className="mb-4">
             <h4 className="text-sm font-semibold text-gray-800">Key Features:</h4>
             <ul className="list-disc list-inside text-sm text-gray-600">
-              {features.slice(0, 3).map((feature, index) => (
+              {displayFeatures.slice(0, 3).map((feature, index) => (
                 <li key={index} className="line-clamp-1">{feature}</li>
               ))}
-              {features.length > 3 && (
+              {displayFeatures.length > 3 && (
                 <li className="line-clamp-1">And more...</li>
               )}
             </ul>

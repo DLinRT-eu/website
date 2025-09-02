@@ -12,36 +12,30 @@ export const SESSION_ID_KEY = "dlinrt-session-id";
  */
 export async function getStoredAnalytics(startDate?: string, endDate?: string): Promise<Record<string, DailyVisitData>> {
   try {
-    let query = supabase
-      .from('analytics_daily')
-      .select('*')
-      .order('date', { ascending: true });
-
-    if (startDate) {
-      query = query.gte('date', startDate);
-    }
-    if (endDate) {
-      query = query.lte('date', endDate);
-    }
-
-    const { data, error } = await query;
-
-    if (error) {
-      console.error('Error fetching analytics data:', error);
+    // Use SECURITY DEFINER functions for controlled access to analytics data
+    const { data: dailyData, error: dailyError } = await supabase
+      .rpc('get_analytics_daily', {
+        start_date: startDate || null,
+        end_date: endDate || null
+      });
+    
+    if (dailyError) {
+      console.error('Error fetching daily analytics data:', dailyError);
       return {};
     }
 
-    if (!data) return {};
+    if (!dailyData) return {};
 
     // Convert to the expected format
     const analytics: Record<string, DailyVisitData> = {};
     
-    for (const record of data) {
-      // Get page visits for this date
+    for (const record of dailyData) {
+      // Get page visits for this date using SECURITY DEFINER function
       const { data: pageVisits } = await supabase
-        .from('analytics_page_visits')
-        .select('*')
-        .eq('date', record.date);
+        .rpc('get_analytics_page_visits', {
+          start_date: record.date,
+          end_date: record.date
+        });
 
       const pageVisitsMap: Record<string, { count: number; totalDuration: number }> = {};
       

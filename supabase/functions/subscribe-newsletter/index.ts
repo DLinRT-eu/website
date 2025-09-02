@@ -24,9 +24,9 @@ function getCorsHeaders(origin: string | null): HeadersInit {
 // Simple in-memory rate limiting store
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
-// Rate limiting configuration
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
-const RATE_LIMIT_MAX_REQUESTS = 3; // Max 3 requests per minute per IP
+// Rate limiting configuration - standardized with other functions
+const RATE_LIMIT_WINDOW = 5 * 60 * 1000; // 5 minutes
+const RATE_LIMIT_MAX_REQUESTS = 5; // Max 5 requests per 5 minutes per IP
 
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();

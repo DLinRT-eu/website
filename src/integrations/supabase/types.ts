@@ -252,6 +252,30 @@ export type Database = {
         Args: Record<PropertyKey, never>
         Returns: undefined
       }
+      get_analytics_daily: {
+        Args: { end_date?: string; start_date?: string }
+        Returns: {
+          created_at: string
+          date: string
+          id: string
+          total_visits: number
+          unique_visitors: number
+          updated_at: string
+        }[]
+      }
+      get_analytics_page_visits: {
+        Args: { end_date?: string; start_date?: string }
+        Returns: {
+          created_at: string
+          date: string
+          id: string
+          path: string
+          title: string
+          total_duration: number
+          updated_at: string
+          visit_count: number
+        }[]
+      }
       hash_ip: {
         Args: { ip_address: string }
         Returns: string

@@ -73,7 +73,7 @@ export const VYSIONER_PRODUCTS: ProductDetails[] = [
     version: "2.5",
     releaseDate: "2023-10-05",
     lastUpdated: "2024-03-10",
-    lastRevised: "2025-05-12",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved and revised",
     // Add evidence and limitations
     evidence: [

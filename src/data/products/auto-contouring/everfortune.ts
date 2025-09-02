@@ -88,7 +88,7 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
       "Pelvis: Prostate",
       "Pelvis: Uterus"
     ],
-    lastRevised: "2025-05-10",
+    lastRevised: "2025-09-01",
     source: "automatically retrieved"
   }
 ];

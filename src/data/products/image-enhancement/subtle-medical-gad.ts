@@ -61,6 +61,6 @@ export const SUBTLE_MEDICAL_GAD_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Early research studies showing promising correlation between synthetic and actual contrast-enhanced images in neurological applications",
     lastUpdated: "2024-12-15",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-09-01"
   }
 ];

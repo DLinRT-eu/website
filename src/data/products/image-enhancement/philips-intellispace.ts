@@ -60,6 +60,6 @@ export const PHILIPS_INTELLISPACE_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple studies showing improved reader confidence and reduced reading time for enhanced images",
     lastUpdated: "2025-01-15",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-09-01"
   }
 ];

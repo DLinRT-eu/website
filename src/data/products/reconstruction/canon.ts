@@ -130,7 +130,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Growing body of clinical evidence showing comparable diagnostic performance with significantly reduced scan times",
     lastUpdated: "2025-01-10",
-    lastRevised: "2025-05-05",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/canon.ts"
     
@@ -194,7 +194,7 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies demonstrating significantly improved spatial resolution and image sharpness for enhanced diagnostic capabilities",
     lastUpdated: "2025-01-15", 
-    lastRevised: "2025-01-15",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved"
   }
 ];

@@ -65,7 +65,7 @@ export const PHILIPS_MRCAT_BRAIN_PRODUCTS: ProductDetails[] = [
     version: "1.0",
     releaseDate: "2020-01-20",
     lastUpdated: "2024-08-08",
-    lastRevised: "2025-08-08",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Validated in clinical studies showing equivalent treatment planning accuracy compared to traditional CT-based planning"
   }

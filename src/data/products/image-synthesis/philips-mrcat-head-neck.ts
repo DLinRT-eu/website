@@ -68,7 +68,7 @@ export const PHILIPS_MRCAT_HEAD_NECK_PRODUCTS: ProductDetails[] = [
     version: "1.5",
     releaseDate: "2022-10-20",
     lastUpdated: "2024-08-08",
-    lastRevised: "2025-08-08",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved and revised",
     clinicalEvidence: "Clinical studies demonstrate comparable treatment planning accuracy to CT-based workflows for head and neck radiation therapy"
   }

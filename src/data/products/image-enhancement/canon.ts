@@ -60,6 +60,6 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple reader studies showing improved diagnostic confidence and reduced reading time for enhanced images",
     lastUpdated: "2025-01-05",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-09-01"
   }
 ];

@@ -69,7 +69,7 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
   ],
   version: "N/D",
   releaseDate: "2017-01-01",
-  lastRevised: "2025-08-11",
+  lastRevised: "2025-09-01",
   lastUpdated: "2025-08-11",
   source: "Automatically retrieved and revised"
 }

@@ -112,7 +112,7 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
       "Pelvis: Sacrum",
       "Pelvis: Iliac Crest (L/R)"
     ],
-    lastRevised: "2025-05-12",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved and revised",
     // Adding new fields
     limitations: [

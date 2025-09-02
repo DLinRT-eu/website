@@ -57,7 +57,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
       basedOn: ["Scanner model", "Usage volume"]
     },
     clinicalEvidence: "Emerging clinical evidence showing significant dose reduction with maintained diagnostic accuracy",
-    lastRevised: "2025-05-10",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved"
 
   },
@@ -117,7 +117,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
       basedOn: ["Scanner model", "Usage volume"]
     },
     clinicalEvidence: "Emerging clinical evidence showing increase image quality",
-    lastRevised: "2025-07-30",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved and verified",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/united-imaging.ts"
 
@@ -180,7 +180,7 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies demonstrating improved lesion detection rates and quantitative accuracy compared to conventional reconstruction techniques",
     lastUpdated: "2024-12-20",
-    lastRevised: "2025-05-05",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/united-imaging.ts"
 

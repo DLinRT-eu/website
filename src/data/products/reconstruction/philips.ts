@@ -59,7 +59,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple peer-reviewed studies showing non-inferiority to standard dose CT with up to 80% dose reduction",
     lastUpdated: "2025-01-15",
-    lastRevised: "2025-05-05",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/philips.ts"
 
@@ -122,7 +122,7 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple clinical studies showing equivalent diagnostic quality with 30-50% reduced scan times across neurological, musculoskeletal, and body imaging",
     lastUpdated: "2025-07-30", 
-    lastRevised: "2025-07-30",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/philips.ts"
 

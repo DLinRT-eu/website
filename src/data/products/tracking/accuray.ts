@@ -64,6 +64,6 @@ export const ACCURAY_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Synchrony is unique and takes data from an individual patient, builds a patient's specific model, which is optimized for that patient. Clinical studies demonstrate significant reduction in treatment margins and improved dose distribution to normal tissue.",
     lastUpdated: "2024-12-15",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-09-01"
   }
 ];

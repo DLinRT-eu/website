@@ -60,7 +60,7 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies showing improved target delineation accuracy and reduced inter-observer variability with Iris-enhanced CBCT images",
     lastUpdated: "2025-02-10",
-    lastRevised: "2025-05-05",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/reconstruction/elekta.ts"
 

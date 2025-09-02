@@ -61,7 +61,7 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple peer-reviewed studies showing diagnostic equivalence between standard acquisition and accelerated protocols with SubtleMR enhancement",
     lastUpdated: "2025-01-10",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-09-01"
   },
   {
     id: "subtle-pet",
@@ -122,6 +122,6 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Multiple peer-reviewed studies showing diagnostic equivalence between standard dose and low-dose/fast-scan protocols with SubtlePET enhancement",
     lastUpdated: "2025-01-05",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-09-01"
   }
 ];

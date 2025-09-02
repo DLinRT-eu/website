@@ -75,7 +75,7 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     version: "3.2",
     releaseDate: "2023-07-10",
     lastUpdated: "2025-08-08",
-    lastRevised: "2025-08-08",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved and revised"
   }
 ];

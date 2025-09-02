@@ -56,6 +56,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     version: "VB80",
     releaseDate: "2024-09-20",
     lastUpdated: "2025-08-11",
-    lastRevised: "2025-08-11"
+    lastRevised: "2025-09-01"
   }
 ];

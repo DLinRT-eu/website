@@ -134,7 +134,7 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     version: "4.0",
     releaseDate: "2023-11-15",
     lastUpdated: "2024-03-20",
-    lastRevised: "2025-05-04",
+    lastRevised: "2025-09-01",
     source: "Automatically retrieved and revised"
   }
 ];

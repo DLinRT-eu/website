@@ -61,6 +61,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     },
     clinicalEvidence: "Clinical studies demonstrating improved lesion detection and characterization compared to conventional dual-energy processing",
     lastUpdated: "2025-02-01",
-    lastRevised: "2025-05-05"
+    lastRevised: "2025-09-01"
   }
 ];

@@ -16,7 +16,7 @@ export const performanceMonitorExample: ProductDetails = {
   modality: ["LINAC", "CBCT", "EPID"],
   anatomy: ["N/A"],
   
-  features: [
+  keyFeatures: [
     "Real-time machine performance monitoring",
     "Beam quality assurance analytics",
     "Predictive maintenance alerts",
@@ -79,8 +79,7 @@ export const performanceMonitorExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-06-01",
-  lastRevised: "2023-06-01",
-  lastVerified: "2023-06-01"
+  lastRevised: "2023-06-01"
 };
 
 export default performanceMonitorExample;

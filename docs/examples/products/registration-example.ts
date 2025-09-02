@@ -16,7 +16,7 @@ export const registrationExample: ProductDetails = {
   modality: ["CT", "MRI", "PET", "CBCT"],
   anatomy: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
   
-  features: [
+  keyFeatures: [
     "Deformable image registration",
     "Multi-modality support",
     "Deep learning-based registration algorithm",
@@ -79,8 +79,7 @@ export const registrationExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-05-15",
-  lastRevised: "2023-05-15",
-  lastVerified: "2023-05-15"
+  lastRevised: "2023-05-15"
 };
 
 export default registrationExample;

@@ -25,8 +25,32 @@ DLinRT.eu is an open, community-driven initiative to catalog deep learning solut
 - **Comprehensive Database**: Explore a wide range of deep learning products used in radiotherapy.
 - **Detailed Product Information**: Access key features, technical specifications, regulatory status, and market availability.
 - **Company Directory**: Find detailed profiles of companies offering AI solutions for radiotherapy.
+- **Model Card Exports**: Export detailed product information in JSON, CSV, Excel, and PDF formats with embedded logos.
+- **Product Comparison**: Compare multiple products side-by-side with export capabilities.
 - **Community-Driven**: Contribute to the platform by adding new products, verifying information, and sharing your expertise.
 - **Open Access**: All content is freely accessible to promote transparency and collaboration.
+
+## Visible Pages
+
+- **Home** (`/`) - Main landing page with featured content
+- **Products** (`/products`) - Browse and search all products
+- **Companies** (`/companies`) - Company directory and profiles
+- **Initiatives** (`/initiatives`) - Research projects and datasets
+- **Dashboard** (`/dashboard`) - Analytics and statistics
+- **News** (`/news`) - Latest updates and announcements
+- **About** (`/about`) - Project information and team
+- **Support** (`/support`) - Help and contact information
+
+## Hidden Administrative Pages
+
+Advanced functionality accessible but not in main navigation:
+
+- **Review Dashboard** (`/review`) - Product review management interface
+- **Timeline Visualization** (`/timeline`) - Interactive data analysis and trends
+- **Individual Product Review** (`/review/:id`) - Detailed product verification
+- **Security Certifications** (`/security`) - Security compliance information
+- **Security Monitoring** (`/security-monitoring`) - Real-time security dashboard
+- **Export Presentation** (`/export-presentation`) - Bulk export functionality
 
 ## Contributing
 
@@ -36,10 +60,15 @@ To get started, please review our [Contributing Guide](CONTRIBUTING.md) for guid
 
 ## Documentation
 
+- **[Documentation Quick Links](DOCUMENTATION_LINKS.md)** - Central hub for all documentation
 - **[Field Reference](docs/FIELD_REFERENCE.md)** - Comprehensive documentation of all data fields and vocabularies
 - **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the project
 - **[Product Review Guide](docs/review/GUIDE.md)** - Guide for reviewing and adding products
 - **[Security](SECURITY.md)** - Security policies and reporting
+
+## Field Standardization
+
+**keyFeatures** is the canonical field for product features. The legacy `features` field has been deprecated to ensure consistency across all displays and exports.
 
 ## Code of Conduct
 

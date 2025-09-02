@@ -78,6 +78,10 @@ Structures with laterality patterns (L/R, R/L) are counted as two distinct struc
 
 This counting is handled by the `hasLateralityPattern` function in `structureClassification.ts`.
 
+## Field Standardization
+
+**keyFeatures** is the canonical field for product features. Only `keyFeatures` is displayed in the interface and included in all exports. The legacy `features` field is deprecated and should not be used in new entries.
+
 ## Hidden Administrative Pages
 
 Advanced functionality is available through hidden pages:
@@ -85,6 +89,9 @@ Advanced functionality is available through hidden pages:
 - **Review Dashboard** (`/review`) - Product review management interface
 - **Timeline Visualization** (`/timeline`) - Interactive data analysis and trends
 - **Individual Product Review** (`/review/:id`) - Detailed product verification
+- **Security Certifications** (`/security`) - Security compliance information
+- **Security Monitoring** (`/security-monitoring`) - Real-time security dashboard
+- **Export Presentation** (`/export-presentation`) - Bulk export functionality
 
 These pages are accessible but not included in main navigation to maintain clean user experience.
 

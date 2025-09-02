@@ -41,10 +41,12 @@ Products represent deep learning solutions available for radiotherapy applicatio
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `features` | string[] | Yes | List of key product features and capabilities |
-| `keyFeatures` | string[] | No | Alternative/additional key features (use either features or keyFeatures) |
+| `keyFeatures` | string[] | Recommended | **Primary field** - List of key product features and capabilities (3-5 items recommended) |
+| `features` | string[] | No | **Legacy/deprecated** - Do not use in new entries, use keyFeatures instead |
 | `suggestedUse` | string | No | Recommended use cases and applications |
 | `useCases` | string[] | No | Array of specific use cases |
+
+**Field Standardization Note**: Only `keyFeatures` is displayed in the interface and included in exports. The `features` field is maintained for backward compatibility but should not be used in new product entries.
 
 ### Medical Specifications
 
@@ -167,9 +169,11 @@ The following guidelines are commonly referenced in radiotherapy AI products:
 |-------|------|----------|-------------|
 | `version` | string | No | Current software version |
 | `releaseDate` | string | No | Release date (YYYY-MM-DD format) |
-| `lastUpdated` | string | No | When product information was last updated (YYYY-MM-DD format) |
-| `lastRevised` | string | No | When product underwent major revision (YYYY-MM-DD format) |
+| `lastUpdated` | string | No | When product information was last updated in the database (YYYY-MM-DD format) |
+| `lastRevised` | string | No | When product underwent major revision by contributors (YYYY-MM-DD format) |
 | `companyRevisionDate` | string | No | When the company last revised/updated the product information (YYYY-MM-DD format) |
+
+**Export Metadata Note**: Exports may include derived metadata such as logo source attribution and embedded logos in PDF format. These are not stored as product fields but generated during export.
 
 ### Contact and Support
 

@@ -22,7 +22,7 @@ export const imageSynthesisExample: ProductDetails = {
   modality: ["MRI", "CT"],
   anatomy: ["Brain", "Pelvis", "Whole Body"],
   
-  features: [
+  keyFeatures: [
     "MR-to-CT synthesis",
     "Multi-contrast MR synthesis", 
     "AI-powered image translation",
@@ -85,8 +85,7 @@ export const imageSynthesisExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-05-28",
-  lastRevised: "2023-05-28",
-  lastVerified: "2023-05-28"
+  lastRevised: "2023-05-28"
 };
 
 export default imageSynthesisExample;

@@ -68,13 +68,15 @@ This comprehensive reference covers:
      website: 'https://company.com/product',
      category: 'Auto-Contouring',
      secondaryCategories: ['Treatment Planning'], // Optional multi-category support
-     features: ['Feature 1', 'Feature 2'],
+     keyFeatures: ['Key Feature 1', 'Key Feature 2', 'Key Feature 3'], // Use keyFeatures only
      version: '2.1.0',
      releaseDate: '2023-06-15',
      certification: 'CE Mark',
      // Category-specific fields...
    };
    ```
+
+   **Important**: Use `keyFeatures` only; `features` is legacy and should not be used in new products.
 
 4. **Add Logo**
    - Save to `public/logos/`
@@ -194,16 +196,24 @@ const currentProduct: ProductDetails = {
 - Data validation rules
 
 ### Quick Reference for Required Fields
+
+**Required:**
 - `id`: Unique identifier (use consistent patterns for versions)
 - `name`: Full product name
 - `company`: Company name
-- `website`: Product webpage
+- `description`: Brief product description
 - `category`: Primary category
-- `features`: Key features array
-- `certification`: Regulatory status
+
+**Strongly Recommended:**
+- `keyFeatures`: Key features array (3-5 items, use instead of deprecated `features`)
 - `version`: Current version
 - `releaseDate`: Release date (YYYY-MM-DD format)
-- `lastUpdated`: Last verified date
+- `website`: Product webpage
+- `certification`: Regulatory status
+
+**Date Fields:**
+- `lastUpdated`: When product information was last updated in database
+- `lastRevised`: When product underwent major revision by contributors
 
 ## Example Templates
 

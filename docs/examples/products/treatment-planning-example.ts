@@ -13,10 +13,10 @@ export const treatmentPlanningExample: ProductDetails = {
   contactPhone: "+1 555-123-4567",
   logoUrl: "/placeholder.svg",
   
-  mo dality: ["LINAC", "VMAT", "IMRT"],
+  modality: ["LINAC", "VMAT", "IMRT"],
   anatomy: ["Head & Neck", "Prostate", "Breast", "Lung"],
   
-  features: [
+  keyFeatures: [
     "Automated plan generation",
     "Knowledge-based planning",
     "Multi-criteria optimization",
@@ -79,8 +79,7 @@ export const treatmentPlanningExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-06-05",
-  lastRevised: "2023-06-05",
-  lastVerified: "2023-06-05"
+  lastRevised: "2023-06-05"
 };
 
 export default treatmentPlanningExample;

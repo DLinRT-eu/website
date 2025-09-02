@@ -16,7 +16,7 @@ export const autoContouringExample: ProductDetails = {
   modality: ["CT", "MRI"],
   anatomy: ["Head & Neck", "Brain", "Thorax", "Abdomen", "Pelvis"],
   
-  features: [
+  keyFeatures: [
     "Deep learning based auto-segmentation",
     "Multi-modal support (CT, MR)",
     "Batch processing",
@@ -98,8 +98,7 @@ export const autoContouringExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-06-10",
-  lastRevised: "2023-06-10",
-  lastVerified: "2023-06-10"
+  lastRevised: "2023-06-10"
 };
 
 export default autoContouringExample;

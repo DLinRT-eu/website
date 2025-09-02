@@ -135,7 +135,6 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     releaseDate: "2024-08-01",
     lastUpdated: "2025-07-14",
     lastRevised: "2025-07-14",
-    lastVerified: "2025-07-14",
     companyRevisionDate: "2025-07-14"
   }
 ];

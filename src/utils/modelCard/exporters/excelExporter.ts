@@ -86,7 +86,6 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
     
     // Quality Assurance Sheet
     const qualitySheet = XLSX.utils.json_to_sheet([
-      { Field: "Last Verified", Value: modelCard.quality.lastVerified },
       { Field: "Last Revised", Value: modelCard.quality.lastRevised },
       { Field: "Company Revision Date", Value: modelCard.quality.companyRevisionDate },
       { Field: "Source", Value: modelCard.quality.source },

@@ -72,7 +72,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
       "Pelvis: Femoral Heads (R)"
     ],
     lastRevised: "2025-05-12",
-    lastVerified: "2025-05-12",
     source: "Automatically retrieved",
     githubUrl: "https://github.com/DLinRT-eu/website/tree/main/src/data/products/auto-contouring/siemens.ts"
   }

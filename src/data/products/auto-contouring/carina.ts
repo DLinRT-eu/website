@@ -131,7 +131,6 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
     ],
     lastRevised: "2025-05-04",
     source: "automatically retrieved and revised",
-    lastVerified: "2025-05-12",
     clinicalEvidence: "Publication in Medical Physics Journal 2023, ESTRO 2022 abstract"
   }
 ];

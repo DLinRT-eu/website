@@ -60,7 +60,6 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     lastUpdated: "2025-05-01",
     lastRevised: "2025-05-13",
     source: "automatically retrieved and verified",
-    lastVerified: "2025-05-12",
     clinicalEvidence: "Clinical studies demonstrating improved contouring accuracy and efficiency.",
     evidence: ["10.1016/j.radonc.2016.10.009"]
   }

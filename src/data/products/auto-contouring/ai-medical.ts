@@ -63,7 +63,6 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     lastUpdated: "2024-04-29",
     clinicalEvidence: "Publication in Medical Physics Journal 2023, ESTRO 2022 abstract",
     lastRevised: "2025-05-04",
-    source: "Automatically retrieved and revised",
-    lastVerified: "2024-05-12"
+    source: "Automatically retrieved and revised"
   }
 ];

@@ -169,16 +169,9 @@ export const VALIDATION_RULES: FieldValidationRule[] = [
   {
     fieldName: 'Last Revised',
     checkFunction: (product) => Boolean(product.lastRevised),
-    severity: 'low',
+    severity: 'medium',
     successMessage: 'Last Revised is valid',
     failureMessage: 'Last Revised is missing'
-  },
-  {
-    fieldName: 'Last Verified',
-    checkFunction: (product) => Boolean(product.lastVerified),
-    severity: 'low',
-    successMessage: 'Last Verified is valid',
-    failureMessage: 'Last Verified is missing'
   },
   {
     fieldName: 'Company URL',

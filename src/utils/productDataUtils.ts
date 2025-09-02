@@ -18,7 +18,6 @@ export const standardizeDates = (product: ProductDetails): ProductDetails => {
     // Standardize date formats and set defaults
     lastRevised: formatToYYYYMMDD(product.lastRevised || today),
     lastUpdated: formatToYYYYMMDD(product.lastUpdated || today),
-    lastVerified: formatToYYYYMMDD(product.lastVerified || today),
     releaseDate: formatToYYYYMMDD(product.releaseDate)
   };
 };

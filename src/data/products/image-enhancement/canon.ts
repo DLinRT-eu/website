@@ -60,7 +60,6 @@ export const CANON_PRODUCTS: ProductDetails[] = [
       basedOn: ["Annual volume", "Enterprise license"]
     },
     clinicalEvidence: "Multiple reader studies showing improved diagnostic confidence and reduced reading time for enhanced images",
-    lastVerified: "2025-05-10",
     lastUpdated: "2025-01-05",
     lastRevised: "2025-05-05"
   }

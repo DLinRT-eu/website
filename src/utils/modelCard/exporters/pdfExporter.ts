@@ -208,7 +208,6 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
     
     // Quality Assurance Section
     addSectionHeader('Quality Assurance');
-    addField('Last Verified', modelCard.quality.lastVerified);
     addField('Last Revised', modelCard.quality.lastRevised);
     addField('Company Revision Date', modelCard.quality.companyRevisionDate);
     addField('Source', modelCard.quality.source);

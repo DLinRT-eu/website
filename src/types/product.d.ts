@@ -24,7 +24,6 @@ export interface Product {
   compatibleSystems?: string[];
   userRating?: number;
   lastUpdated?: string;
-  lastVerified?: string;
   lastRevised?: string;
   clinicalEvidence?: string;
   // Updating supported structures to match ProductDetails definition

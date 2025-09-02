@@ -86,8 +86,8 @@ export function generateReviewSummary(product: ProductDetails, checks: ReviewChe
   if (warningIssues.length > 0) {
     actionableItems.push('Review and update missing information where possible');
   }
-  if (!product.lastVerified) {
-    actionableItems.push('Verify product information with official sources');
+  if (!product.lastRevised) {
+    actionableItems.push('Update product revision information with official sources');
   }
 
   if (actionableItems.length > 0) {

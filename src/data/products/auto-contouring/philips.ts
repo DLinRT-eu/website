@@ -68,7 +68,6 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
       "Pelvis: Urethra"
     ],
     lastRevised: "2025-05-12",
-    lastVerified: "2025-05-12",
     source: "automatically retrieved and verified"
   }
 ];

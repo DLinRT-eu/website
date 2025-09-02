@@ -148,7 +148,6 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       supportEmail: product.supportEmail || "N/A",
     },
     quality: {
-      lastVerified: formatDate(product.lastVerified),
       lastRevised: formatDate(product.lastRevised),
       companyRevisionDate: formatDate(product.companyRevisionDate),
       source: product.source || "N/A",

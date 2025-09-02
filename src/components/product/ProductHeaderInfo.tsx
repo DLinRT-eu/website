@@ -22,14 +22,14 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
   
   const logoSrc = generateLogoUrl();
   
-  // Check if verification is recent (less than 6 months)
-  const isVerified = !!product.lastVerified;
-  const isRecentlyVerified = isVerified && 
-    new Date().getTime() - new Date(product.lastVerified).getTime() < 6 * 30 * 24 * 60 * 60 * 1000;
+  // Check if revision is recent (less than 6 months)
+  const isRevised = !!product.lastRevised;
+  const isRecentlyRevised = isRevised && 
+    new Date().getTime() - new Date(product.lastRevised).getTime() < 6 * 30 * 24 * 60 * 60 * 1000;
   
-  // Format verification date in YYYY-MM-DD format
-  const formattedVerificationDate = product.lastVerified 
-    ? new Date(product.lastVerified).toISOString().split('T')[0]
+  // Format revision date in YYYY-MM-DD format
+  const formattedRevisionDate = product.lastRevised 
+    ? new Date(product.lastRevised).toISOString().split('T')[0]
     : null;
   
   return (
@@ -53,15 +53,15 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
           
           <div className="mt-2 flex items-center">
             <Badge 
-              variant={isRecentlyVerified ? "success" : isVerified ? "outline" : "secondary"} 
-              className={`flex items-center gap-1 ${isRecentlyVerified ? 'bg-green-100 text-green-800' : isVerified ? '' : 'bg-gray-100 text-gray-600'}`}
+              variant={isRecentlyRevised ? "success" : isRevised ? "outline" : "secondary"} 
+              className={`flex items-center gap-1 ${isRecentlyRevised ? 'bg-green-100 text-green-800' : isRevised ? '' : 'bg-gray-100 text-gray-600'}`}
             >
-              {isRecentlyVerified ? (
+              {isRecentlyRevised ? (
                 <CheckCircle className="h-3 w-3" />
               ) : (
                 <XCircle className="h-3 w-3" />
               )}
-              {formattedVerificationDate ? `Verified: ${formattedVerificationDate}` : "Not verified"}
+              {formattedRevisionDate ? `Revised: ${formattedRevisionDate}` : "Not revised"}
             </Badge>
           </div>
         </div>

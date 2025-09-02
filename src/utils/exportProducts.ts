@@ -47,7 +47,7 @@ export const exportProductsToCSV = (products: ProductDetails[]) => {
     "Release Date", "Version", "Website", "Company URL", "Product URL", "GitHub URL",
     "Clinical Evidence", "Evidence", "Limitations",
     "Compatible Systems", "Training Required", "Support Email", "User Rating",
-    "Last Updated", "Last Verified", "Last Revised", "Source"
+    "Last Updated", "Last Revised", "Source"
   ];
   
   // Map product data to CSV rows
@@ -97,7 +97,6 @@ export const exportProductsToCSV = (products: ProductDetails[]) => {
     escapeValueForCsv(product.supportEmail),
     escapeValueForCsv(product.userRating),
     escapeValueForCsv(product.lastUpdated),
-    escapeValueForCsv(product.lastVerified),
     escapeValueForCsv(product.lastRevised),
     escapeValueForCsv(product.source)
   ]);

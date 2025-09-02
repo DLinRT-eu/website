@@ -66,7 +66,6 @@ const rawProduct: ProductDetails = {
   releaseDate: "2023-04-20",
   lastUpdated: "2024-01-15",
   lastRevised: "2025-05-13",
-  lastVerified: "2025-05-13",
   supportedStructures: [
     "Brain: Brain",
     "Brain: Pituitary",

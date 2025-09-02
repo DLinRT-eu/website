@@ -60,7 +60,6 @@ export const PHILIPS_INTELLISPACE_PRODUCTS: ProductDetails[] = [
       basedOn: ["Number of studies", "Enterprise license"]
     },
     clinicalEvidence: "Multiple studies showing improved reader confidence and reduced reading time for enhanced images",
-    lastVerified: "2024-12-01",
     lastUpdated: "2025-01-15",
     lastRevised: "2025-05-05"
   }

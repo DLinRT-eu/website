@@ -46,7 +46,6 @@ export interface ModelCardData {
     supportEmail: string;
   };
   quality: {
-    lastVerified: string;
     lastRevised: string;
     companyRevisionDate: string;
     source: string;

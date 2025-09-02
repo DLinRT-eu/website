@@ -47,7 +47,6 @@ export interface ProductDetails extends Product {
     basedOn?: string[];
   } | string;
   clinicalEvidence?: string;
-  lastVerified?: string;
   lastRevised?: string;
   source?: string;
   // New field for multi-category support

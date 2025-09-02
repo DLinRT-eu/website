@@ -8,9 +8,13 @@ export const hasRegulatoryApproval = (product: ProductDetails): boolean => {
   // Check for FDA clearance/approval
   const hasFDA = product.certification?.toLowerCase().includes('fda') || 
                  (product.regulatory?.fda && 
-                  (product.regulatory.fda.includes('510(k)') || 
-                   product.regulatory.fda.includes('Cleared') || 
-                   product.regulatory.fda.includes('Approved')));
+                  (typeof product.regulatory.fda === 'string' ? 
+                   (product.regulatory.fda.includes('510(k)') || 
+                    product.regulatory.fda.includes('Cleared') || 
+                    product.regulatory.fda.includes('Approved')) :
+                   (product.regulatory.fda.status?.includes('510(k)') ||
+                    product.regulatory.fda.status?.includes('Cleared') ||
+                    product.regulatory.fda.status?.includes('Approved'))));
   
   // Check for CE mark approval
   const hasCE = product.certification?.toLowerCase().includes('ce') || 
@@ -134,9 +138,13 @@ export const getStandardizedCertificationTags = (product: ProductDetails): strin
   }
   
   if (product.regulatory?.fda && 
-      (product.regulatory.fda.includes('510(k)') || 
-       product.regulatory.fda.includes('Cleared') || 
-       product.regulatory.fda.includes('Approved'))) {
+      (typeof product.regulatory.fda === 'string' ? 
+       (product.regulatory.fda.includes('510(k)') || 
+        product.regulatory.fda.includes('Cleared') || 
+        product.regulatory.fda.includes('Approved')) :
+       (product.regulatory.fda.status?.includes('510(k)') ||
+        product.regulatory.fda.status?.includes('Cleared') ||
+        product.regulatory.fda.status?.includes('Approved')))) {
     if (!certTags.includes('FDA')) certTags.push('FDA');
   }
   

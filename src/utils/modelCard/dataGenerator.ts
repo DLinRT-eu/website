@@ -61,7 +61,9 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
   const ceStatus = product.regulatory?.ce?.status || 
     (product.certification?.toLowerCase().includes('ce') ? 'Certified' : 'N/A');
   
-  const fdaStatus = product.regulatory?.fda || 
+  const fdaStatus = typeof product.regulatory?.fda === 'string' ? 
+    product.regulatory.fda : 
+    (typeof product.regulatory?.fda === 'object' ? product.regulatory.fda.status : null) ||
     (product.certification?.toLowerCase().includes('fda') ? 'Cleared' : 'N/A');
 
   // Safely handle modality data
@@ -134,7 +136,11 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       ceDetails: product.regulatory?.ce ? 
         `${product.regulatory.ce.status}${product.regulatory.ce.class ? ` (Class ${product.regulatory.ce.class})` : ''}` : 
         "N/A",
-      fdaDetails: product.regulatory?.fda || "N/A",
+      fdaDetails: typeof product.regulatory?.fda === 'string' ? 
+        product.regulatory.fda : 
+        (typeof product.regulatory?.fda === 'object' ? 
+         `${product.regulatory.fda.status}${product.regulatory.fda.clearanceNumber ? ` (${product.regulatory.fda.clearanceNumber})` : ''}` : 
+         "N/A"),
       intendedUseStatement: product.regulatory?.intendedUseStatement || "N/A",
       marketPresence: product.market?.onMarketSince || "N/A",
     },

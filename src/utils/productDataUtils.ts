@@ -120,14 +120,17 @@ export const standardizeRegulatoryInfo = (product: ProductDetails): ProductDetai
   
   // Standardize FDA status
   if (standardProduct.regulatory.fda) {
-    const fda = standardProduct.regulatory.fda.toLowerCase();
-    if (fda.includes("510(k)") || fda.includes("clear")) {
-      standardProduct.regulatory.fda = "510(k) Cleared";
-    } else if (fda.includes("pend") || fda.includes("review")) {
-      standardProduct.regulatory.fda = "Under review";
-    } else if (fda.includes("not")) {
-      standardProduct.regulatory.fda = "Not available";
+    if (typeof standardProduct.regulatory.fda === 'string') {
+      const fda = standardProduct.regulatory.fda.toLowerCase();
+      if (fda.includes("510(k)") || fda.includes("clear")) {
+        standardProduct.regulatory.fda = "510(k) Cleared";
+      } else if (fda.includes("pend") || fda.includes("review")) {
+        standardProduct.regulatory.fda = "Under review";
+      } else if (fda.includes("not")) {
+        standardProduct.regulatory.fda = "Not available";
+      }
     }
+    // If it's an object, leave it as is for now
   }
   
   return standardProduct;

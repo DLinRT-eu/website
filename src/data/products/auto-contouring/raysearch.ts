@@ -36,11 +36,16 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Certified",
-        class: "IIb",
-        type: "Medical Device"
+        status: "CE Marked",
+        class: "Class IIb",
+        type: "MDR",
+        regulation: "MDR 2017/745"
       },
-      fda: "510k cleared",
+      fda: {
+        status: "510(k) Cleared",
+        class: "Class II",
+        type: "510(k)"
+      },
       intendedUseStatement: "For use in treatment planning for radiation therapy."
     },
     market: {

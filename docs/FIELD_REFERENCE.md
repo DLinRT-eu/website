@@ -132,10 +132,19 @@ The following guidelines are commonly referenced in radiotherapy AI products:
 | `certification` | string | No | Primary regulatory approval. See [Certifications](#certifications) |
 | `regulatory` | object | No | Detailed regulatory information |
 | `regulatory.ce` | object | No | CE marking details |
-| `regulatory.ce.status` | string | No | CE approval status |
-| `regulatory.ce.class` | string | No | Medical device class |
-| `regulatory.ce.type` | string | No | Type of CE marking |
-| `regulatory.fda` | string | No | FDA approval status |
+| `regulatory.ce.status` | string | No | CE approval status ("CE Marked", "Pending", "Not available", "MDR exempt") |
+| `regulatory.ce.class` | string | No | Medical device class ("Class I", "Class IIa", "Class IIb", "Class III") |
+| `regulatory.ce.type` | string | No | Regulatory framework ("MDD", "MDR", "IVDR") |
+| `regulatory.ce.notifiedBody` | string | No | Notified body information |
+| `regulatory.ce.certificateNumber` | string | No | CE certificate number |
+| `regulatory.ce.regulation` | string | No | Specific regulation reference |
+| `regulatory.fda` | object/string | No | FDA approval status (object format preferred) |
+| `regulatory.fda.status` | string | No | FDA regulatory status ("510(k) Cleared", "PMA Approved", etc.) |
+| `regulatory.fda.class` | string | No | FDA device classification ("Class I", "Class II", "Class III") |
+| `regulatory.fda.clearanceNumber` | string | No | FDA clearance number (K-number, P-number, etc.) |
+| `regulatory.fda.regulationNumber` | string | No | CFR regulation number |
+| `regulatory.fda.productCode` | string | No | FDA product code |
+| `regulatory.fda.type` | string | No | Submission type ("510(k)", "PMA", "De Novo") |
 | `regulatory.intendedUseStatement` | string | No | Official intended use statement |
 
 ### Market Information

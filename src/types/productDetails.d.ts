@@ -34,8 +34,18 @@ export interface ProductDetails extends Product {
       status: string;
       class?: string;
       type?: string;
+      notifiedBody?: string;
+      certificateNumber?: string;
+      regulation?: string;
     };
-    fda?: string;
+    fda?: {
+      status: string;
+      class?: string;
+      clearanceNumber?: string;
+      regulationNumber?: string;
+      productCode?: string;
+      type?: string;
+    } | string; // Backward compatibility
     intendedUseStatement?: string;
   };
   market?: {

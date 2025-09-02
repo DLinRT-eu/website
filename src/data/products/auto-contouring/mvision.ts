@@ -59,11 +59,17 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Certified",
-        class: "IIa",
-        type: "Medical Device"
+        status: "CE Marked",
+        class: "Class IIa",
+        type: "MDR",
+        regulation: "MDR 2017/745"
       },
-      fda: "510(k) cleared",
+      fda: {
+        status: "510(k) Cleared",
+        class: "Class II",
+        clearanceNumber: "K193053",
+        type: "510(k)"
+      },
       intendedUseStatement: "For automatic segmentation of organs at risk in radiation therapy planning."
     },
     market: {

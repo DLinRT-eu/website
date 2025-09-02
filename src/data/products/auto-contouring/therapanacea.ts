@@ -35,11 +35,17 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Certified",
-        class: "IIa",
-        type: "Medical Device"
+        status: "CE Marked",
+        class: "Class IIa",
+        type: "MDR",
+        regulation: "MDR 2017/745",
+        notifiedBody: "GMED (Notified Body 0459)"
       },
-      fda: "510(k) cleared",
+      fda: {
+        status: "510(k) Cleared",
+        class: "Class II",
+        type: "510(k)"
+      },
       intendedUseStatement: "For automatic segmentation of organs at risk in radiation therapy planning."
     },
     market: {

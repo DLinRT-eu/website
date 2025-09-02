@@ -42,11 +42,15 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Certified",
-        class: "IIa",
-        type: "Medical Device"
+        status: "CE Marked",
+        class: "Class IIa",
+        type: "MDR",
+        regulation: "MDR 2017/745"
       },
-      fda: "Under review",
+      fda: {
+        status: "Under review",
+        type: "510(k)"
+      },
       intendedUseStatement: "For assistance in the delineation of organs at risk and target volumes in radiation therapy planning."
     },
     market: {

@@ -3,8 +3,9 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, XCircle, AlertTriangle } from "lucide-react";
+import { CheckCircle, XCircle, AlertTriangle, Info } from "lucide-react";
 import { getStandardizedCertificationTags } from "@/utils/productFilters";
+import { parseFDAInfo, parseCEInfo, formatFDAInfo, formatCEInfo } from "@/utils/regulatoryUtils";
 
 interface RegulatoryInformationProps {
   product: ProductDetails;
@@ -16,32 +17,68 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
   const hasFDA = certificationTags.includes('FDA');
   const hasMDRExempt = certificationTags.includes('MDR exempt');
   
-  // Helper function to check certification type and status for CE
   const getCEStatus = () => {
+    const ceInfo = parseCEInfo(product.regulatory?.ce);
+    
+    if (!ceInfo) {
+      return {
+        label: "Not available",
+        icon: <Info className="h-3 w-3" />,
+        variant: "outline" as const,
+        description: "CE marking information not available",
+        details: null
+      };
+    }
+    
     if (hasMDRExempt) {
       return {
         label: "MDR exempt",
         icon: <AlertTriangle className="h-3 w-3" />,
         variant: "warning" as const,
-        description: "Medical Device Regulation Exempt"
+        description: "Medical Device Regulation Exempt",
+        details: ceInfo
       };
     }
     
     return {
-      label: hasCE ? "CE Approved" : "Not CE Approved",
+      label: hasCE ? "CE Marked" : "Not CE Marked",
       icon: hasCE ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
       variant: hasCE ? "success" as const : "outline" as const,
-      description: product.regulatory?.ce?.class ? `Class ${product.regulatory.ce.class}` : ""
+      description: formatCEInfo(ceInfo),
+      details: ceInfo
     };
   };
   
-  // Helper function for FDA status
   const getFDAStatus = () => {
+    const fdaInfo = parseFDAInfo(product.regulatory?.fda);
+    
+    if (!fdaInfo) {
+      return {
+        label: "Not available",
+        icon: <Info className="h-3 w-3" />,
+        variant: "outline" as const,
+        description: "FDA clearance information not available",
+        details: null
+      };
+    }
+    
+    let label = fdaInfo.status;
+    if (fdaInfo.clearanceNumber?.startsWith('K')) {
+      label = "510(k) Cleared";
+    } else if (fdaInfo.clearanceNumber?.startsWith('P')) {
+      label = "PMA Approved";
+    } else if (fdaInfo.status.includes("510(k)")) {
+      label = "510(k) Cleared";
+    } else if (fdaInfo.status.includes("PMA")) {
+      label = "PMA Approved";
+    }
+    
     return {
-      label: hasFDA ? "FDA Cleared/Approved" : "Not FDA Cleared",
+      label,
       icon: hasFDA ? <CheckCircle className="h-3 w-3" /> : <XCircle className="h-3 w-3" />,
       variant: hasFDA ? "success" as const : "outline" as const,
-      description: product.regulatory?.fda || ""
+      description: formatFDAInfo(fdaInfo),
+      details: fdaInfo
     };
   };
   
@@ -71,8 +108,13 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
                 </span>
               )}
             </div>
-            {product.regulatory?.ce?.type && (
-              <p className="text-sm text-gray-500">Type: {product.regulatory.ce.type}</p>
+            {ceStatus.details && (
+              <div className="mt-2 text-xs text-gray-500 space-y-1">
+                {ceStatus.details.type && <div>Type: {ceStatus.details.type}</div>}
+                {ceStatus.details.certificateNumber && <div>Certificate: {ceStatus.details.certificateNumber}</div>}
+                {ceStatus.details.notifiedBody && <div>Notified Body: {ceStatus.details.notifiedBody}</div>}
+                {ceStatus.details.regulation && <div>Regulation: {ceStatus.details.regulation}</div>}
+              </div>
             )}
           </div>
           <div className="space-y-2">
@@ -91,6 +133,15 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
                 </span>
               )}
             </div>
+            {fdaStatus.details && (
+              <div className="mt-2 text-xs text-gray-500 space-y-1">
+                {fdaStatus.details.clearanceNumber && <div>Clearance: {fdaStatus.details.clearanceNumber}</div>}
+                {fdaStatus.details.class && <div>Class: {fdaStatus.details.class}</div>}
+                {fdaStatus.details.regulationNumber && <div>Regulation: {fdaStatus.details.regulationNumber}</div>}
+                {fdaStatus.details.productCode && <div>Product Code: {fdaStatus.details.productCode}</div>}
+                {fdaStatus.details.type && <div>Type: {fdaStatus.details.type}</div>}
+              </div>
+            )}
           </div>
         </div>
         <div>

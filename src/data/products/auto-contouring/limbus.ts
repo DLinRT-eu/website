@@ -59,11 +59,17 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Certified",
-        class: "IIa",
-        type: "Medical Device"
+        status: "CE Marked",
+        class: "Class IIa",
+        type: "MDR",
+        regulation: "MDR 2017/745",
+        notifiedBody: "TÜV SÜD (Notified Body 0123)"
       },
-      fda: "510(k) cleared",
+      fda: {
+        status: "510(k) Cleared",
+        class: "Class II",
+        type: "510(k)"
+      },
       intendedUseStatement: "For use in radiation therapy planning to assist in the delineation of organs at risk."
     },
     market: {

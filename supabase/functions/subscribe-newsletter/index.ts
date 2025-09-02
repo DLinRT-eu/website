@@ -96,10 +96,11 @@ const handler = async (req: Request): Promise<Response> => {
     
     console.log("Received newsletter subscription from:", email);
 
-    // Validate required fields
-    if (!firstName || !lastName || !email || !consentGiven) {
+    // Validate required fields and email format
+    const isValidEmail = typeof email === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!firstName?.trim() || !lastName?.trim() || !isValidEmail || !consentGiven) {
       return new Response(
-        JSON.stringify({ error: "All fields are required and consent must be given" }),
+        JSON.stringify({ error: "All fields are required, consent must be given, and email must be valid" }),
         { 
           status: 400, 
           headers: { "Content-Type": "application/json", ...corsHeaders } 

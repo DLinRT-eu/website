@@ -100,7 +100,7 @@ const RegulatoryInformationDetails = ({ product }: RegulatoryInformationProps) =
         <div>
           <p className="text-sm font-medium">AI Technology:</p>
           <p className="text-gray-500 text-sm">
-            This product utilizes {product.features.filter(f => 
+            This product utilizes {product.features?.filter(f => 
               f.toLowerCase().includes('deep learning') || 
               f.toLowerCase().includes('ai') ||
               f.toLowerCase().includes('artificial intelligence')

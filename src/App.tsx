@@ -9,7 +9,7 @@ import Header from "./components/Header";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
-import Donate from "./pages/Donate";
+
 import ProductDetails from "./pages/ProductDetails";
 import Companies from "./pages/Companies";
 import News from "./pages/News";
@@ -56,7 +56,7 @@ const App = () => (
             <Route path="products" element={<Products />} />
             <Route path="initiatives" element={<Initiatives />} />
             <Route path="/about" element={<About />} />
-            <Route path="donate" element={<Donate />} />
+            
             <Route path="product/:id" element={<ProductDetails />} />
             <Route path="companies" element={<Companies />} />
             <Route path="news" element={<News />} />

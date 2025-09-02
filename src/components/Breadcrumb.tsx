@@ -33,7 +33,7 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
       
       'about': 'About',
       'support': 'Support',
-      'donate': 'Donate',
+      
       'timeline': 'Timeline',
       'review': 'Review',
       'privacy-policy': 'Privacy Policy',

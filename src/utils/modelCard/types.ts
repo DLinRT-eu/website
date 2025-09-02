@@ -11,6 +11,10 @@ export interface ModelCardData {
     ceStatus: string;
     fdaStatus: string;
   };
+  keyFeatures: {
+    features: string[];
+    count: number;
+  };
   clinicalApplication: {
     intendedUse: string;
     targetAnatomy: string;
@@ -42,6 +46,7 @@ export interface ModelCardData {
     companyUrl: string;
     productUrl: string;
     logoUrl: string;
+    logoSource: string;
     contactEmail: string;
     supportEmail: string;
   };

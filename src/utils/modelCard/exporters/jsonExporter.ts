@@ -10,7 +10,17 @@ export const exportModelCardToJSON = (product: ProductDetails) => {
     const jsonContent = JSON.stringify({
       productId: product.id,
       exportDate: new Date().toISOString(),
-      modelCard: modelCard
+      exportVersion: "2.0",
+      modelCard: {
+        ...modelCard,
+        // Include key features prominently
+        keyFeatures: modelCard.keyFeatures,
+        // Include logo information
+        logoInformation: {
+          logoUrl: modelCard.contact.logoUrl,
+          logoSource: modelCard.contact.logoSource
+        }
+      }
     }, null, 2);
     
     const blob = new Blob([jsonContent], { type: "application/json;charset=utf-8" });

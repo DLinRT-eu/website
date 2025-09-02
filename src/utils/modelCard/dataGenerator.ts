@@ -1,6 +1,7 @@
 
 import { ProductDetails } from "@/types/productDetails";
 import { ModelCardData } from "./types";
+import { getKeyFeatures, getLogoInfo } from "@/lib/utils";
 
 const formatArray = (arr: any[] | undefined): string => {
   if (!arr || arr.length === 0) return "N/A";
@@ -16,16 +17,6 @@ const formatDate = (date: string | undefined): string => {
   }
 };
 
-// Helper function to generate logo URL based on company name if needed
-const generateLogoUrl = (product: ProductDetails): string => {
-  if (product.logoUrl && product.logoUrl.trim() !== '') {
-    return product.logoUrl.startsWith('/') ? product.logoUrl.trim() : `/${product.logoUrl.trim()}`;
-  }
-  
-  // Create a standardized company logo filename
-  const standardizedCompany = product.company.toLowerCase().replace(/\s+/g, '-');
-  return `/logos/${standardizedCompany}.png`;
-};
 
 // Helper function to safely format pricing information
 const formatPricing = (pricing: any): string => {
@@ -62,6 +53,10 @@ const formatGuidelines = (guidelines: any[] | undefined): { compliance: string; 
 };
 
 export const generateModelCardData = (product: ProductDetails): ModelCardData => {
+  // Get standardized features and logo information
+  const keyFeatures = getKeyFeatures(product);
+  const logoInfo = getLogoInfo(product);
+
   // Safely handle regulatory data
   const ceStatus = product.regulatory?.ce?.status || 
     (product.certification?.toLowerCase().includes('ce') ? 'Certified' : 'N/A');
@@ -109,6 +104,10 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       ceStatus: ceStatus,
       fdaStatus: fdaStatus,
     },
+    keyFeatures: {
+      features: keyFeatures,
+      count: keyFeatures.length,
+    },
     clinicalApplication: {
       intendedUse: product.regulatory?.intendedUseStatement || 
         product.suggestedUse || 
@@ -143,7 +142,8 @@ export const generateModelCardData = (product: ProductDetails): ModelCardData =>
       website: product.website || "N/A",
       companyUrl: product.companyUrl || "N/A",
       productUrl: product.productUrl || "N/A",
-      logoUrl: generateLogoUrl(product),
+      logoUrl: logoInfo.url,
+      logoSource: logoInfo.source,
       contactEmail: product.contactEmail || "N/A",
       supportEmail: product.supportEmail || "N/A",
     },

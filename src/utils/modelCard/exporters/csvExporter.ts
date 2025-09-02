@@ -16,12 +16,21 @@ export const exportModelCardToCSV = (product: ProductDetails) => {
       { Section: "Basic Information", Field: "Company URL", Value: modelCard.contact.companyUrl },
       { Section: "Basic Information", Field: "Product URL", Value: modelCard.contact.productUrl },
       { Section: "Basic Information", Field: "Logo URL", Value: modelCard.contact.logoUrl },
+      { Section: "Basic Information", Field: "Logo Source", Value: modelCard.contact.logoSource },
       { Section: "Basic Information", Field: "Category", Value: modelCard.basicInfo.category },
       { Section: "Basic Information", Field: "Secondary Categories", Value: modelCard.basicInfo.secondaryCategories },
       { Section: "Basic Information", Field: "Release Date", Value: modelCard.basicInfo.releaseDate },
       { Section: "Basic Information", Field: "Last Updated", Value: modelCard.basicInfo.lastUpdated },
       { Section: "Basic Information", Field: "CE Status", Value: modelCard.basicInfo.ceStatus },
       { Section: "Basic Information", Field: "FDA Status", Value: modelCard.basicInfo.fdaStatus },
+      
+      // Key Features
+      { Section: "Key Features", Field: "Features Count", Value: modelCard.keyFeatures.count.toString() },
+      ...modelCard.keyFeatures.features.map((feature, index) => ({
+        Section: "Key Features",
+        Field: `Feature ${index + 1}`,
+        Value: feature
+      })),
       
       // Clinical Application
       { Section: "Clinical Application", Field: "Intended Use", Value: modelCard.clinicalApplication.intendedUse },
@@ -54,6 +63,7 @@ export const exportModelCardToCSV = (product: ProductDetails) => {
       { Section: "Contact Information", Field: "Company URL", Value: modelCard.contact.companyUrl },
       { Section: "Contact Information", Field: "Product URL", Value: modelCard.contact.productUrl },
       { Section: "Contact Information", Field: "Logo URL", Value: modelCard.contact.logoUrl },
+      { Section: "Contact Information", Field: "Logo Source", Value: modelCard.contact.logoSource },
       { Section: "Contact Information", Field: "Contact Email", Value: modelCard.contact.contactEmail },
       { Section: "Contact Information", Field: "Support Email", Value: modelCard.contact.supportEmail },
       

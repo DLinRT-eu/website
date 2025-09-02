@@ -138,10 +138,10 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
     addField('Last Updated', modelCard.basicInfo.lastUpdated);
     addField('Description', modelCard.clinicalApplication.intendedUse);
     
-    // Product Features Section (if available)
-    if (product.features && product.features.length > 0) {
-      addSectionHeader('Product Features');
-      addList(product.features);
+    // Key Features Section
+    if (modelCard.keyFeatures.features.length > 0) {
+      addSectionHeader('Key Features');
+      addList(modelCard.keyFeatures.features);
     }
     
     // Technical Specifications Section
@@ -200,6 +200,8 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
     addField('Website', modelCard.contact.website);
     addField('Company URL', modelCard.contact.companyUrl);
     addField('Product URL', modelCard.contact.productUrl);
+    addField('Logo URL', modelCard.contact.logoUrl);
+    addField('Logo Source', modelCard.contact.logoSource);
     addField('Contact Email', modelCard.contact.contactEmail);
     addField('Support Email', modelCard.contact.supportEmail);
     if (product.contactPhone) {

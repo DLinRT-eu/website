@@ -19,6 +19,7 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
       { Field: "Company URL", Value: modelCard.contact.companyUrl },
       { Field: "Product URL", Value: modelCard.contact.productUrl },
       { Field: "Logo URL", Value: modelCard.contact.logoUrl },
+      { Field: "Logo Source", Value: modelCard.contact.logoSource },
       { Field: "Category", Value: modelCard.basicInfo.category },
       { Field: "Secondary Categories", Value: modelCard.basicInfo.secondaryCategories },
       { Field: "Release Date", Value: modelCard.basicInfo.releaseDate },
@@ -27,6 +28,16 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
       { Field: "FDA Status", Value: modelCard.basicInfo.fdaStatus },
     ]);
     XLSX.utils.book_append_sheet(wb, basicInfoSheet, "Basic Information");
+    
+    // Key Features Sheet
+    const keyFeaturesSheet = XLSX.utils.json_to_sheet([
+      { Field: "Total Features", Value: modelCard.keyFeatures.count },
+      ...modelCard.keyFeatures.features.map((feature, index) => ({
+        Field: `Feature ${index + 1}`,
+        Value: feature
+      }))
+    ]);
+    XLSX.utils.book_append_sheet(wb, keyFeaturesSheet, "Key Features");
     
     // Clinical Application Sheet
     const clinicalSheet = XLSX.utils.json_to_sheet([
@@ -79,6 +90,7 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
       { Field: "Company URL", Value: modelCard.contact.companyUrl },
       { Field: "Product URL", Value: modelCard.contact.productUrl },
       { Field: "Logo URL", Value: modelCard.contact.logoUrl },
+      { Field: "Logo Source", Value: modelCard.contact.logoSource },
       { Field: "Contact Email", Value: modelCard.contact.contactEmail },
       { Field: "Support Email", Value: modelCard.contact.supportEmail },
     ]);

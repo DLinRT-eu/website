@@ -64,7 +64,12 @@ const NewsDetail = () => {
         
         {newsItem.content && (
           <div className="prose prose-blue max-w-none prose-headings:text-blue-700 prose-a:text-blue-600 prose-strong:text-blue-600">
-            <ReactMarkdown>{newsItem.content}</ReactMarkdown>
+            <ReactMarkdown
+              allowedElements={['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'blockquote', 'code', 'pre']}
+              disallowedElements={['script', 'iframe', 'object', 'embed']}
+            >
+              {newsItem.content}
+            </ReactMarkdown>
           </div>
         )}
         <div className="text-center mt-2 text-xs text-gray-400">

@@ -5,10 +5,21 @@ import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.49.8';
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-};
+// Allowed origins for security
+const ALLOWED_ORIGINS = [
+  "https://dlinrt.eu",
+  "https://www.dlinrt.eu",
+  "http://localhost:5173",
+  "http://localhost:3000"
+];
+
+function getCorsHeaders(origin: string | null): HeadersInit {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[0];
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  };
+}
 
 // Simple in-memory rate limiting store
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
@@ -47,6 +58,9 @@ interface NewsletterSubscriptionRequest {
 
 const handler = async (req: Request): Promise<Response> => {
   console.log("Newsletter subscription function called");
+  
+  const origin = req.headers.get("origin");
+  const corsHeaders = getCorsHeaders(origin);
 
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {

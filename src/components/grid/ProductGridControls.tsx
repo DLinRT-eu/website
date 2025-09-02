@@ -2,7 +2,7 @@
 import { FileSpreadsheet } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { exportProductsToCSV } from "@/utils/exportProducts";
+import ExportButton from "@/components/common/ExportButton";
 import { Product } from "@/types/product";
 import SortControls, { SortOption } from "./SortControls";
 import { ProductDetails } from "@/types/productDetails";
@@ -57,14 +57,11 @@ const ProductGridControls = ({
           />
         </div>
         
-        <Button
+        <ExportButton
+          data={products as ProductDetails[]}
+          type="products"
           variant="outline"
-          onClick={() => exportProductsToCSV(products as ProductDetails[])}
-          className="flex items-center gap-2"
-        >
-          <FileSpreadsheet className="h-4 w-4" />
-          Export All to CSV
-        </Button>
+        />
       </div>
     </div>
   );

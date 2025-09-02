@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import ProductCard from "../ProductCard";
+import UnifiedProductCard from "../common/UnifiedProductCard";
 import ProductPagination from "./ProductPagination";
 import { ProductDetails } from "@/types/productDetails";
 
@@ -76,25 +76,19 @@ const ProductList = ({
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {currentProducts.map((product) => {
           try {
-            // Ensure product has the required properties for ProductCard
-            const productWithLogoUrl = {
-              ...product,
-              logoUrl: product.logoUrl || '/placeholder.svg'
-            };
-            
             const isSelected = selectedProducts.some(p => p.id === product.id);
             
             return (
-              <ProductCard 
+              <UnifiedProductCard 
                 key={product.id || `product-${Math.random()}`} 
-                {...productWithLogoUrl}
+                product={product}
                 isSelectable={isSelectable}
                 isSelected={isSelected}
                 onSelectionChange={onSelectionChange}
               />
             );
           } catch (error) {
-            console.error("Error rendering ProductCard:", error);
+            console.error("Error rendering UnifiedProductCard:", error);
             return (
               <div className="text-red-500" key={product.id || `error-${Math.random()}`}>
                 Error loading product details.

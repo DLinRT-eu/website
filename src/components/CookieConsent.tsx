@@ -19,10 +19,7 @@ const CookieConsent = () => {
   const handleAcceptAll = () => {
     setCookieConsent({ analytics: true });
     setShowBanner(false);
-    // Reinitialize analytics with new consent
-    import('@/services/analytics').then(module => {
-      module.default.reinitialize();
-    });
+    // Analytics initialization removed
     // Reload to ensure all components are properly updated
     window.location.reload();
   };
@@ -40,10 +37,7 @@ const CookieConsent = () => {
     setShowSettings(false);
     if (accepted !== undefined) {
       setShowBanner(false);
-      // Reinitialize analytics with new consent
-      import('@/services/analytics').then(module => {
-        module.default.reinitialize();
-      });
+      // Analytics reinitialization removed
       // Reload to ensure all components are properly updated
       window.location.reload();
     }

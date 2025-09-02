@@ -6,7 +6,7 @@ import dataService from "@/services/DataService";
 import { FilterState } from "@/types/filters";
 import { SortOption } from "./grid/SortControls";
 import { useProductSearch } from "./grid/ProductSearch";
-import { useProductSorting, useProductShuffle } from "./grid/ProductSorting";
+import { useProductSorting, useProductShuffle } from "@/hooks/useProductSorting";
 import { ProductDetails } from "@/types/productDetails";
 import ProductComparison from "./comparison/ProductComparison";
 import CompareButton from "./comparison/CompareButton";

@@ -60,7 +60,6 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
       basedOn: ["Treatment system model", "Enterprise license"]
     },
     clinicalEvidence: "Clinical evaluations showing improved target visualization and reduced contouring variability compared to conventional CBCT",
-    lastVerified: "2024-10-15",
     lastUpdated: "2024-12-20",
     lastRevised: "2025-05-05"
 

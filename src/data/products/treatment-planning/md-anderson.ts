@@ -59,7 +59,6 @@ export const MD_ANDERSON_PRODUCTS: ProductDetails[] = [
     version: "Latest",
     releaseDate: "2020-01-01",
     lastUpdated: "2024-12-01",
-    lastVerified: "2025-07-14",
     lastRevised: "2025-07-14",
     source: "MD Anderson Cancer Center official website",
     evidence: [

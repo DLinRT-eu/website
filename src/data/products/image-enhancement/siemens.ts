@@ -60,7 +60,6 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
       basedOn: ["CT system model", "Enterprise license"]
     },
     clinicalEvidence: "Clinical studies demonstrating improved lesion detection and characterization compared to conventional dual-energy processing",
-    lastVerified: "2024-12-05",
     lastUpdated: "2025-02-01",
     lastRevised: "2025-05-05"
   }

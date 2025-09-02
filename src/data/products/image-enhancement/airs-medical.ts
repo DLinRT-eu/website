@@ -57,7 +57,6 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
       basedOn: ["Annual scan volume", "Pay-per-use option"]
     },
     clinicalEvidence: "Clinical studies showing improved diagnostic confidence and efficiency when interpreting enhanced images",
-    lastVerified: "2024-12-01",
     lastUpdated: "2025-02-10",
     lastRevised: "2025-05-05"
   },
@@ -116,7 +115,6 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
       basedOn: ["Annual scan volume", "Pay-per-use option"]
     },
     clinicalEvidence: "Early clinical evaluations showing improved image quality metrics and reader preference compared to standard CT images",
-    lastVerified: "2024-11-15",
     lastUpdated: "2025-01-20",
     lastRevised: "2025-05-05"
   }

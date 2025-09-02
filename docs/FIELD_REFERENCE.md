@@ -167,9 +167,8 @@ The following guidelines are commonly referenced in radiotherapy AI products:
 |-------|------|----------|-------------|
 | `version` | string | No | Current software version |
 | `releaseDate` | string | No | Release date (YYYY-MM-DD format) |
-| `lastUpdated` | string | No | When product information was last updated |
-| `lastVerified` | string | No | When product information was last verified |
-| `lastRevised` | string | No | When product underwent major revision |
+| `lastUpdated` | string | No | When product information was last updated (YYYY-MM-DD format) |
+| `lastRevised` | string | No | When product underwent major revision (YYYY-MM-DD format) |
 | `companyRevisionDate` | string | No | When the company last revised/updated the product information (YYYY-MM-DD format) |
 
 ### Contact and Support

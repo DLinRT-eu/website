@@ -67,7 +67,6 @@ export const CANON_PRODUCTS: ProductDetails[] = [
         link: "https://global.medical.canon/products/computed-tomography/aice_dlr"
       }
     ],
-    lastVerified: "2024-11-05",
     lastUpdated: "2025-01-15",
     lastRevised: "2025-08-26",
     source: "Automatically retrieved"
@@ -130,7 +129,6 @@ export const CANON_PRODUCTS: ProductDetails[] = [
       basedOn: ["MR system model", "Enterprise license"]
     },
     clinicalEvidence: "Growing body of clinical evidence showing comparable diagnostic performance with significantly reduced scan times",
-    lastVerified: "2024-10-20",
     lastUpdated: "2025-01-10",
     lastRevised: "2025-05-05",
     source: "Automatically retrieved",
@@ -195,7 +193,6 @@ export const CANON_PRODUCTS: ProductDetails[] = [
       basedOn: ["MR system model", "Enterprise licensing"]
     },
     clinicalEvidence: "Clinical studies demonstrating significantly improved spatial resolution and image sharpness for enhanced diagnostic capabilities",
-    lastVerified: "2024-12-01",
     lastUpdated: "2025-01-15", 
     lastRevised: "2025-01-15",
     source: "Automatically retrieved"

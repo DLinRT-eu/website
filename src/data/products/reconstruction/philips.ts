@@ -58,7 +58,6 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
       basedOn: ["Scanner model", "Usage volume"]
     },
     clinicalEvidence: "Multiple peer-reviewed studies showing non-inferiority to standard dose CT with up to 80% dose reduction",
-    lastVerified: "2024-12-01",
     lastUpdated: "2025-01-15",
     lastRevised: "2025-05-05",
     source: "Automatically retrieved",
@@ -122,7 +121,6 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
       basedOn: ["MRI system model", "Site license"]
     },
     clinicalEvidence: "Multiple clinical studies showing equivalent diagnostic quality with 30-50% reduced scan times across neurological, musculoskeletal, and body imaging",
-    lastVerified: "2025-07-30",
     lastUpdated: "2025-07-30", 
     lastRevised: "2025-07-30",
     source: "Automatically retrieved",

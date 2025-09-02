@@ -64,7 +64,6 @@ export const SUN_NUCLEAR_PRODUCTS: ProductDetails[] = [
     version: "1.0",
     releaseDate: "2021-09-15",
     lastUpdated: "2025-07-14",
-    lastVerified: "2025-07-14",
     lastRevised: "2025-07-14",
     source: "Automatically retrieved and verified",
     clinicalEvidence: "FDA 510(k) validation studies and retrospective analysis of clinical treatment plans",

@@ -60,7 +60,6 @@ export const GE_PRODUCTS: ProductDetails[] = [
       basedOn: ["Annual volume", "Enterprise license"]
     },
     clinicalEvidence: "Multiple clinical evaluations demonstrating improved diagnostic confidence and reduced interpretation time",
-    lastVerified: "2024-11-15",
     lastUpdated: "2025-01-20",
     lastRevised: "2025-05-05"
   },
@@ -121,7 +120,6 @@ export const GE_PRODUCTS: ProductDetails[] = [
       basedOn: ["Annual volume", "Enterprise deployment"]
     },
     clinicalEvidence: "Reader studies showing improved diagnostic confidence and lesion conspicuity compared to standard MR images",
-    lastVerified: "2024-10-20",
     lastUpdated: "2025-01-10",
     lastRevised: "2025-05-05"
 

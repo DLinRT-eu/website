@@ -70,7 +70,6 @@ export const THERAPANACEA_ADAPTBOX_PRODUCTS: ProductDetails[] = [
     releaseDate: "2023-09-01",
     lastUpdated: "2024-04-26",
     lastRevised: "2025-05-12",
-    source: "automatically retrieved and verified",
-    lastVerified: "2025-08-01"
+    source: "automatically retrieved and verified"
   }
 ];

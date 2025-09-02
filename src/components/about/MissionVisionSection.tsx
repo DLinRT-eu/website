@@ -13,7 +13,7 @@ const MissionVisionSection = () => {
           <p className="text-gray-700 text-lg leading-relaxed">
             To accelerate innovation in radiotherapy by creating an open, comprehensive database of deep learning solutions. 
             We bridge the gap between cutting-edge AI research and clinical practice, making advanced tools accessible to 
-            radiation oncology professionals worldwide.
+            radiation oncology professionals worldwide while maintaining the highest standards of security and privacy.
           </p>
         </div>
         

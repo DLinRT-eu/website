@@ -54,9 +54,12 @@ export const SecurityHeadersValidator: React.FC = () => {
   const checkSecurityHeaders = async () => {
     setLoading(true);
     try {
-      // In a real implementation, this would check the actual headers
-      // For demo purposes, we'll simulate the check
-      const response = await fetch(window.location.origin, { method: 'HEAD' });
+      // Check headers using a real request to our own domain
+      const testUrl = `${window.location.origin}/favicon.svg`;
+      const response = await fetch(testUrl, { 
+        method: 'GET',
+        cache: 'no-cache'
+      });
       
       const checkedHeaders: SecurityHeader[] = expectedHeaders.map(header => {
         const actualValue = response.headers.get(header.name);
@@ -64,8 +67,17 @@ export const SecurityHeadersValidator: React.FC = () => {
         let status: 'pass' | 'fail' | 'warning' = 'fail';
         if (actualValue) {
           if (header.name === 'Content-Security-Policy') {
-            // CSP can be complex, so we just check if it exists
             status = actualValue.includes('default-src') ? 'pass' : 'warning';
+          } else if (header.name === 'Strict-Transport-Security') {
+            status = actualValue.includes('max-age') ? 'pass' : 'warning';
+          } else if (header.name === 'X-Content-Type-Options') {
+            status = actualValue.toLowerCase() === 'nosniff' ? 'pass' : 'warning';
+          } else if (header.name === 'X-Frame-Options') {
+            status = actualValue.toUpperCase() === 'DENY' ? 'pass' : 'warning';
+          } else if (header.name === 'X-XSS-Protection') {
+            status = actualValue === '1; mode=block' ? 'pass' : 'warning';
+          } else if (header.name === 'Referrer-Policy') {
+            status = actualValue.includes('strict-origin') ? 'pass' : 'warning';
           } else {
             status = actualValue.includes(header.expected.split(';')[0]) ? 'pass' : 'warning';
           }
@@ -82,8 +94,13 @@ export const SecurityHeadersValidator: React.FC = () => {
       setLastChecked(new Date());
     } catch (error) {
       console.error('Error checking security headers:', error);
-      // Fallback to expected values for demo
-      setHeaders(expectedHeaders.map(h => ({ ...h, status: 'pass' as const })));
+      // If we can't check headers, mark them as unknown status
+      const errorHeaders = expectedHeaders.map(h => ({ 
+        ...h, 
+        status: 'warning' as const,
+        actual: 'Unable to verify - check browser console'
+      }));
+      setHeaders(errorHeaders);
       setLastChecked(new Date());
     } finally {
       setLoading(false);

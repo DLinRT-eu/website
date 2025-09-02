@@ -33,7 +33,11 @@ const TeamSection = ({ teamMembers }: TeamSectionProps) => {
             <CardHeader className="pb-0">
               <div className="flex justify-center">
                 <Avatar className="h-32 w-32">
-                  <AvatarImage src={member.image} alt={member.name} />
+                  <AvatarImage 
+                    src={member.image} 
+                    alt={member.name}
+                    className="object-cover"
+                  />
                   <AvatarFallback>
                     <User className="h-16 w-16" />
                   </AvatarFallback>

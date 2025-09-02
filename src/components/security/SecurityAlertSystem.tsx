@@ -34,6 +34,7 @@ export const SecurityAlertSystem: React.FC = () => {
   const [alerts, setAlerts] = useState<SecurityAlert[]>([]);
   const [activeThreats, setActiveThreats] = useState<number>(0);
   const [loading, setLoading] = useState(true);
+  const [accessDenied, setAccessDenied] = useState(false);
 
   useEffect(() => {
     fetchSecurityAlerts();
@@ -56,8 +57,11 @@ export const SecurityAlertSystem: React.FC = () => {
 
       setAlerts(alertData || []);
       setActiveThreats(alertData?.filter(alert => alert.severity === 'critical').length || 0);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching security alerts:', error);
+      if (error?.code === '42501' || String(error?.message || error).includes('permission denied')) {
+        setAccessDenied(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -109,6 +113,16 @@ export const SecurityAlertSystem: React.FC = () => {
           </div>
         </CardContent>
       </Card>
+    );
+  }
+
+  if (accessDenied) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>
+          Access to security alerts is restricted. Please sign in as an authorized security user to view this section.
+        </AlertDescription>
+      </Alert>
     );
   }
 

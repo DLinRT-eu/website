@@ -29,6 +29,7 @@ export const SecurityDashboard: React.FC = () => {
   const [events, setEvents] = useState<SecurityEvent[]>([]);
   const [stats, setStats] = useState<SecurityStats | null>(null);
   const [loading, setLoading] = useState(true);
+  const [accessDenied, setAccessDenied] = useState(false);
 
   useEffect(() => {
     fetchSecurityData();
@@ -70,8 +71,11 @@ export const SecurityDashboard: React.FC = () => {
         recent_events: recentEvents
       });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching security data:', error);
+      if (error?.code === '42501' || String(error?.message || error).includes('permission denied')) {
+        setAccessDenied(true);
+      }
     } finally {
       setLoading(false);
     }
@@ -109,6 +113,16 @@ export const SecurityDashboard: React.FC = () => {
           ))}
         </div>
       </div>
+    );
+  }
+
+  if (accessDenied) {
+    return (
+      <Alert variant="destructive">
+        <AlertDescription>
+          Access to security events is restricted. Please sign in as an authorized security user to view this dashboard.
+        </AlertDescription>
+      </Alert>
     );
   }
 

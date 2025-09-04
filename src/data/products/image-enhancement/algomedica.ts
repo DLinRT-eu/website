@@ -12,10 +12,11 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
     description:
       "Deep-learning CT denoising that enhances image quality and supports low-radiation protocols; vendor-agnostic across CT scanners.",
     logoUrl: "/logos/algomedica.png",
-    companyUrl: "https://www.algomedica.com/",
-    productUrl: "https://www.algomedica.com/low-radation-ct-scans-algomedica",
+    companyUrl: "https://algomedica.com/",
+    productUrl: "https://algomedica.com/low-radation-ct-scans-algomedica",
     githubUrl:
       "https://github.com/DLinRT-eu/website/tree/main/src/data/products/image-enhancement/algomedica.ts",
+    contactEmail: "info@algomedica.com",
     anatomicalLocation: ["Whole body"],
     modality: "CT",
     keyFeatures: [
@@ -61,6 +62,12 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
       model: ["One-off payment", "Subscription"],
       basedOn: ["Number of analyses", "Number of installations", "Number of licensed CT scanners"]
     },
+    evidence: [
+      {
+        type: "Use cases and scientific publications",
+        link: "https://algomedica.com/medical-imaging-resources#case-studies"      
+      }
+    ],
     lastUpdated: "2025-09-01",
     lastRevised: "2025-09-01"
   }

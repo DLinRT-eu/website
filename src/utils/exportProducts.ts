@@ -41,7 +41,8 @@ export const exportProductsToCSV = (products: ProductDetails[]) => {
     "Technical Population", "Technical Input", "Technical Input Format",
     "Technical Output", "Technical Output Format",
     "Integration Methods", "Deployment Options", "Trigger For Analysis", "Processing Time",
-    "CE Status", "CE Class", "CE Type", "FDA Status", "Intended Use Statement",
+    "CE Status", "CE Class", "CE Type", "CE Certificate Number", "CE Regulation Number",
+    "FDA Status", "FDA Clearance Number", "FDA Regulation Number", "FDA Product Code", "Intended Use Statement",
     "Market Since", "Distribution Channels",
     "Pricing Model", "Pricing Based On",
     "Release Date", "Version", "Website", "Company URL", "Product URL", "GitHub URL",
@@ -77,7 +78,16 @@ export const exportProductsToCSV = (products: ProductDetails[]) => {
     escapeValueForCsv(product.regulatory?.ce?.status),
     escapeValueForCsv(product.regulatory?.ce?.class),
     escapeValueForCsv(product.regulatory?.ce?.type),
-    escapeValueForCsv(product.regulatory?.fda),
+    escapeValueForCsv((product as any)?.regulatory?.ce?.certificateNumber),
+    escapeValueForCsv((product as any)?.regulatory?.ce?.regulationNumber),
+    escapeValueForCsv(
+      typeof (product as any)?.regulatory?.fda === 'string'
+        ? (product as any)?.regulatory?.fda
+        : (product as any)?.regulatory?.fda?.status
+    ),
+    escapeValueForCsv((product as any)?.regulatory?.fda?.clearanceNumber),
+    escapeValueForCsv((product as any)?.regulatory?.fda?.regulationNumber),
+    escapeValueForCsv((product as any)?.regulatory?.fda?.productCode),
     escapeValueForCsv(product.regulatory?.intendedUseStatement),
     escapeValueForCsv(product.market?.onMarketSince),
     escapeValueForCsv(product.market?.distributionChannels),

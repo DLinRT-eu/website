@@ -76,13 +76,20 @@ export const exportModelCardToExcel = (product: ProductDetails) => {
     XLSX.utils.book_append_sheet(wb, guidelinesSheet, "Guidelines");
     
     // Regulatory & Market Sheet
-    const regulatorySheet = XLSX.utils.json_to_sheet([
-      { Field: "CE Details", Value: modelCard.regulatory.ceDetails },
-      { Field: "FDA Details", Value: modelCard.regulatory.fdaDetails },
-      { Field: "Intended Use Statement", Value: modelCard.regulatory.intendedUseStatement },
-      { Field: "Market Presence", Value: modelCard.regulatory.marketPresence },
-    ]);
-    XLSX.utils.book_append_sheet(wb, regulatorySheet, "Regulatory & Market");
+  const regulatorySheet = XLSX.utils.json_to_sheet([
+    { Field: "CE Details", Value: modelCard.regulatory.ceDetails },
+    { Field: "CE Class", Value: (product as any)?.regulatory?.ce?.class || "" },
+    { Field: "CE Type", Value: (product as any)?.regulatory?.ce?.type || "" },
+    { Field: "CE Certificate Number", Value: (product as any)?.regulatory?.ce?.certificateNumber || "" },
+    { Field: "CE Regulation Number", Value: (product as any)?.regulatory?.ce?.regulationNumber || "" },
+    { Field: "FDA Details", Value: modelCard.regulatory.fdaDetails },
+    { Field: "FDA Clearance Number", Value: (product as any)?.regulatory?.fda?.clearanceNumber || "" },
+    { Field: "FDA Regulation Number", Value: (product as any)?.regulatory?.fda?.regulationNumber || "" },
+    { Field: "FDA Product Code", Value: (product as any)?.regulatory?.fda?.productCode || "" },
+    { Field: "Intended Use Statement", Value: modelCard.regulatory.intendedUseStatement },
+    { Field: "Market Presence", Value: modelCard.regulatory.marketPresence },
+  ]);
+  XLSX.utils.book_append_sheet(wb, regulatorySheet, "Regulatory & Market");
     
     // Contact Information Sheet
     const contactSheet = XLSX.utils.json_to_sheet([

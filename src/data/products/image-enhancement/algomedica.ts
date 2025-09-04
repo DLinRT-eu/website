@@ -65,6 +65,7 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
     evidence: [
       {
         type: "Use cases and scientific publications",
+        description: "Clinical case studies and scientific publications demonstrating PixelShine effectiveness",
         link: "https://algomedica.com/medical-imaging-resources#case-studies"      
       }
     ],

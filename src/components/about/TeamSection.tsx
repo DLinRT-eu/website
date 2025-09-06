@@ -21,6 +21,7 @@ const TeamSection = ({ teamMembers }: TeamSectionProps) => {
   const [imageErrors, setImageErrors] = useState<Record<string, boolean>>({});
 
   const handleImageError = (memberName: string) => {
+    console.log(`Image loading failed for: ${memberName}`);
     setImageErrors(prev => ({ ...prev, [memberName]: true }));
   };
 

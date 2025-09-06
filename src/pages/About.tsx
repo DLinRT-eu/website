@@ -11,7 +11,7 @@ const TEAM_MEMBERS = [
   {
     name: "Matteo Maspero",
     role: "Website creator, Lead Developer & Reviewer",
-    image: "https://cig-utrecht.org/img/people/mmasp.jpg",
+    image: "/people/M",
     bio: "https://cig-utrecht.org/members/matteo-maspero",
     email: "matteo.maspero@dlinrt.eu",
   },
@@ -32,7 +32,7 @@ const TEAM_MEMBERS = [
   {
     name: "Ana Maria Barragan Montero",
     role: "Advisor & Reviewer", 
-    image: "https://media.licdn.com/dms/image/v2/C4D03AQEZU-Eklp4OmQ/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1641728655258?e=1756944000&v=beta&t=Jjy194jxhY40_IB5hsj4eX_KpkIUOtvybJT5-WN0PXQ",
+    image: "/people/ana-maria-barragan-montero.jpg",
     bio: "https://be.linkedin.com/in/ana-maria-barragan-montero-93090266",
     email: "ana.barragan@dlinrt.eu",
   }

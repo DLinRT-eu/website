@@ -11,7 +11,7 @@ const TEAM_MEMBERS = [
   {
     name: "Matteo Maspero",
     role: "Website creator, Lead Developer & Reviewer",
-    image: "/people/M",
+    image: "/people/matteo-maspero.jpg",
     bio: "https://cig-utrecht.org/members/matteo-maspero",
     email: "matteo.maspero@dlinrt.eu",
   },

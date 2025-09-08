@@ -32,7 +32,7 @@ const TEAM_MEMBERS = [
   {
     name: "Ana Maria Barragan Montero",
     role: "Advisor & Reviewer", 
-    image: "/placeholder.svg",
+    image: "/Ana.png",
     bio: "https://be.linkedin.com/in/ana-maria-barragan-montero-93090266",
     email: "ana.barragan@dlinrt.eu",
   }

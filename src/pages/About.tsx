@@ -35,6 +35,20 @@ const TEAM_MEMBERS = [
     image: "/people/Ana.png",
     bio: "https://be.linkedin.com/in/ana-maria-barragan-montero-93090266",
     email: "ana.barragan@dlinrt.eu",
+  },
+  {
+    name: "Federico Mastroleo",
+    role: "Advisor & Reviewer", 
+    image: "/people/Federico.jpg",
+    bio: "https://www.linkedin.com/in/federico-mastroleo/",
+    email: "federico.mastroleo@dlinrt.eu",
+  },
+  {
+    name: "Viktor Rogowski",
+    role: "Advisor & Reviewer", 
+    image: "/people/Viktor.png",
+    bio: "https://www.linkedin.com/in/viktor-rogowski/",
+    email: "viktor.rogowski@dlinrt.eu",
   }
 ];
 

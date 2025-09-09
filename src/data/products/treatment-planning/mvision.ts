@@ -12,7 +12,7 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
     description: "Dose+ is an AI-based treatment planning solution that automates VMAT and IMRT radiotherapy plans creation, reducing planning time from hours to minutes while ensuring high quality and consistency.",
     features: ["Automated VMAT/IMRT planning", "Clinical objectives optimization", "Fast plan creation", "Plan quality consistency"],
     category: "Treatment Planning",
-    certification: "CE",
+    certification: "CE & FDA",
     logoUrl: "/logos/mvision-ai.png",
     website: "https://mvision.ai/dose/",
     anatomicalLocation: ["Male Pelvis", "Prostate"],
@@ -45,7 +45,11 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
         class: "IIb",
         type: "Medical Device"
       },
-      fda: "Pending",
+      fda: {
+        status: "510(k) Cleared",
+        class: "Class II",
+        type: "510(k)"
+      },
       intendedUseStatement: "For use in radiation therapy treatment planning to assist in creating VMAT and IMRT plans."
     },
     market: {

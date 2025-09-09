@@ -39,7 +39,7 @@ const TeamSection = ({ teamMembers }: TeamSectionProps) => {
         <p className="text-lg text-muted-foreground">The experts who keep our systems running smoothly</p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 justify-items-center">
         {teamMembers.map((member) => (
           <Card key={member.name} className="overflow-hidden hover:shadow-lg transition-shadow">
             <CardHeader className="pb-0">

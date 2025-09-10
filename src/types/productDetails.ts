@@ -6,7 +6,7 @@ import type { ProductDetails as ProductDetailsExtended } from './productDetails.
 
 export interface Structure {
   name: string;
-  type: "OAR" | "GTV" | "Elective";
+  type: "OAR" | "Targets" | "Elective";
   description?: string;
 }
 

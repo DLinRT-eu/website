@@ -28,7 +28,7 @@ export interface PresentationData {
     productName: string; 
     companyName: string; 
     OARs: number; 
-    GTV: number; 
+    Targets: number; 
     Elective: number; 
     total: number 
   }>;
@@ -932,13 +932,13 @@ export class PptxExporter {
     
     // Aggregate data for stacked chart
     const totalOARs = data.structureTypeData.reduce((sum, item) => sum + item.OARs, 0);
-    const totalGTV = data.structureTypeData.reduce((sum, item) => sum + item.GTV, 0);
+    const totalTargets = data.structureTypeData.reduce((sum, item) => sum + item.Targets, 0);
     const totalElective = data.structureTypeData.reduce((sum, item) => sum + item.Elective, 0);
     
     const chartData = [{
       name: "Structure Types",
-      labels: ["OARs", "GTV", "Elective"],
-      values: [totalOARs, totalGTV, totalElective]
+      labels: ["OARs", "Targets", "Elective"],
+      values: [totalOARs, totalTargets, totalElective]
     }];
     
     slide.addChart("pie", chartData, {

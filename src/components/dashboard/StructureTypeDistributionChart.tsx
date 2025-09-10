@@ -6,7 +6,7 @@ interface StructureTypeData {
   productName: string;
   companyName: string;
   OARs: number;
-  GTV: number;
+  Targets: number;
   Elective: number;
   total: number;
 }
@@ -19,16 +19,16 @@ const StructureTypeDistributionChart: React.FC<StructureTypeDistributionChartPro
   // Calculate totals for the title
   const totals = structureTypeData.reduce((acc, curr) => ({
     OARs: acc.OARs + curr.OARs,
-    GTV: acc.GTV + curr.GTV,
+    Targets: acc.Targets + curr.Targets,
     Elective: acc.Elective + curr.Elective
-  }), { OARs: 0, GTV: 0, Elective: 0 });
+  }), { OARs: 0, Targets: 0, Elective: 0 });
 
   return (
     <Card className="col-span-1 md:col-span-2">
       <CardHeader>
         <CardTitle>Structure Type Distribution</CardTitle>
         <p className="text-sm text-muted-foreground">
-          Total structures by type: {totals.OARs} OARs, {totals.GTV} GTV, {totals.Elective} Elective
+          Total structures by type: {totals.OARs} OARs, {totals.Targets} Targets, {totals.Elective} Elective
         </p>
       </CardHeader>
       <CardContent>
@@ -59,7 +59,7 @@ const StructureTypeDistributionChart: React.FC<StructureTypeDistributionChartPro
               />
               <Legend />
               <Bar dataKey="OARs" stackId="a" fill="#3b82f6" name="OARs" />
-              <Bar dataKey="GTV" stackId="a" fill="#ef4444" name="GTV" />
+              <Bar dataKey="Targets" stackId="a" fill="#ef4444" name="Targets" />
               <Bar dataKey="Elective" stackId="a" fill="#8b5cf6" name="Elective" />
             </BarChart>
           </ResponsiveContainer>

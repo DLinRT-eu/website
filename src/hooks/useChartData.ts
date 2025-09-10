@@ -23,7 +23,7 @@ export const useChartData = (
     productName: string;
     companyName: string;
     OARs: number;
-    GTV: number;
+    Targets: number;
     Elective: number;
     total: number;
   }[]>([]);

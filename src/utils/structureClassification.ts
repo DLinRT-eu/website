@@ -3,13 +3,13 @@
 
 export interface StructureTypes {
   hasOAR: boolean;
-  hasGTV: boolean;
+  hasTargets: boolean;
   hasElective: boolean;
 }
 
 export interface StructureTypeCounts {
   OARs: number;
-  GTV: number;
+  Targets: number;
   Elective: number;
   total: number;
 }
@@ -24,22 +24,23 @@ export function hasLateralityPattern(structure: string): boolean {
 }
 
 /**
- * Classifies a structure name into OAR, GTV, or Elective
+ * Classifies a structure name into OAR, Targets, or Elective
  * @param structure Full structure name (can include region prefix)
  * @returns Object indicating which type the structure is
  */
-export function classifyStructure(structure: string): { isGTV: boolean; isElective: boolean } {
+export function classifyStructure(structure: string): { isTarget: boolean; isElective: boolean } {
   // Determine structure types with pattern matching on the FULL string
-  // GTV pattern - looking for explicit GTV markers and lesion references
-  const isGTV = (
-    /\bGTV\b|Gross\s+Tumor|Gross\s+Target/i.test(structure) ||
+  // Target pattern - looking for CTV, GTV, PTV, and lesion references
+  const isTarget = (
+    /\b(CTV|GTV|PTV|Clinical\s+Target|Planning\s+Target|Gross\s+Tumor|Gross\s+Target)\b/i.test(structure) ||
     /\blesion[s]?\b|\blesional\b/i.test(structure)
   );
 
   // Enhanced lymph node and elective structure pattern matching
+  // Note: CTV and PTV are now classified as Targets, not Elective
   const isElective = (
-    // Check for clinical/planning target volumes
-    /\b(CTV|PTV|Clinical\s+Target|Planning\s+Target|Elective)\b/i.test(structure) ||
+    // Check for elective volumes (excluding CTV/PTV which are now Targets)
+    /\bElective\b/i.test(structure) ||
     
     // Match any LN (Lymph Node) patterns - including ESTRO and ALL LN_ prefixes
     /\bLN[_\s\-]|LN_Pelvics|LN_Breast|LN_B_RTOG|\bLN\b/i.test(structure) ||
@@ -69,7 +70,7 @@ export function classifyStructure(structure: string): { isGTV: boolean; isElecti
     /Level\s+[IV]+\s+(LN|Node)/i.test(structure)
   );
 
-  return { isGTV, isElective };
+  return { isTarget, isElective };
 }
 
 /**
@@ -80,19 +81,19 @@ export function classifyStructure(structure: string): { isGTV: boolean; isElecti
 export function countStructureTypes(structures: string[]): StructureTypeCounts {
   const counts: StructureTypeCounts = {
     OARs: 0,
-    GTV: 0,
+    Targets: 0,
     Elective: 0,
     total: 0
   };
 
   structures.forEach(structure => {
-    const { isGTV, isElective } = classifyStructure(structure);
+    const { isTarget, isElective } = classifyStructure(structure);
     
     // Check if structure has L/R pattern - count as two structures if it does
     const multiplier = hasLateralityPattern(structure) ? 2 : 1;
     
-    if (isGTV) {
-      counts.GTV += multiplier;
+    if (isTarget) {
+      counts.Targets += multiplier;
     } else if (isElective) {
       counts.Elective += multiplier;
     } else {

@@ -160,7 +160,7 @@ export const transformStructureData = (
 export const transformStructureTypeData = (
   filteredProducts: ProductDetails[],
   selectedTask: string
-): {productName: string; companyName: string; OARs: number; GTV: number; Elective: number; total: number}[] => {
+): {productName: string; companyName: string; OARs: number; Targets: number; Elective: number; total: number}[] => {
   if (selectedTask !== "Auto-Contouring") {
     return [];
   }

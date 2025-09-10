@@ -1,5 +1,6 @@
 import { ProductDetails } from "@/types/productDetails";
 import { CERTIFICATION_TAGS, CERTIFICATION_MAPPING } from "@/config/tags";
+import { getStandardizedCertificationTags as getRegulatoryCertificationTags } from "@/utils/regulatoryUtils";
 
 /**
  * Checks if a product has CE or FDA regulatory approval
@@ -114,39 +115,8 @@ export const standardizeCertification = (certification: string): string => {
 
 /**
  * Gets standardized certification tags from a product
+ * Delegates to regulatoryUtils for consistency
  */
 export const getStandardizedCertificationTags = (product: ProductDetails): string[] => {
-  // If using combined certifications like "CE & FDA"
-  if (product.certification && CERTIFICATION_MAPPING[product.certification]) {
-    return CERTIFICATION_MAPPING[product.certification];
-  }
-  
-  // Otherwise extract from both certification field and regulatory details
-  const certTags: string[] = [];
-  
-  if (product.certification) {
-    if (product.certification.toLowerCase().includes('ce')) certTags.push('CE');
-    if (product.certification.toLowerCase().includes('fda')) certTags.push('FDA');
-    if (product.certification === 'MDR exempt') certTags.push('MDR exempt');
-    if (product.certification.toLowerCase().includes('nmpa')) certTags.push('NMPA');
-  }
-  
-  // Check regulatory fields
-  if (product.regulatory?.ce?.status === 'Approved' || 
-      product.regulatory?.ce?.status === 'Certified') {
-    if (!certTags.includes('CE')) certTags.push('CE');
-  }
-  
-  if (product.regulatory?.fda && 
-      (typeof product.regulatory.fda === 'string' ? 
-       (product.regulatory.fda.includes('510(k)') || 
-        product.regulatory.fda.includes('Cleared') || 
-        product.regulatory.fda.includes('Approved')) :
-       (product.regulatory.fda.status?.includes('510(k)') ||
-        product.regulatory.fda.status?.includes('Cleared') ||
-        product.regulatory.fda.status?.includes('Approved')))) {
-    if (!certTags.includes('FDA')) certTags.push('FDA');
-  }
-  
-  return certTags.filter(tag => CERTIFICATION_TAGS.includes(tag));
+  return getRegulatoryCertificationTags(product);
 };

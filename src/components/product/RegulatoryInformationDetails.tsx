@@ -4,8 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle, AlertTriangle, Info } from "lucide-react";
-import { getStandardizedCertificationTags } from "@/utils/productFilters";
-import { parseFDAInfo, parseCEInfo, formatFDAInfo, formatCEInfo } from "@/utils/regulatoryUtils";
+import { getStandardizedCertificationTags, parseFDAInfo, parseCEInfo, formatFDAInfo, formatCEInfo } from "@/utils/regulatoryUtils";
 
 interface RegulatoryInformationProps {
   product: ProductDetails;

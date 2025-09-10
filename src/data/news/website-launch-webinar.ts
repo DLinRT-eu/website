@@ -25,7 +25,7 @@ In this 45-minute session, you will:
 
 ## Registration
 
-To secure your spot, register via https://lnkd.in/ejhfr49h or email us at: 📧 **info@dlinrt.eu**
+To secure your spot, register via [https://lnkd.in/ejhfr49h](https://lnkd.in/ejhfr49h) or email us at: 📧 **info@dlinrt.eu**
 
 This is your opportunity to be among the first to explore how DLinRT.eu is transforming the landscape of AI-powered radiotherapy. Whether you're a clinician, researcher, or industry professional, this webinar will showcase how our platform can accelerate your work and connect you with the global radiation oncology community.
 

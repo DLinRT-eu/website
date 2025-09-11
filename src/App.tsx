@@ -30,6 +30,7 @@ import SecurityMonitoring from "./pages/SecurityMonitoring";
 import AutoContouringPage from "./pages/categories/AutoContouring";
 import TreatmentPlanningPage from "./pages/categories/TreatmentPlanning";
 import ImageSynthesisPage from "./pages/categories/ImageSynthesis";
+import ResourcesCompliance from "./pages/ResourcesCompliance";
 import Breadcrumb from "./components/Breadcrumb";
 
 // Create a client
@@ -74,6 +75,7 @@ const App = () => (
             <Route path="category/auto-contouring" element={<AutoContouringPage />} />
             <Route path="category/treatment-planning" element={<TreatmentPlanningPage />} />
             <Route path="category/image-synthesis" element={<ImageSynthesisPage />} />
+            <Route path="resources-compliance" element={<ResourcesCompliance />} />
             <Route path="export-presentation" element={<ExportPresentation />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

@@ -9,13 +9,13 @@ import ResourceLinks from '@/components/resources/ResourceLinks';
 const ResourcesCompliance = () => {
   return (
     <PageLayout
-      title="Resources & Compliance"
+      title="Resources and compliance"
       description="Educational resources on AI solution classification, clinical tasks, and regulatory frameworks governing medical AI in Europe"
       canonical="https://dlinrt.eu/resources-compliance"
       structuredData={{
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Resources & Compliance - DLinRT.eu",
+        "name": "Resources and compliance - DLinRT.eu",
         "description": "Educational resources on AI solution classification, clinical tasks, and regulatory frameworks governing medical AI in Europe",
         "url": "https://dlinrt.eu/resources-compliance"
       }}
@@ -25,7 +25,7 @@ const ResourcesCompliance = () => {
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Resources & Compliance
+              Resources and compliance
             </h1>
             <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
               This page provides the foundational knowledge to navigate the DLinRT platform. 
@@ -38,10 +38,10 @@ const ResourcesCompliance = () => {
           {/* Classification Taxonomy Section */}
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Our Classification Taxonomy
+              Our classification taxonomy
             </h2>
             <h3 className="text-xl text-muted-foreground mb-8">
-              How We Organize AI Solutions in Radiotherapy
+              How we organize AI solutions in radiotherapy
             </h3>
             <p className="text-muted-foreground mb-8 leading-relaxed">
               To help you navigate the landscape, we categorize solutions based on a multi-layered 
@@ -53,10 +53,10 @@ const ResourcesCompliance = () => {
           {/* Clinical Tasks Glossary */}
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Glossary of Clinical Tasks
+              Glossary of clinical tasks
             </h2>
             <h3 className="text-xl text-muted-foreground mb-8">
-              Defining AI's Role in the Clinic
+              Defining AI's role in the clinic
             </h3>
             <p className="text-muted-foreground mb-8 leading-relaxed">
               AI applications are defined by the clinical task they perform. Below is a glossary 
@@ -68,10 +68,10 @@ const ResourcesCompliance = () => {
           {/* Regulatory Framework */}
           <section className="mb-16">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Regulatory Framework
+              Regulatory framework
             </h2>
             <h3 className="text-xl text-muted-foreground mb-8">
-              Navigating Medical Device Regulations
+              Navigating medical device regulations
             </h3>
             <p className="text-muted-foreground mb-8 leading-relaxed">
               In the European Union, AI software intended for medical use is regulated under the 
@@ -87,10 +87,10 @@ const ResourcesCompliance = () => {
           {/* Further Reading */}
           <section>
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Further Reading
+              Further reading
             </h2>
             <h3 className="text-xl text-muted-foreground mb-8">
-              Explore Authoritative Sources
+              Explore authoritative sources
             </h3>
             <ResourceLinks />
           </section>

@@ -2,21 +2,24 @@ import React from 'react';
 import PageLayout from '@/components/layout/PageLayout';
 import TaxonomyDiagram from '@/components/resources/TaxonomyDiagram';
 import ClinicalTasksGlossary from '@/components/resources/ClinicalTasksGlossary';
-import RegulatoryFramework from '@/components/resources/RegulatoryFramework';
+import PurposeSection from '@/components/resources/PurposeSection';
+import RegulatoryLandscape from '@/components/resources/RegulatoryLandscape';
+import StandardsGuidelines from '@/components/resources/StandardsGuidelines';
+import ComplianceChecklist from '@/components/resources/ComplianceChecklist';
+import CoreDocuments from '@/components/resources/CoreDocuments';
 import DisclaimerBox from '@/components/resources/DisclaimerBox';
-import ResourceLinks from '@/components/resources/ResourceLinks';
 
 const ResourcesCompliance = () => {
   return (
     <PageLayout
-      title="Resources and compliance"
-      description="Educational resources on AI solution classification, clinical tasks, and regulatory frameworks governing medical AI in Europe"
+      title="Resources & compliance"
+      description="Essential regulatory and practical resources for deploying deep-learning solutions in clinical radiotherapy workflows, covering EU MDR, AI Act, FDA pathways, and compliance checklists"
       canonical="https://dlinrt.eu/resources-compliance"
       structuredData={{
         "@context": "https://schema.org",
         "@type": "WebPage",
-        "name": "Resources and compliance - DLinRT.eu",
-        "description": "Educational resources on AI solution classification, clinical tasks, and regulatory frameworks governing medical AI in Europe",
+        "name": "Resources & compliance - DLinRT.eu",
+        "description": "Essential regulatory and practical resources for deploying deep-learning solutions in clinical radiotherapy workflows",
         "url": "https://dlinrt.eu/resources-compliance"
       }}
     >
@@ -25,13 +28,12 @@ const ResourcesCompliance = () => {
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-              Resources and compliance
+              Resources & compliance
             </h1>
             <p className="text-lg text-muted-foreground max-w-4xl mx-auto leading-relaxed">
-              This page provides the foundational knowledge to navigate the DLinRT platform. 
-              Here you can learn about the taxonomy we use to classify AI solutions, understand 
-              the clinical tasks they perform, and review the important regulatory frameworks 
-              that govern their use in Europe.
+              This page provides both foundational knowledge and practical compliance guidance for AI in radiotherapy. 
+              Learn about our classification taxonomy, understand clinical tasks, and access essential regulatory 
+              resources for deploying deep-learning solutions in clinical workflows.
             </p>
           </div>
 
@@ -65,34 +67,61 @@ const ResourcesCompliance = () => {
             <ClinicalTasksGlossary />
           </section>
 
-          {/* Regulatory Framework */}
+          {/* Purpose & Regulatory Summary */}
           <section className="mb-16">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              Regulatory framework
+            <h2 className="text-3xl font-bold text-foreground mb-8">
+              Regulatory overview
             </h2>
-            <h3 className="text-xl text-muted-foreground mb-8">
-              Navigating medical device regulations
-            </h3>
-            <p className="text-muted-foreground mb-8 leading-relaxed">
-              In the European Union, AI software intended for medical use is regulated under the 
-              Medical Device Regulation (MDR 2017/745). Our platform helps users understand the 
-              regulatory context of these tools.
-            </p>
-            <RegulatoryFramework />
-            <div className="mt-8">
-              <DisclaimerBox />
-            </div>
+            <PurposeSection />
           </section>
 
-          {/* Further Reading */}
-          <section>
+          {/* Regulatory Landscape Quick Guide */}
+          <section className="mb-16">
             <h2 className="text-3xl font-bold text-foreground mb-4">
-              Further reading
+              Regulatory landscape — quick guide
             </h2>
             <h3 className="text-xl text-muted-foreground mb-8">
-              Explore authoritative sources
+              EU and US regulatory pathways for medical AI
             </h3>
-            <ResourceLinks />
+            <RegulatoryLandscape />
+          </section>
+
+          {/* Standards & Guidelines */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Standards, guidelines & principles
+            </h2>
+            <h3 className="text-xl text-muted-foreground mb-8">
+              Practical targets for implementation
+            </h3>
+            <StandardsGuidelines />
+          </section>
+
+          {/* Practical Compliance Checklist */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Practical compliance checklist
+            </h2>
+            <h3 className="text-xl text-muted-foreground mb-8">
+              For DL teams preparing clinical deployment
+            </h3>
+            <ComplianceChecklist />
+          </section>
+
+          {/* Core Documents & References */}
+          <section className="mb-16">
+            <h2 className="text-3xl font-bold text-foreground mb-4">
+              Core documents & references
+            </h2>
+            <h3 className="text-xl text-muted-foreground mb-8">
+              Essential starting points — start here
+            </h3>
+            <CoreDocuments />
+          </section>
+
+          {/* Disclaimer */}
+          <section>
+            <DisclaimerBox />
           </section>
         </div>
       </div>

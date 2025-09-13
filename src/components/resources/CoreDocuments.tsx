@@ -21,7 +21,7 @@ const CoreDocuments = () => {
         {
           title: "MDCG 2025-6 - MDR/AI Act Interplay FAQ", 
           description: "Joint applicability guidance for medical device AI",
-          url: "https://health.ec.europa.eu/medical-devices-sector/new-regulations/guidance-mdcg-documents_en",
+          url: "https://health.ec.europa.eu/latest-updates/mdcg-2025-6-faq-interplay-between-medical-devices-regulation-vitro-diagnostic-medical-devices-2025-06-19_en",
           type: "Guidance",
           reference: "[2]"
         },
@@ -49,7 +49,7 @@ const CoreDocuments = () => {
         {
           title: "AI-Enabled Device Software Functions",
           description: "Draft guidance on lifecycle and marketing submissions",
-          url: "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/artificial-intelligence-and-machine-learning-aiml-enabled-medical-devices",
+          url: "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/artificial-intelligence-enabled-device-software-functions-lifecycle-management-and-marketing",
           type: "Draft Guidance",
           reference: "[8]"
         }
@@ -63,7 +63,7 @@ const CoreDocuments = () => {
         {
           title: "MDCG Endorsed Guidance Hub",
           description: "Collection of MDCG guidance documents",
-          url: "https://health.ec.europa.eu/medical-devices-sector/new-regulations/guidance-mdcg-documents_en",
+          url: "https://health.ec.europa.eu/medical-devices-sector/new-regulations/guidance-mdcg-endorsed-documents-and-other-guidance_en",
           type: "Resource Hub",
           reference: "[5]"
         },

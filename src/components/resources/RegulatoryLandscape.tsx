@@ -73,7 +73,7 @@ const RegulatoryLandscape = () => {
             MDCG's FAQ (MDCG 2025-6) explains joint applicability, classification cues, and practical expectations for MDAI (Medical Device AI). Follow MDCG guidance for harmonised interpretation.
           </p>
           <a 
-            href="https://health.ec.europa.eu/medical-devices-sector/new-regulations/guidance-mdcg-documents_en" 
+            href="https://health.ec.europa.eu/medical-devices-sector/new-regulations/guidance-mdcg-endorsed-documents-and-other-guidance_en" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 transition-colors"

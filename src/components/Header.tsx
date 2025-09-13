@@ -38,12 +38,6 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/initiatives" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
-                <Beaker className="w-4 h-4 mr-1 lg:mr-2" />
-                <span className="hidden lg:inline">Research&nbsp;&amp;&nbsp;</span>Initiatives
-              </Link>
-            </li>
-            <li>
               <Link to="/dashboard" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
                 <LayoutDashboard className="w-4 h-4 mr-1 lg:mr-2" />
                 Dashboard
@@ -59,6 +53,12 @@ const Header = () => {
               <Link to="/resources-compliance" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
                 <BookOpen className="w-4 h-4 mr-1 lg:mr-2" />
                 <span className="hidden lg:inline">Resources&nbsp;&amp;&nbsp;</span>Compliance
+              </Link>
+            </li>
+            <li>
+              <Link to="/initiatives" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
+                <Beaker className="w-4 h-4 mr-1 lg:mr-2" />
+                <span className="hidden lg:inline">Research&nbsp;&amp;&nbsp;</span>Initiatives
               </Link>
             </li>
             <li>

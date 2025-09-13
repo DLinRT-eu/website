@@ -54,15 +54,6 @@ const MobileNav = () => {
           </Link>
           
           <Link 
-            to="/initiatives" 
-            onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
-          >
-            <Beaker className="w-5 h-5 mr-3 text-gray-500" />
-            <span className="font-medium">Research&nbsp;&amp;&nbsp;Initiatives</span>
-          </Link>
-          
-          <Link 
             to="/dashboard" 
             onClick={handleLinkClick}
             className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
@@ -87,6 +78,15 @@ const MobileNav = () => {
           >
             <BookOpen className="w-5 h-5 mr-3 text-gray-500" />
             <span className="font-medium">Resources&nbsp;&amp;&nbsp;Compliance</span>
+          </Link>
+          
+          <Link 
+            to="/initiatives" 
+            onClick={handleLinkClick}
+            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+          >
+            <Beaker className="w-5 h-5 mr-3 text-gray-500" />
+            <span className="font-medium">Research&nbsp;&amp;&nbsp;Initiatives</span>
           </Link>
           
           <Link 

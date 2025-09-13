@@ -65,6 +65,13 @@ const Index = () => {
                 the vendors pioneering deep learning integration in radiotherapy product development.
               </p>
               <p className="mb-4">
+                Beyond product cataloguing, our <Link to="/resources-compliance" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">Resources & Compliance section</Link> provides essential regulatory guidance, 
+                practical compliance checklists, and comprehensive standards documentation to support the safe deployment 
+                of deep learning solutions in clinical radiotherapy workflows. From understanding the regulatory landscape 
+                to implementing quality management systems and post-market surveillance, we offer actionable resources 
+                for both newcomers and experts navigating the complex requirements of medical AI deployment.
+              </p>
+              <p className="mb-4">
                 Whether you're a medical physicist seeking <Link to="/products?task=Auto-contouring" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline">auto-contouring tools</Link>, a radiation oncologist exploring 
                 <Link to="/products?task=Treatment%20Planning" className="text-[#00A6D6] hover:text-[#00A6D6]/80 underline"> treatment planning solutions</Link>, or a healthcare administrator reviewing new technologies, DLinRT.eu 
                 provides clear, up-to-date information to support informed decision-making. Our goal is to promote 

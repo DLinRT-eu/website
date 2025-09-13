@@ -14,21 +14,21 @@ const CoreDocuments = () => {
         {
           title: "MDR (Regulation EU 2017/745)",
           description: "Official Medical Device Regulation text",
-          url: "#",
+          url: "https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32017R0745",
           type: "Official Text",
           reference: "[1]"
         },
         {
           title: "MDCG 2025-6 - MDR/AI Act Interplay FAQ", 
           description: "Joint applicability guidance for medical device AI",
-          url: "#",
+          url: "https://health.ec.europa.eu/medical-devices-sector/new-regulations/guidance-mdcg-documents_en",
           type: "Guidance",
           reference: "[2]"
         },
         {
           title: "EU AI Act Overview",
           description: "Commission guidance on AI in healthcare",
-          url: "#",
+          url: "https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai",
           type: "Overview",
           reference: "[4]"
         }
@@ -42,14 +42,14 @@ const CoreDocuments = () => {
         {
           title: "AI/ML in Software as Medical Device",
           description: "FDA overview and guidance pages",
-          url: "#",
+          url: "https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-and-machine-learning-software-medical-device",
           type: "Guidance",
           reference: "[3]"
         },
         {
           title: "AI-Enabled Device Software Functions",
           description: "Draft guidance on lifecycle and marketing submissions",
-          url: "#",
+          url: "https://www.fda.gov/regulatory-information/search-fda-guidance-documents/artificial-intelligence-and-machine-learning-aiml-enabled-medical-devices",
           type: "Draft Guidance",
           reference: "[8]"
         }
@@ -63,14 +63,14 @@ const CoreDocuments = () => {
         {
           title: "MDCG Endorsed Guidance Hub",
           description: "Collection of MDCG guidance documents",
-          url: "#",
+          url: "https://health.ec.europa.eu/medical-devices-sector/new-regulations/guidance-mdcg-documents_en",
           type: "Resource Hub",
           reference: "[5]"
         },
         {
           title: "ISO 13485 Quality Management",
           description: "Quality management systems for medical devices",
-          url: "#",
+          url: "https://www.iso.org/standard/59752.html",
           type: "Standard",
           reference: "[6]"
         }
@@ -84,7 +84,7 @@ const CoreDocuments = () => {
         {
           title: "Clinical Evidence for AI in Healthcare",
           description: "Best practices for clinical validation of AI systems",
-          url: "#",
+          url: "https://www.who.int/publications/i/item/9789240029200",
           type: "Research",
           reference: "[7]"
         }
@@ -144,8 +144,20 @@ const CoreDocuments = () => {
                       {doc.description}
                     </p>
                   </div>
-                  <Button variant="ghost" size="sm" className="flex-shrink-0">
-                    <ExternalLink className="h-4 w-4" />
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="flex-shrink-0"
+                    asChild
+                  >
+                    <a 
+                      href={doc.url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`Open ${doc.title}`}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
                   </Button>
                 </div>
               ))}

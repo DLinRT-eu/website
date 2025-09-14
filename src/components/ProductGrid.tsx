@@ -10,6 +10,7 @@ import { useProductSorting, useProductShuffle } from "@/hooks/useProductSorting"
 import { ProductDetails } from "@/types/productDetails";
 import ProductComparison from "./comparison/ProductComparison";
 import CompareButton from "./comparison/CompareButton";
+import FloatingCompareButton from "./comparison/FloatingCompareButton";
 import { Button } from "./ui/button";
 import { Scale } from "lucide-react";
 
@@ -139,7 +140,8 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-4">
+      {/* Enhanced grid controls with better comparison discoverability */}
+      <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-4 mb-4">
         <ProductGridControls
           itemsPerPage={itemsPerPage}
           onItemsPerPageChange={handleItemsPerPageChange}
@@ -150,14 +152,21 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
           onDirectionChange={handleDirectionChange}
         />
         
-        <Button
-          variant={isCompareMode ? "default" : "outline"}
-          onClick={handleToggleCompareMode}
-          className="flex items-center gap-2"
-        >
-          <Scale className="h-4 w-4" />
-          {isCompareMode ? "Exit Compare" : "Compare Products"}
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            variant={isCompareMode ? "default" : "outline"}
+            onClick={handleToggleCompareMode}
+            className="flex items-center gap-2 touch-target-minimum"
+          >
+            <Scale className="h-4 w-4" />
+            {isCompareMode ? "Exit Compare" : "Compare Products"}
+          </Button>
+          {!isCompareMode && (
+            <div className="text-xs text-muted-foreground">
+              Select products to compare
+            </div>
+          )}
+        </div>
       </div>
       
       <ProductList
@@ -174,13 +183,16 @@ const ProductGrid = ({ filters, searchQuery = "", advancedSearch = false }: Prod
         showAllInCompareMode={true}
       />
       
-      {isCompareMode && (
-        <CompareButton
-          selectedProducts={selectedProducts}
-          onCompare={handleCompare}
-          onClear={handleClearSelection}
-        />
-      )}
+      {/* Enhanced floating compare button */}
+      <FloatingCompareButton
+        selectedProducts={selectedProducts}
+        onCompare={handleCompare}
+        onClear={handleClearSelection}
+        onRemoveProduct={(productId) => {
+          const updatedProducts = selectedProducts.filter(p => p.id !== productId);
+          setSelectedProducts(updatedProducts);
+        }}
+      />
       
       <ProductComparison
         products={selectedProducts}

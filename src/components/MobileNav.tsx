@@ -18,9 +18,10 @@ const MobileNav = () => {
         <Button 
           variant="ghost" 
           size="icon" 
-          className="text-white hover:bg-white/10 h-10 w-10"
+          className="text-white hover:bg-white/10 h-12 w-12 touch-target-minimum"
+          aria-label="Open navigation menu"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="h-6 w-6" />
           <span className="sr-only">Toggle menu</span>
         </Button>
       </SheetTrigger>
@@ -38,73 +39,73 @@ const MobileNav = () => {
           <Link 
             to="/products" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
           >
-            <Package className="w-5 h-5 mr-3 text-gray-500" />
+            <Package className="w-5 h-5 mr-3 text-primary" />
             <span className="font-medium">Products</span>
           </Link>
           
           <Link 
             to="/companies" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
           >
-            <Building2 className="w-5 h-5 mr-3 text-gray-500" />
+            <Building2 className="w-5 h-5 mr-3 text-primary" />
             <span className="font-medium">Companies</span>
           </Link>
           
           <Link 
             to="/dashboard" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
           >
-            <LayoutDashboard className="w-5 h-5 mr-3 text-gray-500" />
+            <LayoutDashboard className="w-5 h-5 mr-3 text-primary" />
             <span className="font-medium">Dashboard</span>
           </Link>
           
           <Link 
             to="/news" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
           >
-            <Newspaper className="w-5 h-5 mr-3 text-gray-500" />
+            <Newspaper className="w-5 h-5 mr-3 text-primary" />
             <span className="font-medium">News</span>
           </Link>
           
           <Link 
             to="/resources-compliance" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
           >
-            <BookOpen className="w-5 h-5 mr-3 text-gray-500" />
-            <span className="font-medium">Resources&nbsp;&amp;&nbsp;Compliance</span>
+            <BookOpen className="w-5 h-5 mr-3 text-primary" />
+            <span className="font-medium">Resources & Compliance</span>
           </Link>
           
           <Link 
             to="/initiatives" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
           >
-            <Beaker className="w-5 h-5 mr-3 text-gray-500" />
-            <span className="font-medium">Research&nbsp;&amp;&nbsp;Initiatives</span>
+            <Beaker className="w-5 h-5 mr-3 text-primary" />
+            <span className="font-medium">Research & Initiatives</span>
           </Link>
           
           <Link 
             to="/about" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors border-b border-gray-50"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
           >
-            <Info className="w-5 h-5 mr-3 text-gray-500" />
+            <Info className="w-5 h-5 mr-3 text-primary" />
             <span className="font-medium">About</span>
           </Link>
           
           <Link 
             to="/support" 
             onClick={handleLinkClick}
-            className="flex items-center px-6 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#00A6D6] transition-colors"
+            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors touch-target-minimum"
           >
-            <LifeBuoy className="w-5 h-5 mr-3 text-gray-500" />
-            <span className="font-medium">Support&nbsp;&amp;&nbsp;Contact</span>
+            <LifeBuoy className="w-5 h-5 mr-3 text-primary" />
+            <span className="font-medium">Support & Contact</span>
           </Link>
         </nav>
       </SheetContent>

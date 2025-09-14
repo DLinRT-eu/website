@@ -98,4 +98,10 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* Touch target minimum for mobile accessibility */
+  .touch-target-minimum {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }

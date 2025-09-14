@@ -10,6 +10,7 @@ import { getAllOptions } from "@/utils/filterOptions";
 import dataService from "@/services/DataService";
 import { useLocation } from "react-router-dom";
 import Footer from "@/components/Footer";
+import ActiveFilterChips from "@/components/filters/ActiveFilterChips";
 
 const Products = () => {
   const [filtersActive, setFiltersActive] = useState(false);
@@ -162,6 +163,7 @@ const Products = () => {
       <SearchHeader 
         onSearch={handleSearch} 
         onAdvancedSearchToggle={handleAdvancedSearchToggle}
+        products={allProducts}
       />
       <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
         <div className="flex justify-between items-center mb-6">
@@ -180,9 +182,22 @@ const Products = () => {
         </div>
         
         <FilterBar 
-          onFiltersChange={setFiltersActive} 
+          onFiltersChange={setFiltersActive}
           onFilterUpdate={handleFilterUpdate}
         />
+        
+        {filtersActive && (
+          <ActiveFilterChips 
+            filters={currentFilters}
+            onRemoveFilter={(filterType, value) => {
+              const newFilters = { ...currentFilters };
+              newFilters[filterType] = newFilters[filterType].filter(v => v !== value);
+              handleFilterUpdate(newFilters);
+            }}
+            onClearAll={handleResetFilters}
+            className="mb-6"
+          />
+        )}
         <ProductGrid 
           filters={currentFilters} 
           searchQuery={searchQuery}

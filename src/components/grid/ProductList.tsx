@@ -2,6 +2,7 @@ import { useMemo } from "react";
 import UnifiedProductCard from "../common/UnifiedProductCard";
 import ProductPagination from "./ProductPagination";
 import { ProductDetails } from "@/types/productDetails";
+import SkeletonGrid from "../common/SkeletonGrid";
 
 interface ProductListProps {
   products: ProductDetails[];
@@ -15,20 +16,22 @@ interface ProductListProps {
   selectedProducts?: ProductDetails[];
   onSelectionChange?: (product: ProductDetails, selected: boolean) => void;
   showAllInCompareMode?: boolean;
+  isLoading?: boolean;
 }
 
 const ProductList = ({ 
   products, 
   currentPage, 
   itemsPerPage, 
-  onPageChange,
-  searchQuery,
+  onPageChange, 
+  searchQuery, 
   advancedSearch,
   hasFilters,
   isSelectable = false,
   selectedProducts = [],
   onSelectionChange,
-  showAllInCompareMode = false
+  showAllInCompareMode = false,
+  isLoading = false
 }: ProductListProps) => {
   // In compare mode, show all products; otherwise use pagination
   const shouldShowAll = isSelectable && showAllInCompareMode;
@@ -42,6 +45,18 @@ const ProductList = ({
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Show loading skeleton
+  if (isLoading) {
+    return (
+      <>
+        <div className="mb-4 text-sm text-muted-foreground">
+          Loading products...
+        </div>
+        <SkeletonGrid count={itemsPerPage} />
+      </>
+    );
+  }
+
   if (products.length === 0) {
     return (
       <div className="text-center py-12" role="status" aria-live="polite">
@@ -50,7 +65,7 @@ const ProductList = ({
           Try adjusting your search or filter criteria
         </p>
         <button
-          className="mt-4 px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          className="mt-4 px-4 py-2 rounded bg-primary text-primary-foreground hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/50 touch-target-minimum"
           onClick={() => window.dispatchEvent(new CustomEvent('resetFilters'))}
           aria-label="Reset all filters"
         >

@@ -5,13 +5,16 @@ import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { useState, useEffect } from "react";
+import DebouncedSearchWithSuggestions from "@/components/search/DebouncedSearchWithSuggestions";
+import { ProductDetails } from "@/types/productDetails";
 
 interface SearchHeaderProps {
   onSearch?: (query: string) => void;
   onAdvancedSearchToggle?: (enabled: boolean) => void;
+  products?: ProductDetails[];
 }
 
-const SearchHeader = ({ onSearch, onAdvancedSearchToggle }: SearchHeaderProps = {}) => {
+const SearchHeader = ({ onSearch, onAdvancedSearchToggle, products = [] }: SearchHeaderProps = {}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [advancedSearch, setAdvancedSearch] = useState(false);
 
@@ -33,13 +36,12 @@ const SearchHeader = ({ onSearch, onAdvancedSearchToggle }: SearchHeaderProps = 
           DL in Radiotherapy products
         </h1>
         <div className="flex flex-col gap-4">
-          <div className="relative max-w-2xl">
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-            <Input 
-              placeholder="Search for products, companies, or features..." 
-              className="pl-10 bg-white border-gray-200"
-              value={searchQuery}
-              onChange={handleSearchInput}
+          <div className="max-w-2xl">
+            <DebouncedSearchWithSuggestions
+              onSearch={onSearch || (() => {})}
+              products={products}
+              placeholder="Search for products, companies, or features..."
+              className="w-full"
             />
           </div>
           

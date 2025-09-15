@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom';
 import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker, Info, BookOpen } from 'lucide-react';
 import MobileNav from './MobileNav';
+import DropdownNavItem from './navigation/DropdownNavItem';
 
 const Header = () => {
   return (
@@ -24,7 +25,7 @@ const Header = () => {
         
         {/* Desktop Navigation */}
         <nav className="hidden md:flex flex-shrink-0">
-          <ul className="flex space-x-1 lg:space-x-2 xl:space-x-4">
+          <ul className="flex space-x-1 lg:space-x-2 xl:space-x-3">
             <li>
               <Link to="/products" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
                 <Package className="w-4 h-4 mr-1 lg:mr-2" />
@@ -50,16 +51,22 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/resources-compliance" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
-                <BookOpen className="w-4 h-4 mr-1 lg:mr-2" />
-                <span className="hidden lg:inline">Resources&nbsp;&amp;&nbsp;</span>Compliance
-              </Link>
+              <DropdownNavItem
+                label="Resources"
+                icon={BookOpen}
+                items={[
+                  { label: "Resources & Compliance", to: "/resources-compliance", icon: BookOpen }
+                ]}
+              />
             </li>
             <li>
-              <Link to="/initiatives" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
-                <Beaker className="w-4 h-4 mr-1 lg:mr-2" />
-                <span className="hidden lg:inline">Research&nbsp;&amp;&nbsp;</span>Initiatives
-              </Link>
+              <DropdownNavItem
+                label="Research"
+                icon={Beaker}
+                items={[
+                  { label: "Research & Initiatives", to: "/initiatives", icon: Beaker }
+                ]}
+              />
             </li>
             <li>
               <Link to="/about" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
@@ -70,7 +77,7 @@ const Header = () => {
             <li>
               <Link to="/support" className="flex items-center px-2 lg:px-3 xl:px-4 py-2 hover:text-white/90 transition-colors text-xs lg:text-sm xl:text-base">
                 <LifeBuoy className="w-4 h-4 mr-1 lg:mr-2" />
-                <span className="hidden lg:inline">Support&nbsp;&amp;&nbsp;</span>Contact
+                Contact
               </Link>
             </li>
           </ul>

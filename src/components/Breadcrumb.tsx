@@ -72,34 +72,67 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
     return null;
   }
 
+  // Generate structured data for breadcrumbs
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": breadcrumbItems.map((item, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "name": item.label,
+      ...(item.href && { "item": `${window.location.origin}${item.href}` })
+    }))
+  };
+
   return (
-    <nav aria-label="Breadcrumb" className="bg-gray-50 border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-3">
-        <ol className="flex items-center space-x-2 text-sm">
-          {breadcrumbItems.map((item, index) => (
-            <li key={index} className="flex items-center">
-              {index > 0 && (
-                <ChevronRight className="h-4 w-4 text-gray-400 mx-2" />
-              )}
-              {item.href ? (
-                <Link
-                  to={item.href}
-                  className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  {index === 0 && <Home className="h-4 w-4 mr-1" />}
-                  {item.label}
-                </Link>
-              ) : (
-                <span className="flex items-center text-gray-900 font-medium">
-                  {index === 0 && <Home className="h-4 w-4 mr-1" />}
-                  {item.label}
-                </span>
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
-    </nav>
+    <>
+      {/* Structured Data for SEO */}
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
+      <nav aria-label="Breadcrumb" className="bg-muted/30 border-b border-border">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-3">
+          <ol className="flex items-center space-x-2 text-sm" itemScope itemType="https://schema.org/BreadcrumbList">
+            {breadcrumbItems.map((item, index) => (
+              <li 
+                key={index} 
+                className="flex items-center"
+                itemProp="itemListElement"
+                itemScope 
+                itemType="https://schema.org/ListItem"
+              >
+                <meta itemProp="position" content={String(index + 1)} />
+                {index > 0 && (
+                  <ChevronRight className="h-4 w-4 text-muted-foreground mx-2" aria-hidden="true" />
+                )}
+                {item.href ? (
+                  <Link
+                    to={item.href}
+                    className="flex items-center text-muted-foreground hover:text-foreground transition-colors"
+                    itemProp="item"
+                  >
+                    <span itemProp="name">
+                      {index === 0 && <Home className="h-4 w-4 mr-1" aria-label="Home" />}
+                      {item.label}
+                    </span>
+                  </Link>
+                ) : (
+                  <span 
+                    className="flex items-center text-foreground font-medium"
+                    itemProp="name"
+                  >
+                    {index === 0 && <Home className="h-4 w-4 mr-1" aria-label="Home" />}
+                    {item.label}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </nav>
+    </>
   );
 };
 

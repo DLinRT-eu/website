@@ -11,6 +11,7 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import MailingListSignup from "@/components/MailingListSignup";
 import Footer from "@/components/Footer";
+import QuickAccessSection from "@/components/homepage/QuickAccessSection";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const Index = () => {
 
   // Get all products and count by category
   const allProducts = dataService.getAllProducts();
+  const allCompanies = dataService.getAllCompanies();
   const categories = getAllOptions('category');
   const categoryCounts = categories.map(category => ({
     name: category,
@@ -46,6 +48,12 @@ const Index = () => {
         structuredData={structuredData}
       />
       <IntroSection />
+      
+      {/* Quick Access Section */}
+      <QuickAccessSection 
+        productCount={allProducts.length}
+        companyCount={allCompanies.length}
+      />
       
       {/* Website Description Section */}
       <div className="bg-gray-50 py-12">

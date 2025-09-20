@@ -152,17 +152,21 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
     
     yPosition += 25;
 
-    // Comparison fields
+        // Comparison fields
     const fields = [
       { key: 'description', label: 'Description' },
       { key: 'category', label: 'Category' },
-      { key: 'certification', label: 'Certification' },
+      { key: 'secondaryCategories', label: 'Secondary Categories' },
       { key: 'modality', label: 'Modality' },
       { key: 'anatomicalLocation', label: 'Anatomical Location' },
+      { key: 'diseaseTargeted', label: 'Disease Targeted' },
       { key: 'releaseDate', label: 'Release Date' },
       { key: 'lastUpdated', label: 'Last Updated' },
-      { key: 'features', label: 'Key Features' },
-      { key: 'website', label: 'Website' },
+      { key: 'keyFeatures', label: 'Key Features' },
+      { key: 'supportedStructures', label: 'Supported Structures' },
+      { key: 'ceStatus', label: 'CE Status' },
+      { key: 'fdaStatus', label: 'FDA Status' },
+      { key: 'website', label: 'Website' }
     ];
 
     // Add comparison table
@@ -190,15 +194,42 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
           doc.setTextColor(0, 0, 0);
         }
         
-        let value = product[field.key as keyof ProductDetails];
         let displayValue = '';
-
-        if (Array.isArray(value)) {
-          displayValue = value.join(', ');
-        } else if (value) {
-          displayValue = String(value);
-        } else {
-          displayValue = 'N/A';
+        
+        // Handle specific field mappings
+        switch (field.key) {
+          case 'ceStatus':
+            displayValue = product.regulatory?.ce?.status || 'N/A';
+            break;
+          case 'fdaStatus':
+            displayValue = typeof product.regulatory?.fda === 'string' 
+              ? product.regulatory.fda 
+              : product.regulatory?.fda?.status || 'N/A';
+            break;
+          case 'keyFeatures':
+            displayValue = Array.isArray(product.keyFeatures) 
+              ? product.keyFeatures.join(', ') 
+              : product.keyFeatures || 'N/A';
+            break;
+          case 'supportedStructures':
+            displayValue = Array.isArray(product.supportedStructures) 
+              ? product.supportedStructures.map(s => s.name || s).join(', ')
+              : 'N/A';
+            break;
+          case 'secondaryCategories':
+            displayValue = Array.isArray(product.secondaryCategories) 
+              ? product.secondaryCategories.join(', ') 
+              : 'N/A';
+            break;
+          default:
+            const value = product[field.key as keyof ProductDetails];
+            if (Array.isArray(value)) {
+              displayValue = value.join(', ');
+            } else if (value) {
+              displayValue = String(value);
+            } else {
+              displayValue = 'N/A';
+            }
         }
 
         // Truncate long text based on available width

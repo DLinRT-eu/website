@@ -6,8 +6,11 @@ import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Download, ExternalLink } from 'lucide-react';
-import { exportComparisonToExcel, exportComparisonToCSV, exportComparisonToPDF } from '@/utils/comparison/comparisonExporter';
+import { exportComparisonToExcel, exportComparisonToCSV } from '@/utils/comparison/comparisonExporter';
+import { exportComparisonToPDF } from '@/utils/comparison/comparisonPdfExporter';
 import StructuredDisplay from './StructuredDisplay';
+import { useToast } from '@/hooks/use-toast';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface ProductComparisonProps {
   products: ProductDetails[];
@@ -22,6 +25,8 @@ interface ComparisonRow {
 
 const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps) => {
   const [exportFormat, setExportFormat] = useState<'excel' | 'csv' | 'pdf'>('excel');
+  const [isExporting, setIsExporting] = useState(false);
+  const { toast } = useToast();
 
   // Create comparison data structure
   const createComparisonData = (): ComparisonRow[] => {
@@ -271,15 +276,35 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
     const comparisonData = createComparisonData();
     
     try {
+      setIsExporting(true);
       if (exportFormat === 'excel') {
         exportComparisonToExcel(products, comparisonData);
+        toast({
+          title: "Export Successful",
+          description: `Exported comparison of ${products.length} products to Excel`,
+        });
       } else if (exportFormat === 'csv') {
         exportComparisonToCSV(products, comparisonData);
+        toast({
+          title: "Export Successful", 
+          description: `Exported comparison of ${products.length} products to CSV`,
+        });
       } else if (exportFormat === 'pdf') {
-        await exportComparisonToPDF(products, comparisonData);
+        await exportComparisonToPDF(products);
+        toast({
+          title: "Export Successful",
+          description: `Exported comparison of ${products.length} products to PDF`,
+        });
       }
     } catch (error) {
       console.error('Export failed:', error);
+      toast({
+        title: "Export Failed",
+        description: "There was an error exporting the comparison",
+        variant: "destructive",
+      });
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -309,9 +334,10 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
                 onClick={handleExportComparison}
                 size="sm"
                 className="flex items-center gap-2"
+                disabled={isExporting}
               >
                 <Download className="h-4 w-4" />
-                Export
+                {isExporting ? 'Exporting...' : 'Export'}
               </Button>
             </div>
           </DialogTitle>

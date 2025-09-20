@@ -4,6 +4,9 @@ import { exportProductsToCSV } from "@/utils/exportProducts";
 import { exportModelCardToExcel } from "@/utils/modelCard/exporters/excelExporter";
 import { exportModelCardToPDF } from "@/utils/modelCard/exporters/pdfExporter";
 import { exportModelCardToJSON } from "@/utils/modelCard/exporters/jsonExporter";
+import { exportBulkProductsToExcel } from "@/utils/modelCard/exporters/bulkExcelExporter";
+import { exportBulkProductsToPDF } from "@/utils/modelCard/exporters/bulkPdfExporter";
+import { exportBulkProductsToJSON } from "@/utils/modelCard/exporters/bulkJsonExporter";
 
 export type ExportFormat = "csv" | "excel" | "pdf" | "json";
 export type ExportType = "products" | "initiatives" | "comparison" | "analytics";
@@ -25,23 +28,33 @@ class ExportService {
   ): Promise<void> {
     const filename = options.filename || `products-export-${Date.now()}`;
     
+    if (products.length === 0) {
+      throw new Error('No products to export');
+    }
+    
     switch (format) {
       case "csv":
         exportProductsToCSV(products);
         break;
       case "excel":
-        if (products.length > 0) {
+        if (products.length === 1) {
           exportModelCardToExcel(products[0]);
+        } else {
+          exportBulkProductsToExcel(products);
         }
         break;
       case "pdf":
-        if (products.length > 0) {
+        if (products.length === 1) {
           exportModelCardToPDF(products[0]);
+        } else {
+          await exportBulkProductsToPDF(products);
         }
         break;
       case "json":
-        if (products.length > 0) {
+        if (products.length === 1) {
           exportModelCardToJSON(products[0]);
+        } else {
+          exportBulkProductsToJSON(products);
         }
         break;
       default:

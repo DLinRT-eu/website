@@ -169,30 +169,35 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
       { key: 'website', label: 'Website' }
     ];
 
+    // Calculate column widths for better separation
+    const fieldLabelWidth = 50; // Fixed width for field labels column
+    const productColWidth = (contentWidth - fieldLabelWidth) / products.length;
+    
     // Add comparison table
     fields.forEach((field, fieldIndex) => {
       checkPageBreak(20);
       
-      // Field values for each product (no separate field label column)
+      // Background for alternating rows
+      if (fieldIndex % 2 === 0) {
+        doc.setFillColor(250, 250, 250);
+        doc.rect(margin, yPosition, contentWidth, 15, 'F');
+      }
+      
+      // Field label column (separate from product columns)
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
+      const labelLines = doc.splitTextToSize(field.label + ':', fieldLabelWidth - 5);
+      doc.text(labelLines, margin + 2, yPosition + 5);
+      
+      // Vertical separator after field label column
+      doc.setDrawColor(200, 200, 200);
+      doc.line(margin + fieldLabelWidth, yPosition, margin + fieldLabelWidth, yPosition + 15);
+      
+      // Product value columns
       for (let i = 0; i < products.length; i++) {
         const product = products[i];
-        const x = margin + (i * colWidth);
-        
-        // Background for alternating rows
-        if (fieldIndex % 2 === 0) {
-          doc.setFillColor(250, 250, 250);
-          doc.rect(x, yPosition, colWidth, 15, 'F');
-        }
-        
-        // Add field label for first column only
-        if (i === 0) {
-          doc.setFontSize(9);
-          doc.setFont('helvetica', 'bold');
-          doc.setTextColor(primaryColor[0], primaryColor[1], primaryColor[2]);
-          doc.text(field.label + ':', x + 2, yPosition + 5);
-          doc.setFont('helvetica', 'normal');
-          doc.setTextColor(0, 0, 0);
-        }
+        const x = margin + fieldLabelWidth + (i * productColWidth);
         
         let displayValue = '';
         
@@ -233,7 +238,7 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
         }
 
         // Truncate long text based on available width
-        const maxChars = Math.floor(colWidth / 3); // Rough character estimate
+        const maxChars = Math.floor(productColWidth / 3); // Rough character estimate
         if (displayValue.length > maxChars) {
           displayValue = displayValue.substring(0, maxChars - 3) + '...';
         }
@@ -242,14 +247,14 @@ export const exportComparisonToPDF = async (products: ProductDetails[]) => {
         doc.setFont('helvetica', 'normal');
         doc.setTextColor(0, 0, 0);
         
-        // Position text below field label for first column, or at top for others
-        const textY = i === 0 ? yPosition + 12 : yPosition + 8;
-        doc.text(displayValue, x + 2, textY);
+        // Split text to fit column width
+        const valueLines = doc.splitTextToSize(displayValue, productColWidth - 4);
+        doc.text(valueLines, x + 2, yPosition + 8);
         
-        // Vertical separator line
+        // Vertical separator line between product columns
         if (i < products.length - 1) {
           doc.setDrawColor(200, 200, 200);
-          doc.line(x + colWidth, yPosition, x + colWidth, yPosition + 15);
+          doc.line(x + productColWidth, yPosition, x + productColWidth, yPosition + 15);
         }
       }
       

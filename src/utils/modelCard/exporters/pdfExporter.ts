@@ -38,7 +38,7 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
       doc.setTextColor(0, 0, 0);
     };
     
-    // Helper function to add field-value pairs with card-like styling
+    // Helper function to add field-value pairs with proper column separation
     const addField = (label: string, value: string, isSubheading = false) => {
       if (yPosition > 260) {
         doc.addPage();
@@ -53,38 +53,30 @@ export const exportModelCardToPDF = (product: ProductDetails) => {
         doc.setFont('helvetica', 'bold');
         doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
         doc.text(safeLabel, margin, yPosition);
-        yPosition += 10; // Increased spacing for subheadings
+        yPosition += 12;
         doc.setTextColor(0, 0, 0);
       } else {
+        // Fixed two-column layout
+        const labelColumnWidth = 65; // Fixed width for label column
+        const valueColumnX = margin + labelColumnWidth + 5; // 5mm gap between columns
+        const valueColumnWidth = contentWidth - labelColumnWidth - 5;
+        
+        // Label column
         doc.setFontSize(10);
         doc.setFont('helvetica', 'bold');
+        doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+        doc.text(safeLabel + ':', margin + 5, yPosition);
         
-        // Add proper spacing after colon and before value
-        const labelText = safeLabel + ':  '; // Added extra space after colon
-        doc.text(labelText, margin + 5, yPosition);
-        
+        // Value column
         doc.setFont('helvetica', 'normal');
-        const labelWidth = doc.getTextWidth(labelText) + 8; // Add safety margin
-        const minSpacing = 10; // Minimum spacing between label and value
-        const actualLabelWidth = Math.max(labelWidth, minSpacing);
-        const maxWidth = contentWidth - actualLabelWidth - 10; // Added safety margin
+        doc.setTextColor(0, 0, 0);
+        const lines = doc.splitTextToSize(safeValue, valueColumnWidth);
+        doc.text(lines, valueColumnX, yPosition);
         
-        // Ensure we have enough width for the value text
-        if (maxWidth > 30) {
-          const lines = doc.splitTextToSize(safeValue, maxWidth);
-          doc.text(lines, margin + actualLabelWidth, yPosition);
-          
-          // Improved line height calculation
-          const lineHeight = 6; // Increased from 5
-          const additionalSpacing = 3; // Extra spacing between fields
-          yPosition += Math.max(lines.length * lineHeight, 8) + additionalSpacing;
-        } else {
-          // If label is too long, put value on next line
-          yPosition += 8;
-          const lines = doc.splitTextToSize(safeValue, contentWidth - 15);
-          doc.text(lines, margin + 10, yPosition);
-          yPosition += lines.length * 6 + 3;
-        }
+        // Calculate spacing based on content height
+        const lineHeight = 5;
+        const fieldSpacing = 4;
+        yPosition += Math.max(lines.length * lineHeight, 8) + fieldSpacing;
       }
     };
     

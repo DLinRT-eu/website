@@ -38,32 +38,34 @@ export const exportBulkProductsToPDF = async (products: ProductDetails[]) => {
       doc.setTextColor(0, 0, 0);
     };
     
-    // Helper function to add field-value pairs
+    // Helper function to add field-value pairs with proper column separation
     const addField = (label: string, value: string) => {
       checkPageBreak(12);
       
       const safeLabel = String(label || '');
       const safeValue = String(value || 'N/A');
       
+      // Fixed two-column layout
+      const labelColumnWidth = 65; // Fixed width for label column
+      const valueColumnX = margin + labelColumnWidth + 5; // 5mm gap between columns
+      const valueColumnWidth = contentWidth - labelColumnWidth - 5;
+      
+      // Label column
       doc.setFontSize(10);
       doc.setFont('helvetica', 'bold');
-      const labelText = safeLabel + ':  ';
-      doc.text(labelText, margin + 5, yPosition);
+      doc.setTextColor(secondaryColor[0], secondaryColor[1], secondaryColor[2]);
+      doc.text(safeLabel + ':', margin + 5, yPosition);
       
+      // Value column
       doc.setFont('helvetica', 'normal');
-      const labelWidth = doc.getTextWidth(labelText) + 8;
-      const maxWidth = contentWidth - labelWidth - 10;
+      doc.setTextColor(0, 0, 0);
+      const lines = doc.splitTextToSize(safeValue, valueColumnWidth);
+      doc.text(lines, valueColumnX, yPosition);
       
-      if (maxWidth > 30) {
-        const lines = doc.splitTextToSize(safeValue, maxWidth);
-        doc.text(lines, margin + labelWidth, yPosition);
-        yPosition += Math.max(lines.length * 6, 8) + 3;
-      } else {
-        yPosition += 8;
-        const lines = doc.splitTextToSize(safeValue, contentWidth - 15);
-        doc.text(lines, margin + 10, yPosition);
-        yPosition += lines.length * 6 + 3;
-      }
+      // Calculate spacing based on content height
+      const lineHeight = 5;
+      const fieldSpacing = 3;
+      yPosition += Math.max(lines.length * lineHeight, 8) + fieldSpacing;
     };
     
     // Title page

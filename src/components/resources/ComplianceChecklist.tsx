@@ -48,9 +48,9 @@ const ComplianceChecklist = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4">
+      <div className="grid gap-6 lg:grid-cols-2">
         {checklistItems.map((item, index) => (
-          <Card key={index} className="hover:shadow-md transition-shadow">
+          <Card key={index} className="hover:shadow-md transition-shadow h-fit">
             <CardHeader className="pb-3">
               <div className="flex items-start gap-3">
                 <div className="flex-shrink-0 mt-1">

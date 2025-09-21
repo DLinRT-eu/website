@@ -39,47 +39,51 @@ const TeamSection = ({ teamMembers }: TeamSectionProps) => {
         <p className="text-lg text-muted-foreground">The experts who keep our systems running smoothly</p>
       </div>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 justify-items-center">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
         {teamMembers.map((member) => (
-          <Card key={member.name} className="overflow-hidden hover:shadow-lg transition-shadow">
-            <CardHeader className="pb-0">
+          <Card key={member.name} className="w-full max-w-sm min-h-[380px] overflow-hidden hover:shadow-lg transition-shadow flex flex-col">
+            <CardHeader className="pb-4 flex-shrink-0">
               <div className="flex justify-center">
-                <Avatar className="h-32 w-32">
+                <Avatar className="h-24 w-24">
                   <AvatarImage 
                     src={member.image} 
                     alt={`${member.name} profile photo`}
                     className="object-cover"
                     onError={() => handleImageError(member.name)}
                   />
-                  <AvatarFallback className="bg-primary text-primary-foreground text-xl font-semibold">
-                    {imageErrors[member.name] ? getInitials(member.name) : <User className="h-16 w-16" />}
+                  <AvatarFallback className="bg-primary text-primary-foreground text-lg font-semibold">
+                    {imageErrors[member.name] ? getInitials(member.name) : <User className="h-12 w-12" />}
                   </AvatarFallback>
                 </Avatar>
               </div>
             </CardHeader>
-            <CardContent className="text-center pt-4">
-              <CardTitle className="text-xl mb-2 text-foreground">{member.name}</CardTitle>
-              <p className="text-muted-foreground mb-4">{member.role}</p>
-              
-              <div className="flex justify-center mb-4">
-                <a
-                  href={`mailto:${member.email}`}
-                  className="text-primary hover:text-primary/80 transition-colors duration-200 flex items-center gap-1"
-                  aria-label={`Contact ${member.name} by email`}
-                >
-                  <Mail className="h-5 w-5" />
-                  <span className="text-sm">Contact</span>
-                </a>
+            <CardContent className="text-center pt-0 flex-1 flex flex-col justify-between px-4 pb-6">
+              <div className="mb-4">
+                <CardTitle className="text-lg mb-2 text-foreground leading-tight">{member.name}</CardTitle>
+                <p className="text-muted-foreground text-sm mb-4 min-h-[2.5rem] flex items-center justify-center">{member.role}</p>
               </div>
               
-              <Link
-                to={member.bio}
-                className="text-primary hover:text-primary/80 transition-colors duration-200"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Bio →
-              </Link>
+              <div className="space-y-3">
+                <div className="flex justify-center">
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="text-primary hover:text-primary/80 transition-colors duration-200 flex items-center gap-1"
+                    aria-label={`Contact ${member.name} by email`}
+                  >
+                    <Mail className="h-4 w-4" />
+                    <span className="text-sm">Contact</span>
+                  </a>
+                </div>
+                
+                <Link
+                  to={member.bio}
+                  className="text-primary hover:text-primary/80 transition-colors duration-200 text-sm block"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  View Bio →
+                </Link>
+              </div>
             </CardContent>
           </Card>
         ))}

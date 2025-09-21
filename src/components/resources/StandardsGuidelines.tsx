@@ -68,9 +68,9 @@ const StandardsGuidelines = () => {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="grid gap-6 lg:grid-cols-2">
       {standards.map((category, categoryIndex) => (
-        <Card key={categoryIndex}>
+        <Card key={categoryIndex} className="h-fit">
           <CardHeader>
             <CardTitle className="text-lg font-semibold text-foreground flex items-center gap-2">
               {category.category}
@@ -84,10 +84,10 @@ const StandardsGuidelines = () => {
               {category.items.map((item, itemIndex) => (
                 <div key={itemIndex}>
                   <div className="flex items-start gap-3">
-                    <Badge variant="secondary" className="font-mono text-xs">
+                    <Badge variant="secondary" className="font-mono text-xs whitespace-nowrap">
                       {item.standard}
                     </Badge>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-foreground mb-1">
                         {item.description}
                       </h4>

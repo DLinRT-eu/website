@@ -24,7 +24,7 @@ const ResourcesCompliance = () => {
       }}
     >
       <div className="bg-gradient-to-b from-primary/5 to-background">
-        <div className="max-w-7xl mx-auto px-4 py-12">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Hero Section */}
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">

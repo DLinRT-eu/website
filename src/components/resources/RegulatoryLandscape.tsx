@@ -5,7 +5,7 @@ import { ExternalLink } from 'lucide-react';
 
 const RegulatoryLandscape = () => {
   return (
-    <div className="space-y-8">
+    <div className="grid gap-8 lg:grid-cols-2 xl:gap-12">
       {/* EU: MDR Section */}
       <Card>
         <CardHeader>
@@ -59,7 +59,7 @@ const RegulatoryLandscape = () => {
       </Card>
 
       {/* Interplay: MDR + AI Act */}
-      <Card className="bg-primary/5 border-primary/20">
+      <Card className="bg-primary/5 border-primary/20 lg:col-span-2">
         <CardHeader>
           <div className="flex items-center gap-2">
             <CardTitle className="text-xl font-semibold text-foreground">

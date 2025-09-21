@@ -103,9 +103,10 @@ const CoreDocuments = () => {
   };
 
   return (
-    <div className="space-y-6">
-      {documentCategories.map((category, categoryIndex) => (
-        <Card key={categoryIndex}>
+    <div className="space-y-8">
+      <div className="grid gap-6 lg:grid-cols-2">
+        {documentCategories.map((category, categoryIndex) => (
+          <Card key={categoryIndex} className="h-fit">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
@@ -164,7 +165,8 @@ const CoreDocuments = () => {
             </div>
           </CardContent>
         </Card>
-      ))}
+        ))}
+      </div>
 
       {/* Reference Note */}
       <Card className="bg-muted/30">

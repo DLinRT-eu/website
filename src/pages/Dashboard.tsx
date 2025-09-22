@@ -14,6 +14,7 @@ import TaskDistributionChart from "@/components/dashboard/TaskDistributionChart"
 import LocationDistributionChart from "@/components/dashboard/LocationDistributionChart";
 import ModalityDistributionChart from "@/components/dashboard/ModalityDistributionChart";
 import CompanyDistributionChart from "@/components/dashboard/CompanyDistributionChart";
+import CertificationDistributionChart from "@/components/dashboard/CertificationDistributionChart";
 import DashboardHeader from "@/components/dashboard/DashboardHeader";
 import { CountingModeToggle } from "@/components/dashboard/CountingModeToggle";
 
@@ -58,6 +59,8 @@ const Dashboard = () => {
     totalLocations, 
     modalityData, 
     totalModalities, 
+    certificationData,
+    totalCertified,
     structureData,
     structureTypeData,
     filteredProducts 
@@ -189,6 +192,15 @@ const Dashboard = () => {
         <CompanyDistributionChart 
           companyData={companyData}
           totalCompanies={totalCompanies}
+          countingMode={countingMode}
+          selectedTask={selectedTask}
+          selectedLocation={selectedLocation}
+          selectedModality={selectedModality}
+        />
+
+        <CertificationDistributionChart 
+          certificationData={certificationData}
+          totalCertified={totalCertified}
           countingMode={countingMode}
           selectedTask={selectedTask}
           selectedLocation={selectedLocation}

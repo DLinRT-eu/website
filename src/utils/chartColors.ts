@@ -89,6 +89,21 @@ export const getModalityColor = (modality: string | string[]): string => {
   return '#64748B'; // Gray fallback
 };
 
+// Fixed mapping of certification types to colors
+export const CERTIFICATION_COLORS: Record<string, string> = {
+  'CE Only': '#10B981',      // Green - European
+  'FDA Only': '#3B82F6',     // Blue - US/American  
+  'CE & FDA': '#8B5CF6',     // Purple - Combined
+  'NMPA': '#F59E0B',         // Amber - China
+  'Other': '#6B7280',        // Gray - Other certifications
+  'No Certification': '#EF4444', // Red - No certification
+};
+
+// Get certification color with fallback
+export const getCertificationColor = (certification: string): string => {
+  return CERTIFICATION_COLORS[certification] || '#6B7280';
+};
+
 // Get task color with fallback
 export const getTaskColor = (task: string): string => {
   if (!task) return '#64748B'; // Gray fallback

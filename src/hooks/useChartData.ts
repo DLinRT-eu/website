@@ -8,7 +8,8 @@ import {
   transformLocationData, 
   transformModalityData,
   transformStructureData,
-  transformStructureTypeData 
+  transformStructureTypeData,
+  transformCertificationData
 } from '@/utils/chartDataTransformation';
 
 export const useChartData = (
@@ -38,6 +39,8 @@ export const useChartData = (
   const totalLocations = locationData.reduce((sum, item) => sum + item.value, 0);
   const modalityData = transformModalityData(products, filteredProducts, selectedModality, countingMode);
   const totalModalities = modalityData.reduce((sum, item) => sum + item.value, 0);
+  const certificationData = transformCertificationData(products, filteredProducts, countingMode);
+  const totalCertified = certificationData.reduce((sum, item) => sum + item.value, 0);
 
   // Update structure data when task changes
   useEffect(() => {
@@ -58,6 +61,8 @@ export const useChartData = (
     totalLocations,
     modalityData,
     totalModalities,
+    certificationData,
+    totalCertified,
     structureData,
     structureTypeData,
     filteredProducts

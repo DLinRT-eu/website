@@ -1,6 +1,7 @@
 import { ProductDetails } from '@/types/productDetails';
 import { getAllOptions } from './filterOptions';
-import { LOCATION_COLORS, getTaskColor, getModalityColor } from './chartColors';
+import { LOCATION_COLORS, getTaskColor, getModalityColor, getCertificationColor } from './chartColors';
+import { getStandardizedCertificationTags } from './regulatoryUtils';
 import { countStructureTypes } from './structureClassification';
 import { matchesTask, countModelsInProduct, countTotalModels, countModelsForTask } from './modelCounting';
 import { filterProductsByLocation, filterProductsByModality } from './productFiltering';
@@ -188,4 +189,57 @@ export const transformStructureTypeData = (
     };
   })
   .sort((a, b) => b.total - a.total); // Sort by total number of structures
+};
+
+/**
+ * Transform products data into certification distribution chart data
+ */
+export const transformCertificationData = (
+  products: ProductDetails[],
+  filteredProducts: ProductDetails[],
+  countingMode: 'models' | 'products' = 'models'
+) => {
+  // Count certifications in filtered products
+  const certificationCounts: Record<string, number> = {
+    'CE Only': 0,
+    'FDA Only': 0,
+    'CE & FDA': 0,
+    'NMPA': 0,
+    'Other': 0,
+    'No Certification': 0
+  };
+
+  filteredProducts.forEach(product => {
+    const certificationTags = getStandardizedCertificationTags(product);
+    
+    if (certificationTags.length === 0) {
+      certificationCounts['No Certification'] += countTotalModels([product], countingMode);
+    } else {
+      const hasCE = certificationTags.some(tag => tag.includes('CE'));
+      const hasFDA = certificationTags.some(tag => tag.includes('FDA'));
+      const hasNMPA = certificationTags.some(tag => tag.includes('NMPA'));
+      
+      if (hasCE && hasFDA) {
+        certificationCounts['CE & FDA'] += countTotalModels([product], countingMode);
+      } else if (hasCE) {
+        certificationCounts['CE Only'] += countTotalModels([product], countingMode);
+      } else if (hasFDA) {
+        certificationCounts['FDA Only'] += countTotalModels([product], countingMode);
+      } else if (hasNMPA) {
+        certificationCounts['NMPA'] += countTotalModels([product], countingMode);
+      } else {
+        certificationCounts['Other'] += countTotalModels([product], countingMode);
+      }
+    }
+  });
+
+  // Convert to chart data format and filter out zero values
+  return Object.entries(certificationCounts)
+    .map(([name, value]) => ({
+      name,
+      value,
+      fill: getCertificationColor(name)
+    }))
+    .filter(item => item.value > 0)
+    .sort((a, b) => b.value - a.value);
 };

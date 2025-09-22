@@ -93,7 +93,7 @@ export const getModalityColor = (modality: string | string[]): string => {
 export const CERTIFICATION_COLORS: Record<string, string> = {
   'CE Only': '#10B981',      // Green - European
   'FDA Only': '#3B82F6',     // Blue - US/American  
-  'CE & FDA': '#8B5CF6',     // Purple - Combined
+  'CE FDA': '#8B5CF6',       // Purple - Combined
   'NMPA': '#F59E0B',         // Amber - China
   'MDR Exempt': '#06B6D4',   // Cyan - Exempt status
   'Other': '#6B7280',        // Gray - Other certifications

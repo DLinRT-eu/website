@@ -205,6 +205,7 @@ export const transformCertificationData = (
     'FDA Only': 0,
     'CE & FDA': 0,
     'NMPA': 0,
+    'MDR Exempt': 0,
     'Other': 0,
     'No Certification': 0
   };
@@ -218,8 +219,11 @@ export const transformCertificationData = (
       const hasCE = certificationTags.some(tag => tag.includes('CE'));
       const hasFDA = certificationTags.some(tag => tag.includes('FDA'));
       const hasNMPA = certificationTags.some(tag => tag.includes('NMPA'));
+      const isExempt = certificationTags.some(tag => tag.includes('Exempt'));
       
-      if (hasCE && hasFDA) {
+      if (isExempt) {
+        certificationCounts['MDR Exempt'] += countTotalModels([product], countingMode);
+      } else if (hasCE && hasFDA) {
         certificationCounts['CE & FDA'] += countTotalModels([product], countingMode);
       } else if (hasCE) {
         certificationCounts['CE Only'] += countTotalModels([product], countingMode);

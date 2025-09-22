@@ -136,7 +136,9 @@ export function getStandardizedCertificationTags(product: ProductDetails): strin
   // Fallback to original certification field
   if (!tags.length && product.certification) {
     const cert = product.certification.toLowerCase();
-    if (cert.includes('ce') && cert.includes('fda')) {
+    if (cert.includes('exempt')) {
+      tags.push('MDR Exempt');
+    } else if (cert.includes('ce') && cert.includes('fda')) {
       if (ceInfo?.type === 'MDR') tags.push('CE MDR');
       else tags.push('CE');
       tags.push('FDA');
@@ -145,6 +147,8 @@ export function getStandardizedCertificationTags(product: ProductDetails): strin
       else tags.push('CE');
     } else if (cert.includes('fda')) {
       tags.push('FDA');
+    } else if (cert.includes('nmpa')) {
+      tags.push('NMPA');
     }
   }
   

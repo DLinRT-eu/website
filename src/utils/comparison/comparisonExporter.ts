@@ -124,27 +124,52 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
     };
 
     // Helper function to wrap text and return lines with URL handling
-    const wrapText = (text: string, maxWidth: number): { lines: string[], isUrl: boolean[] } => {
+    const wrapText = (text: string, maxWidth: number): { lines: string[], isUrl: boolean[], originalUrl?: string } => {
       const words = text.split(' ');
       const lines: string[] = [];
       const isUrl: boolean[] = [];
       let currentLine = '';
       
       for (const word of words) {
-        const testLine = currentLine ? `${currentLine} ${word}` : word;
-        const lineWidth = doc.getTextWidth(testLine);
-        
-        if (lineWidth <= maxWidth) {
-          currentLine = testLine;
-        } else {
+        // Check if this word is a URL that needs special handling
+        if (isURL(word) && doc.getTextWidth(word) > maxWidth) {
+          // Handle long URLs by breaking them at logical points
           if (currentLine) {
             lines.push(currentLine);
-            isUrl.push(isURL(currentLine));
-            currentLine = word;
+            isUrl.push(false);
+            currentLine = '';
+          }
+          
+          // Split URL at logical breakpoints
+          const urlParts = splitUrlLogically(word, maxWidth);
+          urlParts.forEach((part, index) => {
+            lines.push(part);
+            isUrl.push(true);
+          });
+        } else {
+          const testLine = currentLine ? `${currentLine} ${word}` : word;
+          const lineWidth = doc.getTextWidth(testLine);
+          
+          if (lineWidth <= maxWidth) {
+            currentLine = testLine;
           } else {
-            // Word is too long, split it
-            lines.push(word);
-            isUrl.push(isURL(word));
+            if (currentLine) {
+              lines.push(currentLine);
+              isUrl.push(isURL(currentLine));
+              currentLine = word;
+            } else {
+              // Word is too long, split it
+              if (isURL(word)) {
+                const urlParts = splitUrlLogically(word, maxWidth);
+                urlParts.forEach((part, index) => {
+                  lines.push(part);
+                  isUrl.push(true);
+                });
+              } else {
+                lines.push(word);
+                isUrl.push(false);
+              }
+            }
           }
         }
       }
@@ -154,7 +179,53 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
         isUrl.push(isURL(currentLine));
       }
       
-      return { lines, isUrl };
+      return { lines, isUrl, originalUrl: text.trim() };
+    };
+
+    // Helper function to split URLs at logical breakpoints
+    const splitUrlLogically = (url: string, maxWidth: number): string[] => {
+      const parts: string[] = [];
+      let remaining = url;
+      
+      while (remaining.length > 0 && doc.getTextWidth(remaining) > maxWidth) {
+        let bestBreakpoint = -1;
+        let testLength = remaining.length;
+        
+        // Try to find the longest substring that fits
+        while (testLength > 0 && doc.getTextWidth(remaining.substring(0, testLength)) > maxWidth) {
+          testLength--;
+        }
+        
+        if (testLength === 0) {
+          // Fallback: take at least some characters
+          testLength = Math.max(1, Math.floor(remaining.length / 2));
+        }
+        
+        // Look for logical breakpoints within the fitting length
+        const fittingPart = remaining.substring(0, testLength);
+        const breakChars = ['/', '?', '&', '=', '-', '.', ':'];
+        
+        for (let i = fittingPart.length - 1; i >= Math.floor(testLength * 0.7); i--) {
+          if (breakChars.includes(fittingPart[i])) {
+            bestBreakpoint = i + 1; // Break after the character
+            break;
+          }
+        }
+        
+        // If no good breakpoint found, use the fitting length
+        const breakAt = bestBreakpoint > 0 ? bestBreakpoint : testLength;
+        const part = remaining.substring(0, breakAt);
+        
+        parts.push(part);
+        remaining = remaining.substring(breakAt);
+      }
+      
+      // Add any remaining part
+      if (remaining.length > 0) {
+        parts.push(remaining);
+      }
+      
+      return parts;
     };
 
     // Helper function to add clickable link
@@ -318,15 +389,18 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
         const valueWrapped = wrapText(String(value), productColumnWidth - 2);
         valueWrapped.lines.forEach((line, lineIndex) => {
           const lineY = yPosition + (lineIndex * 3);
-          doc.text(line, currentX, lineY);
           
-          // Add clickable link if it's a URL
+          // Add clickable link if it's a URL - use original URL for all segments
           if (valueWrapped.isUrl[lineIndex]) {
             doc.setTextColor(0, 0, 255); // Blue color for URLs
             doc.text(line, currentX, lineY);
             const lineWidth = doc.getTextWidth(line);
-            addClickableLink(line, currentX, lineY, lineWidth, 3);
+            // Use the original full URL for the link, not just the segment
+            const linkUrl = valueWrapped.originalUrl || line;
+            addClickableLink(linkUrl, currentX, lineY, lineWidth, 3);
             doc.setTextColor(0, 0, 0); // Reset to black
+          } else {
+            doc.text(line, currentX, lineY);
           }
         });
       }

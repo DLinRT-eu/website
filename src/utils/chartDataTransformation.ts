@@ -203,7 +203,7 @@ export const transformCertificationData = (
   const certificationCounts: Record<string, number> = {
     'CE Only': 0,
     'FDA Only': 0,
-    'CE FDA': 0,
+    'CE and FDA': 0,
     'NMPA': 0,
     'MDR Exempt': 0,
     'Other': 0,
@@ -224,7 +224,7 @@ export const transformCertificationData = (
       if (isExempt) {
         certificationCounts['MDR Exempt'] += countTotalModels([product], countingMode);
       } else if (hasCE && hasFDA) {
-        certificationCounts['CE FDA'] += countTotalModels([product], countingMode);
+        certificationCounts['CE and FDA'] += countTotalModels([product], countingMode);
       } else if (hasCE) {
         certificationCounts['CE Only'] += countTotalModels([product], countingMode);
       } else if (hasFDA) {

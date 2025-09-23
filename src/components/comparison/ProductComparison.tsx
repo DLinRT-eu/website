@@ -6,8 +6,7 @@ import { DataTable } from '@/components/ui/data-table';
 import { ColumnDef } from '@tanstack/react-table';
 import { Badge } from '@/components/ui/badge';
 import { Download, ExternalLink } from 'lucide-react';
-import { exportComparisonToExcel, exportComparisonToCSV } from '@/utils/comparison/comparisonExporter';
-import { exportComparisonToPDF } from '@/utils/comparison/comparisonPdfExporter';
+import { exportComparisonToExcel, exportComparisonToCSV, exportComparisonToPDF } from '@/utils/comparison/comparisonExporter';
 import StructuredDisplay from './StructuredDisplay';
 import { useToast } from '@/hooks/use-toast';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -290,7 +289,7 @@ const ProductComparison = ({ products, isOpen, onClose }: ProductComparisonProps
           description: `Exported comparison of ${products.length} products to CSV`,
         });
       } else if (exportFormat === 'pdf') {
-        await exportComparisonToPDF(products);
+        await exportComparisonToPDF(products, comparisonData);
         toast({
           title: "Export Successful",
           description: `Exported comparison of ${products.length} products to PDF`,

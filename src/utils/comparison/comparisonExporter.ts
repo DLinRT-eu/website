@@ -208,22 +208,19 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
     
     // Calculate proper column width ensuring all columns fit (max 5 products)
     const maxProducts = Math.min(products.length, 5);
-    const fieldColumnWidth = 45; // Reduced width for field column to fit 5 products
-    const availableWidth = contentWidth - fieldColumnWidth - 5; // 5mm gap
-    const productColumnWidth = Math.floor(availableWidth / maxProducts);
+    const fieldColumnWidth = 45; // Fixed width for field column
+    const availableWidth = contentWidth - fieldColumnWidth; // No gap needed
+    const productColumnWidth = availableWidth / maxProducts;
     
     // Product headers with logos
-    let xPosition = margin + fieldColumnWidth + 5;
+    const headerStartX = margin + fieldColumnWidth;
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'bold');
     
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
-      const currentX = xPosition + (i * productColumnWidth);
-      
-      // Ensure logo doesn't go beyond page boundary
-      const logoX = Math.min(currentX, pageWidth - margin - 20);
+      const currentX = headerStartX + (i * productColumnWidth);
       
       // Add logo if available - ensure it fits within column bounds
       if (product.company) {
@@ -231,30 +228,33 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
         try {
           // Scale logo based on column width and ensure it fits
           const logoSize = Math.min(12, productColumnWidth * 0.3);
-          const centeredLogoX = Math.max(logoX, currentX + (productColumnWidth / 2) - (logoSize / 2));
-          const boundedLogoX = Math.min(centeredLogoX, currentX + productColumnWidth - logoSize - 2);
+          const centeredLogoX = currentX + (productColumnWidth / 2) - (logoSize / 2);
           
-          await addLogo(logoUrl, boundedLogoX, yPosition - 5, logoSize, logoSize * 0.7);
+          await addLogo(logoUrl, centeredLogoX, yPosition - 5, logoSize, logoSize * 0.7);
         } catch (error) {
           // Logo loading failed, continue without logo
         }
       }
       
-      // Product name with text wrapping
+      // Product name with text wrapping - centered in column
       doc.setFontSize(9);
       doc.setFont('helvetica', 'bold');
-      const productNameWrapped = wrapText(product.name, productColumnWidth - 2);
+      const productNameWrapped = wrapText(product.name, productColumnWidth - 4);
       productNameWrapped.lines.forEach((line, lineIndex) => {
-        doc.text(line, currentX, yPosition + 8 + (lineIndex * 3));
+        const textWidth = doc.getTextWidth(line);
+        const centeredX = currentX + (productColumnWidth / 2) - (textWidth / 2);
+        doc.text(line, centeredX, yPosition + 8 + (lineIndex * 3));
       });
       
-      // Company name
+      // Company name - centered in column
       doc.setFontSize(7);
       doc.setFont('helvetica', 'normal');
-      const companyNameWrapped = wrapText(product.company, productColumnWidth - 2);
+      const companyNameWrapped = wrapText(product.company, productColumnWidth - 4);
       const companyStartY = yPosition + 8 + (productNameWrapped.lines.length * 3) + 2;
       companyNameWrapped.lines.forEach((line, lineIndex) => {
-        doc.text(line, currentX, companyStartY + (lineIndex * 2.5));
+        const textWidth = doc.getTextWidth(line);
+        const centeredX = currentX + (productColumnWidth / 2) - (textWidth / 2);
+        doc.text(line, centeredX, companyStartY + (lineIndex * 2.5));
       });
     }
     
@@ -293,7 +293,7 @@ export const exportComparisonToPDF = async (products: ProductDetails[], comparis
       
       for (let i = 0; i < products.length; i++) {
         let value = row[`product_${i}`] || 'N/A';
-        const currentX = margin + fieldColumnWidth + 5 + (i * productColumnWidth);
+        const currentX = headerStartX + (i * productColumnWidth);
         
         // Ensure we don't go beyond page boundaries
         if (currentX + productColumnWidth > pageWidth - margin) {

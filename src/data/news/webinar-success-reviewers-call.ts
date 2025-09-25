@@ -11,7 +11,7 @@ export const webinarSuccessReviewersCall: NewsItem = {
 
 For those who were unable to attend the live session, a recording of the webinar presentation is now available on our YouTube channel. This video provides a comprehensive overview of the DLinRT.eu platform, its goals, and its potential impact on the field.
 
-You can watch the recording here: [Watch the webinar on YouTube](https://youtube.com/watch?v=example)
+You can watch the recording here: [Watch the webinar on YouTube](https://youtu.be/i6kYONbW81g)
 
 ## A community-driven effort: call for reviewers
 
@@ -23,7 +23,7 @@ We are looking for professionals willing to contribute their expertise to valida
 
 If you are interested in supporting this initiative, please register your interest via the form below by October 31, 2024.
 
-➡ [Register to become a reviewer](https://forms.example.com/reviewer-registration)
+➡ [Register to become a reviewer](https://forms.gle/Sj1nXMDhkjqv6dDt8)
 
 Following the registration, the first official online meeting for all new reviewers is scheduled for:
 

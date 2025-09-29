@@ -3,11 +3,11 @@ import { ProductDetails } from "@/types/productDetails";
 
 export const PHILIPS_PRODUCTS: ProductDetails[] = [
   {
-    id: "philips-smartct-ai-reconstruction",
-    name: "SmartCT AI Reconstruction",
+    id: "philips-precise-image",
+    name: "Precise Image",
     company: "Philips",
     category: "Reconstruction",
-    description: "AI-powered CT reconstruction technology that achieves high image quality at lower radiation doses.",
+    description: "Advanced CT reconstruction technology that achieves high image quality at lower radiation doses.",
     features: ["Deep learning-based", "Low-dose imaging", "CT modality"],
     certification: "CE Mark",
     logoUrl: "/logos/philips.png",
@@ -65,11 +65,11 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
 
   },
   {
-    id: "philips-smartspeed-ai",
-    name: "SmartSpeed AI",
+    id: "philips-smartspeed",
+    name: "SmartSpeed",
     company: "Philips",
     category: "Reconstruction",
-    description: "AI-driven MRI acceleration technology using deep learning reconstruction algorithms to reduce scan times while maintaining image quality.",
+    description: "MRI acceleration technology using deep learning reconstruction algorithms to reduce scan times while maintaining image quality.",
     features: ["Deep learning-based", "Fast acquisition", "MRI modality"],
     certification: "CE Mark",
     logoUrl: "/logos/philips.png",

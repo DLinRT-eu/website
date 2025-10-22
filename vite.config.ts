@@ -32,7 +32,7 @@ export default defineConfig(({ mode }) => ({
     ]
   },
   build: {
-    sourcemap: true,
+    sourcemap: 'hidden',
     commonjsOptions: {
       include: [/node_modules/],
     },

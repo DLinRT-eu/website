@@ -137,7 +137,9 @@ export type Database = {
           company_id: string
           created_at: string | null
           id: string
+          priority: string | null
           product_id: string
+          reviewer_feedback: string | null
           revised_by: string
           revision_date: string
           verification_status: string | null
@@ -149,7 +151,9 @@ export type Database = {
           company_id: string
           created_at?: string | null
           id?: string
+          priority?: string | null
           product_id: string
+          reviewer_feedback?: string | null
           revised_by: string
           revision_date: string
           verification_status?: string | null
@@ -161,7 +165,9 @@ export type Database = {
           company_id?: string
           created_at?: string | null
           id?: string
+          priority?: string | null
           product_id?: string
+          reviewer_feedback?: string | null
           revised_by?: string
           revision_date?: string
           verification_status?: string | null
@@ -239,6 +245,39 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          created_at: string | null
+          id: string
+          link: string | null
+          message: string
+          read: boolean | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          link?: string | null
+          message: string
+          read?: boolean | null
+          title: string
+          type?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          link?: string | null
+          message?: string
+          read?: boolean | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       product_reviews: {
         Row: {
           assigned_at: string | null
@@ -249,11 +288,14 @@ export type Database = {
           created_at: string | null
           deadline: string | null
           id: string
+          last_activity_at: string | null
           notes: string | null
           priority: string | null
           product_id: string
+          review_score: number | null
           started_at: string | null
           status: string | null
+          time_spent_minutes: number | null
           updated_at: string | null
         }
         Insert: {
@@ -265,11 +307,14 @@ export type Database = {
           created_at?: string | null
           deadline?: string | null
           id?: string
+          last_activity_at?: string | null
           notes?: string | null
           priority?: string | null
           product_id: string
+          review_score?: number | null
           started_at?: string | null
           status?: string | null
+          time_spent_minutes?: number | null
           updated_at?: string | null
         }
         Update: {
@@ -281,11 +326,14 @@ export type Database = {
           created_at?: string | null
           deadline?: string | null
           id?: string
+          last_activity_at?: string | null
           notes?: string | null
           priority?: string | null
           product_id?: string
+          review_score?: number | null
           started_at?: string | null
           status?: string | null
+          time_spent_minutes?: number | null
           updated_at?: string | null
         }
         Relationships: []
@@ -301,6 +349,7 @@ export type Database = {
           institution: string | null
           last_name: string
           linkedin_url: string | null
+          notification_preferences: Json | null
           profile_image_url: string | null
           public_display: boolean | null
           specialization: string | null
@@ -316,6 +365,7 @@ export type Database = {
           institution?: string | null
           last_name: string
           linkedin_url?: string | null
+          notification_preferences?: Json | null
           profile_image_url?: string | null
           public_display?: boolean | null
           specialization?: string | null
@@ -331,6 +381,7 @@ export type Database = {
           institution?: string | null
           last_name?: string
           linkedin_url?: string | null
+          notification_preferences?: Json | null
           profile_image_url?: string | null
           public_display?: boolean | null
           specialization?: string | null
@@ -551,6 +602,15 @@ export type Database = {
         }
         Relationships: []
       }
+      company_products: {
+        Row: {
+          company_id: string | null
+          company_name: string | null
+          product_id: string | null
+          user_id: string | null
+        }
+        Relationships: []
+      }
       public_team_members: {
         Row: {
           bio: string | null
@@ -599,6 +659,16 @@ export type Database = {
       cleanup_old_analytics_data: { Args: never; Returns: undefined }
       cleanup_old_contact_submissions: { Args: never; Returns: undefined }
       cleanup_old_security_events: { Args: never; Returns: undefined }
+      create_notification: {
+        Args: {
+          p_link?: string
+          p_message: string
+          p_title: string
+          p_type?: string
+          p_user_id: string
+        }
+        Returns: string
+      }
       get_analytics_daily: {
         Args: { end_date?: string; start_date?: string }
         Returns: {

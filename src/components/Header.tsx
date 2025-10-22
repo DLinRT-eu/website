@@ -7,6 +7,7 @@ import { Badge } from './ui/badge';
 import MobileNav from './MobileNav';
 import DropdownNavItem from './navigation/DropdownNavItem';
 import { useAuth } from '@/contexts/AuthContext';
+import NotificationBell from './notifications/NotificationBell';
 
 const Header = () => {
   const { user, profile, isAdmin, isReviewer, isCompany, highestRole, signOut } = useAuth();
@@ -90,7 +91,8 @@ const Header = () => {
         </nav>
         
         {/* Auth Section */}
-        <div className="hidden md:flex items-center flex-shrink-0 ml-2">
+        <div className="hidden md:flex items-center gap-2 flex-shrink-0 ml-2">
+          {user && <NotificationBell />}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

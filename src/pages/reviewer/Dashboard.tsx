@@ -10,6 +10,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Calendar, Clock, AlertCircle, CheckCircle2, Play } from 'lucide-react';
 import { formatDistanceToNow } from 'date-fns';
+import RevisionApprovalManager from '@/components/company/RevisionApprovalManager';
 
 interface ReviewAssignment {
   id: string;
@@ -220,8 +221,11 @@ export default function ReviewerDashboard() {
           </Card>
         </div>
 
+        {/* Pending Revisions */}
+        <RevisionApprovalManager />
+
         {/* Reviews List */}
-        <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
           <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="all">All ({reviews.length})</TabsTrigger>
             <TabsTrigger value="pending">Pending ({pendingReviews.length})</TabsTrigger>

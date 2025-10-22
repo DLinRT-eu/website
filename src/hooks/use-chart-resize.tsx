@@ -1,7 +1,6 @@
 
 import * as React from "react";
 import { useIsMobile } from "./use-mobile";
-import debounce from "lodash/debounce";
 
 export function useChartResize() {
   const [dimensions, setDimensions] = React.useState({ 
@@ -12,25 +11,20 @@ export function useChartResize() {
   const isMobile = useIsMobile();
   
   React.useEffect(() => {
-    const updateDimensions = () => {
-      if (containerRef.current) {
-        setDimensions({
-          width: containerRef.current.offsetWidth,
-          height: containerRef.current.offsetHeight
-        });
+    if (!containerRef.current) return;
+
+    // Use ResizeObserver to avoid forced reflows
+    const resizeObserver = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        const { width, height } = entry.contentRect;
+        setDimensions({ width, height });
       }
-    };
+    });
 
-    const debouncedUpdateDimensions = debounce(updateDimensions, 250);
-
-    // Initial measurement
-    updateDimensions();
-    
-    // Add resize listener
-    window.addEventListener("resize", debouncedUpdateDimensions);
+    resizeObserver.observe(containerRef.current);
     
     return () => {
-      window.removeEventListener("resize", debouncedUpdateDimensions);
+      resizeObserver.disconnect();
     };
   }, []);
 

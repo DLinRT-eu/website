@@ -635,7 +635,13 @@ export type Database = {
         Returns: boolean
       }
       hash_ip: { Args: { ip_address: string }; Returns: string }
-      initialize_super_admin: { Args: never; Returns: undefined }
+      initialize_super_admins: {
+        Args: never
+        Returns: {
+          email: string
+          status: string
+        }[]
+      }
       schedule_analytics_cleanup: { Args: never; Returns: undefined }
     }
     Enums: {

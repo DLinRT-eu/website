@@ -33,6 +33,8 @@ import ImageSynthesisPage from "./pages/categories/ImageSynthesis";
 import ResourcesCompliance from "./pages/ResourcesCompliance";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import ResetPassword from "./pages/ResetPassword";
+import UpdatePassword from "./pages/UpdatePassword";
 import ReviewerDashboard from "./pages/reviewer/Dashboard";
 import UserManagement from "./pages/admin/UserManagement";
 import ReviewAssignment from "./pages/admin/ReviewAssignment";
@@ -62,6 +64,8 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route path="/update-password" element={<UpdatePassword />} />
               <Route path="/profile" element={
                 <ProtectedRoute>
                   <Profile />

@@ -12,6 +12,8 @@ import PageLayout from '@/components/layout/PageLayout';
 import { RoleRequestForm } from '@/components/profile/RoleRequestForm';
 import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
 import { MFASettings } from '@/components/profile/MFASettings';
+import { DataExport } from '@/components/profile/DataExport';
+import { DeleteAccount } from '@/components/profile/DeleteAccount';
 import { User, Mail, Building2, Briefcase, Shield } from 'lucide-react';
 
 export default function Profile() {
@@ -230,6 +232,10 @@ export default function Profile() {
 
           {/* Security Settings */}
           <MFASettings />
+
+          {/* GDPR Compliance */}
+          <DataExport />
+          <DeleteAccount />
 
           {/* Role Request Section - Only show if user doesn't have admin role */}
           {!isAdmin && (

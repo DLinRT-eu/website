@@ -47,6 +47,17 @@ export const RoleRequestForm = ({ onRequestSubmitted }: RoleRequestFormProps) =>
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error('Not authenticated');
 
+      // Check email verification
+      if (!user.email_confirmed_at) {
+        toast({
+          title: 'Email verification required',
+          description: 'Please verify your email before requesting a role. Check your inbox for the verification link.',
+          variant: 'destructive',
+        });
+        setSubmitting(false);
+        return;
+      }
+
       const { error } = await supabase
         .from('role_requests')
         .insert({

@@ -18,6 +18,9 @@ interface Profile {
   linkedin_url?: string;
   public_display: boolean;
   display_order: number;
+  mfa_enabled?: boolean;
+  mfa_enrolled_at?: string;
+  mfa_backup_codes_generated_at?: string;
 }
 
 interface AuthContextType {
@@ -81,6 +84,48 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
+    // Session timeout with inactivity detection (30 minutes)
+    let inactivityTimer: NodeJS.Timeout;
+    const INACTIVITY_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+    
+    const resetTimer = () => {
+      clearTimeout(inactivityTimer);
+      if (user) {
+        inactivityTimer = setTimeout(() => {
+          signOut();
+          toast({
+            title: 'Session expired',
+            description: 'You have been logged out due to inactivity.',
+          });
+        }, INACTIVITY_TIMEOUT);
+      }
+    };
+    
+    const events = ['mousedown', 'keydown', 'scroll', 'touchstart'];
+    events.forEach(event => {
+      document.addEventListener(event, resetTimer);
+    });
+    
+    resetTimer();
+    
+    return () => {
+      clearTimeout(inactivityTimer);
+      events.forEach(event => {
+        document.removeEventListener(event, resetTimer);
+      });
+    };
+  }, [user]);
+
+  // Helper function to hash strings for privacy
+  const hashString = async (str: string): Promise<string> => {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+  };
+
+  useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       (event, session) => {
@@ -119,30 +164,68 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      // Check for account lockout (5 failed attempts in 15 minutes)
+      const hashedEmail = await hashString(email);
+      const { data: recentFailures } = await supabase
+        .from('security_events')
+        .select('*')
+        .eq('event_type', 'failed_login')
+        .eq('ip_hash', hashedEmail) // Using email hash as identifier for client-side
+        .gte('created_at', new Date(Date.now() - 15 * 60 * 1000).toISOString());
+      
+      if (recentFailures && recentFailures.length >= 5) {
+        toast({
+          title: "Account temporarily locked",
+          description: "Too many failed login attempts. Please try again in 15 minutes.",
+          variant: "destructive",
+        });
+        return { error: new Error('Account temporarily locked') };
+      }
 
-    if (error) {
-      toast({
-        title: "Sign in failed",
-        description: error.message,
-        variant: "destructive",
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
+
+      if (error) {
+        // Log failed login attempt
+        await supabase.from('security_events').insert({
+          event_type: 'failed_login',
+          severity: 'medium',
+          ip_hash: hashedEmail,
+          details: { email, timestamp: new Date().toISOString() },
+        });
+
+        toast({
+          title: "Sign in failed",
+          description: error.message,
+          variant: "destructive",
+        });
+        return { error };
+      }
+
+      // Log successful login
+      await supabase.from('security_events').insert({
+        event_type: 'successful_login',
+        severity: 'info',
+        ip_hash: hashedEmail,
+        details: { email, timestamp: new Date().toISOString() },
+      });
+
+      // Check if MFA is required
+      const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      const requiresMFA = aal?.nextLevel === 'aal2' && aal?.currentLevel !== 'aal2';
+      
+      if (requiresMFA) {
+        setMfaRequired(true);
+        return { error: null, mfaRequired: true };
+      }
+
+      return { error: null };
+    } catch (error: any) {
       return { error };
     }
-
-    // Check if MFA is required
-    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    const requiresMFA = aal?.nextLevel === 'aal2' && aal?.currentLevel !== 'aal2';
-    
-    if (requiresMFA) {
-      setMfaRequired(true);
-      return { error: null, mfaRequired: true };
-    }
-
-    return { error: null };
   };
 
   const verifyMFA = async (code: string, isBackupCode: boolean) => {

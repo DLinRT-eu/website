@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker, Info, BookOpen, User } from 'lucide-react';
+import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker, Info, BookOpen, User, AlertCircle } from 'lucide-react';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback } from './ui/avatar';
 import { Badge } from './ui/badge';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from './ui/tooltip';
 import MobileNav from './MobileNav';
 import DropdownNavItem from './navigation/DropdownNavItem';
 import { useAuth } from '@/contexts/AuthContext';
@@ -93,6 +94,22 @@ const Header = () => {
         {/* Auth Section */}
         <div className="hidden md:flex items-center gap-2 flex-shrink-0 ml-2">
           {user && <NotificationBell />}
+          {user && !user.email_confirmed_at && (
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Link to="/profile">
+                    <Button variant="ghost" size="sm" className="text-yellow-300 hover:text-yellow-200">
+                      <AlertCircle className="h-5 w-5" />
+                    </Button>
+                  </Link>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Email not verified. Click to verify.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

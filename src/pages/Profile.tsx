@@ -8,18 +8,20 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
+import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import PageLayout from '@/components/layout/PageLayout';
 import { RoleRequestForm } from '@/components/profile/RoleRequestForm';
 import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
 import { MFASettings } from '@/components/profile/MFASettings';
 import { DataExport } from '@/components/profile/DataExport';
 import { DeleteAccount } from '@/components/profile/DeleteAccount';
-import { User, Mail, Building2, Briefcase, Shield } from 'lucide-react';
+import { User, Mail, Building2, Briefcase, Shield, AlertCircle } from 'lucide-react';
 
 export default function Profile() {
-  const { profile, roles, highestRole, isAdmin, updateProfile, signOut } = useAuth();
+  const { user, profile, roles, highestRole, isAdmin, updateProfile, signOut, resendVerificationEmail } = useAuth();
   const [loading, setLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [resendingEmail, setResendingEmail] = useState(false);
   
   const [firstName, setFirstName] = useState(profile?.first_name || '');
   const [lastName, setLastName] = useState(profile?.last_name || '');
@@ -46,6 +48,12 @@ export default function Profile() {
     setLoading(false);
   };
 
+  const handleResendVerification = async () => {
+    setResendingEmail(true);
+    await resendVerificationEmail();
+    setResendingEmail(false);
+  };
+
   const getRoleBadgeVariant = (role: string) => {
     switch (role) {
       case 'admin': return 'destructive';
@@ -67,6 +75,26 @@ export default function Profile() {
             Sign Out
           </Button>
         </div>
+
+        {/* Email Verification Warning */}
+        {user && !user.email_confirmed_at && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Email Not Verified</AlertTitle>
+            <AlertDescription className="flex flex-col gap-2">
+              <p>Your email address has not been verified. Please check your inbox for a verification link. You cannot request roles or access certain features until your email is verified.</p>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={handleResendVerification}
+                disabled={resendingEmail}
+                className="w-fit"
+              >
+                {resendingEmail ? 'Sending...' : 'Resend Verification Email'}
+              </Button>
+            </AlertDescription>
+          </Alert>
+        )}
 
         <div className="grid gap-6">
           {/* Role Information Card */}

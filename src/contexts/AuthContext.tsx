@@ -40,6 +40,7 @@ interface AuthContextType {
   updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>;
   refreshProfile: () => Promise<void>;
   verifyMFA: (code: string, isBackupCode: boolean) => Promise<{ error: any }>;
+  resendVerificationEmail: () => Promise<{ error: Error | null }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -370,8 +371,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
     } else {
       toast({
-        title: "Sign up successful",
-        description: "Please check your email to verify your account.",
+        title: "Account created successfully!",
+        description: "Please check your email and click the verification link to activate your account. You must verify your email before requesting roles or accessing protected features.",
+        duration: 10000,
       });
     }
 
@@ -379,6 +381,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    localStorage.removeItem('lastActivity');
     const { error } = await supabase.auth.signOut();
     
     if (error) {
@@ -393,6 +396,40 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setProfile(null);
       setRoles([]);
     }
+  };
+
+  const resendVerificationEmail = async () => {
+    if (!user?.email) {
+      toast({
+        title: "Error",
+        description: "No user email found",
+        variant: "destructive",
+      });
+      return { error: new Error('No user email found') };
+    }
+
+    const { error } = await supabase.auth.resend({
+      type: 'signup',
+      email: user.email,
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth`,
+      },
+    });
+
+    if (error) {
+      toast({
+        title: "Failed to resend",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Email sent",
+        description: "Check your inbox for the verification link.",
+      });
+    }
+
+    return { error };
   };
 
   const updateProfile = async (data: Partial<Profile>) => {
@@ -441,6 +478,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     updateProfile,
     refreshProfile,
     verifyMFA,
+    resendVerificationEmail,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

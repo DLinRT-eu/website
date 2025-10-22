@@ -16,7 +16,7 @@ import { ProfileDocuments } from '@/components/profile/ProfileDocuments';
 import { User, Mail, Building2, Briefcase, Shield } from 'lucide-react';
 
 export default function Profile() {
-  const { profile, roles, highestRole, updateProfile, signOut } = useAuth();
+  const { profile, roles, highestRole, isAdmin, updateProfile, signOut } = useAuth();
   const [loading, setLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   
@@ -218,7 +218,7 @@ export default function Profile() {
                     id="public-display"
                     checked={publicDisplay}
                     onCheckedChange={setPublicDisplay}
-                    disabled={!roles.includes('admin') && !roles.includes('reviewer')}
+                    disabled={!isAdmin && !roles.includes('reviewer')}
                   />
                 </div>
 
@@ -229,8 +229,14 @@ export default function Profile() {
             </CardContent>
           </Card>
 
+          {/* Security Settings */}
+          <MFASettings />
+
+          {/* Documents */}
+          <ProfileDocuments />
+
           {/* Role Request Section - Only show if user doesn't have admin role */}
-          {!roles.includes('admin') && (
+          {!isAdmin && (
             <>
               <RoleRequestForm onRequestSubmitted={() => setRefreshKey(prev => prev + 1)} />
               <RoleRequestHistory key={refreshKey} />

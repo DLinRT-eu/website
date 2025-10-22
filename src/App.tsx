@@ -35,6 +35,8 @@ import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
 import ReviewerDashboard from "./pages/reviewer/Dashboard";
 import UserManagement from "./pages/admin/UserManagement";
+import ReviewAssignment from "./pages/admin/ReviewAssignment";
+import CompanyDashboard from "./pages/company/Dashboard";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Create a client
@@ -73,6 +75,16 @@ const App = () => (
               <Route path="/admin/users" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <UserManagement />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/reviews" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ReviewAssignment />
+                </ProtectedRoute>
+              } />
+              <Route path="/company/dashboard" element={
+                <ProtectedRoute allowedRoles={['company']}>
+                  <CompanyDashboard />
                 </ProtectedRoute>
               } />
               <Route path="products" element={<Products />} />

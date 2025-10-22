@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { Shield, ShieldCheck, ShieldAlert, Download, Copy } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
+import bcrypt from 'bcryptjs';
 import {
   Dialog,
   DialogContent,
@@ -72,7 +73,12 @@ export const MFASettings = () => {
       setSecret(data.totp.secret);
       setFactorId(data.id);
       setShowEnrollDialog(true);
-      generateBackupCodes();
+      
+      // Generate backup codes with user ID
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        await generateBackupCodes(user.id);
+      }
     } catch (error: any) {
       toast({
         title: 'Enrollment Failed',
@@ -197,11 +203,45 @@ export const MFASettings = () => {
     }
   };
 
-  const generateBackupCodes = () => {
-    const codes = Array.from({ length: 8 }, () =>
-      Math.random().toString(36).substring(2, 10).toUpperCase()
-    );
-    setBackupCodes(codes);
+  const generateBackupCodes = async (userId: string) => {
+    const codes: string[] = [];
+    
+    try {
+      // Generate 10 cryptographically secure backup codes
+      for (let i = 0; i < 10; i++) {
+        const array = new Uint8Array(8);
+        crypto.getRandomValues(array);
+        const code = Array.from(array)
+          .map(b => b.toString(16).padStart(2, '0'))
+          .join('')
+          .toUpperCase()
+          .match(/.{1,4}/g)
+          ?.join('-') || '';
+        
+        codes.push(code);
+        
+        // Hash with bcrypt
+        const hash = await bcrypt.hash(code, 10);
+        
+        // Store hashed code in database via service role edge function
+        const { error } = await supabase.functions.invoke('store-backup-code', {
+          body: { user_id: userId, code_hash: hash }
+        });
+        
+        if (error) {
+          console.error('Error storing backup code:', error);
+        }
+      }
+      
+      setBackupCodes(codes);
+    } catch (error) {
+      console.error('Error generating backup codes:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to generate backup codes',
+        variant: 'destructive',
+      });
+    }
   };
 
   const downloadBackupCodes = () => {

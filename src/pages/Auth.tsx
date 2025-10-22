@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { AlertCircle } from 'lucide-react';
 import { z } from 'zod';
+import { MFAVerification } from '@/components/auth/MFAVerification';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -17,7 +18,12 @@ const loginSchema = z.object({
 
 const signupSchema = z.object({
   email: z.string().email('Invalid email address'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
+  password: z.string()
+    .min(8, 'Password must be at least 8 characters')
+    .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
+    .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
+    .regex(/[0-9]/, 'Password must contain at least one number')
+    .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character'),
   confirmPassword: z.string(),
   firstName: z.string().min(1, 'First name is required'),
   lastName: z.string().min(1, 'Last name is required'),
@@ -28,10 +34,11 @@ const signupSchema = z.object({
 
 export default function Auth() {
   const navigate = useNavigate();
-  const { user, signIn, signUp } = useAuth();
+  const { user, mfaRequired, signIn, signUp, verifyMFA } = useAuth();
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showMFA, setShowMFA] = useState(false);
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
@@ -44,12 +51,17 @@ export default function Auth() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  // Redirect if already authenticated
+  // Redirect if already authenticated (and MFA not required)
   useEffect(() => {
-    if (user) {
+    if (user && !mfaRequired) {
       navigate('/');
     }
-  }, [user, navigate]);
+  }, [user, mfaRequired, navigate]);
+
+  // Show MFA verification when required
+  useEffect(() => {
+    setShowMFA(mfaRequired);
+  }, [mfaRequired]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -59,14 +71,31 @@ export default function Auth() {
       const validation = loginSchema.parse({ email: loginEmail, password: loginPassword });
       setLoading(true);
       
-      const { error: signInError } = await signIn(validation.email, validation.password);
+      const { error: signInError, mfaRequired: needsMFA } = await signIn(validation.email, validation.password);
       
       if (signInError) {
         setError(signInError.message);
+      } else if (needsMFA) {
+        setShowMFA(true);
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleMFAVerify = async (code: string, isBackupCode: boolean) => {
+    setError(null);
+    setLoading(true);
+    
+    try {
+      const { error: verifyError } = await verifyMFA(code, isBackupCode);
+      
+      if (verifyError) {
+        setError(verifyError.message);
       }
     } finally {
       setLoading(false);
@@ -106,6 +135,19 @@ export default function Auth() {
       setLoading(false);
     }
   };
+
+  // Show MFA verification if required
+  if (showMFA) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
+        <MFAVerification 
+          onVerify={handleMFAVerify}
+          loading={loading}
+          error={error || undefined}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">

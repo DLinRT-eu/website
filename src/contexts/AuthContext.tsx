@@ -29,11 +29,13 @@ interface AuthContextType {
   isReviewer: boolean;
   isCompany: boolean;
   loading: boolean;
-  signIn: (email: string, password: string) => Promise<{ error: any }>;
+  mfaRequired: boolean;
+  signIn: (email: string, password: string) => Promise<{ error: any; mfaRequired?: boolean }>;
   signUp: (email: string, password: string, firstName: string, lastName: string) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
   updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>;
   refreshProfile: () => Promise<void>;
+  verifyMFA: (code: string, isBackupCode: boolean) => Promise<{ error: any }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -44,6 +46,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [profile, setProfile] = useState<Profile | null>(null);
   const [roles, setRoles] = useState<AppRole[]>([]);
   const [loading, setLoading] = useState(true);
+  const [mfaRequired, setMfaRequired] = useState(false);
   const { toast } = useToast();
 
   const fetchProfile = async (userId: string) => {
@@ -115,7 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   const signIn = async (email: string, password: string) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -126,9 +129,54 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         description: error.message,
         variant: "destructive",
       });
+      return { error };
     }
 
-    return { error };
+    // Check if MFA is required
+    const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    const requiresMFA = aal?.nextLevel === 'aal2' && aal?.currentLevel !== 'aal2';
+    
+    if (requiresMFA) {
+      setMfaRequired(true);
+      return { error: null, mfaRequired: true };
+    }
+
+    return { error: null };
+  };
+
+  const verifyMFA = async (code: string, isBackupCode: boolean) => {
+    try {
+      const { data: factors } = await supabase.auth.mfa.listFactors();
+      const factor = factors?.totp?.find((f) => f.status === 'verified');
+      
+      if (!factor) {
+        return { error: new Error('No MFA factor found') };
+      }
+
+      const { data: challenge, error: challengeError } = await supabase.auth.mfa.challenge({
+        factorId: factor.id,
+      });
+
+      if (challengeError) return { error: challengeError };
+
+      const { error: verifyError } = await supabase.auth.mfa.verify({
+        factorId: factor.id,
+        challengeId: challenge.id,
+        code,
+      });
+
+      if (verifyError) return { error: verifyError };
+
+      setMfaRequired(false);
+      toast({
+        title: "Verification successful",
+        description: "You are now signed in.",
+      });
+
+      return { error: null };
+    } catch (error: any) {
+      return { error };
+    }
   };
 
   const signUp = async (email: string, password: string, firstName: string, lastName: string) => {
@@ -218,11 +266,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isReviewer: roles.includes('reviewer'),
     isCompany: roles.includes('company'),
     loading,
+    mfaRequired,
     signIn,
     signUp,
     signOut,
     updateProfile,
     refreshProfile,
+    verifyMFA,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

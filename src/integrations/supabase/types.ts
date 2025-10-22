@@ -212,6 +212,36 @@ export type Database = {
         }
         Relationships: []
       }
+      mfa_activity_log: {
+        Row: {
+          action: string
+          created_at: string | null
+          factor_type: string
+          id: string
+          ip_address: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          created_at?: string | null
+          factor_type: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string | null
+          factor_type?: string
+          id?: string
+          ip_address?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       newsletter_subscribers: {
         Row: {
           consent_given: boolean
@@ -338,6 +368,54 @@ export type Database = {
         }
         Relationships: []
       }
+      profile_documents: {
+        Row: {
+          description: string | null
+          document_type: Database["public"]["Enums"]["profile_document_type"]
+          file_name: string
+          file_size: number
+          file_url: string
+          id: string
+          mime_type: string
+          updated_at: string | null
+          uploaded_at: string | null
+          user_id: string
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          description?: string | null
+          document_type: Database["public"]["Enums"]["profile_document_type"]
+          file_name: string
+          file_size: number
+          file_url: string
+          id?: string
+          mime_type: string
+          updated_at?: string | null
+          uploaded_at?: string | null
+          user_id: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          description?: string | null
+          document_type?: Database["public"]["Enums"]["profile_document_type"]
+          file_name?: string
+          file_size?: number
+          file_url?: string
+          id?: string
+          mime_type?: string
+          updated_at?: string | null
+          uploaded_at?: string | null
+          user_id?: string
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           bio: string | null
@@ -349,6 +427,9 @@ export type Database = {
           institution: string | null
           last_name: string
           linkedin_url: string | null
+          mfa_backup_codes_generated_at: string | null
+          mfa_enabled: boolean | null
+          mfa_enrolled_at: string | null
           notification_preferences: Json | null
           profile_image_url: string | null
           public_display: boolean | null
@@ -365,6 +446,9 @@ export type Database = {
           institution?: string | null
           last_name: string
           linkedin_url?: string | null
+          mfa_backup_codes_generated_at?: string | null
+          mfa_enabled?: boolean | null
+          mfa_enrolled_at?: string | null
           notification_preferences?: Json | null
           profile_image_url?: string | null
           public_display?: boolean | null
@@ -381,6 +465,9 @@ export type Database = {
           institution?: string | null
           last_name?: string
           linkedin_url?: string | null
+          mfa_backup_codes_generated_at?: string | null
+          mfa_enabled?: boolean | null
+          mfa_enrolled_at?: string | null
           notification_preferences?: Json | null
           profile_image_url?: string | null
           public_display?: boolean | null
@@ -716,6 +803,13 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "reviewer" | "company"
+      profile_document_type:
+        | "cv_resume"
+        | "certification"
+        | "publication"
+        | "identification"
+        | "company_verification"
+        | "other"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -844,6 +938,14 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "reviewer", "company"],
+      profile_document_type: [
+        "cv_resume",
+        "certification",
+        "publication",
+        "identification",
+        "company_verification",
+        "other",
+      ],
     },
   },
 } as const

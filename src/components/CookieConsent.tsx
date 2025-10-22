@@ -88,6 +88,7 @@ const CookieConsent = () => {
                 variant="ghost"
                 size="sm"
                 className="flex-shrink-0"
+                aria-label="Dismiss cookie consent banner"
               >
                 <X className="h-4 w-4" />
               </Button>

@@ -33,6 +33,9 @@ import ImageSynthesisPage from "./pages/categories/ImageSynthesis";
 import ResourcesCompliance from "./pages/ResourcesCompliance";
 import Auth from "./pages/Auth";
 import Profile from "./pages/Profile";
+import ReviewerDashboard from "./pages/reviewer/Dashboard";
+import UserManagement from "./pages/admin/UserManagement";
+import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -57,7 +60,21 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
-              <Route path="/profile" element={<Profile />} />
+              <Route path="/profile" element={
+                <ProtectedRoute>
+                  <Profile />
+                </ProtectedRoute>
+              } />
+              <Route path="/reviewer/dashboard" element={
+                <ProtectedRoute allowedRoles={['admin', 'reviewer']}>
+                  <ReviewerDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/users" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <UserManagement />
+                </ProtectedRoute>
+              } />
               <Route path="products" element={<Products />} />
               <Route path="initiatives" element={<Initiatives />} />
               <Route path="/about" element={<About />} />

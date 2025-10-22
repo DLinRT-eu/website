@@ -12,8 +12,7 @@ import {
   isTrackingAllowed,
   clearTrackingIds,
   recordUniqueVisitor,
-  isVisitorRecorded,
-  cleanupOldAnalyticsData
+  isVisitorRecorded
 } from "./storageUtils";
 
 class AnalyticsTracker {
@@ -25,8 +24,7 @@ class AnalyticsTracker {
 
   constructor() {
     this.initializeTracking();
-    // Clean up old analytics data (keep only last year)
-    this.cleanupOldData();
+    // Note: Analytics cleanup is handled by backend scheduled tasks
   }
 
   private initializeTracking(): void {
@@ -50,14 +48,6 @@ class AnalyticsTracker {
     }
 
     console.log('Analytics tracking initialized with cookie consent');
-  }
-
-  private async cleanupOldData(): Promise<void> {
-    try {
-      await cleanupOldAnalyticsData();
-    } catch (error) {
-      console.warn('Failed to cleanup old analytics data:', error);
-    }
   }
 
   async trackPageView(path: string, title: string): Promise<void> {

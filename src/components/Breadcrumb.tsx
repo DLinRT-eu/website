@@ -72,6 +72,12 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
     return null;
   }
 
+  // Sanitize breadcrumb data to prevent injection attacks
+  const sanitizeText = (text: string): string => {
+    // Remove any HTML tags and special characters that could be exploited
+    return text.replace(/[<>\"']/g, '').trim();
+  };
+
   // Generate structured data for breadcrumbs
   const structuredData = {
     "@context": "https://schema.org",
@@ -79,8 +85,8 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
     "itemListElement": breadcrumbItems.map((item, index) => ({
       "@type": "ListItem",
       "position": index + 1,
-      "name": item.label,
-      ...(item.href && { "item": `${window.location.origin}${item.href}` })
+      "name": sanitizeText(item.label),
+      ...(item.href && { "item": `${window.location.origin}${sanitizeText(item.href)}` })
     }))
   };
 

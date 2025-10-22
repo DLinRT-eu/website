@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { RoleRequestManager } from '@/components/admin/RoleRequestManager';
 import { useToast } from '@/hooks/use-toast';
 import { Shield, UserPlus, UserMinus } from 'lucide-react';
 
@@ -157,7 +158,12 @@ export default function UserManagement() {
           <p className="text-muted-foreground mt-2">Manage user roles and permissions</p>
         </div>
 
-        <Card>
+        <div className="space-y-6">
+          {/* Role Requests Section */}
+          <RoleRequestManager />
+
+          {/* Existing Users Section */}
+          <Card>
           <CardHeader>
             <CardTitle>All Users</CardTitle>
             <CardDescription>View and manage user roles</CardDescription>
@@ -248,6 +254,7 @@ export default function UserManagement() {
             </Table>
           </CardContent>
         </Card>
+        </div>
       </div>
     </PageLayout>
   );

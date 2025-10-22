@@ -414,6 +414,45 @@ export type Database = {
           },
         ]
       }
+      role_requests: {
+        Row: {
+          company_id: string | null
+          created_at: string
+          id: string
+          justification: string
+          requested_role: Database["public"]["Enums"]["app_role"]
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          justification: string
+          requested_role: Database["public"]["Enums"]["app_role"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          company_id?: string | null
+          created_at?: string
+          id?: string
+          justification?: string
+          requested_role?: Database["public"]["Enums"]["app_role"]
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       security_events: {
         Row: {
           created_at: string
@@ -596,6 +635,7 @@ export type Database = {
         Returns: boolean
       }
       hash_ip: { Args: { ip_address: string }; Returns: string }
+      initialize_super_admin: { Args: never; Returns: undefined }
       schedule_analytics_cleanup: { Args: never; Returns: undefined }
     }
     Enums: {

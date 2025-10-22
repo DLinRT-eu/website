@@ -9,11 +9,14 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import PageLayout from '@/components/layout/PageLayout';
+import { RoleRequestForm } from '@/components/profile/RoleRequestForm';
+import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
 import { User, Mail, Building2, Briefcase, Shield } from 'lucide-react';
 
 export default function Profile() {
   const { profile, roles, highestRole, updateProfile, signOut } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
   
   const [firstName, setFirstName] = useState(profile?.first_name || '');
   const [lastName, setLastName] = useState(profile?.last_name || '');
@@ -223,6 +226,14 @@ export default function Profile() {
               </form>
             </CardContent>
           </Card>
+
+          {/* Role Request Section - Only show if user doesn't have admin role */}
+          {!roles.includes('admin') && (
+            <>
+              <RoleRequestForm onRequestSubmitted={() => setRefreshKey(prev => prev + 1)} />
+              <RoleRequestHistory key={refreshKey} />
+            </>
+          )}
         </div>
       </div>
     </PageLayout>

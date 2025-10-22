@@ -1,10 +1,16 @@
-
 import { Link } from 'react-router-dom';
-import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker, Info, BookOpen } from 'lucide-react';
+import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Beaker, Info, BookOpen, User } from 'lucide-react';
+import { Button } from './ui/button';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
+import { Avatar, AvatarFallback } from './ui/avatar';
+import { Badge } from './ui/badge';
 import MobileNav from './MobileNav';
 import DropdownNavItem from './navigation/DropdownNavItem';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Header = () => {
+  const { user, profile, isAdmin, isReviewer, isCompany, highestRole, signOut } = useAuth();
+  
   return (
     <header className="bg-[#00A6D6] text-white py-3 px-4 sticky top-0 z-50 shadow-md">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 sm:gap-3 md:gap-4">
@@ -82,6 +88,65 @@ const Header = () => {
             </li>
           </ul>
         </nav>
+        
+        {/* Auth Section */}
+        <div className="hidden md:flex items-center flex-shrink-0 ml-2">
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="sm" className="gap-2 text-white hover:text-white/90">
+                  <Avatar className="h-6 w-6">
+                    <AvatarFallback className="text-xs bg-white/20">
+                      {profile?.first_name?.[0]}{profile?.last_name?.[0]}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="hidden lg:inline">
+                    {profile?.first_name}
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col space-y-1">
+                    <p className="text-sm font-medium">
+                      {profile?.first_name} {profile?.last_name}
+                    </p>
+                    <p className="text-xs text-muted-foreground">{profile?.email}</p>
+                    {highestRole && (
+                      <Badge variant="outline" className="w-fit mt-1">
+                        {highestRole.charAt(0).toUpperCase() + highestRole.slice(1)}
+                      </Badge>
+                    )}
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">
+                    My Profile
+                  </Link>
+                </DropdownMenuItem>
+                
+                {(isAdmin || isReviewer) && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/review" className="cursor-pointer">
+                      Review Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={signOut} className="cursor-pointer">
+                  Sign Out
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <Button asChild variant="secondary" size="sm">
+              <Link to="/auth">Sign In</Link>
+            </Button>
+          )}
+        </div>
       </div>
     </header>
   );

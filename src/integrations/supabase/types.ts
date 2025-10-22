@@ -95,6 +95,81 @@ export type Database = {
         }
         Relationships: []
       }
+      company_representatives: {
+        Row: {
+          company_id: string | null
+          company_name: string
+          created_at: string | null
+          id: string
+          position: string | null
+          user_id: string
+          verified: boolean | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          company_id?: string | null
+          company_name: string
+          created_at?: string | null
+          id?: string
+          position?: string | null
+          user_id: string
+          verified?: boolean | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          company_id?: string | null
+          company_name?: string
+          created_at?: string | null
+          id?: string
+          position?: string | null
+          user_id?: string
+          verified?: boolean | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
+      company_revisions: {
+        Row: {
+          changes_summary: string | null
+          company_id: string
+          created_at: string | null
+          id: string
+          product_id: string
+          revised_by: string
+          revision_date: string
+          verification_status: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          changes_summary?: string | null
+          company_id: string
+          created_at?: string | null
+          id?: string
+          product_id: string
+          revised_by: string
+          revision_date: string
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          changes_summary?: string | null
+          company_id?: string
+          created_at?: string | null
+          id?: string
+          product_id?: string
+          revised_by?: string
+          revision_date?: string
+          verification_status?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -164,6 +239,181 @@ export type Database = {
         }
         Relationships: []
       }
+      product_reviews: {
+        Row: {
+          assigned_at: string | null
+          assigned_to: string | null
+          company_reviewed_at: string | null
+          company_reviewed_by: string | null
+          completed_at: string | null
+          created_at: string | null
+          deadline: string | null
+          id: string
+          notes: string | null
+          priority: string | null
+          product_id: string
+          started_at: string | null
+          status: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          assigned_at?: string | null
+          assigned_to?: string | null
+          company_reviewed_at?: string | null
+          company_reviewed_by?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          priority?: string | null
+          product_id: string
+          started_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          assigned_at?: string | null
+          assigned_to?: string | null
+          company_reviewed_at?: string | null
+          company_reviewed_by?: string | null
+          completed_at?: string | null
+          created_at?: string | null
+          deadline?: string | null
+          id?: string
+          notes?: string | null
+          priority?: string | null
+          product_id?: string
+          started_at?: string | null
+          status?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          bio: string | null
+          created_at: string | null
+          display_order: number | null
+          email: string
+          first_name: string
+          id: string
+          institution: string | null
+          last_name: string
+          linkedin_url: string | null
+          profile_image_url: string | null
+          public_display: boolean | null
+          specialization: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          bio?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          email: string
+          first_name: string
+          id: string
+          institution?: string | null
+          last_name: string
+          linkedin_url?: string | null
+          profile_image_url?: string | null
+          public_display?: boolean | null
+          specialization?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          bio?: string | null
+          created_at?: string | null
+          display_order?: number | null
+          email?: string
+          first_name?: string
+          id?: string
+          institution?: string | null
+          last_name?: string
+          linkedin_url?: string | null
+          profile_image_url?: string | null
+          public_display?: boolean | null
+          specialization?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      review_checklist_items: {
+        Row: {
+          checked: boolean | null
+          checked_at: string | null
+          checked_by: string | null
+          id: string
+          item_category: string
+          item_name: string
+          notes: string | null
+          review_id: string | null
+        }
+        Insert: {
+          checked?: boolean | null
+          checked_at?: string | null
+          checked_by?: string | null
+          id?: string
+          item_category: string
+          item_name: string
+          notes?: string | null
+          review_id?: string | null
+        }
+        Update: {
+          checked?: boolean | null
+          checked_at?: string | null
+          checked_by?: string | null
+          id?: string
+          item_category?: string
+          item_name?: string
+          notes?: string | null
+          review_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_checklist_items_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "product_reviews"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_comments: {
+        Row: {
+          comment: string
+          comment_type: string | null
+          created_at: string | null
+          id: string
+          review_id: string | null
+          user_id: string | null
+        }
+        Insert: {
+          comment: string
+          comment_type?: string | null
+          created_at?: string | null
+          id?: string
+          review_id?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          comment?: string
+          comment_type?: string | null
+          created_at?: string | null
+          id?: string
+          review_id?: string | null
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_comments_review_id_fkey"
+            columns: ["review_id"]
+            isOneToOne: false
+            referencedRelation: "product_reviews"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       security_events: {
         Row: {
           created_at: string
@@ -203,6 +453,30 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          granted_at: string | null
+          granted_by: string | null
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          granted_at?: string | null
+          granted_by?: string | null
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       analytics_public: {
@@ -238,20 +512,54 @@ export type Database = {
         }
         Relationships: []
       }
+      public_team_members: {
+        Row: {
+          bio: string | null
+          display_order: number | null
+          first_name: string | null
+          id: string | null
+          institution: string | null
+          last_name: string | null
+          linkedin_url: string | null
+          profile_image_url: string | null
+          role: Database["public"]["Enums"]["app_role"] | null
+          specialization: string | null
+        }
+        Insert: {
+          bio?: string | null
+          display_order?: number | null
+          first_name?: string | null
+          id?: string | null
+          institution?: string | null
+          last_name?: string | null
+          linkedin_url?: string | null
+          profile_image_url?: string | null
+          role?: never
+          specialization?: string | null
+        }
+        Update: {
+          bio?: string | null
+          display_order?: number | null
+          first_name?: string | null
+          id?: string | null
+          institution?: string | null
+          last_name?: string | null
+          linkedin_url?: string | null
+          profile_image_url?: string | null
+          role?: never
+          specialization?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
-      cleanup_old_analytics_data: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
+      can_access_company: {
+        Args: { _company_id: string; _user_id: string }
+        Returns: boolean
       }
-      cleanup_old_contact_submissions: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
-      cleanup_old_security_events: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
-      }
+      cleanup_old_analytics_data: { Args: never; Returns: undefined }
+      cleanup_old_contact_submissions: { Args: never; Returns: undefined }
+      cleanup_old_security_events: { Args: never; Returns: undefined }
       get_analytics_daily: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
@@ -276,17 +584,22 @@ export type Database = {
           visit_count: number
         }[]
       }
-      hash_ip: {
-        Args: { ip_address: string }
-        Returns: string
+      get_highest_role: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"]
       }
-      schedule_analytics_cleanup: {
-        Args: Record<PropertyKey, never>
-        Returns: undefined
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
       }
+      hash_ip: { Args: { ip_address: string }; Returns: string }
+      schedule_analytics_cleanup: { Args: never; Returns: undefined }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "reviewer" | "company"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -413,6 +726,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "reviewer", "company"],
+    },
   },
 } as const

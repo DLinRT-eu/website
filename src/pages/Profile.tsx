@@ -12,7 +12,6 @@ import PageLayout from '@/components/layout/PageLayout';
 import { RoleRequestForm } from '@/components/profile/RoleRequestForm';
 import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
 import { MFASettings } from '@/components/profile/MFASettings';
-import { ProfileDocuments } from '@/components/profile/ProfileDocuments';
 import { User, Mail, Building2, Briefcase, Shield } from 'lucide-react';
 
 export default function Profile() {
@@ -231,9 +230,6 @@ export default function Profile() {
 
           {/* Security Settings */}
           <MFASettings />
-
-          {/* Documents */}
-          <ProfileDocuments />
 
           {/* Role Request Section - Only show if user doesn't have admin role */}
           {!isAdmin && (

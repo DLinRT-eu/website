@@ -36,7 +36,6 @@ import Profile from "./pages/Profile";
 import ReviewerDashboard from "./pages/reviewer/Dashboard";
 import UserManagement from "./pages/admin/UserManagement";
 import ReviewAssignment from "./pages/admin/ReviewAssignment";
-import DocumentVerificationPage from "./pages/admin/DocumentVerification";
 import CompanyDashboard from "./pages/company/Dashboard";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
@@ -81,11 +80,6 @@ const App = () => (
               <Route path="/admin/reviews" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <ReviewAssignment />
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/documents" element={
-                <ProtectedRoute allowedRoles={['admin']}>
-                  <DocumentVerificationPage />
                 </ProtectedRoute>
               } />
               <Route path="/company/dashboard" element={

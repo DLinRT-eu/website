@@ -38,6 +38,8 @@ import UpdatePassword from "./pages/UpdatePassword";
 import ReviewerDashboard from "./pages/reviewer/Dashboard";
 import UserManagement from "./pages/admin/UserManagement";
 import ReviewAssignment from "./pages/admin/ReviewAssignment";
+import AdminDashboard from "./pages/admin/Dashboard";
+import SecurityDashboard from "./pages/admin/SecurityDashboard";
 import CompanyDashboard from "./pages/company/Dashboard";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 
@@ -76,6 +78,11 @@ const App = () => (
                   <ReviewerDashboard />
                 </ProtectedRoute>
               } />
+              <Route path="/admin" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
               <Route path="/admin/users" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <UserManagement />
@@ -84,6 +91,11 @@ const App = () => (
               <Route path="/admin/reviews" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <ReviewAssignment />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/security" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <SecurityDashboard />
                 </ProtectedRoute>
               } />
               <Route path="/company/dashboard" element={

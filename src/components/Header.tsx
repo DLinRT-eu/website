@@ -146,10 +146,48 @@ const Header = () => {
                   </Link>
                 </DropdownMenuItem>
                 
+                {isAdmin && (
+                  <>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin" className="cursor-pointer flex items-center gap-2">
+                        <LayoutDashboard className="h-4 w-4" />
+                        Admin Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/users" className="cursor-pointer flex items-center gap-2">
+                        <Users className="h-4 w-4" />
+                        User Management
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/reviews" className="cursor-pointer flex items-center gap-2">
+                        <Package className="h-4 w-4" />
+                        Review Assignments
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin/security" className="cursor-pointer flex items-center gap-2">
+                        <AlertCircle className="h-4 w-4" />
+                        Security Dashboard
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                  </>
+                )}
+                
                 {(isAdmin || isReviewer) && (
                   <DropdownMenuItem asChild>
                     <Link to="/review" className="cursor-pointer">
                       Review Dashboard
+                    </Link>
+                  </DropdownMenuItem>
+                )}
+                
+                {isCompany && (
+                  <DropdownMenuItem asChild>
+                    <Link to="/company/dashboard" className="cursor-pointer">
+                      Company Dashboard
                     </Link>
                   </DropdownMenuItem>
                 )}

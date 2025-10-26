@@ -41,16 +41,42 @@ DLinRT.eu is an open, community-driven initiative to catalog deep learning solut
 - **About** (`/about`) - Project information and team
 - **Support** (`/support`) - Help and contact information
 
-## Hidden Administrative Pages
+## Administrative Pages
 
-Advanced functionality accessible but not in main navigation:
+Advanced functionality for authenticated users with appropriate roles:
 
+### Admin Pages (Admin role required)
+- **Admin Dashboard** (`/admin`) - Central administrative hub with stats and quick actions
+- **User Management** (`/admin/users`) - Manage user roles and permissions
+- **Review Assignment** (`/admin/reviews`) - Assign product reviews to reviewers
+- **Security Dashboard** (`/admin/security`) - Monitor security events and system health
+
+### Reviewer Pages (Reviewer or Admin role)
 - **Review Dashboard** (`/review`) - Product review management interface
+- **Reviewer Dashboard** (`/reviewer/dashboard`) - Personal reviewer workspace
+
+### Company Pages (Company role)
+- **Company Dashboard** (`/company/dashboard`) - Company representative portal
+
+### Other Administrative Tools
 - **Timeline Visualization** (`/timeline`) - Interactive data analysis and trends
 - **Individual Product Review** (`/review/:id`) - Detailed product verification
 - **Security Certifications** (`/security`) - Security compliance information
 - **Security Monitoring** (`/security-monitoring`) - Real-time security dashboard
 - **Export Presentation** (`/export-presentation`) - Bulk export functionality
+
+### Admin Access
+
+For detailed information on administrative features and procedures, see the [Admin Guide](ADMIN_GUIDE.md).
+
+Team members with the following emails automatically receive admin access upon signup:
+- matteo.maspero@dlinrt.eu
+- mustafa.kadhim@dlinrt.eu
+- ana.barragan@dlinrt.eu
+- paul.doolan@dlinrt.eu
+- federico.mastroleo@dlinrt.eu
+- viktor.rogowski@dlinrt.eu
+- info@dlinrt.eu
 
 ## Contributing
 

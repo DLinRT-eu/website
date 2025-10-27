@@ -54,19 +54,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [mfaRequired, setMfaRequired] = useState(false);
   const { toast } = useToast();
 
-  const fetchProfile = async (userId: string) => {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
+  const fetchProfile = async (userId: string, retries = 2): Promise<void> => {
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
 
-    if (!error && data) {
-      setProfile(data);
+      if (!error && data) {
+        setProfile(data);
+        return;
+      }
+      
+      if (error) {
+        console.error(`[AuthContext] fetchProfile attempt ${attempt + 1} failed:`, error);
+        
+        if (attempt < retries) {
+          // Wait before retry (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, 200 * Math.pow(2, attempt)));
+          continue;
+        }
+        
+        console.error('[AuthContext] fetchProfile failed after all retries:', error);
+      }
     }
   };
 
-  const fetchRoles = async (userId: string) => {
+  const fetchRoles = async (userId: string, retries = 2): Promise<void> => {
     console.log('[AuthContext] Fetching roles for user:', userId);
     
     // Try to get from cache first (5 minute TTL)
@@ -87,31 +102,41 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.error('[AuthContext] Cache read error:', err);
     }
     
-    // Fetch from database
-    const { data, error } = await supabase
-      .from('user_roles')
-      .select('role')
-      .eq('user_id', userId);
+    // Fetch from database with retry logic
+    for (let attempt = 0; attempt <= retries; attempt++) {
+      const { data, error } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
 
-    if (error) {
-      console.error('[AuthContext] Error fetching roles:', error);
-      return;
-    }
-    
-    if (data) {
-      const fetchedRoles = data.map(r => r.role as AppRole);
-      console.log('[AuthContext] Roles fetched from DB:', fetchedRoles);
-      setRoles(fetchedRoles);
+      if (!error && data) {
+        const fetchedRoles = data.map(r => r.role as AppRole);
+        console.log('[AuthContext] Roles fetched from DB:', fetchedRoles);
+        setRoles(fetchedRoles);
+        
+        // Cache the roles
+        try {
+          sessionStorage.setItem(ROLES_CACHE_KEY, JSON.stringify({
+            userId,
+            roles: fetchedRoles,
+            timestamp: Date.now()
+          }));
+        } catch (err) {
+          console.error('[AuthContext] Cache write error:', err);
+        }
+        return;
+      }
       
-      // Cache the roles
-      try {
-        sessionStorage.setItem(ROLES_CACHE_KEY, JSON.stringify({
-          userId,
-          roles: fetchedRoles,
-          timestamp: Date.now()
-        }));
-      } catch (err) {
-        console.error('[AuthContext] Cache write error:', err);
+      if (error) {
+        console.error(`[AuthContext] fetchRoles attempt ${attempt + 1} failed:`, error);
+        
+        if (attempt < retries) {
+          // Wait before retry (exponential backoff)
+          await new Promise(resolve => setTimeout(resolve, 200 * Math.pow(2, attempt)));
+          continue;
+        }
+        
+        console.error('[AuthContext] fetchRoles failed after all retries:', error);
       }
     }
   };
@@ -166,19 +191,25 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
-    // Set up auth state listener FIRST
+    let mounted = true;
+    
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        if (!mounted) return;
+        
         console.log('[AuthContext] Auth state changed:', event);
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Wait for profile and roles to load BEFORE setting loading to false
         if (session?.user) {
-          await Promise.all([
-            fetchProfile(session.user.id),
-            fetchRoles(session.user.id)
-          ]);
+          try {
+            await Promise.all([
+              fetchProfile(session.user.id),
+              fetchRoles(session.user.id)
+            ]);
+          } catch (error) {
+            console.error('[AuthContext] Error loading user data:', error);
+          }
         } else {
           setProfile(null);
           setRoles([]);
@@ -188,23 +219,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     );
 
-    // THEN check for existing session
-    supabase.auth.getSession().then(async ({ data: { session } }) => {
-      console.log('[AuthContext] Initial session check:', session?.user?.email);
-      setSession(session);
-      setUser(session?.user ?? null);
-      
-      if (session?.user) {
-        await Promise.all([
-          fetchProfile(session.user.id),
-          fetchRoles(session.user.id)
-        ]);
-      }
-      
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const signIn = async (email: string, password: string) => {

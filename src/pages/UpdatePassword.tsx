@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,64 @@ export default function UpdatePassword() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [sessionReady, setSessionReady] = useState(false);
+  const [sessionError, setSessionError] = useState('');
   const navigate = useNavigate();
+
+  // Establish session from URL parameters
+  useEffect(() => {
+    const establishSession = async () => {
+      const hashParams = new URLSearchParams(window.location.hash.substring(1));
+      const code = new URLSearchParams(window.location.search).get('code') || 
+                   hashParams.get('access_token');
+      
+      if (!code) {
+        const { data: { session } } = await supabase.auth.getSession();
+        if (session) {
+          setSessionReady(true);
+          return;
+        }
+        
+        setSessionError('Invalid password reset link. Please request a new one.');
+        return;
+      }
+      
+      if (new URLSearchParams(window.location.search).has('code')) {
+        const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+        
+        if (error) {
+          console.error('[UpdatePassword] Session exchange error:', error);
+          setSessionError('Failed to verify reset link. Please request a new one.');
+          return;
+        }
+        
+        console.log('[UpdatePassword] Session established:', data.session?.user?.email);
+        setSessionReady(true);
+        window.history.replaceState({}, document.title, '/update-password');
+      } else {
+        const accessToken = hashParams.get('access_token');
+        const refreshToken = hashParams.get('refresh_token');
+        
+        if (accessToken && refreshToken) {
+          const { error } = await supabase.auth.setSession({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+          });
+          
+          if (error) {
+            console.error('[UpdatePassword] Session set error:', error);
+            setSessionError('Failed to verify reset link. Please request a new one.');
+            return;
+          }
+          
+          setSessionReady(true);
+          window.history.replaceState({}, document.title, '/update-password');
+        }
+      }
+    };
+    
+    establishSession();
+  }, []);
 
   const validatePassword = (pwd: string) => {
     const errors: string[] = [];
@@ -59,11 +116,72 @@ export default function UpdatePassword() {
 
     if (error) {
       setError(error.message);
+      
+      await supabase.from('security_events').insert({
+        event_type: 'password_update_failed',
+        severity: 'medium',
+        details: { 
+          error: error.message,
+          timestamp: new Date().toISOString() 
+        },
+      });
+      
       setLoading(false);
     } else {
+      await supabase.from('security_events').insert({
+        event_type: 'password_updated',
+        severity: 'info',
+        details: { 
+          timestamp: new Date().toISOString() 
+        },
+      });
+      
       navigate('/auth');
     }
   };
+
+  if (!sessionReady) {
+    return (
+      <>
+        <SEO 
+          title="Update Password"
+          description="Update your DLinRT.eu password"
+        />
+        <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background to-muted">
+          <Card className="w-full max-w-md">
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Shield className="h-6 w-6" />
+                <CardTitle>Update Password</CardTitle>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {sessionError ? (
+                <div className="space-y-4">
+                  <Alert variant="destructive">
+                    <AlertDescription>{sessionError}</AlertDescription>
+                  </Alert>
+                  <Button 
+                    onClick={() => navigate('/reset-password')}
+                    className="w-full"
+                  >
+                    Request New Reset Link
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-center py-8">
+                  <div className="text-center">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+                    <p className="text-muted-foreground">Verifying reset link...</p>
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

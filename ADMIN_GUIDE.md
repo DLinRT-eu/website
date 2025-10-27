@@ -294,6 +294,38 @@ If you're supposed to be an admin but lack access:
 
 ---
 
+## Password Reset for Administrators
+
+If you need to reset your password:
+
+1. Go to https://dlinrt.eu/reset-password
+2. Enter your admin email address
+3. Check your email for the reset link (check spam folder if not found)
+4. Click the link - you'll be redirected to the password update page
+5. Wait for the page to verify your reset link (~2 seconds)
+6. Enter your new password (must meet security requirements)
+7. Click "Update Password"
+8. You'll be redirected to the login page
+9. Log in with your new password
+
+### Password Requirements
+
+- At least 8 characters
+- At least one uppercase letter
+- At least one lowercase letter
+- At least one number
+- At least one special character (!@#$%^&*)
+
+### Troubleshooting Password Reset
+
+- **"Auth session missing!" error** → Request a new reset link
+- **Link is expired** → Request a new reset link (links expire after 1 hour)
+- **Email doesn't arrive** → Check spam folder, wait 5 minutes, try again
+- **"Invalid reset link" message** → Link may have been used already, request a new one
+- **Still having issues** → Contact technical support at info@dlinrt.eu
+
+---
+
 ## Troubleshooting
 
 ### Can't Access Admin Pages

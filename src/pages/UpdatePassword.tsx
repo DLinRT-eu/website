@@ -12,9 +12,11 @@ import { z } from 'zod';
 
 const passwordSchema = z.string()
   .min(8, 'Password must be at least 8 characters')
+  .max(128, 'Password must be less than 128 characters')
   .regex(/[A-Z]/, 'Password must contain at least one uppercase letter')
   .regex(/[a-z]/, 'Password must contain at least one lowercase letter')
-  .regex(/[0-9]/, 'Password must contain at least one number');
+  .regex(/[0-9]/, 'Password must contain at least one number')
+  .regex(/[^A-Za-z0-9]/, 'Password must contain at least one special character');
 
 export default function UpdatePassword() {
   const [password, setPassword] = useState('');
@@ -30,6 +32,7 @@ export default function UpdatePassword() {
     if (!/[A-Z]/.test(pwd)) errors.push('One uppercase letter');
     if (!/[a-z]/.test(pwd)) errors.push('One lowercase letter');
     if (!/[0-9]/.test(pwd)) errors.push('One number');
+    if (!/[^A-Za-z0-9]/.test(pwd)) errors.push('One special character');
     setValidationErrors(errors);
     return errors.length === 0;
   };
@@ -141,6 +144,16 @@ export default function UpdatePassword() {
                       )}
                       <span className={validationErrors.includes('One number') ? 'text-destructive' : 'text-green-500'}>
                         One number
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {validationErrors.includes('One special character') ? (
+                        <XCircle className="h-3 w-3 text-destructive" />
+                      ) : (
+                        <CheckCircle className="h-3 w-3 text-green-500" />
+                      )}
+                      <span className={validationErrors.includes('One special character') ? 'text-destructive' : 'text-green-500'}>
+                        One special character (!@#$%^&*)
                       </span>
                     </div>
                   </div>

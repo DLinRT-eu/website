@@ -50,7 +50,7 @@ interface RecentActivity {
 }
 
 export default function AdminDashboard() {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
@@ -65,12 +65,15 @@ export default function AdminDashboard() {
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
 
   useEffect(() => {
+    // Don't check permissions while still loading auth
+    if (authLoading) return;
+    
     if (!user || !isAdmin) {
       navigate('/');
       return;
     }
     fetchDashboardData();
-  }, [user, isAdmin]);
+  }, [user, isAdmin, authLoading, navigate]);
 
   const fetchDashboardData = async () => {
     try {
@@ -205,7 +208,7 @@ export default function AdminDashboard() {
     }
   };
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <PageLayout>
         <div className="flex items-center justify-center min-h-screen">

@@ -26,7 +26,7 @@ interface UserProfile {
 }
 
 export default function UserManagement() {
-  const { user, isAdmin } = useAuth();
+  const { user, isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [users, setUsers] = useState<UserProfile[]>([]);
@@ -36,13 +36,16 @@ export default function UserManagement() {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
+    // Don't check permissions while still loading auth
+    if (authLoading) return;
+    
     if (!user || !isAdmin) {
       navigate('/');
       return;
     }
 
     fetchUsers();
-  }, [user, isAdmin]);
+  }, [user, isAdmin, authLoading, navigate]);
 
   const fetchUsers = async () => {
     // Fetch all profiles
@@ -137,7 +140,7 @@ export default function UserManagement() {
     }
   };
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <PageLayout>
         <div className="flex items-center justify-center min-h-screen">

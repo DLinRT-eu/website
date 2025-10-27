@@ -67,12 +67,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const fetchRoles = async (userId: string) => {
+    console.log('[AuthContext] Fetching roles for user:', userId);
     const { data, error } = await supabase
       .from('user_roles')
       .select('role')
       .eq('user_id', userId);
 
-    if (!error && data) {
+    if (error) {
+      console.error('[AuthContext] Error fetching roles:', error);
+    }
+    
+    if (data) {
+      console.log('[AuthContext] Roles fetched:', data);
       setRoles(data.map(r => r.role as AppRole));
     }
   };
@@ -129,16 +135,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   useEffect(() => {
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
+        console.log('[AuthContext] Auth state changed:', event);
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Defer profile/roles fetching
+        // Wait for profile and roles to load BEFORE setting loading to false
         if (session?.user) {
-          setTimeout(() => {
-            fetchProfile(session.user.id);
-            fetchRoles(session.user.id);
-          }, 0);
+          await Promise.all([
+            fetchProfile(session.user.id),
+            fetchRoles(session.user.id)
+          ]);
         } else {
           setProfile(null);
           setRoles([]);
@@ -149,13 +156,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
 
     // THEN check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      console.log('[AuthContext] Initial session check:', session?.user?.email);
       setSession(session);
       setUser(session?.user ?? null);
       
       if (session?.user) {
-        fetchProfile(session.user.id);
-        fetchRoles(session.user.id);
+        await Promise.all([
+          fetchProfile(session.user.id),
+          fetchRoles(session.user.id)
+        ]);
       }
       
       setLoading(false);

@@ -25,20 +25,23 @@ interface ReviewAssignment {
 }
 
 export default function ReviewerDashboard() {
-  const { user, isReviewer, isAdmin } = useAuth();
+  const { user, isReviewer, isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [reviews, setReviews] = useState<ReviewAssignment[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pending');
 
   useEffect(() => {
+    // Don't check permissions while still loading auth
+    if (authLoading) return;
+    
     if (!user || (!isReviewer && !isAdmin)) {
       navigate('/auth');
       return;
     }
 
     fetchReviews();
-  }, [user, isReviewer, isAdmin]);
+  }, [user, isReviewer, isAdmin, authLoading, navigate]);
 
   const fetchReviews = async () => {
     if (!user) return;
@@ -163,7 +166,7 @@ export default function ReviewerDashboard() {
     );
   };
 
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <PageLayout>
         <div className="flex items-center justify-center min-h-screen">

@@ -68,6 +68,26 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchRoles = async (userId: string) => {
     console.log('[AuthContext] Fetching roles for user:', userId);
+    
+    // Try to get from cache first (5 minute TTL)
+    const ROLES_CACHE_KEY = 'user_roles_cache';
+    try {
+      const cached = sessionStorage.getItem(ROLES_CACHE_KEY);
+      if (cached) {
+        const { userId: cachedUserId, roles: cachedRoles, timestamp } = JSON.parse(cached);
+        const isExpired = Date.now() - timestamp > 5 * 60 * 1000; // 5 minutes
+        
+        if (cachedUserId === userId && !isExpired) {
+          console.log('[AuthContext] Using cached roles:', cachedRoles);
+          setRoles(cachedRoles);
+          return;
+        }
+      }
+    } catch (err) {
+      console.error('[AuthContext] Cache read error:', err);
+    }
+    
+    // Fetch from database
     const { data, error } = await supabase
       .from('user_roles')
       .select('role')
@@ -75,11 +95,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     if (error) {
       console.error('[AuthContext] Error fetching roles:', error);
+      return;
     }
     
     if (data) {
-      console.log('[AuthContext] Roles fetched:', data);
-      setRoles(data.map(r => r.role as AppRole));
+      const fetchedRoles = data.map(r => r.role as AppRole);
+      console.log('[AuthContext] Roles fetched from DB:', fetchedRoles);
+      setRoles(fetchedRoles);
+      
+      // Cache the roles
+      try {
+        sessionStorage.setItem(ROLES_CACHE_KEY, JSON.stringify({
+          userId,
+          roles: fetchedRoles,
+          timestamp: Date.now()
+        }));
+      } catch (err) {
+        console.error('[AuthContext] Cache write error:', err);
+      }
     }
   };
 
@@ -392,6 +425,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signOut = async () => {
     localStorage.removeItem('lastActivity');
+    sessionStorage.removeItem('user_roles_cache'); // Clear role cache on sign out
     const { error } = await supabase.auth.signOut();
     
     if (error) {

@@ -11,7 +11,7 @@ import { useAuth } from '@/contexts/AuthContext';
 import NotificationBell from './notifications/NotificationBell';
 
 const Header = () => {
-  const { user, profile, isAdmin, isReviewer, isCompany, highestRole, signOut } = useAuth();
+  const { user, profile, isAdmin, isReviewer, isCompany, highestRole, loading, signOut } = useAuth();
   
   return (
     <header className="bg-[#00A6D6] text-white py-3 px-4 sticky top-0 z-50 shadow-md">
@@ -131,7 +131,11 @@ const Header = () => {
                       {profile?.first_name} {profile?.last_name}
                     </p>
                     <p className="text-xs text-muted-foreground">{profile?.email}</p>
-                    {highestRole && (
+                    {loading ? (
+                      <Badge variant="outline" className="w-fit mt-1 text-muted-foreground">
+                        Loading roles...
+                      </Badge>
+                    ) : highestRole && (
                       <Badge variant="outline" className="w-fit mt-1">
                         {highestRole.charAt(0).toUpperCase() + highestRole.slice(1)}
                       </Badge>
@@ -145,6 +149,12 @@ const Header = () => {
                     My Profile
                   </Link>
                 </DropdownMenuItem>
+                
+                {loading && (
+                  <DropdownMenuLabel className="text-xs text-muted-foreground">
+                    Loading permissions...
+                  </DropdownMenuLabel>
+                )}
                 
                 {isAdmin && (
                   <>

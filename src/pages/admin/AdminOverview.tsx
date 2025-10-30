@@ -64,13 +64,36 @@ export default function AdminOverview() {
   const fetchAllData = async () => {
     setLoading(true);
     try {
-      // Fetch pending role requests
-      const { data: requests } = await supabase
+      // Fetch pending role requests with user profiles
+      const { data: requests, error: requestsError } = await supabase
         .from('role_requests')
-        .select('*, profiles(email, first_name, last_name)')
+        .select('id, user_id, requested_role, justification, created_at')
         .eq('status', 'pending')
         .order('created_at', { ascending: false });
-      setRoleRequests(requests || []);
+
+      if (requestsError) {
+        console.error('Error fetching role requests:', requestsError);
+      } else if (requests) {
+        // Fetch profiles separately
+        const userIds = requests.map(r => r.user_id);
+        const { data: profilesData } = await supabase
+          .from('profiles')
+          .select('id, email, first_name, last_name')
+          .in('id', userIds);
+
+        const profilesMap = new Map(profilesData?.map(p => [p.id, p]) || []);
+        
+        const enrichedRequests = requests.map(request => ({
+          ...request,
+          profiles: profilesMap.get(request.user_id) || {
+            email: 'Unknown',
+            first_name: 'Unknown',
+            last_name: 'User'
+          }
+        }));
+        
+        setRoleRequests(enrichedRequests);
+      }
 
       // Fetch unassigned reviews
       const { data: reviews } = await supabase
@@ -83,8 +106,8 @@ export default function AdminOverview() {
 
       // Fetch pending revisions
       const { data: revisions } = await supabase
-        .from('product_revisions')
-        .select('*')
+        .from('company_revisions')
+        .select('id, product_id, verification_status, created_at')
         .eq('verification_status', 'pending')
         .order('created_at', { ascending: false })
         .limit(10);
@@ -108,7 +131,7 @@ export default function AdminOverview() {
     }
   };
 
-  const handleApproveRole = async (requestId: string, userId: string, requestedRole: string) => {
+  const handleApproveRole = async (requestId: string, userId: string, requestedRole: 'admin' | 'reviewer' | 'company') => {
     try {
       // Grant the role
       const { error: roleError } = await supabase
@@ -277,7 +300,7 @@ export default function AdminOverview() {
                         <TableCell className="text-right space-x-2">
                           <Button
                             size="sm"
-                            onClick={() => handleApproveRole(request.id, request.user_id, request.requested_role)}
+                            onClick={() => handleApproveRole(request.id, request.user_id, request.requested_role as 'admin' | 'reviewer' | 'company')}
                           >
                             <CheckCircle className="h-4 w-4 mr-1" />
                             Approve

@@ -55,6 +55,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const { toast } = useToast();
 
   const fetchProfile = async (userId: string): Promise<Profile | null> => {
+    console.log('[AuthContext] 🔍 Fetching profile for user:', userId);
+    const startTime = Date.now();
+    
     try {
       const { data, error } = await supabase
         .from('profiles')
@@ -62,28 +65,69 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .eq('id', userId)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('[AuthContext] ❌ Profile fetch failed:', {
+          error,
+          userId,
+          duration: Date.now() - startTime,
+        });
+        throw error;
+      }
+      
+      console.log('[AuthContext] ✅ Profile fetched successfully:', {
+        email: data.email,
+        duration: Date.now() - startTime,
+      });
       return data;
     } catch (error) {
-      console.error('Error fetching profile:', error);
+      console.error('[AuthContext] 💥 Profile fetch error:', error);
       return null;
     }
   };
 
   const fetchRoles = async (userId: string): Promise<AppRole[]> => {
+    console.log('[AuthContext] 🔍 Fetching roles for user:', userId);
+    const startTime = Date.now();
+    
     try {
+      // First verify we have a valid session
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        console.warn('[AuthContext] ⚠️ No active session when fetching roles');
+        return [];
+      }
+      
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
         .eq('user_id', userId);
 
-      if (error) throw error;
+      if (error) {
+        console.error('[AuthContext] ❌ Roles fetch failed:', {
+          error,
+          errorCode: error.code,
+          errorMessage: error.message,
+          errorDetails: error.details,
+          userId,
+          duration: Date.now() - startTime,
+        });
+        throw error;
+      }
       
       const userRoles = data?.map(r => r.role as AppRole) || [];
-      console.log('Fetched roles:', userRoles);
+      console.log('[AuthContext] ✅ Roles fetched successfully:', {
+        roles: userRoles,
+        count: userRoles.length,
+        duration: Date.now() - startTime,
+      });
       return userRoles;
-    } catch (error) {
-      console.error('Error fetching roles:', error);
+    } catch (error: any) {
+      console.error('[AuthContext] 💥 Roles fetch error:', {
+        error,
+        message: error?.message,
+        hint: error?.hint,
+        userId,
+      });
       return [];
     }
   };
@@ -139,48 +183,137 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   };
 
+  // Validate session helper
+  const validateSession = async (): Promise<boolean> => {
+    console.log('[AuthContext] 🔐 Validating session...');
+    
+    try {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      
+      if (error) {
+        console.error('[AuthContext] ❌ Session validation failed:', error);
+        return false;
+      }
+      
+      if (!session) {
+        console.warn('[AuthContext] ⚠️ No active session found');
+        return false;
+      }
+      
+      // Check if token is expired
+      const now = Math.floor(Date.now() / 1000);
+      if (session.expires_at && session.expires_at < now) {
+        console.warn('[AuthContext] ⏰ Session expired, refreshing...');
+        const { data: refreshed, error: refreshError } = await supabase.auth.refreshSession();
+        
+        if (refreshError || !refreshed.session) {
+          console.error('[AuthContext] ❌ Session refresh failed:', refreshError);
+          return false;
+        }
+        
+        console.log('[AuthContext] ✅ Session refreshed successfully');
+        return true;
+      }
+      
+      console.log('[AuthContext] ✅ Session is valid');
+      return true;
+    } catch (error) {
+      console.error('[AuthContext] 💥 Session validation error:', error);
+      return false;
+    }
+  };
+
   // Set up auth state listener with session refresh on focus
   useEffect(() => {
     let mounted = true;
+    let loadingTimeout: NodeJS.Timeout;
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         if (!mounted) return;
         
-        console.log('[AuthContext] Auth state changed:', event);
+        console.log('[AuthContext] 🔄 Auth state changed:', event);
+        
+        // Clear any existing timeout
+        if (loadingTimeout) clearTimeout(loadingTimeout);
+        
+        // Set timeout to force loading to false after 10 seconds
+        loadingTimeout = setTimeout(() => {
+          if (mounted && loading) {
+            console.error('[AuthContext] ⏱️ Loading timeout - forcing completion');
+            setLoading(false);
+          }
+        }, 10000);
+        
         setSession(session);
         setUser(session?.user ?? null);
         
         if (session?.user) {
+          console.log('[AuthContext] 👤 User authenticated:', session.user.id);
+          
+          // Validate session before fetching data
+          const isValid = await validateSession();
+          if (!isValid) {
+            console.warn('[AuthContext] ⚠️ Session invalid, skipping data fetch');
+            setProfile(null);
+            setRoles([]);
+            setLoading(false);
+            return;
+          }
+          
           const userProfile = await fetchProfile(session.user.id);
           const userRoles = await fetchRoles(session.user.id);
           setProfile(userProfile);
           setRoles(userRoles);
+          
+          console.log('[AuthContext] 🎉 Authentication complete:', {
+            hasProfile: !!userProfile,
+            rolesCount: userRoles.length,
+            roles: userRoles,
+          });
         } else {
+          console.log('[AuthContext] 👋 User signed out');
           setProfile(null);
           setRoles([]);
         }
         
+        clearTimeout(loadingTimeout);
         setLoading(false);
       }
     );
 
-    // Refresh session when window regains focus
+    // Refresh session when window regains focus or becomes visible
     const handleFocus = async () => {
+      if (!mounted) return;
+      
       const { data: { session: currentSession } } = await supabase.auth.getSession();
       if (currentSession?.user) {
-        console.log('Window focused - refreshing session');
+        console.log('[AuthContext] 🔄 Window focused - refreshing session and roles');
+        
+        // Refresh session
+        await supabase.auth.refreshSession();
+        
+        // Fetch fresh roles
         const freshRoles = await fetchRoles(currentSession.user.id);
         setRoles(freshRoles);
       }
     };
+    
+    const handleVisibilityChange = async () => {
+      if (document.visibilityState === 'visible') {
+        await handleFocus();
+      }
+    };
 
     window.addEventListener('focus', handleFocus);
+    window.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
       mounted = false;
+      if (loadingTimeout) clearTimeout(loadingTimeout);
       subscription.unsubscribe();
       window.removeEventListener('focus', handleFocus);
+      window.removeEventListener('visibilitychange', handleVisibilityChange);
     };
   }, []);
 

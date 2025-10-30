@@ -40,6 +40,7 @@ import UserManagement from "./pages/admin/UserManagement";
 import ReviewAssignment from "./pages/admin/ReviewAssignment";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminOverview from "./pages/admin/AdminOverview";
+import AdminAccessTest from "./pages/admin/AdminAccessTest";
 import SecurityDashboard from "./pages/admin/SecurityDashboard";
 import CompanyDashboard from "./pages/company/Dashboard";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
@@ -102,6 +103,11 @@ const App = () => (
               <Route path="/admin/security" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <SecurityDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/access-test" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminAccessTest />
                 </ProtectedRoute>
               } />
               <Route path="/company/dashboard" element={

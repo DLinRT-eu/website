@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +9,9 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Separator } from '@/components/ui/separator';
 import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
+import { Skeleton } from '@/components/ui/skeleton';
 import PageLayout from '@/components/layout/PageLayout';
+import { useToast } from '@/hooks/use-toast';
 import { RoleRequestForm } from '@/components/profile/RoleRequestForm';
 import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
 import { MFASettings } from '@/components/profile/MFASettings';
@@ -19,6 +21,7 @@ import { User, Mail, Building2, Briefcase, Shield, AlertCircle } from 'lucide-re
 
 export default function Profile() {
   const { user, profile, roles, highestRole, isAdmin, updateProfile, signOut, resendVerificationEmail } = useAuth();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [resendingEmail, setResendingEmail] = useState(false);
@@ -31,17 +34,51 @@ export default function Profile() {
   const [linkedinUrl, setLinkedinUrl] = useState(profile?.linkedin_url || '');
   const [publicDisplay, setPublicDisplay] = useState(profile?.public_display || false);
 
+  // Sync form state with profile data when it loads
+  useEffect(() => {
+    if (profile) {
+      setFirstName(profile.first_name || '');
+      setLastName(profile.last_name || '');
+      setInstitution(profile.institution || '');
+      setSpecialization(profile.specialization || '');
+      setBio(profile.bio || '');
+      setLinkedinUrl(profile.linkedin_url || '');
+      setPublicDisplay(profile.public_display || false);
+    }
+  }, [profile]);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate required fields
+    if (!firstName.trim() || !lastName.trim()) {
+      toast({
+        title: "Validation error",
+        description: "First name and last name are required.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // Validate LinkedIn URL format (if provided)
+    if (linkedinUrl && !linkedinUrl.startsWith('https://')) {
+      toast({
+        title: "Validation error",
+        description: "LinkedIn URL must start with https://",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setLoading(true);
 
     await updateProfile({
       first_name: firstName,
       last_name: lastName,
-      institution,
-      specialization,
-      bio,
-      linkedin_url: linkedinUrl,
+      institution: institution || null,
+      specialization: specialization || null,
+      bio: bio || null,
+      linkedin_url: linkedinUrl || null,
       public_display: publicDisplay,
     });
 
@@ -62,6 +99,35 @@ export default function Profile() {
       default: return 'outline';
     }
   };
+
+  // Show loading skeleton while profile loads
+  if (!profile) {
+    return (
+      <PageLayout>
+        <div className="container max-w-4xl py-8">
+          <div className="flex items-center justify-between mb-8">
+            <div>
+              <h1 className="text-3xl font-bold">My Profile</h1>
+              <p className="text-muted-foreground mt-2">Loading your profile...</p>
+            </div>
+          </div>
+          
+          <div className="grid gap-6">
+            <Card>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-10 w-full" />
+                  <Skeleton className="h-20 w-full" />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
 
   return (
     <PageLayout>

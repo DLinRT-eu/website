@@ -21,8 +21,9 @@ export default function ResetPassword() {
     setError('');
     setLoading(true);
 
+    // Use explicit production URL for password reset
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/update-password`,
+      redirectTo: 'https://dlinrt.eu/update-password',
     });
 
     if (error) {

@@ -28,107 +28,83 @@ export default function UpdatePassword() {
   const [sessionError, setSessionError] = useState('');
   const navigate = useNavigate();
 
-  // Establish session from URL parameters
   useEffect(() => {
     const establishSession = async () => {
-      console.log('[UpdatePassword] Full URL:', window.location.href);
-      console.log('[UpdatePassword] Search params:', window.location.search);
-      console.log('[UpdatePassword] Hash params:', window.location.hash);
-      
-      // Set timeout to prevent infinite loading
-      const timeout = setTimeout(() => {
-        setSessionError('Verification timed out. The reset link may have expired. Please request a new one.');
-      }, 10000); // 10 second timeout
-      
       try {
+        console.log('=== Password Reset Flow Debug ===');
+        console.log('Full URL:', window.location.href);
+        
         const searchParams = new URLSearchParams(window.location.search);
         const hashParams = new URLSearchParams(window.location.hash.substring(1));
         
-        // Check for PKCE code parameter
+        // PKCE flow parameters (modern)
         const code = searchParams.get('code');
         
-        // Check for legacy hash-based tokens
-        const accessToken = hashParams.get('access_token');
-        const refreshToken = hashParams.get('refresh_token');
+        // Legacy flow parameters (older reset emails)
+        const accessToken = searchParams.get('access_token') || hashParams.get('access_token');
+        const refreshToken = searchParams.get('refresh_token') || hashParams.get('refresh_token');
         
-        // Check for token_hash (used in email verification links)
-        const tokenHash = searchParams.get('token_hash') || hashParams.get('token_hash');
-        const type = searchParams.get('type') || hashParams.get('type');
-        
-        console.log('[UpdatePassword] Detected params:', { 
-          code: !!code, 
-          accessToken: !!accessToken, 
-          tokenHash: !!tokenHash,
-          type 
+        console.log('Detected parameters:', { 
+          hasPKCECode: !!code, 
+          hasLegacyTokens: !!(accessToken && refreshToken) 
         });
-        
-        // If we have a PKCE code, exchange it for a session
+
+        // Timeout to prevent infinite loading
+        const timeoutId = setTimeout(() => {
+          console.error('Session establishment timed out');
+          setSessionError('Session verification timed out. The reset link may have expired.');
+          setSessionReady(false);
+        }, 5000);
+
+        // PKCE flow (preferred)
         if (code) {
-          console.log('[UpdatePassword] Exchanging code for session...');
+          console.log('Using PKCE flow with code exchange...');
           const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+          clearTimeout(timeoutId);
           
           if (error) {
-            console.error('[UpdatePassword] Session exchange error:', error);
-            clearTimeout(timeout);
-            setSessionError('Failed to verify reset link. Please request a new one.');
-            return;
+            console.error('PKCE exchange failed:', error);
+            setSessionError('Reset link is invalid or has expired. Please request a new one.');
+            setSessionReady(false);
+          } else {
+            console.log('✓ Session established via PKCE');
+            setSessionReady(true);
           }
-          
-          console.log('[UpdatePassword] Session established via code:', data.session?.user?.email);
-          clearTimeout(timeout);
-          setSessionReady(true);
-          window.history.replaceState({}, document.title, '/update-password');
           return;
         }
-        
-        // If we have legacy hash tokens, set the session
+
+        // Legacy token flow (fallback)
         if (accessToken && refreshToken) {
-          console.log('[UpdatePassword] Setting session from hash tokens...');
-          const { error } = await supabase.auth.setSession({
+          console.log('Using legacy token flow...');
+          const { data, error } = await supabase.auth.setSession({
             access_token: accessToken,
             refresh_token: refreshToken,
           });
+          clearTimeout(timeoutId);
           
           if (error) {
-            console.error('[UpdatePassword] Session set error:', error);
-            clearTimeout(timeout);
-            setSessionError('Failed to verify reset link. Please request a new one.');
-            return;
+            console.error('Legacy token flow failed:', error);
+            setSessionError('Reset link is invalid or has expired. Please request a new one.');
+            setSessionReady(false);
+          } else {
+            console.log('✓ Session established via legacy tokens');
+            setSessionReady(true);
           }
-          
-          console.log('[UpdatePassword] Session established via hash tokens');
-          clearTimeout(timeout);
-          setSessionReady(true);
-          window.history.replaceState({}, document.title, '/update-password');
           return;
         }
-        
-        // Check if user already has an active session
-        console.log('[UpdatePassword] Checking for existing session...');
-        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
-        
-        if (sessionError) {
-          console.error('[UpdatePassword] Session check error:', sessionError);
-        }
-        
-        if (session) {
-          console.log('[UpdatePassword] Found existing session:', session.user?.email);
-          clearTimeout(timeout);
-          setSessionReady(true);
-          return;
-        }
-        
-        // No valid tokens or session found
-        console.error('[UpdatePassword] No valid authentication tokens found');
-        clearTimeout(timeout);
-        setSessionError('Invalid password reset link. Please request a new one.');
+
+        // No valid tokens found
+        console.error('No reset tokens found in URL');
+        clearTimeout(timeoutId);
+        setSessionError('Invalid reset link. Please request a new password reset link.');
+        setSessionReady(false);
       } catch (err) {
-        console.error('[UpdatePassword] Unexpected error:', err);
-        clearTimeout(timeout);
-        setSessionError('An error occurred. Please request a new reset link.');
+        console.error('Unexpected error:', err);
+        setSessionError('An unexpected error occurred. Please try again.');
+        setSessionReady(false);
       }
     };
-    
+
     establishSession();
   }, []);
 

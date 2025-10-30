@@ -54,97 +54,46 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [mfaRequired, setMfaRequired] = useState(false);
   const { toast } = useToast();
 
-  const fetchProfile = async (userId: string, retries = 2): Promise<void> => {
-    for (let attempt = 0; attempt <= retries; attempt++) {
+  const fetchProfile = async (userId: string): Promise<Profile | null> => {
+    try {
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
         .eq('id', userId)
         .single();
 
-      if (!error && data) {
-        setProfile(data);
-        return;
-      }
-      
-      if (error) {
-        console.error(`[AuthContext] fetchProfile attempt ${attempt + 1} failed:`, error);
-        
-        if (attempt < retries) {
-          // Wait before retry (exponential backoff)
-          await new Promise(resolve => setTimeout(resolve, 200 * Math.pow(2, attempt)));
-          continue;
-        }
-        
-        console.error('[AuthContext] fetchProfile failed after all retries:', error);
-      }
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error('Error fetching profile:', error);
+      return null;
     }
   };
 
-  const fetchRoles = async (userId: string, retries = 2): Promise<void> => {
-    console.log('[AuthContext] Fetching roles for user:', userId);
-    
-    // Try to get from cache first (5 minute TTL)
-    const ROLES_CACHE_KEY = 'user_roles_cache';
+  const fetchRoles = async (userId: string): Promise<AppRole[]> => {
     try {
-      const cached = sessionStorage.getItem(ROLES_CACHE_KEY);
-      if (cached) {
-        const { userId: cachedUserId, roles: cachedRoles, timestamp } = JSON.parse(cached);
-        const isExpired = Date.now() - timestamp > 5 * 60 * 1000; // 5 minutes
-        
-        if (cachedUserId === userId && !isExpired) {
-          console.log('[AuthContext] Using cached roles:', cachedRoles);
-          setRoles(cachedRoles);
-          return;
-        }
-      }
-    } catch (err) {
-      console.error('[AuthContext] Cache read error:', err);
-    }
-    
-    // Fetch from database with retry logic
-    for (let attempt = 0; attempt <= retries; attempt++) {
       const { data, error } = await supabase
         .from('user_roles')
         .select('role')
         .eq('user_id', userId);
 
-      if (!error && data) {
-        const fetchedRoles = data.map(r => r.role as AppRole);
-        console.log('[AuthContext] Roles fetched from DB:', fetchedRoles);
-        setRoles(fetchedRoles);
-        
-        // Cache the roles
-        try {
-          sessionStorage.setItem(ROLES_CACHE_KEY, JSON.stringify({
-            userId,
-            roles: fetchedRoles,
-            timestamp: Date.now()
-          }));
-        } catch (err) {
-          console.error('[AuthContext] Cache write error:', err);
-        }
-        return;
-      }
+      if (error) throw error;
       
-      if (error) {
-        console.error(`[AuthContext] fetchRoles attempt ${attempt + 1} failed:`, error);
-        
-        if (attempt < retries) {
-          // Wait before retry (exponential backoff)
-          await new Promise(resolve => setTimeout(resolve, 200 * Math.pow(2, attempt)));
-          continue;
-        }
-        
-        console.error('[AuthContext] fetchRoles failed after all retries:', error);
-      }
+      const userRoles = data?.map(r => r.role as AppRole) || [];
+      console.log('Fetched roles:', userRoles);
+      return userRoles;
+    } catch (error) {
+      console.error('Error fetching roles:', error);
+      return [];
     }
   };
 
   const refreshProfile = async () => {
     if (user) {
-      await fetchProfile(user.id);
-      await fetchRoles(user.id);
+      const userProfile = await fetchProfile(user.id);
+      const userRoles = await fetchRoles(user.id);
+      setProfile(userProfile);
+      setRoles(userRoles);
     }
   };
 
@@ -190,6 +139,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
   };
 
+  // Set up auth state listener with session refresh on focus
   useEffect(() => {
     let mounted = true;
     
@@ -202,14 +152,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          try {
-            await Promise.all([
-              fetchProfile(session.user.id),
-              fetchRoles(session.user.id)
-            ]);
-          } catch (error) {
-            console.error('[AuthContext] Error loading user data:', error);
-          }
+          const userProfile = await fetchProfile(session.user.id);
+          const userRoles = await fetchRoles(session.user.id);
+          setProfile(userProfile);
+          setRoles(userRoles);
         } else {
           setProfile(null);
           setRoles([]);
@@ -219,9 +165,22 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
     );
 
+    // Refresh session when window regains focus
+    const handleFocus = async () => {
+      const { data: { session: currentSession } } = await supabase.auth.getSession();
+      if (currentSession?.user) {
+        console.log('Window focused - refreshing session');
+        const freshRoles = await fetchRoles(currentSession.user.id);
+        setRoles(freshRoles);
+      }
+    };
+
+    window.addEventListener('focus', handleFocus);
+
     return () => {
       mounted = false;
       subscription.unsubscribe();
+      window.removeEventListener('focus', handleFocus);
     };
   }, []);
 
@@ -442,22 +401,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
-    localStorage.removeItem('lastActivity');
-    sessionStorage.removeItem('user_roles_cache'); // Clear role cache on sign out
     const { error } = await supabase.auth.signOut();
-    
     if (error) {
+      console.error('Error signing out:', error);
       toast({
         title: "Sign out failed",
         description: error.message,
         variant: "destructive",
       });
-    } else {
-      setUser(null);
-      setSession(null);
-      setProfile(null);
-      setRoles([]);
+      throw error;
     }
+    
+    // Clear ALL state
+    setUser(null);
+    setSession(null);
+    setProfile(null);
+    setRoles([]);
+    
+    // Clear all storage to prevent stale data
+    sessionStorage.clear();
+    localStorage.removeItem('supabase.auth.token');
+    localStorage.removeItem('lastActivity');
+    
+    console.log('✓ Sign out complete - all state cleared');
   };
 
   const resendVerificationEmail = async () => {

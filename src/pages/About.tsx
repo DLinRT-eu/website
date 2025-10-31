@@ -6,6 +6,8 @@ import BlackPaperSection from "@/components/about/BlackPaperSection";
 import MissionVisionSection from "@/components/about/MissionVisionSection";
 import CoreValuesSection from "@/components/about/CoreValuesSection";
 import TeamSection from "@/components/about/TeamSection";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Shield, Eye, Building2, User } from "lucide-react";
 
 const TEAM_MEMBERS = [
   {
@@ -105,6 +107,127 @@ const About = () => {
       <BlackPaperSection />
       <MissionVisionSection />
       <CoreValuesSection />
+      
+      {/* What Happens After You Log In Section */}
+      <section className="py-16 px-4 bg-gradient-to-br from-background to-primary/5">
+        <div className="container mx-auto max-w-6xl">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              What Happens After You Log In?
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              DLinRT.eu offers different experiences based on your role. Here's what you can expect after logging in.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+            {/* Regular User Card */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-3">
+                  <User className="h-6 w-6 text-blue-500" />
+                </div>
+                <CardTitle>Regular User</CardTitle>
+                <CardDescription>
+                  Explore and track AI/ML products in radiotherapy
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Browse comprehensive product database</li>
+                  <li>• Track products you've adopted</li>
+                  <li>• Share your product experiences</li>
+                  <li>• Access regulatory resources</li>
+                  <li>• View market insights and analytics</li>
+                  <li>• Request reviewer or company roles</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Reviewer Card */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-blue-500/10 flex items-center justify-center mb-3">
+                  <Eye className="h-6 w-6 text-blue-500" />
+                </div>
+                <CardTitle>Reviewer</CardTitle>
+                <CardDescription>
+                  Validate AI/ML products for regulatory compliance
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Access dedicated review dashboard</li>
+                  <li>• Review assigned AI/ML products</li>
+                  <li>• Validate regulatory compliance</li>
+                  <li>• View user product experiences</li>
+                  <li>• Provide detailed feedback</li>
+                  <li>• Track review assignments and deadlines</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Company Representative Card */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-green-500/10 flex items-center justify-center mb-3">
+                  <Building2 className="h-6 w-6 text-green-500" />
+                </div>
+                <CardTitle>Company Representative</CardTitle>
+                <CardDescription>
+                  Manage your company's product portfolio
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Access company-specific dashboard</li>
+                  <li>• Update product information</li>
+                  <li>• View user adoption statistics</li>
+                  <li>• Submit product revisions</li>
+                  <li>• Respond to user feedback</li>
+                  <li>• Track verification status</li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Administrator Card */}
+            <Card className="hover:shadow-lg transition-shadow">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-full bg-red-500/10 flex items-center justify-center mb-3">
+                  <Shield className="h-6 w-6 text-red-500" />
+                </div>
+                <CardTitle>Administrator</CardTitle>
+                <CardDescription>
+                  Full platform access and user management
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>• Full system access and control</li>
+                  <li>• Manage user roles and permissions</li>
+                  <li>• Oversee product reviews</li>
+                  <li>• Assign review tasks</li>
+                  <li>• Monitor security and compliance</li>
+                  <li>• Access analytics and audit logs</li>
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground mb-4">
+              Users with multiple roles can switch between them at any time using the role selector in the header menu.
+            </p>
+            <a 
+              href="/roles" 
+              className="text-primary hover:underline font-medium"
+            >
+              Learn more about roles and permissions →
+            </a>
+          </div>
+        </div>
+      </section>
+      
       <TeamSection teamMembers={shuffledTeamMembers} />
       <Footer />
     </div>

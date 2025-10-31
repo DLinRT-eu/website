@@ -32,6 +32,9 @@ interface AuthContextType {
   isAdmin: boolean;
   isReviewer: boolean;
   isCompany: boolean;
+  activeRole: string | null;
+  availableRoles: string[];
+  requiresRoleSelection: boolean;
   loading: boolean;
   mfaRequired: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any; mfaRequired?: boolean }>;
@@ -41,6 +44,7 @@ interface AuthContextType {
   refreshProfile: () => Promise<void>;
   verifyMFA: (code: string, isBackupCode: boolean) => Promise<{ error: any }>;
   resendVerificationEmail: () => Promise<{ error: Error | null }>;
+  setActiveRole: (role: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,6 +54,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [roles, setRoles] = useState<AppRole[]>([]);
+  const [activeRole, setActiveRoleState] = useState<string | null>(null);
+  const [availableRoles, setAvailableRoles] = useState<string[]>([]);
+  const [requiresRoleSelection, setRequiresRoleSelection] = useState(false);
   const [loading, setLoading] = useState(true);
   const [mfaRequired, setMfaRequired] = useState(false);
   const { toast } = useToast();
@@ -115,9 +122,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       
       const userRoles = data?.map(r => r.role as AppRole) || [];
+      setAvailableRoles(userRoles);
+      
+      // Handle active role selection
+      const storedActiveRole = localStorage.getItem('dlinrt_active_role');
+      
+      if (userRoles.length === 0) {
+        // No roles - regular user
+        setActiveRoleState('user');
+        setRequiresRoleSelection(false);
+      } else if (userRoles.length === 1) {
+        // Single role - auto-set
+        setActiveRoleState(userRoles[0]);
+        localStorage.setItem('dlinrt_active_role', userRoles[0]);
+        setRequiresRoleSelection(false);
+      } else if (storedActiveRole && userRoles.includes(storedActiveRole as AppRole)) {
+        // Multi-role with valid stored selection
+        setActiveRoleState(storedActiveRole);
+        setRequiresRoleSelection(false);
+      } else {
+        // Multi-role without valid selection - require selection
+        setActiveRoleState(null);
+        setRequiresRoleSelection(true);
+      }
+      
       console.log('[AuthContext] ✅ Roles fetched successfully:', {
         roles: userRoles,
         count: userRoles.length,
+        activeRole: activeRole,
         duration: Date.now() - startTime,
       });
       return userRoles;
@@ -128,7 +160,34 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         hint: error?.hint,
         userId,
       });
+      setAvailableRoles([]);
+      setActiveRoleState('user');
+      setRequiresRoleSelection(false);
       return [];
+    }
+  };
+  
+  const setActiveRole = (role: string) => {
+    // Validate role is in available roles or is 'user'
+    if (role === 'user' || availableRoles.includes(role)) {
+      setActiveRoleState(role);
+      localStorage.setItem('dlinrt_active_role', role);
+      setRequiresRoleSelection(false);
+      
+      // Log role switch for audit
+      if (user) {
+        supabase.from('security_events').insert({
+          event_type: 'role_switch',
+          severity: 'info',
+          details: {
+            previous_role: activeRole,
+            new_role: role,
+            user_id: user.id
+          }
+        }).then();
+      }
+    } else {
+      console.error('Invalid role selection:', role);
     }
   };
 
@@ -550,11 +609,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setSession(null);
     setProfile(null);
     setRoles([]);
+    setActiveRoleState(null);
+    setAvailableRoles([]);
+    setRequiresRoleSelection(false);
     
     // Clear all storage to prevent stale data
     sessionStorage.clear();
     localStorage.removeItem('supabase.auth.token');
     localStorage.removeItem('lastActivity');
+    localStorage.removeItem('dlinrt_active_role');
     
     console.log('✓ Sign out complete - all state cleared');
   };
@@ -631,6 +694,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     isAdmin: roles.includes('admin'),
     isReviewer: roles.includes('reviewer'),
     isCompany: roles.includes('company'),
+    activeRole,
+    availableRoles,
+    requiresRoleSelection,
     loading,
     mfaRequired,
     signIn,
@@ -640,6 +706,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     refreshProfile,
     verifyMFA,
     resendVerificationEmail,
+    setActiveRole,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

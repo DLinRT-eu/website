@@ -21,6 +21,9 @@ interface Profile {
   mfa_enabled?: boolean;
   mfa_enrolled_at?: string;
   mfa_backup_codes_generated_at?: string;
+  approval_status?: string;
+  approved_by?: string;
+  approved_at?: string;
 }
 
 interface AuthContextType {
@@ -321,6 +324,51 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           }
           
           const userProfile = await fetchProfile(session.user.id);
+          
+          // Team members are auto-approved
+          const teamEmails = [
+            'matteo.maspero@dlinrt.eu',
+            'mustafa.kadhim@dlinrt.eu',
+            'ana.barragan@dlinrt.eu',
+            'paul.doolan@dlinrt.eu',
+            'federico.mastroleo@dlinrt.eu',
+            'viktor.rogowski@dlinrt.eu'
+          ];
+          const isTeamMember = teamEmails.includes(session.user.email?.toLowerCase() || '');
+          
+          // Check approval status - but don't block team members or admins
+          if (userProfile?.approval_status === 'pending' && !isTeamMember) {
+            const { data: adminRole } = await supabase
+              .from('user_roles')
+              .select('role')
+              .eq('user_id', session.user.id)
+              .eq('role', 'admin')
+              .single();
+            
+            if (!adminRole) {
+              toast({
+                title: "Account Pending Approval",
+                description: "Your account is awaiting admin approval. You'll receive an email once approved.",
+                variant: "default",
+              });
+              setProfile(null);
+              setRoles([]);
+              setLoading(false);
+              return;
+            }
+          }
+          
+          if (userProfile?.approval_status === 'rejected') {
+            toast({
+              title: "Account Not Approved",
+              description: "Your account was not approved. Contact admin@dlinrt.eu for assistance.",
+              variant: "destructive",
+            });
+            await signOut();
+            setLoading(false);
+            return;
+          }
+          
           const userRoles = await fetchRoles(session.user.id);
           setProfile(userProfile);
           setRoles(userRoles);
@@ -329,6 +377,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             hasProfile: !!userProfile,
             rolesCount: userRoles.length,
             roles: userRoles,
+            approvalStatus: userProfile?.approval_status,
           });
         } else {
           console.log('[AuthContext] 👋 User signed out');

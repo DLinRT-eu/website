@@ -12,9 +12,14 @@ import { useNavigate } from "react-router-dom";
 import MailingListSignup from "@/components/MailingListSignup";
 import Footer from "@/components/Footer";
 import QuickAccessSection from "@/components/homepage/QuickAccessSection";
+import { useAuth } from "@/contexts/AuthContext";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowRight, BarChart3, Building2, FileText, Package } from "lucide-react";
 
 const Index = () => {
   const navigate = useNavigate();
+  const { user, profile, activeRole } = useAuth();
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -39,7 +44,136 @@ const Index = () => {
     navigate(`/products?task=${encodeURIComponent(category)}`);
   };
 
-  return (
+  // Personalized dashboard for authenticated users
+  const renderAuthenticatedView = () => (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <SEO 
+        title="Dashboard - DLinRT"
+        description="Your personalized dashboard for deep learning products in radiotherapy"
+        noindex={true}
+      />
+      
+      {/* Welcome Section */}
+      <div className="bg-gradient-to-r from-[#00A6D6] to-[#0086b3] text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2">
+            Welcome back, {profile?.first_name}!
+          </h1>
+          <p className="text-lg text-white/90">
+            {activeRole === 'admin' && "Manage users, reviews, and system settings"}
+            {activeRole === 'reviewer' && "Review products and validate compliance"}
+            {activeRole === 'company' && "Manage your company's product information"}
+            {(!activeRole || activeRole === 'user') && "Explore deep learning solutions in radiotherapy"}
+          </p>
+        </div>
+      </div>
+
+      {/* Quick Actions */}
+      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {activeRole === 'admin' && (
+            <>
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin')}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <Building2 className="h-5 w-5" />
+                    Admin Panel
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Manage users and system settings</p>
+                </CardContent>
+              </Card>
+              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/review-dashboard')}>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2 text-lg">
+                    <FileText className="h-5 w-5" />
+                    Reviews
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground">Review product submissions</p>
+                </CardContent>
+              </Card>
+            </>
+          )}
+          {(activeRole === 'reviewer' || activeRole === 'admin') && (
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/reviewer/dashboard')}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <FileText className="h-5 w-5" />
+                  My Reviews
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">View your assigned reviews</p>
+              </CardContent>
+            </Card>
+          )}
+          {(activeRole === 'company' || activeRole === 'admin') && (
+            <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/company/dashboard')}>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2 text-lg">
+                  <Building2 className="h-5 w-5" />
+                  Company Dashboard
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">Manage your products</p>
+              </CardContent>
+            </Card>
+          )}
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/products')}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Package className="h-5 w-5" />
+                Products
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">Browse all products</p>
+            </CardContent>
+          </Card>
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/dashboard')}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <BarChart3 className="h-5 w-5" />
+                Analytics
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">View market insights</p>
+            </CardContent>
+          </Card>
+          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/my-products')}>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-lg">
+                <Package className="h-5 w-5" />
+                My Products
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground">Track your adoptions</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <TaskTaxonomy 
+          categories={categoryCounts} 
+          onCategoryClick={handleCategoryClick}
+          filterType="task"
+        />
+      </div>
+
+      <NewsSection />
+      
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
+        <Footer />
+      </main>
+    </div>
+  );
+
+  return user ? renderAuthenticatedView() : (
     <div className="min-h-screen bg-white">
       <SEO 
         title="DLinRT - Deep learning-based products database for radiotherapy"

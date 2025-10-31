@@ -55,14 +55,92 @@ export default function RolesFAQ() {
                 <AccordionItem value="item-2">
                   <AccordionTrigger>Can I have multiple roles?</AccordionTrigger>
                   <AccordionContent>
-                    <p>Yes! Roles are compatible and can be combined:</p>
+                    <p><strong>Important:</strong> User and Company roles are <strong>incompatible</strong> to prevent conflicts of interest.</p>
+                    <p className="mt-2">Compatible role combinations:</p>
                     <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
-                      <li>A Reviewer can also track products as a User</li>
-                      <li>Company Representatives can request Reviewer status</li>
-                      <li>Admins have access to all features</li>
+                      <li>Reviewer + User (review products and track your adoptions)</li>
+                      <li>Reviewer + Company (not recommended, but allowed)</li>
+                      <li>Admin has all roles for testing purposes</li>
                     </ul>
-                    <p className="mt-2">
-                      Each role adds specific capabilities without removing existing ones.
+                    <p className="mt-2 text-destructive font-medium">
+                      ❌ You cannot be both a User (tracking products) and a Company Representative
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-institutional">
+                  <AccordionTrigger>Why can't I use my Gmail/personal email?</AccordionTrigger>
+                  <AccordionContent>
+                    <p>
+                      We require institutional emails (.edu, .ac.uk, .org, .gov, etc.) to:
+                    </p>
+                    <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
+                      <li>Verify professional affiliation</li>
+                      <li>Prevent spam and fake accounts</li>
+                      <li>Ensure GDPR compliance for European institutions</li>
+                      <li>Maintain platform quality and trust</li>
+                    </ul>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      Contact <a href="mailto:info@dlinrt.eu" className="text-primary hover:underline">info@dlinrt.eu</a> if your institution uses a non-standard email domain.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-approval">
+                  <AccordionTrigger>How long does account approval take?</AccordionTrigger>
+                  <AccordionContent>
+                    <p>
+                      <strong>All accounts require manual admin review.</strong> Typically 1-3 business days.
+                    </p>
+                    <p className="mt-2">After signing up:</p>
+                    <ol className="list-decimal list-inside space-y-1 ml-2 mt-2">
+                      <li>You'll receive an email confirmation link</li>
+                      <li>Admin reviews your institutional email</li>
+                      <li>You'll be notified when approved</li>
+                      <li>Then you can request additional roles</li>
+                    </ol>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      This process protects the community from unauthorized access.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-user-company">
+                  <AccordionTrigger>Can I be both a User and Company Representative?</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="text-destructive font-medium mb-2">
+                      <strong>No.</strong> These roles are mutually exclusive to prevent conflicts of interest.
+                    </p>
+                    <p>If you have user product adoptions, you cannot request the Company role until you remove them.</p>
+                    <p className="mt-2">This ensures:</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2 mt-2">
+                      <li>Unbiased user experiences</li>
+                      <li>Clear separation between users and vendors</li>
+                      <li>Trust in shared user feedback</li>
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-user-review">
+                  <AccordionTrigger>Can users review products?</AccordionTrigger>
+                  <AccordionContent>
+                    <p className="mb-2">
+                      <strong>No.</strong> Users share <em>experiences</em>, not formal reviews.
+                    </p>
+                    <p className="mt-2"><strong>User Experience</strong> (available to all):</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Share your adoption story</li>
+                      <li>Rate your satisfaction (1-5 stars)</li>
+                      <li>Describe use cases and department</li>
+                    </ul>
+                    <p className="mt-2"><strong>Product Review</strong> (Reviewer role only):</p>
+                    <ul className="list-disc list-inside space-y-1 ml-2">
+                      <li>Validate regulatory compliance</li>
+                      <li>Check technical accuracy</li>
+                      <li>Ensure documentation quality</li>
+                    </ul>
+                    <p className="mt-2 text-sm text-muted-foreground">
+                      This separation ensures objective compliance validation.
                     </p>
                   </AccordionContent>
                 </AccordionItem>

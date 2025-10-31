@@ -323,5 +323,6 @@ export default function Auth() {
         </CardFooter>
       </Card>
     </div>
+    </>
   );
 }

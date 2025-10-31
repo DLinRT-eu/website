@@ -12,7 +12,7 @@ import { Alert, AlertTitle, AlertDescription } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import PageLayout from '@/components/layout/PageLayout';
 import { useToast } from '@/hooks/use-toast';
-import { RoleRequestForm } from '@/components/profile/RoleRequestForm';
+import RoleRequestForm from '@/components/profile/RoleRequestForm';
 import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
 import { MFASettings } from '@/components/profile/MFASettings';
 import { DataExport } from '@/components/profile/DataExport';

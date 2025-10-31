@@ -22,6 +22,8 @@ interface UserProfile {
   first_name: string;
   last_name: string;
   institution?: string;
+  approval_status?: string;
+  created_at?: string;
   roles: AppRole[];
 }
 
@@ -51,8 +53,8 @@ export default function UserManagement() {
     // Fetch all profiles
     const { data: profiles, error: profilesError } = await supabase
       .from('profiles')
-      .select('*')
-      .order('last_name');
+      .select('id, email, first_name, last_name, institution, created_at')
+      .order('created_at', { ascending: false });
 
     if (profilesError) {
       toast({
@@ -86,13 +88,18 @@ export default function UserManagement() {
   const handleGrantRole = async () => {
     if (!selectedUser || !user) return;
 
+    // If granting admin role, also grant reviewer and company for testing
+    const rolesToGrant: Array<{ user_id: string; role: AppRole; granted_by: string }> = selectedRole === 'admin' 
+      ? [
+          { user_id: selectedUser.id, role: 'admin' as AppRole, granted_by: user.id },
+          { user_id: selectedUser.id, role: 'reviewer' as AppRole, granted_by: user.id },
+          { user_id: selectedUser.id, role: 'company' as AppRole, granted_by: user.id }
+        ]
+      : [{ user_id: selectedUser.id, role: selectedRole, granted_by: user.id }];
+
     const { error } = await supabase
       .from('user_roles')
-      .insert({
-        user_id: selectedUser.id,
-        role: selectedRole,
-        granted_by: user.id,
-      });
+      .insert(rolesToGrant);
 
     if (error) {
       toast({
@@ -101,9 +108,13 @@ export default function UserManagement() {
         variant: 'destructive',
       });
     } else {
+      const message = selectedRole === 'admin'
+        ? `Admin role granted (includes reviewer & company for testing)`
+        : `${selectedRole} role granted`;
+      
       toast({
         title: 'Success',
-        description: `${selectedRole} role granted to ${selectedUser.first_name} ${selectedUser.last_name}`,
+        description: `${message} to ${selectedUser.first_name} ${selectedUser.last_name}`,
       });
       fetchUsers();
       setDialogOpen(false);

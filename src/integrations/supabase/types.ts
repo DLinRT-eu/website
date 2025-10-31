@@ -657,6 +657,57 @@ export type Database = {
         }
         Relationships: []
       }
+      user_products: {
+        Row: {
+          adoption_date: string | null
+          company_id: string
+          contact_preference: string | null
+          created_at: string | null
+          department: string | null
+          experience_notes: string | null
+          experience_rating: number | null
+          id: string
+          institution: string | null
+          product_id: string
+          updated_at: string | null
+          use_case: string | null
+          user_id: string
+          willing_to_share_experience: boolean | null
+        }
+        Insert: {
+          adoption_date?: string | null
+          company_id: string
+          contact_preference?: string | null
+          created_at?: string | null
+          department?: string | null
+          experience_notes?: string | null
+          experience_rating?: number | null
+          id?: string
+          institution?: string | null
+          product_id: string
+          updated_at?: string | null
+          use_case?: string | null
+          user_id: string
+          willing_to_share_experience?: boolean | null
+        }
+        Update: {
+          adoption_date?: string | null
+          company_id?: string
+          contact_preference?: string | null
+          created_at?: string | null
+          department?: string | null
+          experience_notes?: string | null
+          experience_rating?: number | null
+          id?: string
+          institution?: string | null
+          product_id?: string
+          updated_at?: string | null
+          use_case?: string | null
+          user_id?: string
+          willing_to_share_experience?: boolean | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           granted_at: string | null
@@ -761,6 +812,27 @@ export type Database = {
           profile_image_url?: string | null
           role?: never
           specialization?: string | null
+        }
+        Relationships: []
+      }
+      user_product_experiences: {
+        Row: {
+          adoption_date: string | null
+          company_id: string | null
+          contact_preference: string | null
+          department: string | null
+          email: string | null
+          experience_notes: string | null
+          experience_rating: number | null
+          first_name: string | null
+          id: string | null
+          institution: string | null
+          last_name: string | null
+          linkedin_url: string | null
+          product_id: string | null
+          specialization: string | null
+          use_case: string | null
+          user_id: string | null
         }
         Relationships: []
       }

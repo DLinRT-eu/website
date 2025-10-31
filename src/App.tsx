@@ -44,6 +44,10 @@ import AdminAccessTest from "./pages/admin/AdminAccessTest";
 import SecurityDashboard from "./pages/admin/SecurityDashboard";
 import CompanyDashboard from "./pages/company/Dashboard";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
+import Roles from "./pages/Roles";
+import RolesFAQ from "./pages/RolesFAQ";
+import MyProducts from "./pages/MyProducts";
+import ProductExperiences from "./pages/ProductExperiences";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -113,6 +117,18 @@ const App = () => (
               <Route path="/company/dashboard" element={
                 <ProtectedRoute allowedRoles={['company']}>
                   <CompanyDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/roles" element={<Roles />} />
+              <Route path="/roles/faq" element={<RolesFAQ />} />
+              <Route path="/my-products" element={
+                <ProtectedRoute>
+                  <MyProducts />
+                </ProtectedRoute>
+              } />
+              <Route path="/product-experiences/:productId" element={
+                <ProtectedRoute allowedRoles={['admin', 'reviewer']}>
+                  <ProductExperiences />
                 </ProtectedRoute>
               } />
               <Route path="products" element={<Products />} />

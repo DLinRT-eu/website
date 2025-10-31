@@ -150,6 +150,18 @@ const Header = () => {
                   </Link>
                 </DropdownMenuItem>
                 
+                <DropdownMenuItem asChild>
+                  <Link to="/my-products" className="cursor-pointer">
+                    My Products
+                  </Link>
+                </DropdownMenuItem>
+                
+                <DropdownMenuItem asChild>
+                  <Link to="/roles" className="cursor-pointer">
+                    Role Information
+                  </Link>
+                </DropdownMenuItem>
+                
                 {loading && (
                   <DropdownMenuLabel className="text-xs text-muted-foreground">
                     Loading permissions...

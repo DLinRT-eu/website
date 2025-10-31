@@ -55,7 +55,7 @@ export default function ProductExperiences() {
       .eq('product_id', productId);
 
     if (!error && data) {
-      setExperiences(data);
+      setExperiences(data as UserExperience[]);
     }
     setLoading(false);
   };

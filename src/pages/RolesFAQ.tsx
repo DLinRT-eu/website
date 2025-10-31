@@ -202,7 +202,7 @@ export default function RolesFAQ() {
                 </AccordionItem>
 
                 <AccordionItem value="reviewer-3">
-                  <AccordionTrigger">What if I can't complete a review on time?</AccordionTrigger>
+                  <AccordionTrigger>What if I can't complete a review on time?</AccordionTrigger>
                   <AccordionContent>
                     <p>
                       If you're unable to meet a deadline:
@@ -309,7 +309,6 @@ export default function RolesFAQ() {
                     </p>
                   </AccordionContent>
                 </AccordionItem>
-              </Accordion>
               </Accordion>
             </CardContent>
           </Card>

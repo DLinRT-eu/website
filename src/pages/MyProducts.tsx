@@ -71,7 +71,7 @@ export default function MyProducts() {
       .order('adoption_date', { ascending: false, nullsFirst: false });
 
     if (!error && data) {
-      setProducts(data);
+      setProducts(data as UserProduct[]);
     }
     setLoading(false);
   };

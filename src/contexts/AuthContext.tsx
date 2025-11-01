@@ -23,6 +23,7 @@ interface Profile {
   approval_status?: string;
   approved_by?: string;
   approved_at?: string;
+  is_core_team?: boolean;
 }
 
 interface AuthContextType {
@@ -324,19 +325,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           
           const userProfile = await fetchProfile(session.user.id);
           
-          // Team members are auto-approved
-          const teamEmails = [
-            'matteo.maspero@dlinrt.eu',
-            'mustafa.kadhim@dlinrt.eu',
-            'ana.barragan@dlinrt.eu',
-            'paul.doolan@dlinrt.eu',
-            'federico.mastroleo@dlinrt.eu',
-            'viktor.rogowski@dlinrt.eu'
-          ];
-          const isTeamMember = teamEmails.includes(session.user.email?.toLowerCase() || '');
-          
-          // Check approval status - but don't block team members or admins
-          if (userProfile?.approval_status === 'pending' && !isTeamMember) {
+          // Check approval status - but don't block core team members or admins
+          if (userProfile?.approval_status === 'pending' && !userProfile?.is_core_team) {
             const { data: adminRole } = await supabase
               .from('user_roles')
               .select('role')

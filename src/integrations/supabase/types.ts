@@ -526,6 +526,7 @@ export type Database = {
           first_name: string
           id: string
           institution: string | null
+          is_core_team: boolean | null
           last_name: string
           linkedin_url: string | null
           mfa_backup_codes_generated_at: string | null
@@ -545,6 +546,7 @@ export type Database = {
           first_name: string
           id: string
           institution?: string | null
+          is_core_team?: boolean | null
           last_name: string
           linkedin_url?: string | null
           mfa_backup_codes_generated_at?: string | null
@@ -564,6 +566,7 @@ export type Database = {
           first_name?: string
           id?: string
           institution?: string | null
+          is_core_team?: boolean | null
           last_name?: string
           linkedin_url?: string | null
           mfa_backup_codes_generated_at?: string | null

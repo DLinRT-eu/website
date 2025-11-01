@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import { Shield, ShieldCheck, ShieldAlert, Download, Copy } from 'lucide-react';
 import { QRCodeSVG } from 'qrcode.react';
-import bcrypt from 'bcryptjs';
 import {
   Dialog,
   DialogContent,
@@ -220,12 +219,9 @@ export const MFASettings = () => {
         
         codes.push(code);
         
-        // Hash with bcrypt
-        const hash = await bcrypt.hash(code, 10);
-        
-        // Store hashed code in database via service role edge function
+        // Store code in database via service role edge function (hashing happens server-side)
         const { error } = await supabase.functions.invoke('store-backup-code', {
-          body: { user_id: userId, code_hash: hash }
+          body: { user_id: userId, code }
         });
         
         if (error) {

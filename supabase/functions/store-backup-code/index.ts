@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import * as bcrypt from "https://deno.land/x/bcrypt@v0.4.1/mod.ts";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -24,9 +25,9 @@ serve(async (req) => {
       }
     );
 
-    const { user_id, code_hash } = await req.json();
+    const { user_id, code } = await req.json();
 
-    if (!user_id || !code_hash) {
+    if (!user_id || !code) {
       return new Response(
         JSON.stringify({ error: 'Missing required fields' }),
         { 
@@ -35,6 +36,9 @@ serve(async (req) => {
         }
       );
     }
+
+    // Hash the backup code server-side
+    const code_hash = await bcrypt.hash(code, 10);
 
     // Insert backup code using service role to bypass RLS
     const { data, error } = await supabaseClient

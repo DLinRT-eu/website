@@ -353,8 +353,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
                   description: "Your account is awaiting admin approval. You'll receive an email once approved.",
                   variant: "default",
                 });
-                setProfile(null);
-                setRoles([]);
+                // Sign out the user to prevent redirect loop
+                await signOut();
                 clearTimeout(loadingTimeout);
                 setLoading(false);
                 return;

@@ -46,7 +46,7 @@ const signupSchema = z.object({
 
 export default function Auth() {
   const navigate = useNavigate();
-  const { user, mfaRequired, signIn, signUp, verifyMFA } = useAuth();
+  const { user, mfaRequired, profile, signIn, signUp, verifyMFA } = useAuth();
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -65,10 +65,11 @@ export default function Auth() {
 
   // Redirect if already authenticated (and MFA not required)
   useEffect(() => {
-    if (user && !mfaRequired) {
+    // Only redirect if user is authenticated AND not pending approval
+    if (user && !mfaRequired && profile && profile.approval_status !== 'pending') {
       navigate('/');
     }
-  }, [user, mfaRequired, navigate]);
+  }, [user, mfaRequired, profile, navigate]);
 
   // Show MFA verification when required
   useEffect(() => {

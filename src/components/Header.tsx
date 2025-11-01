@@ -54,6 +54,11 @@ const Header = () => {
               <Link to="/products" className="px-3 py-2 hover:text-white/90 text-sm">Products</Link>
               <Link to="/companies" className="px-3 py-2 hover:text-white/90 text-sm">Companies</Link>
               <Link to="/dashboard" className="px-3 py-2 hover:text-white/90 text-sm">Dashboard</Link>
+              <Link to="/news" className="px-3 py-2 hover:text-white/90 text-sm">News</Link>
+              <Link to="/resources-compliance" className="px-3 py-2 hover:text-white/90 text-sm">Resources & Compliance</Link>
+              <Link to="/initiatives" className="px-3 py-2 hover:text-white/90 text-sm">Research & Initiatives</Link>
+              <Link to="/about" className="px-3 py-2 hover:text-white/90 text-sm">About</Link>
+              <Link to="/support" className="px-3 py-2 hover:text-white/90 text-sm">Support & Contact</Link>
             </>
           )}
         </nav>

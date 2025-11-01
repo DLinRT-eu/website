@@ -431,6 +431,44 @@ export type Database = {
         }
         Relationships: []
       }
+      profile_document_access_log: {
+        Row: {
+          access_reason: string
+          accessed_at: string | null
+          accessed_by: string
+          document_id: string
+          id: string
+          ip_hash: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          access_reason: string
+          accessed_at?: string | null
+          accessed_by: string
+          document_id: string
+          id?: string
+          ip_hash?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          access_reason?: string
+          accessed_at?: string | null
+          accessed_by?: string
+          document_id?: string
+          id?: string
+          ip_hash?: string | null
+          user_agent?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profile_document_access_log_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "profile_documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profile_documents: {
         Row: {
           description: string | null

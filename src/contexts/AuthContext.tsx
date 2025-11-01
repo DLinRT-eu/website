@@ -2,7 +2,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
 import { useToast } from '@/hooks/use-toast';
-import bcrypt from 'bcryptjs';
 
 type AppRole = 'admin' | 'reviewer' | 'company';
 
@@ -508,56 +507,27 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
 
       if (isBackupCode) {
-        // Verify backup code
-        const { data: backupCodes, error: fetchError } = await supabase
-          .from('mfa_backup_codes')
-          .select('*')
-          .eq('user_id', user.id)
-          .eq('used', false);
-        
-        if (fetchError || !backupCodes?.length) {
-          await supabase.from('mfa_activity_log').insert({
-            user_id: user.id,
-            action: 'failed_verification',
-            factor_type: 'backup_code',
-          });
-          return { error: new Error('No valid backup codes found') };
-        }
-        
-        // Check if code matches any unused backup code
-        for (const dbCode of backupCodes) {
-          const isMatch = await bcrypt.compare(code, dbCode.code_hash);
-          if (isMatch) {
-            // Mark as used
-            await supabase
-              .from('mfa_backup_codes')
-              .update({ used: true, used_at: new Date().toISOString() })
-              .eq('id', dbCode.id);
-            
-            // Log activity
-            await supabase.from('mfa_activity_log').insert({
-              user_id: user.id,
-              action: 'verified_backup_code',
-              factor_type: 'backup_code',
-            });
-            
-            setMfaRequired(false);
-            toast({
-              title: "Verification successful",
-              description: "You are now signed in using a backup code.",
-            });
-            return { error: null };
-          }
-        }
-        
-        // Log failed backup code attempt
-        await supabase.from('mfa_activity_log').insert({
-          user_id: user.id,
-          action: 'failed_verification',
-          factor_type: 'backup_code',
+        // Use edge function for secure backup code verification (prevents timing attacks)
+        const { data, error: invokeError } = await supabase.functions.invoke('verify-backup-code', {
+          body: { code },
         });
-        
-        return { error: new Error('Invalid backup code') };
+
+        if (invokeError || !data?.success) {
+          toast({
+            title: "Verification failed",
+            description: data?.error || "Invalid backup code",
+            variant: "destructive",
+          });
+          return { error: new Error(data?.error || 'Invalid backup code') };
+        }
+
+        setMfaRequired(false);
+        toast({
+          title: "Verification successful",
+          description: "You are now signed in with backup code.",
+        });
+
+        return { error: null };
       }
       
       // TOTP verification

@@ -8,3 +8,9 @@ verify_jwt = false
 
 [functions.track-security-event]
 verify_jwt = false
+
+[functions.verify-backup-code]
+verify_jwt = false
+
+[functions.log-document-access]
+verify_jwt = false

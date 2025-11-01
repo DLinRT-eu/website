@@ -4,12 +4,11 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle, Info } from 'lucide-react';
+import { AlertCircle, CheckCircle2 } from 'lucide-react';
 import { z } from 'zod';
-import { MFAVerification } from '@/components/auth/MFAVerification';
 import SEO from '@/components/SEO';
 
 const loginSchema = z.object({
@@ -35,10 +34,12 @@ const signupSchema = z.object({
   confirmPassword: z.string().max(128, 'Password must be less than 128 characters'),
   firstName: z.string()
     .min(1, 'First name is required')
-    .max(100, 'First name must be less than 100 characters'),
+    .max(100, 'First name must be less than 100 characters')
+    .trim(),
   lastName: z.string()
     .min(1, 'Last name is required')
-    .max(100, 'Last name must be less than 100 characters'),
+    .max(100, 'Last name must be less than 100 characters')
+    .trim(),
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -46,11 +47,11 @@ const signupSchema = z.object({
 
 export default function Auth() {
   const navigate = useNavigate();
-  const { user, mfaRequired, profile, signIn, signUp, verifyMFA } = useAuth();
+  const { user, loading: authLoading, signIn, signUp } = useAuth();
   const [activeTab, setActiveTab] = useState<'login' | 'signup'>('login');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [showMFA, setShowMFA] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
@@ -63,52 +64,37 @@ export default function Auth() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
 
-  // Redirect if already authenticated (and MFA not required)
+  // Redirect if already authenticated
   useEffect(() => {
-    // Only redirect if user is authenticated AND not pending approval
-    if (user && !mfaRequired && profile && profile.approval_status !== 'pending') {
+    if (user && !authLoading) {
+      console.log('[Auth Page] User authenticated, redirecting to home');
       navigate('/');
     }
-  }, [user, mfaRequired, profile, navigate]);
-
-  // Show MFA verification when required
-  useEffect(() => {
-    setShowMFA(mfaRequired);
-  }, [mfaRequired]);
+  }, [user, authLoading, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccessMessage(null);
     
     try {
-      const validation = loginSchema.parse({ email: loginEmail, password: loginPassword });
+      const validation = loginSchema.parse({ 
+        email: loginEmail.trim(), 
+        password: loginPassword 
+      });
+      
       setLoading(true);
       
-      const { error: signInError, mfaRequired: needsMFA } = await signIn(validation.email, validation.password);
+      const { error: signInError } = await signIn(validation.email, validation.password);
       
       if (signInError) {
-        setError(signInError.message);
-      } else if (needsMFA) {
-        setShowMFA(true);
+        setError(signInError.message || 'Failed to sign in');
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleMFAVerify = async (code: string, isBackupCode: boolean) => {
-    setError(null);
-    setLoading(true);
-    
-    try {
-      const { error: verifyError } = await verifyMFA(code, isBackupCode);
-      
-      if (verifyError) {
-        setError(verifyError.message);
+      } else {
+        setError('An unexpected error occurred');
       }
     } finally {
       setLoading(false);
@@ -118,14 +104,15 @@ export default function Auth() {
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
+    setSuccessMessage(null);
     
     try {
       const validation = signupSchema.parse({
-        email: signupEmail,
+        email: signupEmail.trim(),
         password: signupPassword,
         confirmPassword,
-        firstName,
-        lastName,
+        firstName: firstName.trim(),
+        lastName: lastName.trim(),
       });
       
       setLoading(true);
@@ -133,34 +120,33 @@ export default function Auth() {
       const { error: signUpError } = await signUp(
         validation.email,
         validation.password,
-        validation.firstName,
-        validation.lastName
+        {
+          firstName: validation.firstName,
+          lastName: validation.lastName,
+        }
       );
       
       if (signUpError) {
-        setError(signUpError.message);
+        setError(signUpError.message || 'Failed to create account');
+      } else {
+        setSuccessMessage('Account created! Please check your email to verify your account.');
+        // Clear form
+        setSignupEmail('');
+        setSignupPassword('');
+        setConfirmPassword('');
+        setFirstName('');
+        setLastName('');
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
         setError(err.errors[0].message);
+      } else {
+        setError('An unexpected error occurred');
       }
     } finally {
       setLoading(false);
     }
   };
-
-  // Show MFA verification if required
-  if (showMFA) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background to-muted p-4">
-        <MFAVerification 
-          onVerify={handleMFAVerify}
-          loading={loading}
-          error={error || undefined}
-        />
-      </div>
-    );
-  }
 
   return (
     <>
@@ -178,152 +164,157 @@ export default function Auth() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Alert className="mb-6">
-              <Info className="h-4 w-4" />
-              <AlertDescription>
-                <strong>Institutional Email Required:</strong> Use your institutional email (.edu, .ac.uk, .org, .gov, etc.). Personal emails not accepted. All accounts require manual admin approval (1-3 business days).
-              </AlertDescription>
-            </Alert>
-
             <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as 'login' | 'signup')}>
               <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="login">Login</TabsTrigger>
                 <TabsTrigger value="signup">Sign Up</TabsTrigger>
               </TabsList>
             
-            <TabsContent value="login">
-              <form onSubmit={handleLogin} className="space-y-4">
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-                
-                <div className="space-y-2">
-                  <Label htmlFor="login-email">Email</Label>
-                  <Input
-                    id="login-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={loginEmail}
-                    onChange={(e) => setLoginEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="login-password">Password</Label>
-                  <Input
-                    id="login-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={loginPassword}
-                    onChange={(e) => setLoginPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Signing in...' : 'Sign In'}
-                </Button>
-
-                <div className="text-center">
-                  <Button
-                    type="button"
-                    variant="link"
-                    onClick={() => navigate('/reset-password')}
-                    className="text-sm"
-                  >
-                    Forgot password?
-                  </Button>
-                </div>
-              </form>
-            </TabsContent>
-            
-            <TabsContent value="signup">
-              <form onSubmit={handleSignup} className="space-y-4">
-                {error && (
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{error}</AlertDescription>
-                  </Alert>
-                )}
-                
-                <div className="grid grid-cols-2 gap-4">
+              <TabsContent value="login">
+                <form onSubmit={handleLogin} className="space-y-4">
+                  {error && (
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                  )}
+                  
                   <div className="space-y-2">
-                    <Label htmlFor="first-name">First Name</Label>
+                    <Label htmlFor="login-email">Email</Label>
                     <Input
-                      id="first-name"
-                      placeholder="John"
-                      value={firstName}
-                      onChange={(e) => setFirstName(e.target.value)}
+                      id="login-email"
+                      type="email"
+                      placeholder="your@email.com"
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
                       required
+                      disabled={loading}
                     />
                   </div>
                   
                   <div className="space-y-2">
-                    <Label htmlFor="last-name">Last Name</Label>
+                    <Label htmlFor="login-password">Password</Label>
                     <Input
-                      id="last-name"
-                      placeholder="Doe"
-                      value={lastName}
-                      onChange={(e) => setLastName(e.target.value)}
+                      id="login-password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
                       required
+                      disabled={loading}
                     />
                   </div>
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
-                  <Input
-                    id="signup-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={signupEmail}
-                    onChange={(e) => setSignupEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
-                  <Input
-                    id="signup-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={signupPassword}
-                    onChange={(e) => setSignupPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="confirm-password">Confirm Password</Label>
-                  <Input
-                    id="confirm-password"
-                    type="password"
-                    placeholder="••••••••"
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Creating account...' : 'Create Account'}
-                </Button>
-              </form>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-        <CardFooter className="text-center text-sm text-muted-foreground">
-          <p className="w-full">
-            By signing up, you'll need admin approval for role assignment.
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
+                  
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? 'Signing in...' : 'Sign In'}
+                  </Button>
+
+                  <div className="text-center">
+                    <Button
+                      type="button"
+                      variant="link"
+                      onClick={() => navigate('/reset-password')}
+                      className="text-sm"
+                    >
+                      Forgot password?
+                    </Button>
+                  </div>
+                </form>
+              </TabsContent>
+            
+              <TabsContent value="signup">
+                <form onSubmit={handleSignup} className="space-y-4">
+                  {error && (
+                    <Alert variant="destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      <AlertDescription>{error}</AlertDescription>
+                    </Alert>
+                  )}
+                  
+                  {successMessage && (
+                    <Alert>
+                      <CheckCircle2 className="h-4 w-4" />
+                      <AlertDescription>{successMessage}</AlertDescription>
+                    </Alert>
+                  )}
+                  
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="first-name">First Name</Label>
+                      <Input
+                        id="first-name"
+                        placeholder="John"
+                        value={firstName}
+                        onChange={(e) => setFirstName(e.target.value)}
+                        required
+                        disabled={loading}
+                      />
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <Label htmlFor="last-name">Last Name</Label>
+                      <Input
+                        id="last-name"
+                        placeholder="Doe"
+                        value={lastName}
+                        onChange={(e) => setLastName(e.target.value)}
+                        required
+                        disabled={loading}
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-email">Email</Label>
+                    <Input
+                      id="signup-email"
+                      type="email"
+                      placeholder="your@email.com"
+                      value={signupEmail}
+                      onChange={(e) => setSignupEmail(e.target.value)}
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="signup-password">Password</Label>
+                    <Input
+                      id="signup-password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={signupPassword}
+                      onChange={(e) => setSignupPassword(e.target.value)}
+                      required
+                      disabled={loading}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Must contain uppercase, lowercase, number, and special character
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <Label htmlFor="confirm-password">Confirm Password</Label>
+                    <Input
+                      id="confirm-password"
+                      type="password"
+                      placeholder="••••••••"
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      required
+                      disabled={loading}
+                    />
+                  </div>
+                  
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? 'Creating account...' : 'Create Account'}
+                  </Button>
+                </form>
+              </TabsContent>
+            </Tabs>
+          </CardContent>
+        </Card>
+      </div>
     </>
   );
 }

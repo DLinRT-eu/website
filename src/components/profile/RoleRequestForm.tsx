@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
@@ -17,13 +17,17 @@ interface RoleRequestFormProps {
 }
 
 export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormProps) {
-  const { user, profile } = useAuth();
+  const { user, profile, roles } = useAuth();
   const [requestedRole, setRequestedRole] = useState<'reviewer' | 'company'>('reviewer');
   const [justification, setJustification] = useState('');
   const [companyId, setCompanyId] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [hasUserProducts, setHasUserProducts] = useState(false);
   const [emailValidationError, setEmailValidationError] = useState<string | null>(null);
+
+  // Compute which roles the user already has
+  const hasReviewerRole = roles.includes('reviewer');
+  const hasCompanyRole = roles.includes('company');
 
   useEffect(() => {
     // Check if user has products (incompatible with company role)
@@ -55,6 +59,23 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
 
     if (!user) {
       toast.error('You must be logged in to request a role');
+      return;
+    }
+
+    // Check if user already has this role
+    if (requestedRole === 'reviewer' && hasReviewerRole) {
+      toast.error('You already have the Reviewer role');
+      return;
+    }
+
+    if (requestedRole === 'company' && hasCompanyRole) {
+      toast.error('You already have the Company Representative role');
+      return;
+    }
+
+    // Check for conflicting roles
+    if (requestedRole === 'company' && hasReviewerRole) {
+      toast.error('Company role is incompatible with Reviewer role. Please contact an admin to remove your Reviewer role first.');
       return;
     }
 
@@ -118,6 +139,16 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
     <Card>
       <CardHeader>
         <CardTitle>Request a Role</CardTitle>
+        {(hasReviewerRole || hasCompanyRole) && (
+          <CardDescription className="text-amber-600">
+            You can request additional roles. Note: Company role is incompatible with Reviewer role.
+          </CardDescription>
+        )}
+        {!hasReviewerRole && !hasCompanyRole && (
+          <CardDescription>
+            Request a role to contribute to the DLinRT platform
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent>
         {emailValidationError && (
@@ -140,12 +171,19 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="reviewer">Reviewer</SelectItem>
+                <SelectItem 
+                  value="reviewer"
+                  disabled={hasReviewerRole}
+                >
+                  Reviewer {hasReviewerRole && '(Already assigned)'}
+                </SelectItem>
                 <SelectItem 
                   value="company" 
-                  disabled={hasUserProducts}
+                  disabled={hasUserProducts || hasCompanyRole}
                 >
-                  Company Representative {hasUserProducts && '(Remove product adoptions first)'}
+                  Company Representative 
+                  {hasCompanyRole && ' (Already assigned)'}
+                  {hasUserProducts && !hasCompanyRole && ' (Remove product adoptions first)'}
                 </SelectItem>
               </SelectContent>
             </Select>
@@ -154,6 +192,14 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
                 <AlertTriangle className="h-4 w-4" />
                 <AlertDescription className="text-sm">
                   Company representative role is incompatible with user product adoptions to prevent conflicts of interest. Please remove your product adoptions before requesting this role.
+                </AlertDescription>
+              </Alert>
+            )}
+            {hasReviewerRole && requestedRole === 'company' && (
+              <Alert variant="destructive" className="mt-2">
+                <AlertTriangle className="h-4 w-4" />
+                <AlertDescription className="text-sm">
+                  Company representative role is incompatible with Reviewer role due to conflict of interest. You will need to have your Reviewer role removed first.
                 </AlertDescription>
               </Alert>
             )}

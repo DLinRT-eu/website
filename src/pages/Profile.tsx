@@ -21,9 +21,9 @@ import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package } from '
 import { Link, Navigate } from 'react-router-dom';
 
 export default function Profile() {
-  const { user, profile, roles, highestRole, isAdmin, updateProfile, signOut, resendVerificationEmail } = useAuth();
+  const { user, profile, roles, highestRole, isAdmin, updateProfile, signOut, resendVerificationEmail, loading } = useAuth();
   const { toast } = useToast();
-  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [resendingEmail, setResendingEmail] = useState(false);
   
@@ -71,7 +71,7 @@ export default function Profile() {
       return;
     }
     
-    setLoading(true);
+    setSaving(true);
 
     await updateProfile({
       first_name: firstName,
@@ -83,7 +83,7 @@ export default function Profile() {
       public_display: publicDisplay,
     });
 
-    setLoading(false);
+    setSaving(false);
   };
 
   const handleResendVerification = async () => {
@@ -102,7 +102,7 @@ export default function Profile() {
   };
 
   // Show loading skeleton while profile loads
-  if (!profile) {
+  if (loading || !profile) {
     return (
       <PageLayout>
         <div className="container max-w-4xl py-8">
@@ -318,8 +318,8 @@ export default function Profile() {
                   />
                 </div>
 
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Saving...' : 'Save Changes'}
+                <Button type="submit" className="w-full" disabled={saving}>
+                  {saving ? 'Saving...' : 'Save Changes'}
                 </Button>
               </form>
             </CardContent>
@@ -350,7 +350,7 @@ export default function Profile() {
           <DataExport />
           <DeleteAccount />
 
-          {/* Role Request Section - Only show if user doesn't have admin role */}
+          {/* Role Request Section - Show for all non-admin users */}
           {!isAdmin && (
             <>
               <RoleRequestForm onRequestSubmitted={() => setRefreshKey(prev => prev + 1)} />

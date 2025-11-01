@@ -104,6 +104,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
         console.warn('[AuthContext] ⚠️ No active session when fetching roles');
+        setAvailableRoles([]);
+        setActiveRoleState('user');
+        setRequiresRoleSelection(false);
         return [];
       }
       
@@ -121,7 +124,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           userId,
           duration: Date.now() - startTime,
         });
-        throw error;
+        
+        // Don't throw - just set default state and continue
+        // This prevents the entire auth flow from failing if role fetch fails
+        setAvailableRoles([]);
+        setActiveRoleState('user');
+        setRequiresRoleSelection(false);
+        return [];
       }
       
       const userRoles = data?.map(r => r.role as AppRole) || [];
@@ -152,7 +161,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       console.log('[AuthContext] ✅ Roles fetched successfully:', {
         roles: userRoles,
         count: userRoles.length,
-        activeRole: activeRole,
+        activeRole: userRoles.length === 1 ? userRoles[0] : storedActiveRole,
         duration: Date.now() - startTime,
       });
       return userRoles;
@@ -163,6 +172,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         hint: error?.hint,
         userId,
       });
+      
+      // Ensure state is set even on unexpected errors
       setAvailableRoles([]);
       setActiveRoleState('user');
       setRequiresRoleSelection(false);
@@ -288,7 +299,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Set up auth state listener with session refresh on focus
   useEffect(() => {
     let mounted = true;
-    let loadingTimeout: NodeJS.Timeout;
+    let loadingTimeout: NodeJS.Timeout | undefined;
     
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
@@ -299,13 +310,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         // Clear any existing timeout
         if (loadingTimeout) clearTimeout(loadingTimeout);
         
-        // Set timeout to force loading to false after 10 seconds
+        // Set timeout to force loading to false after 8 seconds
         loadingTimeout = setTimeout(() => {
-          if (mounted && loading) {
+          if (mounted) {
             console.error('[AuthContext] ⏱️ Loading timeout - forcing completion');
             setLoading(false);
           }
-        }, 10000);
+        }, 8000);
         
         setSession(session);
         setUser(session?.user ?? null);
@@ -313,68 +324,78 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         if (session?.user) {
           console.log('[AuthContext] 👤 User authenticated:', session.user.id);
           
-          // Validate session before fetching data
-          const isValid = await validateSession();
-          if (!isValid) {
-            console.warn('[AuthContext] ⚠️ Session invalid, skipping data fetch');
-            setProfile(null);
-            setRoles([]);
-            setLoading(false);
-            return;
-          }
-          
-          const userProfile = await fetchProfile(session.user.id);
-          
-          // Check approval status - but don't block core team members or admins
-          if (userProfile?.approval_status === 'pending' && !userProfile?.is_core_team) {
-            const { data: adminRole } = await supabase
-              .from('user_roles')
-              .select('role')
-              .eq('user_id', session.user.id)
-              .eq('role', 'admin')
-              .single();
-            
-            if (!adminRole) {
-              toast({
-                title: "Account Pending Approval",
-                description: "Your account is awaiting admin approval. You'll receive an email once approved.",
-                variant: "default",
-              });
+          try {
+            // Validate session before fetching data
+            const isValid = await validateSession();
+            if (!isValid) {
+              console.warn('[AuthContext] ⚠️ Session invalid, skipping data fetch');
               setProfile(null);
               setRoles([]);
+              clearTimeout(loadingTimeout);
               setLoading(false);
               return;
             }
-          }
-          
-          if (userProfile?.approval_status === 'rejected') {
-            toast({
-              title: "Account Not Approved",
-              description: "Your account was not approved. Contact admin@dlinrt.eu for assistance.",
-              variant: "destructive",
+            
+            const userProfile = await fetchProfile(session.user.id);
+            
+            // Check approval status - but don't block core team members or admins
+            if (userProfile?.approval_status === 'pending' && !userProfile?.is_core_team) {
+              const { data: adminRole } = await supabase
+                .from('user_roles')
+                .select('role')
+                .eq('user_id', session.user.id)
+                .eq('role', 'admin')
+                .single();
+              
+              if (!adminRole) {
+                toast({
+                  title: "Account Pending Approval",
+                  description: "Your account is awaiting admin approval. You'll receive an email once approved.",
+                  variant: "default",
+                });
+                setProfile(null);
+                setRoles([]);
+                clearTimeout(loadingTimeout);
+                setLoading(false);
+                return;
+              }
+            }
+            
+            if (userProfile?.approval_status === 'rejected') {
+              toast({
+                title: "Account Not Approved",
+                description: "Your account was not approved. Contact admin@dlinrt.eu for assistance.",
+                variant: "destructive",
+              });
+              await signOut();
+              clearTimeout(loadingTimeout);
+              setLoading(false);
+              return;
+            }
+            
+            const userRoles = await fetchRoles(session.user.id);
+            setProfile(userProfile);
+            setRoles(userRoles);
+            
+            console.log('[AuthContext] 🎉 Authentication complete:', {
+              hasProfile: !!userProfile,
+              rolesCount: userRoles.length,
+              roles: userRoles,
+              approvalStatus: userProfile?.approval_status,
             });
-            await signOut();
-            setLoading(false);
-            return;
+          } catch (error) {
+            console.error('[AuthContext] 💥 Error during auth flow:', error);
+            // Ensure we still set loading to false even if there's an error
+            setProfile(null);
+            setRoles([]);
           }
-          
-          const userRoles = await fetchRoles(session.user.id);
-          setProfile(userProfile);
-          setRoles(userRoles);
-          
-          console.log('[AuthContext] 🎉 Authentication complete:', {
-            hasProfile: !!userProfile,
-            rolesCount: userRoles.length,
-            roles: userRoles,
-            approvalStatus: userProfile?.approval_status,
-          });
         } else {
           console.log('[AuthContext] 👋 User signed out');
           setProfile(null);
           setRoles([]);
         }
         
-        clearTimeout(loadingTimeout);
+        if (loadingTimeout) clearTimeout(loadingTimeout);
         setLoading(false);
       }
     );

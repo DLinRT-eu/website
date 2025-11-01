@@ -17,6 +17,7 @@ const Header = () => {
   const isCompany = activeRole === 'company';
   const isRegularUser = activeRole === 'user' || (!activeRole && availableRoles.length === 0);
   const canSwitchRoles = availableRoles.length > 1;
+  const showRoleIndicator = true; // Always show role indicator
 
   return (
     <header className="bg-[#00A6D6] text-white py-3 px-4 sticky top-0 z-50 shadow-md">
@@ -80,14 +81,23 @@ const Header = () => {
                   )}
                 </div>
                 
+                <DropdownMenuSeparator />
+                <div className="px-2 py-1.5 text-xs text-muted-foreground">
+                  Current Role: {activeRole ? activeRole.charAt(0).toUpperCase() + activeRole.slice(1) : 'User'}
+                </div>
+                
                 {canSwitchRoles && (
                   <>
                     <DropdownMenuSeparator />
-                    <div className="px-2 py-1 text-xs text-muted-foreground">Switch Role</div>
+                    <div className="px-2 py-1.5 text-xs font-semibold">Switch Role</div>
                     {availableRoles.map(role => (
-                      <DropdownMenuItem key={role} onClick={() => setActiveRole(role)}>
-                        <Shield className="mr-2 h-4 w-4" />
+                      <DropdownMenuItem
+                        key={role}
+                        onClick={() => setActiveRole(role)}
+                        className={activeRole === role ? 'bg-accent' : ''}
+                      >
                         {role.charAt(0).toUpperCase() + role.slice(1)}
+                        {activeRole === role && ' ✓'}
                       </DropdownMenuItem>
                     ))}
                   </>

@@ -95,6 +95,42 @@ export type Database = {
         }
         Relationships: []
       }
+      company_product_verifications: {
+        Row: {
+          company_id: string
+          created_at: string | null
+          id: string
+          product_id: string
+          supporting_documents: Json | null
+          updated_at: string | null
+          verification_notes: string | null
+          verified_at: string | null
+          verified_by: string | null
+        }
+        Insert: {
+          company_id: string
+          created_at?: string | null
+          id?: string
+          product_id: string
+          supporting_documents?: Json | null
+          updated_at?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Update: {
+          company_id?: string
+          created_at?: string | null
+          id?: string
+          product_id?: string
+          supporting_documents?: Json | null
+          updated_at?: string | null
+          verification_notes?: string | null
+          verified_at?: string | null
+          verified_by?: string | null
+        }
+        Relationships: []
+      }
       company_representatives: {
         Row: {
           company_id: string | null

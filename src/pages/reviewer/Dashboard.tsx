@@ -9,6 +9,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Calendar, Clock, AlertCircle, CheckCircle2, Play } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import RevisionApprovalManager from '@/components/company/RevisionApprovalManager';
 
@@ -183,9 +184,14 @@ export default function ReviewerDashboard() {
   return (
     <PageLayout>
       <div className="container max-w-7xl py-8">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold">My Reviews</h1>
-          <p className="text-muted-foreground mt-2">Manage your assigned product reviews</p>
+        <div className="mb-8 flex items-center justify-between">
+          <div>
+            <h1 className="text-3xl font-bold">My Reviews</h1>
+            <p className="text-muted-foreground mt-2">Manage your assigned product reviews</p>
+          </div>
+          <Button asChild>
+            <Link to="/reviewer/due-reviews">View Due Reviews</Link>
+          </Button>
         </div>
 
         {/* Stats Cards */}

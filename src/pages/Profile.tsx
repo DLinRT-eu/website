@@ -17,7 +17,8 @@ import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
 import { MFASettings } from '@/components/profile/MFASettings';
 import { DataExport } from '@/components/profile/DataExport';
 import { DeleteAccount } from '@/components/profile/DeleteAccount';
-import { User, Mail, Building2, Briefcase, Shield, AlertCircle } from 'lucide-react';
+import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package } from 'lucide-react';
+import { Link, Navigate } from 'react-router-dom';
 
 export default function Profile() {
   const { user, profile, roles, highestRole, isAdmin, updateProfile, signOut, resendVerificationEmail } = useAuth();
@@ -323,6 +324,24 @@ export default function Profile() {
               </form>
             </CardContent>
           </Card>
+
+          {/* Admin Tools */}
+          {isAdmin && (
+            <Card>
+              <CardHeader>
+                <CardTitle>Admin Tools</CardTitle>
+                <CardDescription>Administrative functions and oversight</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <Button variant="outline" asChild className="w-full justify-start">
+                  <Link to="/admin/user-products">
+                    <Package className="h-4 w-4 mr-2" />
+                    View User Product Adoptions
+                  </Link>
+                </Button>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Security Settings */}
           <MFASettings />

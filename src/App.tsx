@@ -9,6 +9,7 @@ import CookieConsent from "./components/CookieConsent";
 import Header from "./components/Header";
 import Breadcrumb from "./components/Breadcrumb";
 import Index from "./pages/Index";
+import Dashboard_Authenticated from "./pages/Dashboard_Authenticated";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
 import ProductDetails from "./pages/ProductDetails";
@@ -37,13 +38,16 @@ import ResetPassword from "./pages/ResetPassword";
 import UpdatePassword from "./pages/UpdatePassword";
 import RoleSelection from "./pages/RoleSelection";
 import ReviewerDashboard from "./pages/reviewer/Dashboard";
+import DueReviews from "./pages/reviewer/DueReviews";
 import UserManagement from "./pages/admin/UserManagement";
+import UserProductAdoptions from "./pages/admin/UserProductAdoptions";
 import ReviewAssignment from "./pages/admin/ReviewAssignment";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminAccessTest from "./pages/admin/AdminAccessTest";
 import SecurityDashboard from "./pages/admin/SecurityDashboard";
 import CompanyDashboard from "./pages/company/Dashboard";
+import ProductsManager from "./pages/company/ProductsManager";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
 import Roles from "./pages/Roles";
 import RolesFAQ from "./pages/RolesFAQ";
@@ -72,6 +76,11 @@ const App = () => (
             <Breadcrumb />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/dashboard-home" element={
+                <ProtectedRoute>
+                  <Dashboard_Authenticated />
+                </ProtectedRoute>
+              } />
             <Route path="/auth" element={<Auth />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/update-password" element={<UpdatePassword />} />
@@ -90,6 +99,11 @@ const App = () => (
                   <ReviewerDashboard />
                 </ProtectedRoute>
               } />
+              <Route path="/reviewer/due-reviews" element={
+                <ProtectedRoute allowedRoles={['admin', 'reviewer']}>
+                  <DueReviews />
+                </ProtectedRoute>
+              } />
               <Route path="/admin" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <AdminOverview />
@@ -103,6 +117,11 @@ const App = () => (
               <Route path="/admin/users" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <UserManagement />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/user-products" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <UserProductAdoptions />
                 </ProtectedRoute>
               } />
               <Route path="/admin/reviews" element={
@@ -123,6 +142,11 @@ const App = () => (
               <Route path="/company/dashboard" element={
                 <ProtectedRoute allowedRoles={['company']}>
                   <CompanyDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/company/products-manager" element={
+                <ProtectedRoute allowedRoles={['company']}>
+                  <ProductsManager />
                 </ProtectedRoute>
               } />
               <Route path="/roles" element={<Roles />} />

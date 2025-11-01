@@ -13,6 +13,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useToast } from '@/hooks/use-toast';
 import { Building2, FileEdit, Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { ALL_PRODUCTS } from '@/data';
 
 interface CompanyRevision {
@@ -146,15 +147,19 @@ export default function CompanyDashboard() {
               <Building2 className="h-8 w-8" />
               Company Dashboard
             </h1>
-            <p className="text-muted-foreground mt-2">Manage your product revisions</p>
+            <p className="text-muted-foreground mt-2">Manage your product revisions and certifications</p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="gap-2">
-                <FileEdit className="h-4 w-4" />
-                Submit Revision
-              </Button>
-            </DialogTrigger>
+          <div className="flex gap-2">
+            <Button asChild variant="outline">
+              <Link to="/company/products-manager">Manage Certifications</Link>
+            </Button>
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="gap-2">
+                  <FileEdit className="h-4 w-4" />
+                  Submit Revision
+                </Button>
+              </DialogTrigger>
             <DialogContent>
               <DialogHeader>
                 <DialogTitle>Submit Product Revision</DialogTitle>
@@ -198,7 +203,8 @@ export default function CompanyDashboard() {
                 </Button>
               </DialogFooter>
             </DialogContent>
-          </Dialog>
+            </Dialog>
+          </div>
         </div>
 
         {/* Stats */}

@@ -2,7 +2,7 @@
 import React from 'react';
 import IntroSection from "@/components/IntroSection";
 import NewsSection from "@/components/NewsSection";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import SEO from "@/components/SEO";
 import TaskTaxonomy from "@/components/TaskTaxonomy";
 import { getAllOptions } from "@/utils/filterOptions";
@@ -18,8 +18,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ArrowRight, BarChart3, Building2, FileText, Package } from "lucide-react";
 
 const Index = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
-  const { user, profile, activeRole } = useAuth();
+
+  // Redirect authenticated users to dashboard
+  if (user) {
+    return <Navigate to="/dashboard-home" />;
+  }
+
+  const products = dataService.getAllProducts();
+  const companies = dataService.getAllCompanies();
+  const categories = getAllOptions('category');
+
+  const handleCategoryClick = (category: string) => {
+    navigate('/products', { state: { selectedCategory: category } });
+  };
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -29,151 +43,13 @@ const Index = () => {
     "description": "Search and explore deep learning products in Radiotherapy"
   };
 
-  // Get all products and count by category
-  const allProducts = dataService.getAllProducts();
-  const allCompanies = dataService.getAllCompanies();
-  const categories = getAllOptions('category');
   const categoryCounts = categories.map(category => ({
     name: category,
-    count: allProducts.filter(p => p.category === category).length
+    count: products.filter(p => p.category === category).length
   }));
 
-  // Handle category click by navigating to products page with filter
-  const handleCategoryClick = (category: string) => {
-    toast.info(`Exploring ${category} products`);
-    navigate(`/products?task=${encodeURIComponent(category)}`);
-  };
-
-  // Personalized dashboard for authenticated users
-  const renderAuthenticatedView = () => (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <SEO 
-        title="Dashboard - DLinRT"
-        description="Your personalized dashboard for deep learning products in radiotherapy"
-        noindex={true}
-      />
-      
-      {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-[#00A6D6] to-[#0086b3] text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 md:px-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-2">
-            Welcome back, {profile?.first_name}!
-          </h1>
-          <p className="text-lg text-white/90">
-            {activeRole === 'admin' && "Manage users, reviews, and system settings"}
-            {activeRole === 'reviewer' && "Review products and validate compliance"}
-            {activeRole === 'company' && "Manage your company's product information"}
-            {(!activeRole || activeRole === 'user') && "Explore deep learning solutions in radiotherapy"}
-          </p>
-        </div>
-      </div>
-
-      {/* Quick Actions */}
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          {activeRole === 'admin' && (
-            <>
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/admin')}>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <Building2 className="h-5 w-5" />
-                    Admin Panel
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">Manage users and system settings</p>
-                </CardContent>
-              </Card>
-              <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/review-dashboard')}>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-lg">
-                    <FileText className="h-5 w-5" />
-                    Reviews
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">Review product submissions</p>
-                </CardContent>
-              </Card>
-            </>
-          )}
-          {(activeRole === 'reviewer' || activeRole === 'admin') && (
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/reviewer/dashboard')}>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <FileText className="h-5 w-5" />
-                  My Reviews
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">View your assigned reviews</p>
-              </CardContent>
-            </Card>
-          )}
-          {(activeRole === 'company' || activeRole === 'admin') && (
-            <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/company/dashboard')}>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2 text-lg">
-                  <Building2 className="h-5 w-5" />
-                  Company Dashboard
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-muted-foreground">Manage your products</p>
-              </CardContent>
-            </Card>
-          )}
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/products')}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Package className="h-5 w-5" />
-                Products
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">Browse all products</p>
-            </CardContent>
-          </Card>
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/dashboard')}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <BarChart3 className="h-5 w-5" />
-                Analytics
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">View market insights</p>
-            </CardContent>
-          </Card>
-          <Card className="hover:shadow-lg transition-shadow cursor-pointer" onClick={() => navigate('/my-products')}>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-lg">
-                <Package className="h-5 w-5" />
-                My Products
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">Track your adoptions</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        <TaskTaxonomy 
-          categories={categoryCounts} 
-          onCategoryClick={handleCategoryClick}
-          filterType="task"
-        />
-      </div>
-
-      <NewsSection />
-      
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-8">
-        <Footer />
-      </main>
-    </div>
-  );
-
-  return user ? renderAuthenticatedView() : (
+  // Public landing page
+  return (
     <div className="min-h-screen bg-white">
       <SEO 
         title="DLinRT - Deep learning-based products database for radiotherapy"
@@ -185,8 +61,8 @@ const Index = () => {
       
       {/* Quick Access Section */}
       <QuickAccessSection 
-        productCount={allProducts.length}
-        companyCount={allCompanies.length}
+        productCount={products.length}
+        companyCount={companies.length}
       />
       
       {/* Website Description Section */}

@@ -39,9 +39,28 @@ export const ProtectedRoute = ({
     if (!hasRequiredRole) {
       return (
         <div className="flex items-center justify-center min-h-screen">
-          <div className="text-center max-w-md p-6">
+          <div className="text-center max-w-md p-6 space-y-4">
             <h2 className="text-2xl font-bold mb-4">Access Denied</h2>
-            <Button asChild><Link to="/">Go Home</Link></Button>
+            <p className="text-muted-foreground">
+              This page requires one of the following roles: <strong>{allowedRoles.join(', ')}</strong>
+            </p>
+            {roles.length > 0 ? (
+              <p className="text-sm text-muted-foreground">
+                Your current roles: {roles.join(', ')}
+              </p>
+            ) : (
+              <p className="text-sm text-muted-foreground">
+                You don't have any special roles assigned yet.
+              </p>
+            )}
+            <div className="flex gap-2 justify-center mt-6">
+              <Button asChild variant="outline">
+                <Link to="/profile">View Profile</Link>
+              </Button>
+              <Button asChild>
+                <Link to="/">Go Home</Link>
+              </Button>
+            </div>
           </div>
         </div>
       );

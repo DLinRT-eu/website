@@ -37,6 +37,36 @@ export function useProfile(userId: string | null) {
     fetchProfile();
   }, [userId]);
 
+  const ensureProfileExists = async (session: any) => {
+    try {
+      const uid = session?.user?.id;
+      const email = session?.user?.email ?? null;
+      const meta = session?.user?.user_metadata ?? {};
+      if (!uid) return false;
+
+      const { error } = await supabase
+        .from('profiles')
+        .upsert(
+          {
+            id: uid,
+            email,
+            first_name: meta.first_name ?? '',
+            last_name: meta.last_name ?? '',
+          },
+          { onConflict: 'id' }
+        );
+
+      if (error) {
+        console.warn('Profile upsert failed:', error);
+        return false;
+      }
+      return true;
+    } catch (e) {
+      console.error('ensureProfileExists error', e);
+      return false;
+    }
+  };
+
   const fetchProfile = async (retryCount = 0) => {
     if (!userId) {
       setLoading(false);
@@ -54,23 +84,49 @@ export function useProfile(userId: string | null) {
         .from('profiles')
         .select('*')
         .eq('id', userId)
-        .single();
+        .maybeSingle();
 
       if (error) {
-        // Check if it's an RLS error (no rows returned)
-        if (error.code === 'PGRST116') {
-          console.warn('Profile not found or RLS policy blocking access', { userId, retryCount });
-          
-          // Retry logic with exponential backoff
-          if (retryCount < 3) {
-            const delays = [500, 1000, 2000];
-            const delay = delays[retryCount];
-            console.log(`Retrying profile fetch in ${delay}ms (attempt ${retryCount + 1}/3)`);
-            await new Promise(resolve => setTimeout(resolve, delay));
-            return fetchProfile(retryCount + 1);
-          }
+        // Retry logic for transient/permission errors
+        if (retryCount < 3) {
+          const delays = [500, 1000, 2000];
+          const delay = delays[retryCount];
+          console.warn(`Profile fetch error. Retrying in ${delay}ms (attempt ${retryCount + 1}/3)`, error);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return fetchProfile(retryCount + 1);
         }
         throw error;
+      }
+
+      if (!data) {
+        console.warn('No profile found. Attempting to create one for current user');
+        const created = await ensureProfileExists(session);
+        if (created) {
+          // Re-fetch once after creating profile
+          const { data: data2, error: err2 } = await supabase
+            .from('profiles')
+            .select('*')
+            .eq('id', userId)
+            .maybeSingle();
+
+          if (!err2 && data2) {
+            setProfile(data2);
+            return;
+          }
+        }
+
+        // If still missing, retry with backoff
+        if (retryCount < 3) {
+          const delays = [500, 1000, 2000];
+          const delay = delays[retryCount];
+          console.warn(`Profile still missing. Retrying in ${delay}ms (attempt ${retryCount + 1}/3)`);
+          await new Promise(resolve => setTimeout(resolve, delay));
+          return fetchProfile(retryCount + 1);
+        }
+
+        // Give up gracefully
+        setProfile(null);
+        return;
       }
 
       setProfile(data);

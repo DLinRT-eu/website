@@ -824,6 +824,45 @@ export type Database = {
         }
         Relationships: []
       }
+      user_registration_notifications: {
+        Row: {
+          id: string
+          user_id: string
+          email: string
+          notification_sent_at: string | null
+          notification_status: string
+          failure_reason: string | null
+          verified: boolean
+          verified_at: string | null
+          verified_by: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          email: string
+          notification_sent_at?: string | null
+          notification_status?: string
+          failure_reason?: string | null
+          verified?: boolean
+          verified_at?: string | null
+          verified_by?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          email?: string
+          notification_sent_at?: string | null
+          notification_status?: string
+          failure_reason?: string | null
+          verified?: boolean
+          verified_at?: string | null
+          verified_by?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           granted_at: string | null
@@ -1022,6 +1061,13 @@ export type Database = {
         }[]
       }
       schedule_analytics_cleanup: { Args: never; Returns: undefined }
+      verify_user_registration: {
+        Args: {
+          p_user_id: string
+          p_verified?: boolean
+        }
+        Returns: boolean
+      }
     }
     Enums: {
       app_role: "admin" | "reviewer" | "company"

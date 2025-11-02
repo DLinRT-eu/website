@@ -108,9 +108,29 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const signUp = async (email: string, password: string, data: SignUpData) => {
     try {
       console.log('[Auth] Signing up...');
+      
+      // First, check if email is institutional (client-side validation)
+      const emailDomain = email.toLowerCase().split('@')[1];
+      const blockedDomains = [
+        'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
+        'live.com', 'msn.com', 'aol.com', 'icloud.com',
+        'protonmail.com', 'mail.com', 'zoho.com', 'yandex.com',
+        'gmx.com', 'inbox.com', 'fastmail.com', 'hushmail.com'
+      ];
+      
+      if (blockedDomains.includes(emailDomain)) {
+        console.error('[Auth] Non-institutional email blocked:', emailDomain);
+        return { 
+          error: { 
+            message: 'Only institutional email addresses are allowed. Please use your organization or university email address.',
+            code: 'institutional_email_required'
+          } 
+        };
+      }
+      
       const redirectUrl = `${window.location.origin}/`;
       
-      const { error } = await supabase.auth.signUp({
+      const { data: signUpData, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -125,6 +145,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (error) {
         console.error('[Auth] Sign up error:', error.message);
         return { error };
+      }
+
+      // Send notification to admin about new registration
+      if (signUpData.user) {
+        try {
+          console.log('[Auth] Sending registration notification...');
+          const { error: notificationError } = await supabase.functions.invoke('notify-user-registration', {
+            body: {
+              userId: signUpData.user.id,
+              email: email,
+              firstName: data.firstName,
+              lastName: data.lastName,
+              createdAt: signUpData.user.created_at || new Date().toISOString()
+            }
+          });
+          
+          if (notificationError) {
+            console.error('[Auth] Failed to send registration notification:', notificationError);
+            // Don't fail the signup if notification fails
+          } else {
+            console.log('[Auth] Registration notification sent successfully');
+          }
+        } catch (notifError) {
+          console.error('[Auth] Exception sending registration notification:', notifError);
+          // Don't fail the signup if notification fails
+        }
       }
 
       console.log('[Auth] Sign up successful - check email for verification');

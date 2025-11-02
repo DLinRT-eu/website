@@ -48,6 +48,7 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminOverview from "./pages/admin/AdminOverview";
 import AdminAccessTest from "./pages/admin/AdminAccessTest";
 import SecurityDashboard from "./pages/admin/SecurityDashboard";
+import UserRegistrationReview from "./pages/admin/UserRegistrationReview";
 import CompanyDashboard from "./pages/company/Dashboard";
 import ProductsManager from "./pages/company/ProductsManager";
 import { ProtectedRoute } from "./components/auth/ProtectedRoute";
@@ -135,6 +136,11 @@ const App = () => (
               <Route path="/admin/security" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <SecurityDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/registrations" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <UserRegistrationReview />
                 </ProtectedRoute>
               } />
               <Route path="/admin/access-test" element={

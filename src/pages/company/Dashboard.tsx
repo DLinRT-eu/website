@@ -70,15 +70,15 @@ export default function CompanyDashboard() {
   const fetchCompanyUser = async () => {
     if (!user) return;
 
-    // Fetch the company assignment for this user
-    const { data: companyUserData, error: companyError } = await supabase
-      .from('company_users')
+    // Fetch the company representative assignment for this user
+    const { data: companyRepData, error: companyError } = await supabase
+      .from('company_representatives')
       .select('*')
       .eq('user_id', user.id)
-      .eq('is_active', true)
-      .single();
+      .eq('verified', true)
+      .maybeSingle();
 
-    if (companyError || !companyUserData) {
+    if (companyError || !companyRepData) {
       toast({
         title: 'No Company Assignment',
         description: 'You are not assigned to any company. Please contact an administrator.',
@@ -88,10 +88,20 @@ export default function CompanyDashboard() {
       return;
     }
 
-    setCompanyUser(companyUserData as CompanyUser);
+    // Map company_representatives data to CompanyUser format
+    const mappedCompanyUser: CompanyUser = {
+      id: companyRepData.id,
+      user_id: companyRepData.user_id,
+      company_name: companyRepData.company_name,
+      assigned_by: companyRepData.verified_by,
+      assigned_at: companyRepData.verified_at || companyRepData.created_at,
+      is_active: companyRepData.verified,
+    };
+    
+    setCompanyUser(mappedCompanyUser);
     
     // Filter products for this company
-    const filteredProducts = products.filter(p => p.company === companyUserData.company_name);
+    const filteredProducts = products.filter(p => p.company === companyRepData.company_name);
     setCompanyProducts(filteredProducts);
 
     // Fetch revisions

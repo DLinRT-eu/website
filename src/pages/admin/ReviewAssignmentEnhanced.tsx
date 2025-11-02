@@ -159,16 +159,29 @@ export default function ReviewAssignmentEnhanced() {
   const fetchReviews = async () => {
     const { data, error } = await supabase
       .from('product_reviews')
-      .select(`
-        *,
-        profiles!product_reviews_assigned_to_fkey(first_name, last_name)
-      `)
+      .select('*')
       .order('deadline', { ascending: true, nullsFirst: false });
 
     if (!error && data) {
+      // Manually fetch profiles for assigned reviewers
+      const assignedToIds = data
+        .map(r => r.assigned_to)
+        .filter((id): id is string => id !== null);
+      
+      const { data: profilesData } = await supabase
+        .from('profiles')
+        .select('id, first_name, last_name')
+        .in('id', assignedToIds);
+      
+      const profilesMap = (profilesData || []).reduce((acc, p) => {
+        acc[p.id] = p;
+        return acc;
+      }, {} as Record<string, { first_name: string; last_name: string }>);
+
       const reviewsWithReviewer = data.map((review) => ({
         ...review,
-        reviewer: review.profiles as any,
+        profiles: review.assigned_to ? profilesMap[review.assigned_to] : undefined,
+        reviewer: review.assigned_to ? profilesMap[review.assigned_to] : undefined,
       }));
       setReviews(reviewsWithReviewer);
     }

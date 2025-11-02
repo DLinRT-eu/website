@@ -5,6 +5,7 @@ export interface StructureTypes {
   hasOAR: boolean;
   hasTargets: boolean;
   hasElective: boolean;
+  hasGTV: boolean; // Alias for hasTargets for backward compatibility
 }
 
 export interface StructureTypeCounts {

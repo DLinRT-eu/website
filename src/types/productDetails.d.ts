@@ -90,4 +90,7 @@ export interface ProductDetails extends Product {
     url?: string;
     compliance?: 'full' | 'partial' | 'planned';
   }>;
+  
+  // Legacy field for verification date (kept for backward compatibility)
+  lastVerified?: string;
 }

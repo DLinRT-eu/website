@@ -96,8 +96,8 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
     // Use shared utility for classification if type is not already provided
     if (!structureType) {
       const structureString = `${region}:${structureName}`;
-      const { isGTV, isElective } = classifyStructure(structureString);
-      structureType = isGTV ? "GTV" : isElective ? "Elective" : "OAR";
+      const { isTarget, isElective } = classifyStructure(structureString);
+      structureType = isTarget ? "GTV" : isElective ? "Elective" : "OAR";
     }
     
     const type = structureType === "GTV" ? "GTV" : structureType === "Elective" ? "Elective" : "OAR";
@@ -122,9 +122,12 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
     
     // Track which types each model supports
     if (!modelTypes[model]) {
-      modelTypes[model] = { hasOAR: false, hasGTV: false, hasElective: false };
+      modelTypes[model] = { hasOAR: false, hasTargets: false, hasElective: false, hasGTV: false };
     }
-    if (isGTV) modelTypes[model].hasGTV = true;
+    if (isGTV) {
+      modelTypes[model].hasGTV = true;
+      modelTypes[model].hasTargets = true; // GTV is a type of target
+    }
     if (isElective) modelTypes[model].hasElective = true;
     if (isOAR) modelTypes[model].hasOAR = true;
     
@@ -132,7 +135,7 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
       groupedStructures[region] = {
         name: region,
         structures: [],
-        types: { hasOAR: false, hasGTV: false, hasElective: false },
+        types: { hasOAR: false, hasTargets: false, hasGTV: false, hasElective: false },
         model
       };
     }
@@ -144,7 +147,10 @@ const SupportedStructures: React.FC<SupportedStructuresProps> = ({ structures })
     });
     
     // Update group types
-    if (isGTV) groupedStructures[region].types.hasGTV = true;
+    if (isGTV) {
+      groupedStructures[region].types.hasGTV = true;
+      groupedStructures[region].types.hasTargets = true;
+    }
     if (isElective) groupedStructures[region].types.hasElective = true;
     if (isOAR) groupedStructures[region].types.hasOAR = true;
   });

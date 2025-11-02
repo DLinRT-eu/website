@@ -67,7 +67,7 @@ const Dashboard = () => {
   } = useChartData(products, selectedTask, selectedLocation, selectedModality, countingMode);
 
   // Get company data using the updated hook with filtered products
-  const { companyData, totalCompanies } = useCompanyData(companies, filteredProducts, countingMode);
+  const { companyData, totalCompanies } = useCompanyData(companies, filteredProducts);
 
   // Handler functions
   const handleTaskBarClick = (data: any) => {

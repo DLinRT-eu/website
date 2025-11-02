@@ -3,12 +3,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { RoleProvider } from "@/contexts/RoleContext";
 import Header from "./components/Header";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import MaintenanceTeam from "./pages/MaintenanceTeam";
-import Donate from "./pages/Donate";
+import About from "./pages/About";
 import ProductDetails from "./pages/ProductDetails";
 import Companies from "./pages/Companies";
 import News from "./pages/News";
@@ -35,32 +36,37 @@ const queryClient = new QueryClient({
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="products" element={<Products />} />
-          <Route path="initiatives" element={<Initiatives />} />
-          <Route path="maintenance-team" element={<MaintenanceTeam />} />
-          <Route path="donate" element={<Donate />} />
-          <Route path="product/:id" element={<ProductDetails />} />
-          <Route path="companies" element={<Companies />} />
-          <Route path="news" element={<News />} />
-          <Route path="support" element={<Support />} />
-          <Route path="news/:id" element={<NewsDetail />} />
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="timeline" element={<Timeline />} />
-          <Route path="review" element={<ReviewDashboard />} />
-          <Route path="review/:id" element={<ProductReview />} />
-          <Route path="privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="terms-of-use" element={<TermsOfUse />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
+    <AuthProvider>
+      <RoleProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <Header />
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="products" element={<Products />} />
+              <Route path="initiatives" element={<Initiatives />} />
+              <Route path="about" element={<About />} />
+              <Route path="maintenance-team" element={<Navigate to="/about" replace />} />
+              <Route path="donate" element={<Navigate to="/support" replace />} />
+              <Route path="product/:id" element={<ProductDetails />} />
+              <Route path="companies" element={<Companies />} />
+              <Route path="news" element={<News />} />
+              <Route path="support" element={<Support />} />
+              <Route path="news/:id" element={<NewsDetail />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="timeline" element={<Timeline />} />
+              <Route path="review" element={<ReviewDashboard />} />
+              <Route path="review/:id" element={<ProductReview />} />
+              <Route path="privacy-policy" element={<PrivacyPolicy />} />
+              <Route path="terms-of-use" element={<TermsOfUse />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </RoleProvider>
+    </AuthProvider>
   </QueryClientProvider>
 );
 

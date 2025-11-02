@@ -23,7 +23,6 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
   const [companyId, setCompanyId] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [hasUserProducts, setHasUserProducts] = useState(false);
-  const [emailValidationError, setEmailValidationError] = useState<string | null>(null);
 
   // Compute which roles the user already has
   const hasReviewerRole = roles.includes('reviewer');
@@ -44,14 +43,6 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
     };
 
     checkUserProducts();
-
-    // Validate email on load
-    if (user?.email) {
-      const validation = validateInstitutionalEmail(user.email);
-      if (!validation.isValid) {
-        setEmailValidationError(validation.error || 'Invalid email');
-      }
-    }
   }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -59,6 +50,28 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
 
     if (!user) {
       toast.error('You must be logged in to request a role');
+      return;
+    }
+
+    // Validate email first
+    if (user.email) {
+      const validation = validateInstitutionalEmail(user.email);
+      if (!validation.isValid) {
+        toast.error(validation.error || 'Only institutional email addresses are allowed');
+        return;
+      }
+    }
+
+    // Check if email is verified
+    const { data: userData, error: userError } = await supabase.auth.getUser();
+    if (userError) {
+      console.error('Error fetching user:', userError);
+      toast.error('Failed to verify user authentication');
+      return;
+    }
+
+    if (!userData.user?.email_confirmed_at) {
+      toast.error('Please verify your email address before requesting a role');
       return;
     }
 
@@ -76,22 +89,6 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
     // Check for conflicting roles
     if (requestedRole === 'company' && hasReviewerRole) {
       toast.error('Company role is incompatible with Reviewer role. Please contact an admin to remove your Reviewer role first.');
-      return;
-    }
-
-    // Validate institutional email
-    if (user.email) {
-      const validation = validateInstitutionalEmail(user.email);
-      if (!validation.isValid) {
-        toast.error(validation.error);
-        return;
-      }
-    }
-
-    // Check if email is verified
-    const { data: userData } = await supabase.auth.getUser();
-    if (!userData.user?.email_confirmed_at) {
-      toast.error('Please verify your email address before requesting a role');
       return;
     }
 
@@ -113,26 +110,41 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
 
     setSubmitting(true);
 
-    const { error } = await supabase
-      .from('role_requests')
-      .insert({
+    try {
+      console.log('Submitting role request:', {
         user_id: user.id,
         requested_role: requestedRole,
-        justification: justification.trim(),
-        company_id: requestedRole === 'company' ? companyId.trim() : null,
-        status: 'pending'
+        company_id: requestedRole === 'company' ? companyId.trim() : null
       });
 
-    if (error) {
-      toast.error(error.message);
-    } else {
-      toast.success('Role request submitted successfully');
-      setJustification('');
-      setCompanyId('');
-      onRequestSubmitted();
-    }
+      const { data, error } = await supabase
+        .from('role_requests')
+        .insert({
+          user_id: user.id,
+          requested_role: requestedRole,
+          justification: justification.trim(),
+          company_id: requestedRole === 'company' ? companyId.trim() : null,
+          status: 'pending'
+        })
+        .select()
+        .single();
 
-    setSubmitting(false);
+      if (error) {
+        console.error('Error submitting role request:', error);
+        toast.error(`Failed to submit request: ${error.message}`);
+      } else {
+        console.log('Role request submitted successfully:', data);
+        toast.success('Role request submitted successfully! An admin will review your request.');
+        setJustification('');
+        setCompanyId('');
+        onRequestSubmitted();
+      }
+    } catch (err: any) {
+      console.error('Exception submitting role request:', err);
+      toast.error(`An error occurred: ${err.message || 'Unknown error'}`);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -146,19 +158,22 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
         )}
         {!hasReviewerRole && !hasCompanyRole && (
           <CardDescription>
-            Request a role to contribute to the DLinRT platform
+            Request a specialized role to contribute to the DLinRT platform. All registered users already have basic access - only request Reviewer or Company Representative roles if needed.
           </CardDescription>
         )}
       </CardHeader>
       <CardContent>
-        {emailValidationError && (
-          <Alert variant="destructive" className="mb-4">
-            <AlertTriangle className="h-4 w-4" />
-            <AlertDescription>
-              {emailValidationError}
-            </AlertDescription>
-          </Alert>
-        )}
+        <Alert className="mb-4">
+          <AlertTriangle className="h-4 w-4" />
+          <AlertDescription>
+            <strong>Important Role Restrictions:</strong>
+            <ul className="mt-2 ml-4 list-disc text-sm">
+              <li><strong>Company Representatives</strong> cannot have user product adoptions (conflict of interest)</li>
+              <li><strong>Company Representatives</strong> and <strong>Reviewers</strong> are incompatible roles</li>
+              <li>All registered users have basic access by default - only request specialized roles if needed</li>
+            </ul>
+          </AlertDescription>
+        </Alert>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -231,7 +246,7 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
             />
           </div>
 
-          <Button type="submit" disabled={submitting || !!emailValidationError}>
+          <Button type="submit" disabled={submitting}>
             {submitting ? 'Submitting...' : 'Submit Request'}
           </Button>
         </form>

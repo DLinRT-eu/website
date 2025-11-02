@@ -25,7 +25,7 @@ import { Link, Navigate } from 'react-router-dom';
 
 export default function Profile() {
   const { user, profile, updateProfile, signOut, resendVerificationEmail, loading, profileLoading, refreshProfile } = useAuth();
-  const { roles, highestRole, isAdmin, activeRole } = useRoles();
+  const { roles, highestRole, isAdmin, activeRole, setActiveRole } = useRoles();
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -327,7 +327,24 @@ export default function Profile() {
                   <div className="flex gap-2 mt-2">
                     {roles.length > 0 ? (
                       roles.map(role => (
-                        <Badge key={role} variant={getRoleBadgeVariant(role)}>
+                        <Badge 
+                          key={role} 
+                          variant={getRoleBadgeVariant(role)}
+                          className={`cursor-pointer transition-all hover:scale-105 ${
+                            role === activeRole 
+                              ? 'ring-2 ring-offset-2 ring-primary' 
+                              : 'opacity-70 hover:opacity-100'
+                          }`}
+                          onClick={() => {
+                            if (role !== activeRole) {
+                              setActiveRole(role as any);
+                              toast({
+                                title: "Role Changed",
+                                description: `You are now using the ${role.charAt(0).toUpperCase() + role.slice(1)} role.`,
+                              });
+                            }
+                          }}
+                        >
                           {role.charAt(0).toUpperCase() + role.slice(1)}
                           {role === activeRole && ' ✓'}
                         </Badge>
@@ -343,7 +360,7 @@ export default function Profile() {
                   )}
                   {roles.length > 1 && (
                     <p className="text-sm text-muted-foreground mt-2">
-                      ✓ indicates your currently active role. Use the role selector below to switch roles.
+                      ✓ indicates your currently active role. Click on any role badge to switch roles.
                     </p>
                   )}
                 </div>

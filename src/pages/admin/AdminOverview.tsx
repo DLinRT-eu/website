@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, CheckCircle, Clock, Users, FileText, Building2, Shield } from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, Users, FileText, Building2, Shield, Gauge, Lock, ClipboardCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import SEO from '@/components/SEO';
@@ -133,6 +133,43 @@ export default function AdminOverview() {
 
   const handleApproveRole = async (requestId: string, userId: string, requestedRole: 'admin' | 'reviewer' | 'company') => {
     try {
+      // Check for existing roles and conflicts
+      const { data: existingRoles, error: rolesError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId);
+
+      if (rolesError) throw rolesError;
+
+      const userRoles = existingRoles?.map(r => r.role) || [];
+
+      // Check for company + reviewer conflict
+      if (requestedRole === 'company' && userRoles.includes('reviewer')) {
+        toast.error('Cannot assign Company role: User already has Reviewer role (incompatible)');
+        return;
+      }
+
+      if (requestedRole === 'reviewer' && userRoles.includes('company')) {
+        toast.error('Cannot assign Reviewer role: User already has Company role (incompatible)');
+        return;
+      }
+
+      // Check for company + user products conflict
+      if (requestedRole === 'company') {
+        const { data: userProducts, error: productsError } = await supabase
+          .from('user_products')
+          .select('id')
+          .eq('user_id', userId)
+          .limit(1);
+
+        if (productsError) throw productsError;
+
+        if (userProducts && userProducts.length > 0) {
+          toast.error('Cannot assign Company role: User has product adoptions (conflict of interest)');
+          return;
+        }
+      }
+
       // Grant the role
       const { error: roleError } = await supabase
         .from('user_roles')
@@ -143,7 +180,7 @@ export default function AdminOverview() {
       // Update request status
       const { error: updateError } = await supabase
         .from('role_requests')
-        .update({ status: 'approved' })
+        .update({ status: 'approved', reviewed_by: userId, reviewed_at: new Date().toISOString() })
         .eq('id', requestId);
 
       if (updateError) throw updateError;
@@ -250,6 +287,134 @@ export default function AdminOverview() {
               </CardContent>
             </Card>
           </div>
+
+          {/* Administrative Tools */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Building2 className="h-5 w-5" />
+                Administrative Tools
+              </CardTitle>
+              <CardDescription>Quick access to admin and reviewer features</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-6">
+                {/* Admin Pages Section */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                    <Shield className="h-4 w-4" />
+                    Admin Pages <Badge variant="secondary" className="ml-2">Admin role required</Badge>
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/admin')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <Gauge className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">Admin Dashboard</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Central administrative hub with stats and quick actions
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/admin/users')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <Users className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">User Management</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Manage user roles and permissions
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/admin/reviews')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <ClipboardCheck className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">Review Assignment</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Assign product reviews to reviewers
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/admin/security')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <Lock className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">Security Dashboard</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Monitor security events and system health
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Reviewer Pages Section */}
+                <div>
+                  <h3 className="text-sm font-semibold mb-3 flex items-center gap-2">
+                    <FileText className="h-4 w-4" />
+                    Reviewer Pages <Badge variant="secondary" className="ml-2">Reviewer or Admin role</Badge>
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/review')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <FileText className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">Review Dashboard</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Product review management interface
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/reviewer/dashboard')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <Gauge className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">Reviewer Dashboard</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Personal reviewer workspace
+                          </div>
+                        </div>
+                      </div>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Pending Role Requests */}
           <Card>

@@ -7,17 +7,25 @@ import { Badge } from './ui/badge';
 import MobileNav from './MobileNav';
 import DropdownNavItem from './navigation/DropdownNavItem';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
+import { useToast } from '@/hooks/use-toast';
 import NotificationBell from './notifications/NotificationBell';
 
 const Header = () => {
-  const { user, profile, activeRole, availableRoles, setActiveRole, signOut } = useAuth();
+  const { user, profile, signOut } = useAuth();
+  const { roles, activeRole, setActiveRole, isAdmin, isReviewer, isCompany } = useRoles();
+  const { toast } = useToast();
   
-  const isAdmin = activeRole === 'admin';
-  const isReviewer = activeRole === 'reviewer';
-  const isCompany = activeRole === 'company';
-  const isRegularUser = activeRole === 'user' || (!activeRole && availableRoles.length === 0);
-  const canSwitchRoles = availableRoles.length > 1;
-  const showRoleIndicator = true; // Always show role indicator
+  const isRegularUser = !activeRole || roles.length === 0;
+  const canSwitchRoles = roles.length > 1;
+
+  const handleRoleSwitch = (role: any) => {
+    setActiveRole(role);
+    toast({
+      title: "Role Changed",
+      description: `You are now using the ${role.charAt(0).toUpperCase() + role.slice(1)} role.`,
+    });
+  };
 
   return (
     <header className="bg-[#00A6D6] text-white py-3 px-4 sticky top-0 z-50 shadow-md">
@@ -79,32 +87,36 @@ const Header = () => {
               <DropdownMenuContent align="end" className="w-56">
                 <div className="px-2 py-1.5">
                   <p className="text-sm font-medium">{profile?.first_name} {profile?.last_name}</p>
+                  <p className="text-xs text-muted-foreground">{profile?.email}</p>
                   {activeRole && (
-                    <Badge variant="outline" className="mt-1">
+                    <Badge variant="outline" className="mt-2">
                       {activeRole.charAt(0).toUpperCase() + activeRole.slice(1)}
                     </Badge>
                   )}
-                </div>
-                
-                <DropdownMenuSeparator />
-                <div className="px-2 py-1.5 text-xs text-muted-foreground">
-                  Current Role: {activeRole ? activeRole.charAt(0).toUpperCase() + activeRole.slice(1) : 'User'}
+                  {!activeRole && roles.length === 0 && (
+                    <Badge variant="outline" className="mt-2">
+                      No Role
+                    </Badge>
+                  )}
                 </div>
                 
                 {canSwitchRoles && (
                   <>
                     <DropdownMenuSeparator />
-                    <div className="px-2 py-1.5 text-xs font-semibold">Switch Role</div>
-                    {availableRoles.map(role => (
-                      <DropdownMenuItem
-                        key={role}
-                        onClick={() => setActiveRole(role)}
-                        className={activeRole === role ? 'bg-accent' : ''}
-                      >
-                        {role.charAt(0).toUpperCase() + role.slice(1)}
-                        {activeRole === role && ' ✓'}
-                      </DropdownMenuItem>
-                    ))}
+                    <div className="px-2 py-1.5">
+                      <p className="text-xs font-semibold text-muted-foreground mb-1">SWITCH ROLE</p>
+                      {roles.map(role => (
+                        <DropdownMenuItem
+                          key={role}
+                          onClick={() => handleRoleSwitch(role)}
+                          className={activeRole === role ? 'bg-accent font-medium' : ''}
+                        >
+                          <Shield className="h-4 w-4 mr-2" />
+                          {role.charAt(0).toUpperCase() + role.slice(1)}
+                          {activeRole === role && ' ✓'}
+                        </DropdownMenuItem>
+                      ))}
+                    </div>
                   </>
                 )}
                 

@@ -8,6 +8,7 @@ import { SPECTRONIC_PRODUCTS } from "./spectronic";
 import { SYNTHETICMR_PRODUCTS } from "./syntheticmr";
 import { THERAPANACEA_PRODUCTS } from "./therapanacea";
 import { THERAPANACEA_ADAPTBOX_PRODUCTS } from "./therapanacea-adaptbox";
+import { MVISION_IMAGE_SYNTHESIS_PRODUCTS } from "./mvision";
 
 export const IMAGE_SYNTHESIS_PRODUCTS: ProductDetails[] = [
   ...PHILIPS_MRCAT_BRAIN_PRODUCTS,
@@ -17,5 +18,6 @@ export const IMAGE_SYNTHESIS_PRODUCTS: ProductDetails[] = [
   ...SPECTRONIC_PRODUCTS,
   ...SYNTHETICMR_PRODUCTS,
   ...THERAPANACEA_PRODUCTS,
-  ...THERAPANACEA_ADAPTBOX_PRODUCTS
+  ...THERAPANACEA_ADAPTBOX_PRODUCTS,
+  ...MVISION_IMAGE_SYNTHESIS_PRODUCTS
 ];

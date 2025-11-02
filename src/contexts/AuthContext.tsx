@@ -30,6 +30,7 @@ interface AuthContextType {
   setActiveRole: (role: string) => void;
   updateProfile: (data: Partial<Profile>) => Promise<{ data: any; error: any }>;
   resendVerificationEmail: () => Promise<{ error: Error | null }>;
+  refreshProfile: () => Promise<void>;
 }
 
 // Create context with null as initial value instead of undefined
@@ -41,7 +42,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [loading, setLoading] = useState(true);
   
   // Use the useProfile hook to manage profile data (legacy profiles table)
-  const { profile, loading: profileLoading, updateProfile: updateProfileData } = useProfile(user?.id || null);
+  const { profile, loading: profileLoading, updateProfile: updateProfileData, refetch: refreshProfile } = useProfile(user?.id || null);
 
   // Set up auth state listener
   useEffect(() => {
@@ -180,6 +181,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     profile,
     updateProfile: updateProfileData,
     resendVerificationEmail,
+    refreshProfile,
     // Stubs - use useRoles() hook instead
     roles: [] as AppRole[],
     highestRole: null,

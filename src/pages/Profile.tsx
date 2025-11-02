@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRoles } from '@/contexts/RoleContext';
+import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -15,19 +16,22 @@ import PageLayout from '@/components/layout/PageLayout';
 import { useToast } from '@/hooks/use-toast';
 import RoleRequestForm from '@/components/profile/RoleRequestForm';
 import { RoleRequestHistory } from '@/components/profile/RoleRequestHistory';
+import { RoleSelector } from '@/components/profile/RoleSelector';
 import { MFASettings } from '@/components/profile/MFASettings';
 import { DataExport } from '@/components/profile/DataExport';
 import { DeleteAccount } from '@/components/profile/DeleteAccount';
-import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package } from 'lucide-react';
+import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package, RefreshCw } from 'lucide-react';
 import { Link, Navigate } from 'react-router-dom';
 
 export default function Profile() {
-  const { user, profile, updateProfile, signOut, resendVerificationEmail, loading, profileLoading } = useAuth();
-  const { roles, highestRole, isAdmin } = useRoles();
+  const { user, profile, updateProfile, signOut, resendVerificationEmail, loading, profileLoading, refreshProfile } = useAuth();
+  const { roles, highestRole, isAdmin, activeRole } = useRoles();
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [resendingEmail, setResendingEmail] = useState(false);
+  const [loadingError, setLoadingError] = useState<string | null>(null);
+  const [retrying, setRetrying] = useState(false);
   
   const [firstName, setFirstName] = useState(profile?.first_name || '');
   const [lastName, setLastName] = useState(profile?.last_name || '');
@@ -47,8 +51,72 @@ export default function Profile() {
       setBio(profile.bio || '');
       setLinkedinUrl(profile.linkedin_url || '');
       setPublicDisplay(profile.public_display || false);
+      setLoadingError(null);
     }
   }, [profile]);
+
+  // Check for profile loading issues and attempt to create if missing
+  useEffect(() => {
+    const checkAndCreateProfile = async () => {
+      if (!user || loading || profileLoading || profile || loadingError) return;
+
+      // If we're not loading but don't have a profile, try to create it
+      if (!profile && user) {
+        try {
+          console.log('Profile missing, attempting to create...');
+          const { data, error } = await supabase
+            .from('profiles')
+            .insert({
+              id: user.id,
+              email: user.email,
+              first_name: user.user_metadata?.first_name || '',
+              last_name: user.user_metadata?.last_name || '',
+            })
+            .select()
+            .single();
+
+          if (error) {
+            if (error.code === '23505') { // Duplicate key - profile exists but wasn't loaded
+              console.log('Profile exists, refreshing...');
+              if (refreshProfile) {
+                await refreshProfile();
+              }
+            } else {
+              console.error('Error creating profile:', error);
+              setLoadingError('Failed to load profile. Please try refreshing the page.');
+            }
+          } else {
+            console.log('Profile created successfully');
+            if (refreshProfile) {
+              await refreshProfile();
+            }
+            toast({
+              title: "Profile Created",
+              description: "Your profile has been created successfully.",
+            });
+          }
+        } catch (err: any) {
+          console.error('Error in profile creation:', err);
+          setLoadingError(err.message || 'Failed to create profile');
+        }
+      }
+    };
+
+    // Add a small delay to avoid race conditions
+    const timer = setTimeout(checkAndCreateProfile, 1000);
+    return () => clearTimeout(timer);
+  }, [user, loading, profileLoading, profile, loadingError, refreshProfile, toast]);
+
+  const handleRetry = async () => {
+    setRetrying(true);
+    setLoadingError(null);
+    
+    if (refreshProfile) {
+      await refreshProfile();
+    }
+    
+    setRetrying(false);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -104,7 +172,7 @@ export default function Profile() {
   };
 
   // Show loading skeleton while profile loads
-  if (loading) {
+  if (loading || profileLoading) {
     return (
       <PageLayout>
         <div className="container max-w-4xl py-8">
@@ -132,45 +200,31 @@ export default function Profile() {
     );
   }
 
-  if (!user) {
-    return <Navigate to="/auth" replace />;
-  }
-
-  if (profileLoading) {
-    return (
-      <PageLayout>
-        <div className="container max-w-4xl py-8">
-          <Alert>
-            <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Loading your profile...</AlertTitle>
-          </Alert>
-        </div>
-      </PageLayout>
-    );
-  }
-
-  if (!profile) {
+  // Show error state if profile failed to load after timeout
+  if (loadingError && !loading && !profileLoading) {
     return (
       <PageLayout>
         <div className="container max-w-4xl py-8">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Profile Not Found</AlertTitle>
-            <AlertDescription className="flex flex-col gap-3">
-              <span>Unable to load your profile. This may be a temporary session issue.</span>
+            <AlertTitle>Error Loading Profile</AlertTitle>
+            <AlertDescription className="mt-2 space-y-4">
+              <p>{loadingError}</p>
               <div className="flex gap-2">
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => window.location.reload()}
-                >
-                  Retry Loading Profile
+                <Button onClick={handleRetry} variant="outline" disabled={retrying}>
+                  {retrying ? (
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                      Retrying...
+                    </>
+                  ) : (
+                    <>
+                      <RefreshCw className="mr-2 h-4 w-4" />
+                      Try Again
+                    </>
+                  )}
                 </Button>
-                <Button 
-                  variant="outline" 
-                  size="sm"
-                  onClick={() => signOut()}
-                >
+                <Button onClick={signOut} variant="ghost">
                   Sign Out
                 </Button>
               </div>
@@ -179,6 +233,40 @@ export default function Profile() {
         </div>
       </PageLayout>
     );
+  }
+
+  // If still no profile after everything, show a friendly message
+  if (!profile && !loading && !profileLoading) {
+    return (
+      <PageLayout>
+        <div className="container max-w-4xl py-8">
+          <Alert>
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Setting Up Your Profile</AlertTitle>
+            <AlertDescription className="mt-2 space-y-4">
+              <p>We're creating your profile. This should only take a moment...</p>
+              <Button onClick={handleRetry} variant="outline" disabled={retrying}>
+                {retrying ? (
+                  <>
+                    <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
+                    Creating...
+                  </>
+                ) : (
+                  <>
+                    <RefreshCw className="mr-2 h-4 w-4" />
+                    Refresh
+                  </>
+                )}
+              </Button>
+            </AlertDescription>
+          </Alert>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
   }
 
   return (
@@ -241,6 +329,7 @@ export default function Profile() {
                       roles.map(role => (
                         <Badge key={role} variant={getRoleBadgeVariant(role)}>
                           {role.charAt(0).toUpperCase() + role.slice(1)}
+                          {role === activeRole && ' ✓'}
                         </Badge>
                       ))
                     ) : (
@@ -249,7 +338,12 @@ export default function Profile() {
                   </div>
                   {roles.length === 0 && (
                     <p className="text-sm text-muted-foreground mt-2">
-                      Contact an administrator to request role assignment.
+                      Use the role request form below to request a role.
+                    </p>
+                  )}
+                  {roles.length > 1 && (
+                    <p className="text-sm text-muted-foreground mt-2">
+                      ✓ indicates your currently active role. Use the role selector below to switch roles.
                     </p>
                   )}
                 </div>
@@ -267,6 +361,9 @@ export default function Profile() {
               </div>
             </CardContent>
           </Card>
+
+          {/* Role Selector - for users with multiple roles */}
+          <RoleSelector />
 
           {/* Profile Information Card */}
           <Card>
@@ -401,13 +498,9 @@ export default function Profile() {
           <DataExport />
           <DeleteAccount />
 
-          {/* Role Request Section - Show for all non-admin users */}
-          {!isAdmin && (
-            <>
-              <RoleRequestForm onRequestSubmitted={() => setRefreshKey(prev => prev + 1)} />
-              <RoleRequestHistory key={refreshKey} />
-            </>
-          )}
+          {/* Role Request Section - Show for all users (can request additional roles) */}
+          <RoleRequestForm onRequestSubmitted={() => setRefreshKey(prev => prev + 1)} />
+          <RoleRequestHistory key={refreshKey} />
         </div>
       </div>
     </PageLayout>

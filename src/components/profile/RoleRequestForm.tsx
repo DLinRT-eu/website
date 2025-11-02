@@ -53,12 +53,16 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
       return;
     }
 
-    // Validate email first
+    // Warn about institutional email preference (but don't block)
     if (user.email) {
       const validation = validateInstitutionalEmail(user.email);
       if (!validation.isValid) {
-        toast.error(validation.error || 'Only institutional email addresses are allowed');
-        return;
+        // Show warning but don't block the request
+        toast.warning(
+          'Note: Institutional email addresses are preferred. Your request will be reviewed by an admin.',
+          { duration: 5000 }
+        );
+        console.warn('[RoleRequest] Non-institutional email detected:', user.email);
       }
     }
 

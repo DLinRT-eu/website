@@ -109,7 +109,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       console.log('[Auth] Signing up...');
       
-      // First, check if email is institutional (client-side validation)
+      // Warn about institutional email preference (but don't block)
       const emailDomain = email.toLowerCase().split('@')[1];
       const blockedDomains = [
         'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
@@ -119,13 +119,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       ];
       
       if (blockedDomains.includes(emailDomain)) {
-        console.error('[Auth] Non-institutional email blocked:', emailDomain);
-        return { 
-          error: { 
-            message: 'Only institutional email addresses are allowed. Please use your organization or university email address.',
-            code: 'institutional_email_required'
-          } 
-        };
+        console.warn('[Auth] Non-institutional email detected:', emailDomain);
+        // Show warning but don't block signup
+        // The warning will be shown by the signup form
       }
       
       const redirectUrl = `${window.location.origin}/`;

@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertCircle, CheckCircle2 } from 'lucide-react';
+import { AlertCircle, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { z } from 'zod';
 import SEO from '@/components/SEO';
 
@@ -52,6 +52,7 @@ export default function Auth() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [warning, setWarning] = useState<string | null>(null);
 
   // Login form state
   const [loginEmail, setLoginEmail] = useState('');
@@ -105,6 +106,7 @@ export default function Auth() {
     e.preventDefault();
     setError(null);
     setSuccessMessage(null);
+    setWarning(null);
     
     try {
       const validation = signupSchema.parse({
@@ -114,6 +116,20 @@ export default function Auth() {
         firstName: firstName.trim(),
         lastName: lastName.trim(),
       });
+      
+      // Check if email is institutional and show warning if not
+      const emailDomain = validation.email.toLowerCase().split('@')[1];
+      const nonInstitutionalDomains = [
+        'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
+        'live.com', 'msn.com', 'aol.com', 'icloud.com',
+        'protonmail.com', 'mail.com', 'zoho.com', 'yandex.com',
+        'gmx.com', 'inbox.com', 'fastmail.com', 'hushmail.com'
+      ];
+      
+      if (nonInstitutionalDomains.includes(emailDomain)) {
+        // Show warning but allow signup to proceed
+        setWarning('Note: Institutional email addresses (university, hospital, research center) are strongly preferred. Your account may require additional verification.');
+      }
       
       setLoading(true);
       
@@ -128,6 +144,7 @@ export default function Auth() {
       
       if (signUpError) {
         setError(signUpError.message || 'Failed to create account');
+        setWarning(null); // Clear warning if there's an error
       } else {
         setSuccessMessage('Account created! Please check your email to verify your account.');
         // Clear form
@@ -143,6 +160,7 @@ export default function Auth() {
       } else {
         setError('An unexpected error occurred');
       }
+      setWarning(null); // Clear warning if there's an error
     } finally {
       setLoading(false);
     }
@@ -235,6 +253,15 @@ export default function Auth() {
                     <Alert>
                       <CheckCircle2 className="h-4 w-4" />
                       <AlertDescription>{successMessage}</AlertDescription>
+                    </Alert>
+                  )}
+                  
+                  {warning && (
+                    <Alert variant="default" className="border-amber-500 bg-amber-50 dark:bg-amber-950">
+                      <AlertTriangle className="h-4 w-4 text-amber-600" />
+                      <AlertDescription className="text-amber-800 dark:text-amber-200">
+                        {warning}
+                      </AlertDescription>
                     </Alert>
                   )}
                   

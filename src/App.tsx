@@ -28,6 +28,7 @@ import Profile from "./pages/Profile";
 import MyProducts from "./pages/MyProducts";
 import RoleSelection from "./pages/RoleSelection";
 import ProductExperiences from "./pages/ProductExperiences";
+import Auth from "./pages/Auth";
 
 // Admin Pages
 import AdminOverview from "./pages/admin/AdminOverview";
@@ -81,6 +82,7 @@ const App = () => (
               <Route path="review/:id" element={<ProductReview />} />
               <Route path="privacy-policy" element={<PrivacyPolicy />} />
               <Route path="terms-of-use" element={<TermsOfUse />} />
+              <Route path="auth" element={<Auth />} />
               
               {/* User Authenticated Routes */}
               <Route path="/profile" element={

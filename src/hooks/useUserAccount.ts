@@ -50,11 +50,11 @@ export function useUserAccount(userId: string | null) {
           .single();
 
         if (insertError) throw insertError;
-        setAccount(newAccount);
+        setAccount(newAccount as unknown as UserAccount);
         return;
       }
 
-      setAccount(data);
+      setAccount(data as unknown as UserAccount);
     } catch (error: any) {
       console.error('Failed to fetch user account:', error);
       toast({

@@ -39,7 +39,7 @@ export function useAdminProfile(userId: string | null, enabled: boolean = true) 
         .maybeSingle();
 
       if (error) throw error;
-      setProfile(data);
+      setProfile(data as unknown as AdminProfile | null);
     } catch (error: any) {
       console.error('Failed to fetch admin profile:', error);
     } finally {

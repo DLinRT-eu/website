@@ -45,7 +45,7 @@ export function useReviewerProfile(userId: string | null, enabled: boolean = tru
         .maybeSingle();
 
       if (error) throw error;
-      setProfile(data);
+      setProfile(data as unknown as ReviewerProfile | null);
     } catch (error: any) {
       console.error('Failed to fetch reviewer profile:', error);
     } finally {

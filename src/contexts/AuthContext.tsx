@@ -1,11 +1,9 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { useUserAccount, UserAccount } from '@/hooks/useUserAccount';
+import { useProfile, Profile } from '@/hooks/useProfile';
 
 type AppRole = 'admin' | 'reviewer' | 'company';
-
-// Profile type is now imported from useProfile hook
 
 interface SignUpData {
   firstName: string;
@@ -20,9 +18,17 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, data: SignUpData) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
-  // User account (minimal public data)
-  account: UserAccount | null;
-  updateAccount: (data: Partial<UserAccount>) => Promise<void>;
+  profile: Profile | null;
+  roles: AppRole[];
+  highestRole: AppRole | null;
+  isAdmin: boolean;
+  isReviewer: boolean;
+  isCompany: boolean;
+  activeRole: string | null;
+  availableRoles: string[];
+  requiresRoleSelection: boolean;
+  setActiveRole: (role: string) => void;
+  updateProfile: (data: Partial<Profile>) => Promise<{ data: any; error: any }>;
   resendVerificationEmail: () => Promise<{ error: Error | null }>;
 }
 
@@ -33,8 +39,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   
-  // Use the useUserAccount hook to manage basic account data
-  const { account, loading: profileLoading, updateAccount } = useUserAccount(user?.id || null);
+  // Use the useProfile hook to manage profile data (legacy profiles table)
+  const { profile, loading: profileLoading, updateProfile: updateProfileData } = useProfile(user?.id || null);
 
   // Set up auth state listener
   useEffect(() => {
@@ -170,10 +176,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signIn,
     signUp,
     signOut,
-    // User account management
-    account,
-    updateAccount,
+    // Profile management (legacy profiles table for backward compat)
+    profile,
+    updateProfile: updateProfileData,
     resendVerificationEmail,
+    // Stubs - use useRoles() hook instead
+    roles: [] as AppRole[],
+    highestRole: null,
+    isAdmin: false,
+    isReviewer: false,
+    isCompany: false,
+    activeRole: null,
+    availableRoles: [],
+    requiresRoleSelection: false,
+    setActiveRole: () => {},
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

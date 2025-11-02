@@ -43,7 +43,7 @@ export function useCompanyProfile(userId: string | null, enabled: boolean = true
         .maybeSingle();
 
       if (error) throw error;
-      setProfile(data);
+      setProfile(data as unknown as CompanyProfile | null);
     } catch (error: any) {
       console.error('Failed to fetch company profile:', error);
     } finally {

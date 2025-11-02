@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRoles } from '@/contexts/RoleContext';
+import { useReviewerProfile } from '@/hooks/useReviewerProfile';
+import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import { useAdminProfile } from '@/hooks/useAdminProfile';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,8 +25,17 @@ import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package } from '
 import { Link, Navigate } from 'react-router-dom';
 
 export default function Profile() {
-  const { user, profile, updateProfile, signOut, resendVerificationEmail, loading, profileLoading } = useAuth();
-  const { roles, highestRole, isAdmin } = useRoles();
+  const { user, account, updateAccount, signOut, resendVerificationEmail, loading, profileLoading } = useAuth();
+  const { roles, highestRole, isAdmin, activeRole } = useRoles();
+  
+  // Fetch role-specific profiles
+  const { profile: reviewerProfile, updateProfile: updateReviewerProfile, loading: reviewerLoading } = useReviewerProfile(user?.id || null, activeRole === 'reviewer');
+  const { profile: companyProfile, updateProfile: updateCompanyProfile, loading: companyLoading } = useCompanyProfile(user?.id || null, activeRole === 'company');
+  const { profile: adminProfile, updateProfile: updateAdminProfile, loading: adminLoading } = useAdminProfile(user?.id || null, activeRole === 'admin');
+  
+  // Determine which profile to use based on active role
+  const profile = activeRole === 'reviewer' ? reviewerProfile : activeRole === 'company' ? companyProfile : activeRole === 'admin' ? adminProfile : null;
+  const roleProfileLoading = activeRole === 'reviewer' ? reviewerLoading : activeRole === 'company' ? companyLoading : activeRole === 'admin' ? adminLoading : false;
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -75,15 +87,30 @@ export default function Profile() {
     
     setSaving(true);
 
-    await updateProfile({
-      first_name: firstName,
-      last_name: lastName,
-      institution: institution || null,
-      specialization: specialization || null,
-      bio: bio || null,
-      linkedin_url: linkedinUrl || null,
-      public_display: publicDisplay,
-    });
+    // Update role-specific profile based on active role
+    if (activeRole === 'reviewer' && updateReviewerProfile) {
+      await updateReviewerProfile({
+        first_name: firstName,
+        last_name: lastName,
+        institution: institution || null,
+        specialization: specialization || null,
+        bio: bio || null,
+        linkedin_url: linkedinUrl || null,
+        public_display: publicDisplay,
+      });
+    } else if (activeRole === 'company' && updateCompanyProfile) {
+      await updateCompanyProfile({
+        first_name: firstName,
+        last_name: lastName,
+        position: specialization || null,
+        department: institution || null,
+      });
+    } else if (activeRole === 'admin' && updateAdminProfile) {
+      await updateAdminProfile({
+        first_name: firstName,
+        last_name: lastName,
+      });
+    }
 
     setSaving(false);
   };
@@ -136,7 +163,7 @@ export default function Profile() {
     return <Navigate to="/auth" replace />;
   }
 
-  if (profileLoading) {
+  if (profileLoading || roleProfileLoading) {
     return (
       <PageLayout>
         <div className="container max-w-4xl py-8">
@@ -149,15 +176,15 @@ export default function Profile() {
     );
   }
 
-  if (!profile) {
+  if (!account) {
     return (
       <PageLayout>
         <div className="container max-w-4xl py-8">
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
-            <AlertTitle>Profile Not Found</AlertTitle>
+            <AlertTitle>Account Not Found</AlertTitle>
             <AlertDescription className="flex flex-col gap-3">
-              <span>Unable to load your profile. This may be a temporary session issue.</span>
+              <span>Unable to load your account. This may be a temporary session issue.</span>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 
@@ -230,7 +257,7 @@ export default function Profile() {
                   <Label className="text-sm text-muted-foreground">Email</Label>
                   <div className="flex items-center gap-2 mt-1">
                     <Mail className="h-4 w-4 text-muted-foreground" />
-                    <span className="font-medium">{profile?.email}</span>
+                    <span className="font-medium">{account?.email}</span>
                   </div>
                 </div>
                 

@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
-import { useProfile, Profile } from '@/hooks/useProfile';
+import { useUserAccount, UserAccount } from '@/hooks/useUserAccount';
 
 type AppRole = 'admin' | 'reviewer' | 'company';
 
@@ -20,18 +20,9 @@ interface AuthContextType {
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, data: SignUpData) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
-  // Phase 2+ properties (stubs for now)
-  profile: Profile | null;
-  roles: AppRole[];
-  highestRole: AppRole | null;
-  isAdmin: boolean;
-  isReviewer: boolean;
-  isCompany: boolean;
-  activeRole: string | null;
-  availableRoles: string[];
-  requiresRoleSelection: boolean;
-  setActiveRole: (role: string) => void;
-  updateProfile: (data: Partial<Profile>) => Promise<{ data: any; error: any }>;
+  // User account (minimal public data)
+  account: UserAccount | null;
+  updateAccount: (data: Partial<UserAccount>) => Promise<void>;
   resendVerificationEmail: () => Promise<{ error: Error | null }>;
 }
 
@@ -42,8 +33,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   
-  // Phase 2: Use the useProfile hook to manage profile data
-  const { profile, loading: profileLoading, updateProfile: updateProfileData } = useProfile(user?.id || null);
+  // Use the useUserAccount hook to manage basic account data
+  const { account, loading: profileLoading, updateAccount } = useUserAccount(user?.id || null);
 
   // Set up auth state listener
   useEffect(() => {
@@ -179,20 +170,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     signIn,
     signUp,
     signOut,
-    // Phase 2: Profile management (now implemented)
-    profile,
-    updateProfile: updateProfileData,
+    // User account management
+    account,
+    updateAccount,
     resendVerificationEmail,
-    // Phase 3+ stubs - will be implemented later
-    roles: [] as AppRole[],
-    highestRole: null,
-    isAdmin: false,
-    isReviewer: false,
-    isCompany: false,
-    activeRole: null,
-    availableRoles: [],
-    requiresRoleSelection: false,
-    setActiveRole: () => {},
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -57,14 +57,8 @@ export const PHILIPS_MRCAT_PELVIS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Partnerships"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["Institution size", "Features included"]
-    },
+
+},
     version: "2.0",
     releaseDate: "2019-05-21",
     lastUpdated: "2025-08-08",

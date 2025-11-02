@@ -58,14 +58,8 @@ export const THERAPANACEA_ADAPTBOX_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2023",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
+
+},
     version: "1.0",
     releaseDate: "2023-09-01",
     lastUpdated: "2024-04-26",

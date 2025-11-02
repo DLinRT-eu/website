@@ -51,14 +51,8 @@ export const SUBTLE_MEDICAL_GAD_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Research partnerships", "Early access program"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Research license"],
-      basedOn: ["Institution size", "Research scope"]
-    },
+
+},
     clinicalEvidence: "Early research studies showing promising correlation between synthetic and actual contrast-enhanced images in neurological applications",
     lastUpdated: "2024-12-15",
     lastRevised: "2025-09-01"

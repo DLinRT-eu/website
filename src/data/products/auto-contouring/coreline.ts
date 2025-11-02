@@ -51,10 +51,6 @@ const rawProduct: ProductDetails = {
     onMarketSince: "2019",
     distributionChannels: ["Direct sales", "Distribution partners"]
   },
-  pricing: {
-    model: ["Perpetual license", "Subscription"],
-    basedOn: ["Institution size", "Module selection"]
-  },
   version: "3.0",
   releaseDate: "2023-04-20",
   lastUpdated: "2024-01-15",

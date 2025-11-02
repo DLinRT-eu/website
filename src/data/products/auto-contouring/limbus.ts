@@ -75,14 +75,8 @@ export const LIMBUS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Partnerships"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of contours"]
-    },
+
+},
     version: "3.0",
     releaseDate: "2023-06-15",
     lastUpdated: "2024-03-10",

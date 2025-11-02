@@ -51,14 +51,8 @@ export const UNITED_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated with uRT systems", "Standalone option"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["System integration", "Subscription available"],
-      basedOn: ["Treatment system model", "Enterprise license"]
-    },
+
+},
     clinicalEvidence: "Clinical evaluations showing improved target visualization and reduced contouring variability compared to conventional CBCT",
     lastUpdated: "2024-12-20",
     lastRevised: "2025-09-01"

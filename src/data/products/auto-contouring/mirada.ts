@@ -49,14 +49,8 @@ export const MIRADA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Not available anymore"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Subscription"],
-      basedOn: ["Institution size", "Volume"]
-    },
+
+},
     version: "2.2",
     releaseDate: "2023-05-20",
     lastUpdated: "2024-01-15",

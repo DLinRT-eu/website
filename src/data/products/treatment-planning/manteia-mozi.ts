@@ -47,14 +47,8 @@ export const MANTEIA_MOZI_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Cloud platform"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of plans"]
-    },
+
+},
     version: "3.0",
     releaseDate: "2023-12-01",
     lastUpdated: "2024-04-15",

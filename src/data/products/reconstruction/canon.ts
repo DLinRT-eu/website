@@ -51,14 +51,8 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated in new CT systems", "Upgrade for compatible systems"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["System integration", "Subscription options"],
-      basedOn: ["Scanner model", "Enterprise licensing"]
-    },
+
+},
     clinicalEvidence: "Multiple clinical studies demonstrating excellent image quality at ultra-low-dose settings across various clinical applications",
     evidence: [
       {
@@ -120,14 +114,8 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Integrated in new MR systems", "Upgrade option"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["One-time purchase", "System integration"],
-      basedOn: ["MR system model", "Enterprise license"]
-    },
+
+},
     clinicalEvidence: "Growing body of clinical evidence showing comparable diagnostic performance with significantly reduced scan times",
     lastUpdated: "2025-01-10",
     lastRevised: "2025-09-01",
@@ -184,14 +172,8 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2023",
       distributionChannels: ["Integrated in new MR systems", "Upgrade option for compatible systems"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["System integration", "One-time purchase"],
-      basedOn: ["MR system model", "Enterprise licensing"]
-    },
+
+},
     clinicalEvidence: "Clinical studies demonstrating significantly improved spatial resolution and image sharpness for enhanced diagnostic capabilities",
     lastUpdated: "2025-01-15", 
     lastRevised: "2025-09-01",

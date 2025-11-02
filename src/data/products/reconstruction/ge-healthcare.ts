@@ -50,14 +50,8 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Integrated in new CT systems"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["One-time purchase", "Software subscription"],
-      basedOn: ["Scanner type", "Volume license"]
-    },
+
+},
     clinicalEvidence: "Multiple clinical studies showing diagnostic equivalence at up to 82% lower dose compared to conventional techniques",
     lastUpdated: "2025-02-10",
     lastRevised: "2025-09-01",
@@ -112,14 +106,8 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Integrated in new MR systems", "Upgrade for compatible systems"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["One-time purchase", "Subscription available"],
-      basedOn: ["MR system model", "Enterprise license options"]
-    },
+
+},
     clinicalEvidence: "Over 30 peer-reviewed publications demonstrating improved image quality and/or reduced scan times across various clinical applications",
     lastUpdated: "2025-01-15",
     lastRevised: "2025-09-01",

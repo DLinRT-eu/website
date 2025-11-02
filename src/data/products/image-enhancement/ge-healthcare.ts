@@ -50,14 +50,8 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Edison Marketplace"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Annual volume", "Enterprise license"]
-    },
+
+},
     clinicalEvidence: "Multiple clinical evaluations demonstrating improved diagnostic confidence and reduced interpretation time",
     lastUpdated: "2025-01-20",
     lastRevised: "2025-09-01"
@@ -109,14 +103,8 @@ export const GE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Edison Marketplace"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "One-time purchase"],
-      basedOn: ["Annual volume", "Enterprise deployment"]
-    },
+
+},
     clinicalEvidence: "Reader studies showing improved diagnostic confidence and lesion conspicuity compared to standard MR images",
     lastUpdated: "2025-01-10",
     lastRevised: "2025-09-01"

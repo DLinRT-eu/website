@@ -57,10 +57,6 @@ export const AI_MEDICAL_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Distribution partners"]
     },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
     version: "2.0",
     releaseDate: "2023-05-15",
     lastUpdated: "2024-04-29",

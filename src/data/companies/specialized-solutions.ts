@@ -71,5 +71,14 @@ export const SPECIALIZED_SOLUTIONS_COMPANIES: CompanyDetails[] = [
     "productIds": ["pymedix-registration"],
     "category": "Specialized Solutions",
     "logoUrl": "/logos/pymedix.png"
+  },
+  {
+    "id": "medlever",
+    "name": "MedLever, Inc.",
+    "description": "AI-powered workflow orchestration and work management platform for radiation oncology. Built with data integrity at the core to unify clinical and financial pathways.",
+    "website": "https://medlever.com/",
+    "productIds": ["medlever-workflow-management"],
+    "category": "Specialized Solutions",
+    "logoUrl": "/logos/medlever.jpg"
   }
 ];

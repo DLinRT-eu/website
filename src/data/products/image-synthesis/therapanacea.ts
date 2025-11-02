@@ -45,14 +45,8 @@ export const THERAPANACEA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["Institution size", "Service level"]
-    },
+
+},
     version: "2.0",
     releaseDate: "2023-04-25",
     lastUpdated: "2024-08-06",

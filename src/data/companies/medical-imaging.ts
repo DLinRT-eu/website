@@ -12,7 +12,8 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "ge-truefidelity-pro", 
       "ge-air-recon-dl",
       "ge-dlip-ct",
-      "ge-air-recon-dl-enhancement"
+      "ge-air-recon-dl-enhancement",
+      "ge-healthcare-irt"
     ],
     "category": "Medical Imaging",
     "logoUrl": "/logos/ge_healthcare.png"

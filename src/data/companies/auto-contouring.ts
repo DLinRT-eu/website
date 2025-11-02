@@ -148,6 +148,6 @@ export const AUTO_CONTOURING_COMPANIES: CompanyDetails[] = [
     "website": "https://www.oncosoft.io/",
     "productIds": ["oncosoft-oncostudio"],
     "category": "Auto-Contouring",
-    "logoUrl": "/logos/oncosoft.png"
+    "logoUrl": "/logos/Oncosoft.png"
   }
 ];

@@ -18,7 +18,8 @@ export const getAllOptions = (field: keyof Product): string[] => {
         "Treatment Planning",
         "Clinical Prediction",
         "Registration",
-        "Performance Monitor"
+        "Performance Monitor",
+        "Platform"
       ];
       
       // Sort categories according to preferred order

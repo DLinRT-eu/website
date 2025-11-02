@@ -11,7 +11,7 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
     description: "AI-powered auto-contouring solution proven in practice with over 4M contours in treatments for 80K patients, delivering fully automatic, fast, and consistent expert-level accuracy.",
     category: "Auto-Contouring",
     certification: "CE & FDA",
-    logoUrl: "/logos/oncosoft.png",
+    logoUrl: "/logos/Oncosoft.png",
     website: "https://www.oncosoft.io/",
     anatomicalLocation: ["Brain", "Head & Neck", "Breast", "Abdomen", "Pelvis"],
     modality: ["CT"],
@@ -323,15 +323,7 @@ export const ONCOSOFT_PRODUCTS: ProductDetails[] = [
   // Market Information
   market: {
     onMarketSince: "2022",
-    distributionChannels: ["Direct sales", "Partner distributors"],
-    
-    
-    
-  },
-  // Pricing Information
-  pricing: {
-    model: ["Subscription", "License-based"],
-    basedOn: ["Annual subscription", "Per-case processing"]
+    distributionChannels: ["Direct sales", "Partner distributors"]
   },
   version: "2024",
   releaseDate: "2024-01-01",

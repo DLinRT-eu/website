@@ -58,10 +58,6 @@ export const PHILIPS_MRCAT_BRAIN_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Partnerships"]
     },
-    pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["Institution size", "Features included"]
-    },
     version: "1.0",
     releaseDate: "2020-01-20",
     lastUpdated: "2024-08-08",

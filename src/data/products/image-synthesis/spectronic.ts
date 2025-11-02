@@ -64,14 +64,8 @@ export const SPECTRONIC_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
+
+},
     version: "3.2",
     releaseDate: "2023-07-10",
     lastUpdated: "2025-08-08",

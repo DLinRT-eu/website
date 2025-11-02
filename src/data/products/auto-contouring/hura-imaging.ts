@@ -78,14 +78,8 @@ export const HURA_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
+
+},
     version: "2.5",
     releaseDate: "2023-05-20",
     lastUpdated: "2024-01-15",

@@ -44,14 +44,8 @@ export const MANTEIA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
+
+},
     version: "2.1",
     releaseDate: "2024-03-15",
     lastUpdated: "2024-04-25",

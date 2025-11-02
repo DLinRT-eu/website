@@ -51,14 +51,8 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Annual scan volume", "Enterprise-wide options"]
-    },
+
+},
     clinicalEvidence: "Multiple peer-reviewed studies showing diagnostic equivalence between standard acquisition and accelerated protocols with SubtleMR enhancement",
     lastUpdated: "2025-01-10",
     lastRevised: "2025-09-01"
@@ -112,14 +106,8 @@ export const SUBTLE_MEDICAL_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Annual scan volume", "Enterprise-wide options"]
-    },
+
+},
     clinicalEvidence: "Multiple peer-reviewed studies showing diagnostic equivalence between standard dose and low-dose/fast-scan protocols with SubtlePET enhancement",
     lastUpdated: "2025-01-05",
     lastRevised: "2025-09-01"

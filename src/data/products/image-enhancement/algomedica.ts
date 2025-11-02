@@ -58,10 +58,6 @@ export const ALGOMEDICA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019-05"
     },
-    pricing: {
-      model: ["One-off payment", "Subscription"],
-      basedOn: ["Number of analyses", "Number of installations", "Number of licensed CT scanners"]
-    },
     evidence: [
       {
         type: "Use cases and scientific publications",

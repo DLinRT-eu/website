@@ -51,10 +51,6 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Distribution partners"]
     },
-    pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Annual scan volume", "Pay-per-use option"]
-    },
     clinicalEvidence: "Clinical studies showing improved diagnostic confidence and efficiency when interpreting enhanced images",
     lastUpdated: "2025-02-10",
     lastRevised: "2025-09-01"
@@ -107,10 +103,6 @@ export const AIRS_MEDICAL_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Distribution partners"]
-    },
-    pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Annual scan volume", "Pay-per-use option"]
     },
     clinicalEvidence: "Early clinical evaluations showing improved image quality metrics and reader preference compared to standard CT images",
     lastUpdated: "2025-01-20",

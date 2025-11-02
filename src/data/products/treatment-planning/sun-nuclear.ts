@@ -57,10 +57,6 @@ export const SUN_NUCLEAR_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2021-09-15",
       distributionChannels: ["Direct Sales", "Cloud Platform"]
     },
-    pricing: {
-      model: ["Contact vendor"],
-      basedOn: ["Institution size", "Usage volume"]
-    },
     version: "1.0",
     releaseDate: "2021-09-15",
     lastUpdated: "2025-07-14",

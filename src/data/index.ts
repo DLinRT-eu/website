@@ -7,6 +7,7 @@ import { COMPANIES } from "./companies/index";
 import { AUTO_CONTOURING_PRODUCTS } from "./products/auto-contouring/index";
 import { IMAGE_SYNTHESIS_PRODUCTS } from "./products/image-synthesis/index";
 import { REGISTRATION_PRODUCTS } from "./products/registration/index";
+import { PLATFORM_PRODUCTS } from "./products/platform/index";
 import { TREATMENT_PLANNING_PRODUCTS } from "./products/treatment-planning";
 import { CLINICAL_PREDICTION_PRODUCTS } from "./products/clinical-prediction";
 import { RECONSTRUCTION_PRODUCTS } from "./products/reconstruction";
@@ -25,6 +26,7 @@ export const ALL_PRODUCTS: ProductDetails[] = [
   ...AUTO_CONTOURING_PRODUCTS,
   ...IMAGE_SYNTHESIS_PRODUCTS,
   ...REGISTRATION_PRODUCTS,
+  ...PLATFORM_PRODUCTS,
   ...TREATMENT_PLANNING_PRODUCTS,
   ...CLINICAL_PREDICTION_PRODUCTS,
   ...RECONSTRUCTION_PRODUCTS,
@@ -40,6 +42,7 @@ export {
   AUTO_CONTOURING_PRODUCTS,
   IMAGE_SYNTHESIS_PRODUCTS,
   REGISTRATION_PRODUCTS,
+  PLATFORM_PRODUCTS,
   TREATMENT_PLANNING_PRODUCTS,
   CLINICAL_PREDICTION_PRODUCTS,
   RECONSTRUCTION_PRODUCTS,

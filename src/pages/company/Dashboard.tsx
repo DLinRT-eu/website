@@ -9,12 +9,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Calendar } from '@/components/ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { format } from 'date-fns';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useToast } from '@/hooks/use-toast';
-import { Building2, FileEdit, Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { Building2, FileEdit, Clock, CheckCircle2, XCircle, BadgeCheck, Calendar as CalendarIcon, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { ALL_PRODUCTS } from '@/data';
+import { cn } from '@/lib/utils';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 interface CompanyRevision {
   id: string;
@@ -27,6 +33,15 @@ interface CompanyRevision {
   created_at: string;
 }
 
+interface CompanyUser {
+  id: string;
+  user_id: string;
+  company_name: string;
+  assigned_by: string | null;
+  assigned_at: string;
+  is_active: boolean;
+}
+
 export default function CompanyDashboard() {
   const { user, isCompany } = useAuth();
   const navigate = useNavigate();
@@ -34,8 +49,12 @@ export default function CompanyDashboard() {
   const [revisions, setRevisions] = useState<CompanyRevision[]>([]);
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [certifyDialogOpen, setCertifyDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState('');
   const [changesSummary, setChangesSummary] = useState('');
+  const [certificationDate, setCertificationDate] = useState<Date>(new Date());
+  const [companyUser, setCompanyUser] = useState<CompanyUser | null>(null);
+  const [companyProducts, setCompanyProducts] = useState<any[]>([]);
 
   const products = ALL_PRODUCTS;
 
@@ -45,8 +64,39 @@ export default function CompanyDashboard() {
       return;
     }
 
-    fetchRevisions();
+    fetchCompanyUser();
   }, [user, isCompany]);
+
+  const fetchCompanyUser = async () => {
+    if (!user) return;
+
+    // Fetch the company assignment for this user
+    const { data: companyUserData, error: companyError } = await supabase
+      .from('company_users')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('is_active', true)
+      .single();
+
+    if (companyError || !companyUserData) {
+      toast({
+        title: 'No Company Assignment',
+        description: 'You are not assigned to any company. Please contact an administrator.',
+        variant: 'destructive',
+      });
+      setLoading(false);
+      return;
+    }
+
+    setCompanyUser(companyUserData as CompanyUser);
+    
+    // Filter products for this company
+    const filteredProducts = products.filter(p => p.company === companyUserData.company_name);
+    setCompanyProducts(filteredProducts);
+
+    // Fetch revisions
+    fetchRevisions();
+  };
 
   const fetchRevisions = async () => {
     if (!user) return;
@@ -55,12 +105,59 @@ export default function CompanyDashboard() {
       .from('company_revisions')
       .select('*')
       .eq('revised_by', user.id)
-      .order('created_at', { ascending: false });
+      .order('created_at', { ascending: false});
 
     if (!error && data) {
       setRevisions(data as CompanyRevision[]);
     }
     setLoading(false);
+  };
+
+  const handleCertifyProduct = async () => {
+    if (!selectedProduct || !certificationDate) {
+      toast({
+        title: 'Error',
+        description: 'Please select a product and certification date',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    const product = companyProducts.find(p => p.id === selectedProduct);
+    if (!product || !companyUser) return;
+
+    // Insert/update company revision with approved status automatically
+    // This sets the companyRevisionDate in the database
+    const { error } = await supabase
+      .from('company_revisions')
+      .insert({
+        product_id: selectedProduct,
+        company_id: product.company,
+        revised_by: user!.id,
+        company_user_id: companyUser.id,
+        revision_date: format(certificationDate, 'yyyy-MM-dd'),
+        changes_summary: 'Company certification: Product information verified and approved',
+        verification_status: 'approved', // Auto-approved since it's from the company itself
+        verified_by: user!.id,
+        verified_at: new Date().toISOString(),
+      });
+
+    if (error) {
+      toast({
+        title: 'Error',
+        description: error.message,
+        variant: 'destructive',
+      });
+    } else {
+      toast({
+        title: 'Success',
+        description: `${product.name} has been certified. The verification badge will now appear on the product page.`,
+      });
+      setCertifyDialogOpen(false);
+      setSelectedProduct('');
+      setCertificationDate(new Date());
+      fetchRevisions();
+    }
   };
 
   const handleSubmitRevision = async () => {

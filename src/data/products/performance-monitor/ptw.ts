@@ -56,14 +56,8 @@ export const PTW_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Support contract"],
-      basedOn: ["Number of treatment machines", "Features"]
-    },
+
+},
     version: "2.4",
     releaseDate: "2023-06-01",
     lastUpdated: "2024-02-15",

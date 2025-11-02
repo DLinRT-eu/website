@@ -46,10 +46,6 @@ export const CARINA_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"]
     },
-    pricing: {
-      model: ["-"],
-      basedOn: ["-"]
-    },
     version: "2.1",
     releaseDate: "2023-08-10",
     lastUpdated: "2024-03-05",

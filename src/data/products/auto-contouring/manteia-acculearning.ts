@@ -47,14 +47,8 @@ export const MANTEIA_LEARNING_PRODUCTS: ProductDetails[] = [
   market: {
     onMarketSince: "2017",
     distributionChannels: ["Direct sales", "OEM partnerships"], // Added proper format
-    
-    
-    
-  },
-  pricing: {
-    model: ["Annual license", "Compute-hour credits"],
-    basedOn: ["GPU utilization", "Model instances"]
-  },
+
+},
   useCases: [
     "Clinic-specific OAR models (e.g., post-op anatomy)",
     "Rare tumor target delineation",

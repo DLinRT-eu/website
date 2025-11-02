@@ -50,14 +50,8 @@ export const ELEKTA_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Integrated with Elekta systems", "Software upgrade"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "System integrated license"],
-      basedOn: ["Treatment system model", "Enterprise license"]
-    },
+
+},
     clinicalEvidence: "Clinical studies showing improved target delineation accuracy and reduced inter-observer variability with Iris-enhanced CBCT images",
     lastUpdated: "2025-02-10",
     lastRevised: "2025-09-01",

@@ -45,14 +45,8 @@ export const MIM_SOFTWARE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Subscription"],
-      basedOn: ["Module selection", "Institution size"]
-    },
+
+},
     version: "7.1",
     releaseDate: "2023-10-15",
     lastUpdated: "2024-03-20",

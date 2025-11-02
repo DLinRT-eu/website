@@ -51,14 +51,8 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Integrated in dual-energy CT workflow", "Software upgrade"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["One-time purchase", "Subscription available"],
-      basedOn: ["CT system model", "Enterprise license"]
-    },
+
+},
     clinicalEvidence: "Clinical studies demonstrating improved lesion detection and characterization compared to conventional dual-energy processing",
     lastUpdated: "2025-02-01",
     lastRevised: "2025-09-01"

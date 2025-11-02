@@ -123,14 +123,8 @@ export const RADFORMATION_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2017",
       distributionChannels: ["Direct sales", "Cloud platform"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Per-contour pricing"]
-    },
+
+},
     version: "4.0",
     releaseDate: "2023-11-15",
     lastUpdated: "2024-03-20",

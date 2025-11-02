@@ -57,14 +57,8 @@ export const PHILIPS_MRCAT_HEAD_NECK_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Partnerships"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["Institution size", "Features included"]
-    },
+
+},
     version: "1.5",
     releaseDate: "2022-10-20",
     lastUpdated: "2024-08-08",

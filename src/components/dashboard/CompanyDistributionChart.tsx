@@ -81,6 +81,9 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
 
   // For mobile, limit the number of companies displayed to improve readability
   const displayData = isMobile ? sortedData.slice(0, 15) : sortedData;
+  
+  // Calculate total models/products across all companies
+  const totalModelsProducts = sortedData.reduce((sum, company) => sum + company.value, 0);
     
   // Get active filters list for title display
   const activeFilters = [];
@@ -96,7 +99,7 @@ const CompanyDistributionChart: React.FC<CompanyDistributionChartProps> = ({
     <Card className="w-full">
       <CardHeader className="pb-2">
         <CardTitle className="text-lg md:text-2xl">
-          {validatedCountingMode === 'models' ? 'AI Models' : 'Products'} by Company ({validatedTotalCompanies} total) {filterText}
+          {validatedCountingMode === 'models' ? 'AI Models' : 'Products'} by Company ({totalModelsProducts} total) {filterText}
         </CardTitle>
       </CardHeader>
       <CardContent className="p-2 md:p-6">

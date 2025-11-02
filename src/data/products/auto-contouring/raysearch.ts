@@ -51,14 +51,8 @@ export const RAYSEARCH_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2018",
       distributionChannels: ["Direct sales"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["Module selection", "Institution size"]
-    },
+
+},
     version: "12.0",
     releaseDate: "2023-12-01",
     lastUpdated: "2025-05-01",

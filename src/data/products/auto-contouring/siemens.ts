@@ -43,14 +43,8 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2019",
       distributionChannels: ["Direct sales"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Module selection", "Usage volume"]
-    },
+
+},
     version: "3.2",
     releaseDate: "2023-09-15",
     lastUpdated: "2024-02-28",

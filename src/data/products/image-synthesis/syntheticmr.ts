@@ -55,14 +55,8 @@ export const SYNTHETICMR_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2023",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
+
+},
     version: "3.0",
     releaseDate: "2023-09-01",
     lastUpdated: "2024-08-08",

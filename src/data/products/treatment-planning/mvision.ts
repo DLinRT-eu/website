@@ -56,10 +56,6 @@ export const MVISION_PLANNING_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"]
     },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Institution size", "Expected volume"]
-    },
     version: "2.0",
     releaseDate: "2023-01-15",
     lastUpdated: "2024-02-10",

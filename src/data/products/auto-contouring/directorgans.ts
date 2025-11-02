@@ -46,10 +46,6 @@ export const DIRECTORGANS_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"]
     },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
     version: "2.0",
     releaseDate: "2023-05-25",
     lastUpdated: "2024-02-10",

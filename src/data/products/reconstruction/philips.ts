@@ -49,14 +49,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Integrated in new CT systems"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["One-time purchase", "Subscription available"],
-      basedOn: ["Scanner model", "Usage volume"]
-    },
+
+},
     clinicalEvidence: "Multiple peer-reviewed studies showing non-inferiority to standard dose CT with up to 80% dose reduction",
     lastUpdated: "2025-01-15",
     lastRevised: "2025-09-01",
@@ -112,14 +106,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated in Philips MRI systems", "Software upgrade"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["One-time purchase", "Subscription available"],
-      basedOn: ["MRI system model", "Site license"]
-    },
+
+},
     clinicalEvidence: "Multiple clinical studies showing equivalent diagnostic quality with 30-50% reduced scan times across neurological, musculoskeletal, and body imaging",
     lastUpdated: "2025-07-30", 
     lastRevised: "2025-09-01",

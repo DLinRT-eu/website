@@ -64,10 +64,6 @@ export const MVISION_REGISTRATION_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2025",
       distributionChannels: ["Direct sales", "Partnerships"]
     },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
     version: "1.0",
     releaseDate: "2025-10-21",
     lastUpdated: "2025-11-02",

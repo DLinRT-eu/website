@@ -53,14 +53,8 @@ export const PYMEDIX_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Distribution partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Perpetual license"],
-      basedOn: ["Annual license", "Number of workstations"]
-    },
+
+},
     version: "2.1",
     releaseDate: "2023-08-15",
     lastUpdated: "2024-01-20",

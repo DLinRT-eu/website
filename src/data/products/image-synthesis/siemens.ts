@@ -45,14 +45,8 @@ export const SIEMENS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2015",
       distributionChannels: ["Direct sales"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["Module selection", "Institution size"]
-    },
+
+},
     version: "VB80",
     releaseDate: "2024-09-20",
     lastUpdated: "2025-08-11",

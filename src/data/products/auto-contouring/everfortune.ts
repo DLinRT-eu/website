@@ -46,10 +46,6 @@ export const EVERFORTUNE_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2021",
       distributionChannels: ["Direct sales", "Partnerships"]
     },
-    pricing: {
-      model: ["Subscription"],
-      basedOn: ["Annual license", "Module selection"]
-    },
     version: "2.0",
     releaseDate: "2023-07-15",
     lastUpdated: "2024-03-10",

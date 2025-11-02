@@ -75,14 +75,8 @@ export const MVISION_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2018",
       distributionChannels: ["Direct sales", "Partnerships"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Pay-per-use"],
-      basedOn: ["Annual license", "Number of patients"]
-    },
+
+},
     version: "3.0",
     releaseDate: "2023-09-10",
     lastUpdated: "2024-02-15",

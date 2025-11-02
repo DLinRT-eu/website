@@ -52,10 +52,6 @@ export const MD_ANDERSON_PRODUCTS: ProductDetails[] = [
       onMarketSince: "2020",
       distributionChannels: ["Academic partnerships", "Direct licensing"]
     },
-    pricing: {
-      model: ["Academic licensing", "Commercial licensing"],
-      basedOn: ["Institution type", "Usage volume"]
-    },
     version: "Latest",
     releaseDate: "2020-01-01",
     lastUpdated: "2024-12-01",

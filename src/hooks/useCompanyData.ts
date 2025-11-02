@@ -15,14 +15,9 @@ export const useCompanyData = (
 
   // Prepare data by mapping companies to their products and product counts
   const companyData = companies.map(company => {
-    // Get products for this company, either from filtered list or all products
-    const companyProducts = products.filter(p => {
-      const hasId = p.id || '';
-      const isIncluded = company.productIds.includes(hasId);
-      
-      
-      return isIncluded;
-    });
+    // Match products by company name (more reliable than productIds)
+    // This ensures all products from a company are counted, regardless of category
+    const companyProducts = products.filter(p => p.company === company.name);
     
     // Count total models for this company
     const totalModels = companyProducts.reduce((sum, product) => sum + countModelsInProduct(product, countingMode), 0);

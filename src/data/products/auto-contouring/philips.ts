@@ -45,14 +45,8 @@ export const PHILIPS_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2015",
       distributionChannels: ["Direct sales"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license", "Service contract"],
-      basedOn: ["Institution size", "Modules purchased"]
-    },
+
+},
     version: "9.2",
     releaseDate: "2022-10-10",
     lastUpdated: "2023-11-20",

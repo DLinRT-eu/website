@@ -50,14 +50,8 @@ export const CANON_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2021",
       distributionChannels: ["Integrated with Vitrea platform", "Standalone module"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "One-time purchase"],
-      basedOn: ["Annual volume", "Enterprise license"]
-    },
+
+},
     clinicalEvidence: "Multiple reader studies showing improved diagnostic confidence and reduced reading time for enhanced images",
     lastUpdated: "2025-01-05",
     lastRevised: "2025-09-01"

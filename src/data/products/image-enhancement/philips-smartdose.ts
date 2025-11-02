@@ -50,14 +50,8 @@ export const PHILIPS_SMARTDOSE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Direct sales", "Integrated solution"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Per CT system license"],
-      basedOn: ["Annual volume", "Enterprise deployment"]
-    },
+
+},
     clinicalEvidence: "Clinical studies showing diagnostic equivalence between enhanced low-dose images and standard-dose acquisitions",
     lastUpdated: "2025-01-05",
     lastRevised: "2025-09-01"

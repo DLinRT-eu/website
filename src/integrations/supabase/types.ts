@@ -171,6 +171,7 @@ export type Database = {
         Row: {
           changes_summary: string | null
           company_id: string
+          company_user_id: string | null
           created_at: string | null
           id: string
           priority: string | null
@@ -185,6 +186,7 @@ export type Database = {
         Insert: {
           changes_summary?: string | null
           company_id: string
+          company_user_id?: string | null
           created_at?: string | null
           id?: string
           priority?: string | null
@@ -199,6 +201,7 @@ export type Database = {
         Update: {
           changes_summary?: string | null
           company_id?: string
+          company_user_id?: string | null
           created_at?: string | null
           id?: string
           priority?: string | null
@@ -209,6 +212,42 @@ export type Database = {
           verification_status?: string | null
           verified_at?: string | null
           verified_by?: string | null
+        }
+        Relationships: []
+      }
+      company_users: {
+        Row: {
+          id: string
+          user_id: string
+          company_name: string
+          assigned_by: string | null
+          assigned_at: string
+          is_active: boolean
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          company_name: string
+          assigned_by?: string | null
+          assigned_at?: string
+          is_active?: boolean
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          company_name?: string
+          assigned_by?: string | null
+          assigned_at?: string
+          is_active?: boolean
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
         }
         Relationships: []
       }

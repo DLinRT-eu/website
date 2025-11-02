@@ -121,14 +121,8 @@ export const WISDOM_TECH_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2020",
       distributionChannels: ["Direct sales"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Perpetual license"],
-      basedOn: ["Module selection", "Institution size"]
-    },
+
+},
     version: "2.0",
     releaseDate: "2023-04-10",
     lastUpdated: "2023-12-15",

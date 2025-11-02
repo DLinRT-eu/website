@@ -25,10 +25,6 @@ const ContactInformation = ({ product }: ContactInformationProps) => (
           <p className="text-gray-500">N/A</p>
         )}
       </div>
-      <div>
-        <p className="text-sm font-medium">Support Email:</p>
-        <p className="text-gray-500">{product.supportEmail || "N/A"}</p>
-      </div>
     </CardContent>
   </Card>
 );

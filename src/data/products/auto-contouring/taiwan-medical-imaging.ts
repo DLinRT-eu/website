@@ -117,14 +117,8 @@ export const TAIWAN_MEDICAL_IMAGING_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2024",
       distributionChannels: ["Direct sales", "Regional partners"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Annual subscription", "Per-case licensing"],
-      basedOn: ["Number of users", "Volume of cases processed"]
-    },
+
+},
     version: "1.2",
     releaseDate: "2024-08-01",
     lastUpdated: "2025-07-14",

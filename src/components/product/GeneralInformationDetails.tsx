@@ -60,13 +60,15 @@ const GeneralInformationDetails = ({ product }: GeneralInformationProps) => {
             <p className="text-gray-500">{formatField(product.certification)}</p>
           </div>
           <div>
-            <p className="text-sm font-medium">Price:</p>
-            <p className="text-gray-500">{product.price ? `$${product.price}` : "-"}</p>
-          </div>
-          <div>
             <p className="text-sm font-medium">Data Source:</p>
             <p className="text-gray-500">{formatField(sourceInfo)}</p>
           </div>
+          {product.companyRevisionDate && (
+            <div>
+              <p className="text-sm font-medium">Revised by Company:</p>
+              <p className="text-gray-500">{formatDate(product.companyRevisionDate)}</p>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

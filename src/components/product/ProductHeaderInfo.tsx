@@ -1,6 +1,6 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, CheckCircle, XCircle } from "lucide-react";
+import { ExternalLink, CheckCircle, XCircle, BadgeCheck } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";
 
@@ -21,6 +21,16 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
   };
   
   const logoSrc = generateLogoUrl();
+  
+  // Check if product has been revised by company
+  const hasCompanyRevision = !!product.companyRevisionDate;
+  const isRecentCompanyRevision = hasCompanyRevision && 
+    new Date().getTime() - new Date(product.companyRevisionDate).getTime() < 6 * 30 * 24 * 60 * 60 * 1000;
+  
+  // Format company revision date
+  const formattedCompanyRevisionDate = product.companyRevisionDate 
+    ? new Date(product.companyRevisionDate).toISOString().split('T')[0]
+    : null;
   
   // Check if revision is recent (less than 6 months)
   const isRevised = !!product.lastRevised;
@@ -51,7 +61,16 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
           <h1 className="text-3xl font-bold">{product.name}</h1>
           <p className="text-gray-500">{product.description}</p>
           
-          <div className="mt-2 flex items-center">
+          <div className="mt-2 flex items-center gap-2 flex-wrap">
+            {hasCompanyRevision && (
+              <Badge 
+                variant="default"
+                className="flex items-center gap-1 bg-blue-600 text-white hover:bg-blue-700"
+              >
+                <BadgeCheck className="h-3 w-3" />
+                Company Verified: {formattedCompanyRevisionDate}
+              </Badge>
+            )}
             <Badge 
               variant={isRecentlyRevised ? "success" : isRevised ? "outline" : "secondary"} 
               className={`flex items-center gap-1 ${isRecentlyRevised ? 'bg-green-100 text-green-800' : isRevised ? '' : 'bg-gray-100 text-gray-600'}`}

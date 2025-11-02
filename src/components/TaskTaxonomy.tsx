@@ -2,7 +2,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Brain, FileImage, LayoutGrid, Microscope, Monitor, Waves, ZoomIn } from 'lucide-react';
+import { Brain, FileImage, LayoutGrid, Microscope, Monitor, Waves, ZoomIn, Layers } from 'lucide-react';
 
 interface CategoryCount {
   name: string;
@@ -62,6 +62,11 @@ const categoryInfo: Record<string, { icon: React.ElementType, description: strin
     description: "Tools for quality assurance and performance monitoring in radiotherapy", 
     color: "bg-gray-100" 
   },
+  "Platform": { 
+    icon: Layers, 
+    description: "Enterprise integration systems that unify multiple AI applications and streamline clinical deployment", 
+    color: "bg-violet-100" 
+  },
   "Model Training": { 
     icon: Brain, 
     description: "Models trainable by the user", 
@@ -87,7 +92,8 @@ const TaskTaxonomy = ({ categories, onCategoryClick, filterType = 'task' }: Task
     "Treatment Planning",
     "Clinical Prediction",
     "Registration",
-    "Performance Monitor"
+    "Performance Monitor",
+    "Platform"
   ];
   
   const sortedCategories = [...categories].sort((a, b) => {

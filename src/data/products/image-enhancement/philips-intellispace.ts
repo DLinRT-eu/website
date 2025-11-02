@@ -50,14 +50,8 @@ export const PHILIPS_INTELLISPACE_PRODUCTS: ProductDetails[] = [
     market: {
       onMarketSince: "2022",
       distributionChannels: ["Enterprise imaging solution", "Standalone module"],
-      
-      
-      
-    },
-    pricing: {
-      model: ["Subscription", "Volume-based"],
-      basedOn: ["Number of studies", "Enterprise license"]
-    },
+
+},
     clinicalEvidence: "Multiple studies showing improved reader confidence and reduced reading time for enhanced images",
     lastUpdated: "2025-01-15",
     lastRevised: "2025-09-01"

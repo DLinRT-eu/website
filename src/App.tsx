@@ -149,12 +149,12 @@ const App = () => (
                 </ProtectedRoute>
               } />
               <Route path="/company/dashboard" element={
-                <ProtectedRoute allowedRoles={['company']}>
+                <ProtectedRoute allowedRoles={['admin', 'company']}>
                   <CompanyDashboard />
                 </ProtectedRoute>
               } />
               <Route path="/company/products-manager" element={
-                <ProtectedRoute allowedRoles={['company']}>
+                <ProtectedRoute allowedRoles={['admin', 'company']}>
                   <ProductsManager />
                 </ProtectedRoute>
               } />
@@ -179,19 +179,39 @@ const App = () => (
               <Route path="/support" element={<Support />} />
               <Route path="/news/:id" element={<NewsDetail />} />
               <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/timeline" element={<Timeline />} />
-              <Route path="/review" element={<ReviewDashboard />} />
-              <Route path="/review/:id" element={<ProductReview />} />
+              <Route path="/timeline" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <Timeline />
+                </ProtectedRoute>
+              } />
+              <Route path="/review" element={
+                <ProtectedRoute allowedRoles={['admin', 'reviewer']}>
+                  <ReviewDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/review/:id" element={
+                <ProtectedRoute allowedRoles={['admin', 'reviewer']}>
+                  <ProductReview />
+                </ProtectedRoute>
+              } />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               <Route path="/terms-of-use" element={<TermsOfUse />} />
               <Route path="/security" element={<Security />} />
-              <Route path="/security-monitoring" element={<SecurityMonitoring />} />
+              <Route path="/security-monitoring" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <SecurityMonitoring />
+                </ProtectedRoute>
+              } />
               <Route path="/category/auto-contouring" element={<AutoContouringPage />} />
               <Route path="/category/treatment-planning" element={<TreatmentPlanningPage />} />
               <Route path="/category/image-synthesis" element={<ImageSynthesisPage />} />
               <Route path="/category/platform" element={<PlatformPage />} />
               <Route path="/resources-compliance" element={<ResourcesCompliance />} />
-              <Route path="/export-presentation" element={<ExportPresentation />} />
+              <Route path="/export-presentation" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ExportPresentation />
+                </ProtectedRoute>
+              } />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <CookieConsent />

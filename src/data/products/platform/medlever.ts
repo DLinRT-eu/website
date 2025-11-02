@@ -16,7 +16,7 @@ export const MEDLEVER_PLATFORM_PRODUCTS: ProductDetails[] = [
       "Real-time analytics & visibility"
     ],
     category: "Platform",
-    certification: "Information not specified",
+    certification: "FDA",
     logoUrl: "/logos/medlever.jpg",
     website: "https://medlever.com/",
     anatomicalLocation: ["Multi-site"],
@@ -61,9 +61,13 @@ export const MEDLEVER_PLATFORM_PRODUCTS: ProductDetails[] = [
     },
     regulatory: {
       ce: {
-        status: "Information not specified"
+        status: "Not specified"
       },
-      fda: "Information not specified",
+      fda: {
+        status: "Approved",
+        class: "Class II",
+        type: "510(k)"
+      },
       intendedUseStatement: "Workflow orchestration and documentation automation for radiation oncology departments"
     },
     market: {

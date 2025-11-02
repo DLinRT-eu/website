@@ -92,7 +92,7 @@ export const AUTO_CONTOURING_COMPANIES: CompanyDetails[] = [
     "name": "MVision AI",
     "description": "Pioneers in cloud-based auto-segmentation solutions for radiation therapy.",
     "website": "https://www.mvision.ai",
-    "productIds": ["mvision-ai-contouring", "mvision-ai-dose-plus", "mvision-verify"],
+    "productIds": ["mvision-ai-contouring", "mvision-ai-dose-plus", "mvision-verify", "mvision-ai-workspace-plus", "mvision-ai-adapt-plus", "mvision-ai-image-plus"],
     "category": "Auto-Contouring",
     "logoUrl": "/logos/mvision-ai.png"
   },

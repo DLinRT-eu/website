@@ -28,6 +28,8 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "philips-mrcat-head-and-neck",
       "philips-mrcat-brain",
       "philips-mrcat-pelvis",
+      "philips-precise-image",
+      "philips-smartspeed",
       "philips-smartct-ai-reconstruction",
       "philips-smartspeed-ai",
       "philips-intellispace-ai-enhancement",
@@ -45,7 +47,6 @@ export const MEDICAL_IMAGING_COMPANIES: CompanyDetails[] = [
       "siemens-syngo-ct", 
       "siemens-ai-rad-companion", 
       "directorgans",
-      "siemens-deep-resolve",
       "siemens-dual-energy-optimizer"
     ],
     "category": "Medical Imaging",

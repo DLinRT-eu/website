@@ -7,17 +7,10 @@ export const imageSynthesisExample: ProductDetails = {
   company: "Example Company",
   companyUrl: "https://example.com",
   category: "Image Synthesis",
-  // Example: Image synthesis product with registration capabilities
-  secondaryCategories: ["Registration"],
-  description: "An example image synthesis product for testing and documentation with advanced registration features.",
+  description: "An example image synthesis product for testing and documentation.",
   url: "https://example.com/products/synthesis",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
-  logoUrl: "/placeholder.svg",
-  
-  // Version tracking example
-  version: "1.5.2",
-  releaseDate: "2023-05-28",
   
   modality: ["MRI", "CT"],
   anatomy: ["Brain", "Pelvis", "Whole Body"],
@@ -27,33 +20,15 @@ export const imageSynthesisExample: ProductDetails = {
     "Multi-contrast MR synthesis",
     "AI-powered image translation",
     "Consistent HU values in synthetic CT",
-    "Processing time under 2 minutes",
-    "Automatic image registration" // Feature from secondary category
+    "Processing time under 2 minutes"
   ],
   
-  guidelines: [
-    {
-      name: "AAPM TG-275",
-      version: "2022",
-      reference: "https://doi.org/10.1002/mp.15419",
-      url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
-      compliance: "full"
-    },
-    {
-      name: "AAPM TG-132",
-      version: "2013",
-      reference: "https://doi.org/10.1118/1.4816279",
-      url: "https://www.aapm.org/pubs/reports/RPT_132.pdf",
-      compliance: "partial"
-    }
-  ],
-  
-  technicalSpecifications: {
-    population: "Adult patients undergoing RT planning",
-    input: ["MRI", "Multi-contrast MR"],
+  technicalSpecs: {
     inputFormat: ["DICOM"],
-    output: ["Synthetic CT", "Enhanced images"],
-    outputFormat: ["DICOM"]
+    outputFormat: ["DICOM"],
+    integrations: ["Major TPS systems", "PACS"],
+    processingTime: "1-2 minutes per volume",
+    accuracy: "Mean absolute HU error < 40 units"
   },
   
   regulatoryInfo: {
@@ -64,6 +39,7 @@ export const imageSynthesisExample: ProductDetails = {
   },
   
   marketInfo: {
+    releaseDate: "2022-08-15",
     countries: ["EU", "UK", "Canada", "Australia", "Japan"],
     installBase: "20+ institutions"
   },
@@ -94,7 +70,8 @@ export const imageSynthesisExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-05-28",
-  lastRevised: "2023-05-28"
+  lastRevised: "2023-05-28",
+  lastVerified: "2023-05-28"
 };
 
 export default imageSynthesisExample;

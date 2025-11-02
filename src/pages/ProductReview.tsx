@@ -13,34 +13,12 @@ import { ArrowLeft, Clipboard } from 'lucide-react';
 import { ALL_PRODUCTS } from '@/data';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { createIssueUrl } from '@/utils/githubUrlHelper';
-import ReviewChecklistManager from '@/components/review/ReviewChecklistManager';
-import { supabase } from '@/integrations/supabase/client';
-import { useEffect, useState } from 'react';
 
 const ProductReview = () => {
   const { id } = useParams<{ id: string }>();
   const product = ALL_PRODUCTS.find(p => p.id === id);
   const { companyData } = useCompanyData();
   const company = product ? companyData.find(c => c.name === product.company) : null;
-  const [reviewId, setReviewId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchReviewId = async () => {
-      if (!id) return;
-      
-      const { data } = await supabase
-        .from('product_reviews')
-        .select('id')
-        .eq('product_id', id)
-        .single();
-      
-      if (data) {
-        setReviewId(data.id);
-      }
-    };
-
-    fetchReviewId();
-  }, [id]);
 
   if (!product) {
     return (
@@ -112,8 +90,6 @@ const ProductReview = () => {
 
         <TabsContent value="review" className="space-y-4">
           <GitHubUrlCard product={product} />
-          
-          {reviewId && <ReviewChecklistManager reviewId={reviewId} productId={id!} />}
           
           <ProductReviewStatus product={product} />
           

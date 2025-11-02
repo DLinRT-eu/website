@@ -29,37 +29,29 @@
    - Track with `version` and `releaseDate` fields
    - Reference versioning guide in [Review Guide](./docs/review/GUIDE.md)
 
-4. **Exporting Model Cards and Comparisons**
-   - **Model Cards**: Available on individual product pages in JSON, CSV, Excel, and PDF formats
-   - **Product Comparisons**: Export comparison tables from the comparison interface
-   - **PDF Exports**: Include embedded logos and logo source attribution
-   - **Bulk Exports**: Use Export Presentation page (`/export-presentation`) for bulk operations
-
-5. **Contacting Manufacturers**
+4. **Contacting Manufacturers**
    - Use [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md)
    - Submit through the in-site forms
    - Track in the product dashboard
 
-6. **Using Hidden Admin Pages**
+5. **Using Hidden Admin Pages**
    - **Review Dashboard**: `/review` - Product review management
    - **Timeline Analysis**: `/timeline` - Data visualization and trends
    - **Individual Reviews**: `/review/:id` - Detailed product verification
-   - **Security Monitoring**: `/security-monitoring` - Real-time security dashboard
-   - **Export Presentation**: `/export-presentation` - Bulk export functionality
 
-7. **Legacy Documentation**
+6. **Legacy Documentation**
    - [Manual Update Guide](./docs/review/README.md)
    - Update [Review Status](./docs/review/STATUS.md)
 
 ## Documentation Updates
 
-Last Updated: 2025-01-02
+Last Updated: 2025-05-27
 
 **Recent Changes:**
-- **Field Standardization**: Unified feature display to use `keyFeatures` only
-- **Export Enhancements**: Added model card exports in multiple formats with logo embedding
-- **Page Route Updates**: Documented current visible and hidden administrative pages
-- **Documentation Consolidation**: Removed deprecated field references and updated examples
+- Added multi-category product support documentation
+- Documented hidden administrative pages
+- Updated versioning guidelines
+- Clarified product structure capabilities
 
 For any documentation improvements or issues, please:
 

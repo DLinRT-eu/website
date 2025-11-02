@@ -11,7 +11,6 @@ export const treatmentPlanningExample: ProductDetails = {
   url: "https://example.com/products/planning",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
-  logoUrl: "/placeholder.svg",
   
   modality: ["LINAC", "VMAT", "IMRT"],
   anatomy: ["Head & Neck", "Prostate", "Breast", "Lung"],
@@ -24,36 +23,12 @@ export const treatmentPlanningExample: ProductDetails = {
     "Plan quality assessment"
   ],
   
-  guidelines: [
-    {
-      name: "AAPM TG-275",
-      version: "2022",
-      reference: "https://doi.org/10.1002/mp.15419",
-      url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
-      compliance: "full"
-    },
-    {
-      name: "ICRU Report 83",
-      version: "2010",
-      reference: "https://doi.org/10.1093/jicru/ndq001",
-      url: "https://icru.org/home/reports/prescribing-recording-and-reporting-photon-beam-intensity-modulated-radiation-therapy-imrt-report-83",
-      compliance: "full"
-    },
-    {
-      name: "IAEA TRS-430",
-      version: "2004",
-      reference: "https://www.iaea.org/publications/6789/commissioning-and-quality-assurance-of-computerized-planning-systems-for-radiation-treatment-of-cancer",
-      url: "https://www.iaea.org/publications/6789/commissioning-and-quality-assurance-of-computerized-planning-systems-for-radiation-treatment-of-cancer",
-      compliance: "partial"
-    }
-  ],
-  
-  technicalSpecifications: {
-    population: "Cancer patients",
-    input: ["CT", "Structure sets", "Dose constraints"],
-    inputFormat: ["DICOM", "DICOM-RT"],
-    output: ["Treatment plans", "Dose distributions", "DVH curves"],
-    outputFormat: ["DICOM RT-PLAN", "DICOM RT-DOSE"]
+  technicalSpecs: {
+    inputFormat: ["DICOM RT-STRUCT", "DICOM CT"],
+    outputFormat: ["DICOM RT-PLAN"],
+    integrations: ["Major TPS vendors", "Record & Verify systems"],
+    processingTime: "5-10 minutes per plan",
+    accuracy: "98% plans clinically acceptable without modification"
   },
   
   regulatoryInfo: {
@@ -95,7 +70,8 @@ export const treatmentPlanningExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-06-05",
-  lastRevised: "2023-06-05"
+  lastRevised: "2023-06-05",
+  lastVerified: "2023-06-05"
 };
 
 export default treatmentPlanningExample;

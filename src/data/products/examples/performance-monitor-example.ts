@@ -11,7 +11,6 @@ export const performanceMonitorExample: ProductDetails = {
   url: "https://example.com/products/monitor",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
-  logoUrl: "/placeholder.svg",
   
   modality: ["LINAC", "CBCT", "EPID"],
   anatomy: ["N/A"],
@@ -24,36 +23,12 @@ export const performanceMonitorExample: ProductDetails = {
     "Comprehensive reporting dashboard"
   ],
   
-  guidelines: [
-    {
-      name: "IEC 60601-2-1",
-      version: "2020",
-      reference: "https://doi.org/10.3403/30258698",
-      url: "https://www.iec.ch/",
-      compliance: "full"
-    },
-    {
-      name: "NCS Report 22",
-      version: "2015",
-      reference: "https://doi.org/10.25030/ncs-022",
-      url: "https://radiationdosimetry.org/ncs/documents/ncs-22-code-of-practice-for-the-quality-assurance-and-control-for-volumetric-modulated-arc-therapy",
-      compliance: "full"
-    },
-    {
-      name: "AAPM TG-275",
-      version: "2022",
-      reference: "https://doi.org/10.1002/mp.15419",
-      url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
-      compliance: "partial"
-    }
-  ],
-  
-  technicalSpecifications: {
-    population: "N/A - Equipment monitoring",
-    input: ["Log files", "EPID images", "Machine parameters"],
-    inputFormat: ["Vendor-specific", "DICOM"],
-    output: ["Reports", "Alerts", "Quality assessments"],
-    outputFormat: ["PDF", "HTML", "Real-time alerts"]
+  technicalSpecs: {
+    inputFormat: ["DICOM", "Log files", "Machine data"],
+    outputFormat: ["Reports", "Dashboards", "Alerts"],
+    integrations: ["Major LINAC vendors", "R&V systems", "QA software"],
+    processingTime: "Real-time monitoring with <30s latency",
+    accuracy: "Detects 99.5% of deviations >1%"
   },
   
   regulatoryInfo: {
@@ -95,7 +70,8 @@ export const performanceMonitorExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-06-01",
-  lastRevised: "2023-06-01"
+  lastRevised: "2023-06-01",
+  lastVerified: "2023-06-01"
 };
 
 export default performanceMonitorExample;

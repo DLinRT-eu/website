@@ -2,107 +2,111 @@
 import { ProductDetails } from '@/types/productDetails';
 
 export const autoContouringExample: ProductDetails = {
-  id: "example-contouring",
-  name: "Example AI Contouring",
+  id: "example-contour",
+  name: "Example Auto-Contouring",
   company: "Example Company",
   companyUrl: "https://example.com",
   category: "Auto-Contouring",
-  description: "An example auto-contouring product for testing and documentation.",
-  url: "https://example.com/products/contouring",
+  // Example of multi-category product - this auto-contouring tool also has planning features
+  secondaryCategories: ["Treatment Planning"],
+  description: "An example auto-contouring product for testing and documentation with integrated planning capabilities.",
+  url: "https://example.com/products/contour",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
   logoUrl: "/placeholder.svg",
   
+  // Version tracking - this represents version 2.1.0 released in 2023
+  version: "2.1.0",
+  releaseDate: "2023-06-15",
+  
   modality: ["CT", "MRI"],
-  anatomy: ["Head & Neck", "Thorax", "Pelvis"],
+  anatomy: ["Head & Neck", "Brain", "Thorax", "Abdomen", "Pelvis"],
   
   features: [
-    "Automated organ at risk delineation",
-    "Deep learning-based segmentation",
-    "Multi-atlas approach with AI refinement",
-    "Real-time quality metrics",
-    "Batch processing capabilities"
+    "Deep learning based auto-segmentation",
+    "Multi-modal support (CT, MR)",
+    "Batch processing",
+    "Manual editing tools",
+    "DICOM RT-STRUCT export",
+    "Integrated dose planning tools" // Feature from secondary category
   ],
   
-  supportedStructures: [
-    "Brain: Brainstem, Optic nerves, Optic chiasm",
-    "Head & Neck: Parotid glands, Submandibular glands, Spinal cord",
-    "Thorax: Heart, Lungs, Esophagus, Spinal cord",
-    "Pelvis: Bladder, Rectum, Femoral heads"
-  ],
-  
-  guidelines: [
-    {
-      name: "AAPM TG-263",
-      version: "2018",
-      reference: "https://doi.org/10.1002/mp.12909",
-      url: "https://www.aapm.org/pubs/reports/RPT_263.pdf",
-      compliance: "full"
-    },
-    {
-      name: "AAPM TG-275",
-      version: "2022",
-      reference: "https://doi.org/10.1002/mp.15419",
-      url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
-      compliance: "partial"
-    },
-    {
-      name: "ESTRO Consensus Guideline on CT-based Auto-contouring",
-      version: "2021",
-      reference: "https://doi.org/10.1016/j.radonc.2021.09.019",
-      url: "https://www.thegreenjournal.com/article/S0167-8140(21)08440-0/fulltext",
-      compliance: "full"
-    }
-  ],
-  
-  technicalSpecifications: {
-    population: "Adult patients",
-    input: ["CT", "MRI"],
+  technicalSpecs: {
     inputFormat: ["DICOM"],
-    output: ["Structure sets", "Quality metrics"],
-    outputFormat: ["DICOM-RT", "JSON"]
+    outputFormat: ["DICOM RT-STRUCT", "DICOM RT-PLAN"], // Planning output
+    integrations: ["Any DICOM compatible TPS"],
+    processingTime: "~1-2 minutes per structure set",
+    accuracy: "85-95% DSC for most structures"
   },
   
   regulatoryInfo: {
     ceMark: true,
     fdaClearance: true,
     regulatoryClass: "Class II medical device",
-    approvalDate: "2023-03-15"
+    approvalDate: "2023-01-15"
   },
   
   marketInfo: {
-    releaseDate: "2022-09-01",
-    countries: ["USA", "EU", "UK", "Canada", "Australia", "Japan"],
+    // Note: This could be different from releaseDate for major versions
+    countries: ["USA", "EU", "Canada", "Australia"],
     installBase: "50+ institutions worldwide"
   },
   
   pricingInfo: {
-    pricingModel: "Annual subscription with per-patient pricing",
-    priceRange: "$25,000-$40,000/year + $5-10/patient",
+    pricingModel: "Subscription-based",
+    priceRange: "$20,000-$40,000/year",
     trialAvailability: "30-day free trial available"
   },
   
+  supportedStructures: [
+    {
+      name: "Brainstem",
+      type: "OAR",
+      accuracy: "92% DSC",
+      validationDataset: "Internal validation on 150 cases"
+    },
+    {
+      name: "Parotid (L/R)",
+      type: "OAR",
+      accuracy: "89% DSC",
+      validationDataset: "Public dataset + internal validation"
+    },
+    {
+      name: "Lungs (L/R)",
+      type: "OAR",
+      accuracy: "95% DSC",
+      validationDataset: "Internal validation on 200 cases"
+    },
+    {
+      name: "GTV Primary",
+      type: "GTV",
+      accuracy: "82% DSC",
+      validationDataset: "Internal validation on clinical cases"
+    }
+  ],
+  
   evidence: [
     {
-      type: "Multi-center Validation Study",
-      description: "Validation across 10 institutions with 500+ patients",
+      type: "Clinical Validation",
+      description: "Multi-center validation study with 5 institutions",
       link: "https://example.com/validation"
     },
     {
-      type: "Dosimetric Impact Study",
-      description: "Clinical impact on treatment planning workflows",
+      type: "Peer-Reviewed Publication",
+      description: "Published in Medical Physics journal",
       link: "https://doi.org/10.xxxx/xxxx.xxxx"
     }
   ],
   
   limitations: [
-    "Requires high-quality imaging for optimal results",
-    "Performance may vary with unusual anatomy",
-    "Manual review recommended for critical structures"
+    "Performance may vary for unusual anatomy",
+    "Not validated for pediatric patients",
+    "Requires contralateral structures for some segmentations"
   ],
   
-  lastUpdated: "2023-04-20",
-  lastRevised: "2023-04-20"
+  lastUpdated: "2023-06-15",
+  lastRevised: "2023-06-15",
+  lastVerified: "2023-06-15"
 };
 
 export default autoContouringExample;

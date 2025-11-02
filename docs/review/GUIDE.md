@@ -1,28 +1,16 @@
-
 # DLinRT.eu Product Guide
 
 This guide covers all aspects of working with products on DLinRT.eu, including reviewing existing products and adding new ones.
 
 ## Table of Contents
 
-1. [Field Reference](#field-reference)
-2. [Reviewing Products](#reviewing-products)
-3. [Adding New Products](#adding-new-products)
-4. [Product Categories](#product-categories)
-5. [Multi-Category Products](#multi-category-products)
-6. [Product Versioning](#product-versioning)
-7. [Field Requirements](#field-requirements)
-8. [Example Templates](#example-templates)
-
-## Field Reference
-
-📋 **For detailed information about all available fields and their meanings, see the [Field Reference Documentation](../FIELD_REFERENCE.md)**.
-
-This comprehensive reference covers:
-- All product, company, initiative, and news fields
-- Controlled vocabularies and standardized terms
-- Data types and formatting requirements
-- Validation rules and best practices
+1. [Reviewing Products](#reviewing-products)
+2. [Adding New Products](#adding-new-products)
+3. [Product Categories](#product-categories)
+4. [Multi-Category Products](#multi-category-products)
+5. [Product Versioning](#product-versioning)
+6. [Field Requirements](#field-requirements)
+7. [Example Templates](#example-templates)
 
 ## Reviewing Products
 
@@ -37,7 +25,6 @@ This comprehensive reference covers:
    - Primary and secondary categories
    - Integrations and certifications
    - Category-specific fields
-   - **Use the [Field Reference](../FIELD_REFERENCE.md) to understand each field's purpose**
 
 3. **Submit Changes**
    - Document verification sources
@@ -68,15 +55,13 @@ This comprehensive reference covers:
      website: 'https://company.com/product',
      category: 'Auto-Contouring',
      secondaryCategories: ['Treatment Planning'], // Optional multi-category support
-     keyFeatures: ['Key Feature 1', 'Key Feature 2', 'Key Feature 3'], // Use keyFeatures only
+     features: ['Feature 1', 'Feature 2'],
      version: '2.1.0',
      releaseDate: '2023-06-15',
      certification: 'CE Mark',
      // Category-specific fields...
    };
    ```
-
-   **Important**: Use `keyFeatures` only; `features` is legacy and should not be used in new products.
 
 4. **Add Logo**
    - Save to `public/logos/`
@@ -91,7 +76,7 @@ This comprehensive reference covers:
 
 ## Product Categories
 
-Each category has specific field requirements. **See the [Field Reference](../FIELD_REFERENCE.md) for complete details on category-specific fields.**
+Each category has specific field requirements:
 
 ### Auto-Contouring
 - `supportedStructures` (OAR/GTV/Elective classification)
@@ -188,32 +173,25 @@ const currentProduct: ProductDetails = {
 
 ## Field Requirements
 
-### Essential Reading
-📖 **Before adding products, review the [Field Reference Documentation](../FIELD_REFERENCE.md)** for:
-- Complete field descriptions and purposes
-- Required vs optional fields
-- Controlled vocabularies and standardized terms
-- Data validation rules
-
-### Quick Reference for Required Fields
-
-**Required:**
+### Required for All Products
 - `id`: Unique identifier (use consistent patterns for versions)
 - `name`: Full product name
 - `company`: Company name
-- `description`: Brief product description
+- `website`: Product webpage
 - `category`: Primary category
-
-**Strongly Recommended:**
-- `keyFeatures`: Key features array (3-5 items, use instead of deprecated `features`)
+- `features`: Key features array
+- `certification`: Regulatory status
 - `version`: Current version
 - `releaseDate`: Release date (YYYY-MM-DD format)
-- `website`: Product webpage
-- `certification`: Regulatory status
+- `lastUpdated`: Last verified date
 
-**Date Fields:**
-- `lastUpdated`: When product information was last updated in database
-- `lastRevised`: When product underwent major revision by contributors
+### Optional Multi-Category Fields
+- `secondaryCategories`: Array of additional categories
+
+### Version-Specific Fields
+- `version`: Semantic versioning (e.g., "2.1.0")
+- `releaseDate`: Version release date
+- Consider separate entries for major versions
 
 ## Example Templates
 
@@ -231,7 +209,6 @@ All examples include:
 
 ## Need Help?
 
-- **Check the [Field Reference Documentation](../FIELD_REFERENCE.md)** for field meanings and requirements
 - Check example templates
 - Open GitHub issue
 - Join discussions

@@ -3,30 +3,23 @@ import { COMPANIES } from '@/data';
 import dataService from '@/services/DataService';
 import { CompanyDetails } from '@/types/company';
 import { ProductDetails } from '@/types/productDetails';
-import { countModelsInProduct } from '@/utils/modelCounting';
 
 export const useCompanyData = (
   companies = dataService.getAllCompanies(),
-  filteredProducts?: ProductDetails[],
-  countingMode: 'models' | 'products' = 'models'
+  filteredProducts?: ProductDetails[]
 ) => {
   // Get products - either use filtered ones if provided or get all
   const products = filteredProducts || dataService.getAllProducts();
 
   // Prepare data by mapping companies to their products and product counts
   const companyData = companies.map(company => {
-    // Match products by company name (more reliable than productIds)
-    // This ensures all products from a company are counted, regardless of category
-    const companyProducts = products.filter(p => p.company === company.name);
-    
-    // Count total models for this company
-    const totalModels = companyProducts.reduce((sum, product) => sum + countModelsInProduct(product, countingMode), 0);
+    // Get products for this company, either from filtered list or all products
+    const companyProducts = products.filter(p => company.productIds.includes(p.id || ''));
     
     return {
       name: company.name,
-      value: totalModels,
-      company, // Keep full company data in case needed
-      products: companyProducts // Include the filtered products for this company
+      value: companyProducts.length,
+      company // Keep full company data in case needed
     };
   }).filter(item => item.value > 0); // Only include companies with products
 

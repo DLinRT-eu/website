@@ -1,19 +1,5 @@
 # DLinRT.eu Product Documentation
 
-## Table of Contents
-
-1. [Quick Start](#quick-start)
-2. [Review Status](#review-status)
-3. [Product Structure](#product-structure)
-   - [Multi-Category Support](#multi-category-support)
-   - [Versioning Support](#versioning-support)
-4. [Structure Classification](#structure-classification)
-   - [Laterality Handling](#laterality-handling)
-5. [Hidden Administrative Pages](#hidden-administrative-pages)
-6. [Need Help?](#need-help)
-
----
-
 ## Quick Start
 
 1. **Reviewing Products**
@@ -78,10 +64,6 @@ Structures with laterality patterns (L/R, R/L) are counted as two distinct struc
 
 This counting is handled by the `hasLateralityPattern` function in `structureClassification.ts`.
 
-## Field Standardization
-
-**keyFeatures** is the canonical field for product features. Only `keyFeatures` is displayed in the interface and included in all exports. The legacy `features` field is deprecated and should not be used in new entries.
-
 ## Hidden Administrative Pages
 
 Advanced functionality is available through hidden pages:
@@ -89,9 +71,6 @@ Advanced functionality is available through hidden pages:
 - **Review Dashboard** (`/review`) - Product review management interface
 - **Timeline Visualization** (`/timeline`) - Interactive data analysis and trends
 - **Individual Product Review** (`/review/:id`) - Detailed product verification
-- **Security Certifications** (`/security`) - Security compliance information
-- **Security Monitoring** (`/security-monitoring`) - Real-time security dashboard
-- **Export Presentation** (`/export-presentation`) - Bulk export functionality
 
 These pages are accessible but not included in main navigation to maintain clean user experience.
 

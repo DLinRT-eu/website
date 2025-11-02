@@ -1,109 +1,165 @@
-# DLinRT.eu - Deep Learning in Radiotherapy Product Database
 
-[![Website](https://img.shields.io/website?up_message=online&down_message=offline&url=https%3A%2F%2Fdlinrt.eu)](https://dlinrt.eu)
-[![GitHub Stars](https://img.shields.io/github/stars/DLinRT-eu/website?style=social)](https://github.com/DLinRT-eu/website/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/DLinRT-eu/website?style=social)](https://github.com/DLinRT-eu/website/network/members)
-[![GitHub Issues](https://img.shields.io/github/issues/DLinRT-eu/website)](https://github.com/DLinRT-eu/website/issues)
-[![License](https://img.shields.io/github/license/DLinRT-eu/website)](https://github.com/DLinRT-eu/website/blob/main/LICENSE)
-[![Code of Conduct](https://img.shields.io/badge/Code%20of%20Conduct-Contributor%20Covenant-2ea44f)](https://github.com/DLinRT-eu/website/blob/main/CODE_OF_CONDUCT.md)
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![GNU GPL-3.0][license-shield]][license-url]
 
-DLinRT.eu is an open, community-driven initiative to catalog deep learning solutions in radiotherapy. Our goal is to provide a comprehensive, transparent, and reliable resource for clinicians, researchers, and industry professionals seeking information about AI-powered tools in radiation oncology.
+# Deep learning in Radiotherapy products
 
-## Table of Contents
-
-1. [Features](#features)
-2. [Contributing](#contributing)
-3. [Documentation](#documentation)
-4. [Code of Conduct](#code-of-conduct)
-5. [Security](#security)
-6. [License](#license)
-
----
-
-## Features
-
-- **Comprehensive Database**: Explore a wide range of deep learning products used in radiotherapy.
-- **Detailed Product Information**: Access key features, technical specifications, regulatory status, and market availability.
-- **Company Directory**: Find detailed profiles of companies offering AI solutions for radiotherapy.
-- **Model Card Exports**: Export detailed product information in JSON, CSV, Excel, and PDF formats with embedded logos.
-- **Product Comparison**: Compare multiple products side-by-side with export capabilities.
-- **Community-Driven**: Contribute to the platform by adding new products, verifying information, and sharing your expertise.
-- **Open Access**: All content is freely accessible to promote transparency and collaboration.
-
-## Visible Pages
-
-- **Home** (`/`) - Main landing page with featured content
-- **Products** (`/products`) - Browse and search all products
-- **Companies** (`/companies`) - Company directory and profiles
-- **Initiatives** (`/initiatives`) - Research projects and datasets
-- **Dashboard** (`/dashboard`) - Analytics and statistics
-- **News** (`/news`) - Latest updates and announcements
-- **About** (`/about`) - Project information and team
-- **Support** (`/support`) - Help and contact information
-
-## Administrative Pages
-
-Advanced functionality for authenticated users with appropriate roles:
-
-### Admin Pages (Admin role required)
-- **Admin Dashboard** (`/admin`) - Central administrative hub with stats and quick actions
-- **User Management** (`/admin/users`) - Manage user roles and permissions
-- **Review Assignment** (`/admin/reviews`) - Assign product reviews to reviewers
-- **Security Dashboard** (`/admin/security`) - Monitor security events and system health
-
-### Reviewer Pages (Reviewer or Admin role)
-- **Review Dashboard** (`/review`) - Product review management interface
-- **Reviewer Dashboard** (`/reviewer/dashboard`) - Personal reviewer workspace
-
-### Company Pages (Company role)
-- **Company Dashboard** (`/company/dashboard`) - Company representative portal
-
-### Other Administrative Tools
-- **Timeline Visualization** (`/timeline`) - Interactive data analysis and trends
-- **Individual Product Review** (`/review/:id`) - Detailed product verification
-- **Security Certifications** (`/security`) - Security compliance information
-- **Security Monitoring** (`/security-monitoring`) - Real-time security dashboard
-- **Export Presentation** (`/export-presentation`) - Bulk export functionality
-
-### Admin Access
-
-For detailed information on administrative features and procedures, see the [Admin Guide](ADMIN_GUIDE.md).
-
-Team members with the following emails automatically receive admin access upon signup:
-- matteo.maspero@dlinrt.eu
-- mustafa.kadhim@dlinrt.eu
-- ana.barragan@dlinrt.eu
-- paul.doolan@dlinrt.eu
-- federico.mastroleo@dlinrt.eu
-- viktor.rogowski@dlinrt.eu
-- info@dlinrt.eu
-
-## Contributing
-
-We welcome contributions from the community to help us maintain and expand the DLinRT.eu database. Whether you're a clinician, researcher, industry professional, or AI enthusiast, your contributions can make a significant impact.
-
-To get started, please review our [Contributing Guide](CONTRIBUTING.md) for guidelines and best practices.
+> **Note**: The website is currently under development. We welcome contributions to verify and improve the product information accuracy.
 
 ## Documentation
 
-- **[Documentation Quick Links](DOCUMENTATION_LINKS.md)** - Central hub for all documentation
-- **[Field Reference](docs/FIELD_REFERENCE.md)** - Comprehensive documentation of all data fields and vocabularies
-- **[Contributing Guide](CONTRIBUTING.md)** - How to contribute to the project
-- **[Product Review Guide](docs/review/GUIDE.md)** - Guide for reviewing and adding products
-- **[Security](SECURITY.md)** - Security policies and reporting
+For a comprehensive guide to reviewing and updating product information:
 
-## Field Standardization
+- [Documentation Quick Links](./DOCUMENTATION_LINKS.md) - Start here for an overview
+- [Review Guide](./docs/review/GUIDE.md) - Complete review documentation
+- [Review Status Dashboard](./docs/review/STATUS.md) - Current review status
+- [Products Revision Guide](./docs/review/README.md) - How to update products
+- [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md) - Templates for manufacturer communication
 
-**keyFeatures** is the canonical field for product features. The legacy `features` field has been deprecated to ensure consistency across all displays and exports.
+---
 
-## Code of Conduct
+## Hidden/Admin Pages
 
-We are committed to fostering a welcoming and inclusive environment for all contributors. Please review our [Code of Conduct](CODE_OF_CONDUCT.md) to ensure a positive and respectful community.
+The following pages are accessible but not listed in the main navigation:
 
-## Security
+- **Review Dashboard** (`/review`) - Administrative interface for product review management and status tracking
+- **Product Review** (`/review/:id`) - Individual product review interface for detailed verification
+- **Timeline** (`/timeline`) - Interactive data visualization showing product release timeline and trends
 
-We take the security of our platform seriously. Please review our [Security Guidelines](SECURITY.md) for information on reporting vulnerabilities and security best practices.
+These pages provide advanced functionality for maintainers and data analysis but are intentionally kept separate from the main user navigation.
+
+---
+
+## Reviewing Product Content
+
+If you want to review or update the content of a product, follow the instructions in the [Review Guide](./docs/review/GUIDE.md).
+
+### Key Files to Review
+1. **`src/data/products/*.ts`**  
+   These files contain the core product data, including details like name, modality, anatomy, and certifications.  
+
+2. **`src/components/product/*.tsx`**  
+   Components that display product information on the website.  
+
+3. **`src/config/tags.ts`**  
+   Defines valid tags for modality, anatomy, and certifications.  
+
+4. **`src/utils/validateTags.ts`**  
+   Utility that validates product tags against predefined valid tags.
+
+---
+
+## Adding New Products
+
+### Product Structure Overview
+
+Products in DLinRT.eu support:
+- **Multiple Categories**: Products can belong to multiple categories using the `secondaryCategories` field
+- **Multiple Versions**: Different versions of the same product can be tracked with separate `version` and `releaseDate` fields
+- **Comprehensive Data**: Each product includes regulatory, technical, market, and evidence information
+
+### Steps to Add a New Product:
+
+1. **Determine the Appropriate Category**
+   - Products are organized by primary category in `src/data/products/` directory
+   - Use `secondaryCategories` field for products that span multiple categories
+   - See the [Review Guide](./docs/review/GUIDE.md) for current categories
+
+2. **Create or Update the Company-Specific File**
+   - Each company has its own file in the appropriate category directory
+   - If the company already exists, add your product to its file
+   - If it's a new company, create a new file named `company-name.ts`
+   - Example: `src/data/products/auto-contouring/varian.ts`
+
+3. **Follow the Data Format**
+   - See [example templates](./src/data/products/examples) for properly formatted data
+   - Include `secondaryCategories` array for multi-category products
+   - Use separate entries for different product versions with distinct `version` and `releaseDate` fields
+   - Ensure all dates follow YYYY-MM-DD format
+   - Include regulatory information with proper structure
+
+4. **Multiple Versions Support**
+   - Create separate product entries for major version releases
+   - Use consistent `id` patterns (e.g., `product-v1`, `product-v2`)
+   - Track evolution through `version` and `releaseDate` fields
+   - Maintain backward compatibility in data structure
+
+5. **Update the Category Index**
+   - After adding the product, update the category index file to include your new products
+
+6. **Add the Company Logo**
+   - Place the company logo in the `/public/logos/` directory
+   - Use a consistent naming scheme: `company-name.png`
+
+For complete examples, refer to the example templates in `src/data/products/examples/`.
+
+---
+
+## Development
+
+This project is built with:
+
+- Vite
+- TypeScript
+- React
+- Tailwind CSS
+
+### Running Locally
+
+The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+
+```sh
+# Clone the repository
+git clone https://github.com/DLinRT-eu/website.git
+
+# Navigate to the project directory
+cd website
+
+# Install dependencies
+npm install
+
+# Start the development server
+npm run dev
+```
+
+You can also use GitHub Codespaces for development:
+1. Navigate to the repository
+2. Click "Code" > "Codespaces"
+3. Create a new codespace to start developing
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the GNU AGPL-3.0 License - see the LICENSE file for details.
+
+## Team
+
+<div align="center">
+  <p><strong>Matteo Maspero</strong></p>
+  <p>Project Lead - Computational Imaging Group Utrecht</p>
+</div>
+
+Feel free to contact the Project Lead in case you would like to be involved!
+
+## How to Contribute
+
+We welcome contributions to improve the accuracy of product information. If you notice any inaccuracies or have updates about the AI products listed, please:
+
+1. Open an issue describing the update needed.
+2. Submit a pull request with your changes.
+3. Ensure proper attribution and documentation.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/DLinRT-eu/website.svg?style=for-the-badge
+[contributors-url]: https://github.com/DLinRT-eu/website/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/DLinRT-eu/website.svg?style=for-the-badge
+[forks-url]: https://github.com/DLinRT-eu/website/network/members
+[stars-shield]: https://img.shields.io/github/stars/DLinRT-eu/website.svg?style=for-the-badge
+[stars-url]: https://github.com/DLinRT-eu/website/stargazers
+[issues-shield]: https://img.shields.io/github/issues/DLinRT-eu/website.svg?style=for-the-badge
+[issues-url]: https://github.com/DLinRT-eu/website/issues
+[license-shield]: https://img.shields.io/github/license/DLinRT-eu/website.svg?style=for-the-badge
+[license-url]: https://github.com/DLinRT-eu/website/blob/master/LICENSE

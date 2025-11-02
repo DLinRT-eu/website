@@ -11,7 +11,6 @@ export const registrationExample: ProductDetails = {
   url: "https://example.com/products/registration",
   contactEmail: "info@example.com",
   contactPhone: "+1 555-123-4567",
-  logoUrl: "/placeholder.svg",
   
   modality: ["CT", "MRI", "PET", "CBCT"],
   anatomy: ["Brain", "Head & Neck", "Thorax", "Abdomen", "Pelvis"],
@@ -24,36 +23,12 @@ export const registrationExample: ProductDetails = {
     "Registration quality metrics"
   ],
   
-  guidelines: [
-    {
-      name: "AAPM TG-132",
-      version: "2013",
-      reference: "https://doi.org/10.1118/1.4816279",
-      url: "https://www.aapm.org/pubs/reports/RPT_132.pdf",
-      compliance: "full"
-    },
-    {
-      name: "AAPM TG-162",
-      version: "2014",
-      reference: "https://doi.org/10.1118/1.4866223",
-      url: "https://www.aapm.org/pubs/reports/RPT_162.pdf",
-      compliance: "full"
-    },
-    {
-      name: "AAPM TG-275",
-      version: "2022",
-      reference: "https://doi.org/10.1002/mp.15419",
-      url: "https://www.aapm.org/pubs/reports/RPT_275.pdf",
-      compliance: "partial"
-    }
-  ],
-  
-  technicalSpecifications: {
-    population: "Adult patients",
-    input: ["CT", "MRI", "PET", "CBCT"],
+  technicalSpecs: {
     inputFormat: ["DICOM", "DICOM RT-STRUCT"],
-    output: ["Registered images", "Fused images"],
-    outputFormat: ["DICOM", "DICOM-RT"]
+    outputFormat: ["Deformation vector fields", "Registered images", "DICOM RT-STRUCT"],
+    integrations: ["Major TPS systems", "PACS", "Standalone software"],
+    processingTime: "<60 seconds for rigid registration, <3 minutes for deformable",
+    accuracy: "Mean TRE <2mm for anatomical landmarks"
   },
   
   regulatoryInfo: {
@@ -95,7 +70,8 @@ export const registrationExample: ProductDetails = {
   ],
   
   lastUpdated: "2023-05-15",
-  lastRevised: "2023-05-15"
+  lastRevised: "2023-05-15",
+  lastVerified: "2023-05-15"
 };
 
 export default registrationExample;

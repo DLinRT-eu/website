@@ -4,19 +4,20 @@ import { useAuth } from '@/contexts/AuthContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useToast } from '@/hooks/use-toast';
 import { Package, Plus, Edit, Trash2, Star, Building2, Info } from 'lucide-react';
 import { ALL_PRODUCTS } from '@/data';
+import { ProductSelectorDialog } from '@/components/products/ProductSelectorDialog';
 
 interface UserProduct {
   id: string;
@@ -38,6 +39,7 @@ export default function MyProducts() {
   const { toast } = useToast();
   const [products, setProducts] = useState<UserProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectorOpen, setSelectorOpen] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<UserProduct | null>(null);
   
@@ -101,11 +103,22 @@ export default function MyProducts() {
       setUseCase(product.use_case || '');
       setWillingToShare(product.willing_to_share_experience);
       setContactPreference(product.contact_preference);
+      setDialogOpen(true);
     } else {
+      // For new products, open the selector first
       resetForm();
+      setSelectorOpen(true);
     }
+  };
+
+  const handleProductSelected = (productId: string) => {
+    setSelectedProductId(productId);
+    setSelectorOpen(false);
     setDialogOpen(true);
   };
+
+  // Get list of already adopted product IDs
+  const adoptedProductIds = products.map(p => p.product_id);
 
   const handleSave = async () => {
     if (!selectedProductId) {
@@ -202,6 +215,18 @@ export default function MyProducts() {
       description="Manage your adopted products and share your experience"
     >
       <div className="container max-w-7xl py-8">
+        {/* Product Selector Dialog */}
+        <ProductSelectorDialog
+          open={selectorOpen}
+          onOpenChange={setSelectorOpen}
+          onSelectProduct={handleProductSelected}
+          selectedProductId={selectedProductId}
+          excludeProductIds={adoptedProductIds}
+          allProducts={ALL_PRODUCTS}
+          title="Select Product to Add"
+          description="Search and filter to find the product you want to track"
+        />
+
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold flex items-center gap-2">
@@ -210,40 +235,44 @@ export default function MyProducts() {
             </h1>
             <p className="text-muted-foreground mt-2">Track products you've adopted and share your experience</p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={(open) => {
-            setDialogOpen(open);
-            if (!open) resetForm();
-          }}>
-            <DialogTrigger asChild>
-              <Button onClick={() => handleOpenDialog()} className="gap-2">
-                <Plus className="h-4 w-4" />
-                Add Product
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-              <DialogHeader>
-                <DialogTitle>{editingProduct ? 'Edit Product' : 'Add Product'}</DialogTitle>
-                <DialogDescription>
-                  Track products you've adopted and optionally share your experience with the community
-                </DialogDescription>
-              </DialogHeader>
-              
-              <div className="space-y-4 py-4">
-                <div className="space-y-2">
-                  <Label htmlFor="product">Product *</Label>
-                  <Select value={selectedProductId} onValueChange={setSelectedProductId} disabled={!!editingProduct}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a product" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {ALL_PRODUCTS.map(product => (
-                        <SelectItem key={product.id} value={product.id}>
-                          {product.name} ({product.company})
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+          <Button onClick={() => handleOpenDialog()} className="gap-2">
+            <Plus className="h-4 w-4" />
+            Add Product
+          </Button>
+        </div>
+
+        {/* Product Details Dialog */}
+        <Dialog open={dialogOpen} onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open) resetForm();
+        }}>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle>{editingProduct ? 'Edit Product' : 'Add Product Details'}</DialogTitle>
+              <DialogDescription>
+                {editingProduct 
+                  ? 'Update your product information and experience'
+                  : `Adding: ${ALL_PRODUCTS.find(p => p.id === selectedProductId)?.name || ''}`
+                }
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="space-y-4 py-4">
+              {!editingProduct && selectedProductId && (
+                <div className="p-3 bg-muted rounded-lg">
+                  <div className="flex items-start gap-3">
+                    <Package className="h-5 w-5 mt-0.5 text-muted-foreground" />
+                    <div>
+                      <p className="font-medium">
+                        {ALL_PRODUCTS.find(p => p.id === selectedProductId)?.name}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {ALL_PRODUCTS.find(p => p.id === selectedProductId)?.company}
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              )}
 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
@@ -354,17 +383,16 @@ export default function MyProducts() {
                 )}
               </div>
 
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setDialogOpen(false)}>
-                  Cancel
-                </Button>
-                <Button onClick={handleSave}>
-                  {editingProduct ? 'Update' : 'Add Product'}
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
-        </div>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                Cancel
+              </Button>
+              <Button onClick={handleSave}>
+                {editingProduct ? 'Update' : 'Add Product'}
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
 
         {products.length === 0 ? (
           <Card>

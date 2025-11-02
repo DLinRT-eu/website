@@ -16,6 +16,7 @@ interface AuthContextType {
   user: User | null;
   session: Session | null;
   loading: boolean;
+  profileLoading: boolean;
   signIn: (email: string, password: string) => Promise<{ error: any }>;
   signUp: (email: string, password: string, data: SignUpData) => Promise<{ error: any }>;
   signOut: () => Promise<void>;
@@ -159,7 +160,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const value = {
     user,
     session,
-    loading: loading || profileLoading, // Combined loading state
+    loading, // Auth loading state
+    profileLoading, // Profile loading state (separate)
     signIn,
     signUp,
     signOut,

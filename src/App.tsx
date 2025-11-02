@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AnalyticsProvider } from "./providers/AnalyticsProvider";
 import { AuthProvider } from "./contexts/AuthContext";
+import { RoleProvider } from "./contexts/RoleContext";
 import CookieConsent from "./components/CookieConsent";
 import Header from "./components/Header";
 import Breadcrumb from "./components/Breadcrumb";
@@ -71,10 +72,11 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <AuthProvider>
-          <AnalyticsProvider>
-            <Header />
-            <Breadcrumb />
-            <Routes>
+          <RoleProvider>
+            <AnalyticsProvider>
+              <Header />
+              <Breadcrumb />
+              <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/dashboard-home" element={
                 <ProtectedRoute>
@@ -186,6 +188,7 @@ const App = () => (
             </Routes>
             <CookieConsent />
           </AnalyticsProvider>
+        </RoleProvider>
         </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>

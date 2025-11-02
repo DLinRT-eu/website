@@ -1,5 +1,6 @@
 import { Navigate, Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { Button } from '@/components/ui/button';
 
@@ -18,11 +19,12 @@ export const ProtectedRoute = ({
   requireAuth = true,
   requireActiveRole = false
 }: ProtectedRouteProps) => {
-  const { user, roles, activeRole, requiresRoleSelection, loading } = useAuth();
+  const { user, loading } = useAuth();
+  const { roles, activeRole, requiresRoleSelection, loading: rolesLoading } = useRoles();
   const location = useLocation();
   const navigate = useNavigate();
 
-  if (loading) {
+  if (loading || rolesLoading) {
     return <div className="flex items-center justify-center min-h-screen"><LoadingSpinner /></div>;
   }
 

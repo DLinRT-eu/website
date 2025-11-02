@@ -38,7 +38,10 @@ export function useProfile(userId: string | null) {
   }, [userId]);
 
   const fetchProfile = async () => {
-    if (!userId) return;
+    if (!userId) {
+      setLoading(false);
+      return;
+    }
 
     try {
       setLoading(true);
@@ -48,17 +51,27 @@ export function useProfile(userId: string | null) {
         .eq('id', userId)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        // Check if it's an RLS error (no rows returned)
+        if (error.code === 'PGRST116') {
+          console.warn('Profile not found or RLS policy blocking access');
+        }
+        throw error;
+      }
 
       setProfile(data);
     } catch (error: any) {
       console.error('Error fetching profile:', error);
-      toast({
-        title: "Error loading profile",
-        description: error.message,
-        variant: "destructive",
-      });
+      // Don't show toast for missing profile, just log it
+      if (error.code !== 'PGRST116') {
+        toast({
+          title: "Error loading profile",
+          description: error.message,
+          variant: "destructive",
+        });
+      }
     } finally {
+      // Always set loading to false, even on error
       setLoading(false);
     }
   };

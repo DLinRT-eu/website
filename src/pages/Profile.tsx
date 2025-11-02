@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,7 +22,8 @@ import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package } from '
 import { Link, Navigate } from 'react-router-dom';
 
 export default function Profile() {
-  const { user, profile, roles, highestRole, isAdmin, updateProfile, signOut, resendVerificationEmail, loading } = useAuth();
+  const { user, profile, updateProfile, signOut, resendVerificationEmail, loading, profileLoading } = useAuth();
+  const { roles, highestRole, isAdmin } = useRoles();
   const { toast } = useToast();
   const [saving, setSaving] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -102,7 +104,7 @@ export default function Profile() {
   };
 
   // Show loading skeleton while profile loads
-  if (loading || !profile) {
+  if (loading) {
     return (
       <PageLayout>
         <div className="container max-w-4xl py-8">
@@ -124,6 +126,42 @@ export default function Profile() {
                 </div>
               </CardContent>
             </Card>
+          </div>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (!user) {
+    return <Navigate to="/auth" replace />;
+  }
+
+  if (profileLoading) {
+    return (
+      <PageLayout>
+        <div className="container max-w-4xl py-8">
+          <Alert>
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Loading your profile...</AlertTitle>
+          </Alert>
+        </div>
+      </PageLayout>
+    );
+  }
+
+  if (!profile) {
+    return (
+      <PageLayout>
+        <div className="container max-w-4xl py-8">
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Profile Not Found</AlertTitle>
+            <AlertDescription>
+              Unable to load your profile. Please try signing out and back in.
+            </AlertDescription>
+          </Alert>
+          <div className="mt-4">
+            <Button onClick={() => signOut()}>Sign Out</Button>
           </div>
         </div>
       </PageLayout>

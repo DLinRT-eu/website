@@ -18,6 +18,7 @@ import Support from "./pages/Support";
 import NewsDetail from "./pages/NewsDetail";
 import Products from "./pages/Products";
 import Dashboard from "./pages/Dashboard";
+import Dashboard_Authenticated from "./pages/Dashboard_Authenticated";
 import Timeline from "./pages/Timeline";
 import Initiatives from "./pages/Initiatives";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
@@ -78,6 +79,11 @@ const App = () => (
               <Route path="support" element={<Support />} />
               <Route path="news/:id" element={<NewsDetail />} />
               <Route path="dashboard" element={<Dashboard />} />
+              <Route path="dashboard-home" element={
+                <ProtectedRoute requireAuth={true}>
+                  <Dashboard_Authenticated />
+                </ProtectedRoute>
+              } />
               <Route path="timeline" element={<Timeline />} />
               <Route path="review" element={<ReviewDashboard />} />
               <Route path="review/:id" element={<ProductReview />} />

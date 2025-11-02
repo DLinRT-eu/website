@@ -76,6 +76,7 @@ export const MEDLEVER_PLATFORM_PRODUCTS: ProductDetails[] = [
     },
     version: "Information not specified",
     lastUpdated: "2025-11-02",
+    lastRevised: "2025-11-02",
     companyRevisionDate: "2025-11-02",
     releaseDate: "Information not specified"
   }

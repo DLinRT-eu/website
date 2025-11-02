@@ -24,6 +24,7 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
+import ResourcesCompliance from "./pages/ResourcesCompliance";
 import Profile from "./pages/Profile";
 import MyProducts from "./pages/MyProducts";
 import RoleSelection from "./pages/RoleSelection";
@@ -80,6 +81,7 @@ const App = () => (
               <Route path="timeline" element={<Timeline />} />
               <Route path="review" element={<ReviewDashboard />} />
               <Route path="review/:id" element={<ProductReview />} />
+              <Route path="resources-compliance" element={<ResourcesCompliance />} />
               <Route path="privacy-policy" element={<PrivacyPolicy />} />
               <Route path="terms-of-use" element={<TermsOfUse />} />
               <Route path="auth" element={<Auth />} />

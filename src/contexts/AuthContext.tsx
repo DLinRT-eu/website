@@ -1,23 +1,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, Session } from '@supabase/supabase-js';
 import { supabase } from '@/integrations/supabase/client';
+import { useProfile, Profile } from '@/hooks/useProfile';
 
 type AppRole = 'admin' | 'reviewer' | 'company';
 
-interface Profile {
-  id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  institution?: string;
-  specialization?: string;
-  bio?: string;
-  linkedin_url?: string;
-  public_display?: boolean;
-  mfa_enabled?: boolean;
-  approval_status?: string;
-  is_core_team?: boolean;
-}
+// Profile type is now imported from useProfile hook
 
 interface SignUpData {
   firstName: string;
@@ -42,7 +30,7 @@ interface AuthContextType {
   availableRoles: string[];
   requiresRoleSelection: boolean;
   setActiveRole: (role: string) => void;
-  updateProfile: (data: Partial<Profile>) => Promise<{ error: any }>;
+  updateProfile: (data: Partial<Profile>) => Promise<{ data: any; error: any }>;
   resendVerificationEmail: () => Promise<{ error: Error | null }>;
 }
 
@@ -52,6 +40,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  
+  // Phase 2: Use the useProfile hook to manage profile data
+  const { profile, loading: profileLoading, updateProfile: updateProfileData } = useProfile(user?.id || null);
 
   // Set up auth state listener
   useEffect(() => {
@@ -148,15 +139,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const resendVerificationEmail = async () => {
+    try {
+      if (!user?.email) {
+        return { error: new Error('No email address found') };
+      }
+      
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email: user.email,
+      });
+      
+      return { error };
+    } catch (error: any) {
+      return { error };
+    }
+  };
+
   const value = {
     user,
     session,
-    loading,
+    loading: loading || profileLoading, // Combined loading state
     signIn,
     signUp,
     signOut,
-    // Phase 2+ stubs - will be implemented later
-    profile: null,
+    // Phase 2: Profile management (now implemented)
+    profile,
+    updateProfile: updateProfileData,
+    resendVerificationEmail,
+    // Phase 3+ stubs - will be implemented later
     roles: [] as AppRole[],
     highestRole: null,
     isAdmin: false,
@@ -166,8 +177,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     availableRoles: [],
     requiresRoleSelection: false,
     setActiveRole: () => {},
-    updateProfile: async () => ({ error: new Error('Not implemented in Phase 1') }),
-    resendVerificationEmail: async () => ({ error: new Error('Not implemented in Phase 1') }),
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

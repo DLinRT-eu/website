@@ -425,7 +425,7 @@ export default function Profile() {
                     </Link>
                   </Button>
                   <Button asChild variant="outline" className="justify-start">
-                    <Link to="/company/products-manager">
+                    <Link to="/company/products">
                       <Package className="h-4 w-4 mr-2" />
                       Manage Certifications
                     </Link>

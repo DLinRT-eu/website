@@ -139,7 +139,7 @@ export default function UserRegistrationReview() {
         <CardHeader>
           <CardTitle>User Registration Review</CardTitle>
           <CardDescription>
-            Review and verify new user registrations. Only institutional email addresses are allowed.
+            Review and verify new user registrations. Institutional email addresses are preferred and receive priority approval.
           </CardDescription>
         </CardHeader>
         <CardContent>

@@ -3,8 +3,8 @@ import { Resend } from "npm:resend@2.0.0";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
-// Common free email providers to block (only institutional emails allowed)
-const BLOCKED_EMAIL_DOMAINS = [
+// Common free email providers to flag (institutional emails are preferred but all are allowed)
+const NON_INSTITUTIONAL_EMAIL_DOMAINS = [
   "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", 
   "live.com", "msn.com", "aol.com", "icloud.com", 
   "protonmail.com", "mail.com", "zoho.com", "yandex.com",
@@ -24,8 +24,8 @@ function isInstitutionalEmail(email: string): boolean {
   const domain = email.toLowerCase().split('@')[1];
   if (!domain) return false;
   
-  // Block common free email providers
-  if (BLOCKED_EMAIL_DOMAINS.includes(domain)) {
+  // Flag common free email providers as non-institutional
+  if (NON_INSTITUTIONAL_EMAIL_DOMAINS.includes(domain)) {
     return false;
   }
   
@@ -74,16 +74,11 @@ const handler = async (req: Request): Promise<Response> => {
 
     const { userId, email, firstName, lastName, createdAt }: UserRegistrationData = await req.json();
 
-    // Validate email is institutional
-    if (!isInstitutionalEmail(email)) {
-      console.warn(`Non-institutional email registration blocked: ${email}`);
-      return new Response(
-        JSON.stringify({ 
-          error: "Only institutional email addresses are allowed. Please use your organization or university email.",
-          blocked: true
-        }),
-        { status: 403, headers: { "Content-Type": "application/json" } }
-      );
+    // Check if email is institutional (but don't block non-institutional)
+    const isInstitutional = isInstitutionalEmail(email);
+    if (!isInstitutional) {
+      console.warn(`Non-institutional email registration detected: ${email}`);
+      // Log but don't block - admin will review
     }
 
     // Prepare user display name
@@ -92,12 +87,15 @@ const handler = async (req: Request): Promise<Response> => {
       : "Not provided";
     
     const emailDomain = email.split('@')[1];
+    const emailWarning = !isInstitutional 
+      ? '<div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 12px; border-radius: 4px; margin-bottom: 20px;"><p style="margin: 0; color: #92400e;"><strong>⚠️ Note:</strong> This user registered with a non-institutional email address and may require additional verification.</p></div>'
+      : '';
 
     // Send notification email to admin
     const emailResponse = await resend.emails.send({
       from: "DLinRT.eu User Registration <noreply@dlinrt.eu>",
       to: ["info@dlinrt.eu"],
-      subject: `🔔 New User Registration - Verification Required`,
+      subject: `🔔 New User Registration - Verification Required${!isInstitutional ? ' (Non-Institutional Email)' : ''}`,
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
           <div style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; padding: 30px; border-radius: 8px 8px 0 0;">
@@ -106,6 +104,8 @@ const handler = async (req: Request): Promise<Response> => {
           </div>
           
           <div style="background-color: #ffffff; padding: 30px; border: 1px solid #e5e7eb; border-top: none;">
+            ${emailWarning}
+            
             <div style="background-color: #fef3c7; border-left: 4px solid #f59e0b; padding: 15px; border-radius: 4px; margin-bottom: 25px;">
               <p style="margin: 0; color: #92400e; font-weight: 600;">
                 ⚠️ This user requires manual verification before their account can be fully activated.
@@ -166,7 +166,7 @@ const handler = async (req: Request): Promise<Response> => {
 
             <div style="background-color: #eff6ff; border-left: 4px solid #2563eb; padding: 15px; border-radius: 4px; margin: 25px 0;">
               <p style="margin: 0; color: #1e40af; font-size: 14px;">
-                <strong>🔒 Security Note:</strong> Only institutional email addresses are allowed. Free email providers (Gmail, Yahoo, etc.) are automatically blocked.
+                <strong>🔒 Security Note:</strong> Institutional email addresses are strongly preferred. Non-institutional emails (Gmail, Yahoo, etc.) are allowed but require additional verification.
               </p>
             </div>
 

@@ -1,6 +1,6 @@
--- Migration: Add user registration notification system with institutional email validation
+-- Migration: Add user registration notification system with institutional email preference
 -- This sends an email to info@dlinrt.eu when a new user registers
--- Only institutional emails are allowed (blocks free email providers)
+-- Institutional emails are preferred (warns about free email providers but allows them)
 
 -- 1. Create function to check if email is institutional
 CREATE OR REPLACE FUNCTION public.is_institutional_email(email TEXT)

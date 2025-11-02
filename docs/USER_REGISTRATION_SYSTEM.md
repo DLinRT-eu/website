@@ -2,15 +2,15 @@
 
 ## Overview
 
-The DLinRT.eu platform implements a **mandatory institutional email verification system** for all new user registrations. This ensures that only users from legitimate institutions (universities, hospitals, research centers, companies) can access the platform.
+The DLinRT.eu platform implements an **institutional email preference system** for new user registrations. While institutional emails are strongly encouraged, users can register with any valid email address. Registrations with non-institutional emails receive additional scrutiny during the verification process.
 
 ## Key Features
 
-### 🔒 Institutional Email Requirement
-- **Only institutional email addresses are allowed**
-- Free email providers are automatically blocked (Gmail, Yahoo, Hotmail, Outlook, etc.)
-- Educational (.edu), government (.gov), academic (.ac.*), and organizational (.org) domains are preferred
-- Company domains (.com, .net, .eu) are allowed but require manual verification
+### 🔒 Institutional Email Preference
+- **Institutional email addresses are strongly preferred** but not required
+- Free email providers trigger a warning notification (Gmail, Yahoo, Hotmail, Outlook, etc.)
+- Educational (.edu), government (.gov), academic (.ac.*), and organizational (.org) domains are automatically approved
+- Company domains (.com, .net, .eu) and personal emails require manual verification
 
 ### 📧 Automatic Admin Notification
 - When a new user registers, an automated email is sent to `info@dlinrt.eu`
@@ -25,10 +25,11 @@ The DLinRT.eu platform implements a **mandatory institutional email verification
   - Institution affiliation check
   - Email verification status
 
-### 🚫 Blocked Registration Tracking
-- Non-institutional email registrations are automatically blocked
-- Blocked attempts are logged for security monitoring
-- Admins can review blocked registrations in the dashboard
+### ⚠️ Enhanced Verification for Non-Institutional Emails
+- Non-institutional email registrations are allowed but flagged for review
+- Warning notifications are shown to users during signup
+- Admins receive enhanced scrutiny recommendations for non-institutional emails
+- All registration attempts are logged for security monitoring
 
 ## System Architecture
 
@@ -39,20 +40,24 @@ The DLinRT.eu platform implements a **mandatory institutional email verification
 **Function:** `signUp(email, password, data)`
 
 **Process:**
-1. Validates email domain against blocked list
-2. Prevents registration if using free email provider
+1. Validates email domain against non-institutional list
+2. Shows warning if using free email provider (but allows signup to proceed)
 3. Calls Supabase Auth signup
 4. Triggers notification Edge Function on success
+5. Admin notification includes email domain classification
 
-**Blocked Domains:**
+**Non-Institutional Domains (Warning Shown):**
 ```typescript
-const blockedDomains = [
+const nonInstitutionalDomains = [
   'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
   'live.com', 'msn.com', 'aol.com', 'icloud.com',
   'protonmail.com', 'mail.com', 'zoho.com', 'yandex.com',
   'gmx.com', 'inbox.com', 'fastmail.com', 'hushmail.com'
 ];
 ```
+
+**Warning Message:**
+> "Note: Institutional email addresses (university, hospital, research center) are strongly preferred. Your account may require additional verification."
 
 ### 2. Edge Function (`notify-user-registration`)
 
@@ -146,27 +151,31 @@ CREATE TABLE user_registration_notifications (
 1. User submits registration form
    ↓
 2. Client validates email domain
-   ↓ (if blocked)
-   → Error: "Only institutional emails allowed"
+   ↓ (if non-institutional)
+   → Warning shown: "Institutional emails preferred"
+   → Registration proceeds anyway
    
-   ↓ (if allowed)
+   ↓
 3. Supabase Auth creates user account
    ↓
 4. Database trigger (handle_new_user) fires
    ↓
-5. Profile created (institutional only)
+5. Profile created for all users
    ↓
 6. Notification logged in database
    ↓
 7. Edge Function called (notify-user-registration)
    ↓
-8. Email sent to info@dlinrt.eu
+8. Email sent to info@dlinrt.eu (includes domain classification)
    ↓
 9. Admin receives notification
    ↓
 10. Admin reviews in /admin/registrations
    ↓
-11. Admin verifies or rejects user
+11. Admin verifies or rejects user based on:
+    - Email verification status
+    - Institution affiliation
+    - Account purpose
    ↓
 12. User can access platform (if verified)
 ```
@@ -179,7 +188,8 @@ Navigate to: `https://dlinrt.eu/admin/registrations`
 ### Step 2: Review Pending Registrations
 - Check user name and email
 - Verify email domain authenticity
-- Confirm institution affiliation
+- Confirm institution affiliation (if applicable)
+- **Note:** Non-institutional emails are allowed but require extra scrutiny
 
 ### Step 3: Validate Email Verification
 - Ensure user has verified their email address
@@ -197,24 +207,31 @@ Navigate to: `https://dlinrt.eu/admin/registrations`
 
 ## Email Domain Validation Rules
 
-### ✅ Automatically Allowed
+### ✅ Preferred (Fast-Track Verification)
 - `.edu` - Educational institutions
 - `.gov` - Government agencies
 - `.ac.*` - Academic institutions (e.g., .ac.uk, .ac.jp)
 - `.org` - Organizations
+- `.nhs.uk` - Healthcare institutions
+- `.hospital`, `.clinic`, `.medical` - Medical facilities
 
-### ⚠️ Allowed with Manual Verification
+### ⚠️ Allowed with Standard Verification
 - `.com` - Company domains
 - `.net` - Network organizations
 - `.eu` - European organizations
 - Other institutional domains
 
-### ❌ Automatically Blocked
-All free email providers including:
+### ⚠️ Allowed with Enhanced Verification
+Free email providers (warning shown, additional verification required):
 - Gmail, Yahoo, Hotmail, Outlook
 - Live, MSN, AOL, iCloud
 - ProtonMail, Mail.com, Zoho, Yandex
 - GMX, Inbox, FastMail, HushMail
+
+**Note:** All emails are accepted, but non-institutional emails may require:
+- Additional verification steps
+- Justification for platform access
+- Longer approval time
 
 ## Security Features
 
@@ -342,16 +359,12 @@ SELECT cron.schedule(
 3. Service role key is correct
 4. Check `user_registration_notifications` table for status
 
-### Issue: User blocked incorrectly
+### Issue: User with personal email can't access features
 **Solution:**
-1. Check email domain against blocked list
-2. Manually update notification status if needed:
-```sql
-UPDATE user_registration_notifications
-SET notification_status = 'pending',
-    failure_reason = NULL
-WHERE user_id = '<user-uuid>';
-```
+1. All users can register regardless of email domain
+2. Personal emails require admin verification
+3. Verify the user manually in `/admin/registrations`
+4. Check that email is verified in Supabase Auth dashboard
 
 ### Issue: Admin can't verify users
 **Check:**

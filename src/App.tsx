@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { RoleProvider } from "@/contexts/RoleContext";
+import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
 import Header from "./components/Header";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -23,6 +24,18 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
+
+// Admin Pages
+import AdminOverview from "./pages/admin/AdminOverview";
+import AdminDashboard from "./pages/admin/Dashboard";
+import UserManagement from "./pages/admin/UserManagement";
+import ReviewAssignment from "./pages/admin/ReviewAssignment";
+import SecurityDashboard from "./pages/admin/SecurityDashboard";
+import UserRegistrationReview from "./pages/admin/UserRegistrationReview";
+
+// Company Pages
+import CompanyDashboard from "./pages/company/Dashboard";
+import CompanyProductsManager from "./pages/company/ProductsManager";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -61,6 +74,51 @@ const App = () => (
               <Route path="review/:id" element={<ProductReview />} />
               <Route path="privacy-policy" element={<PrivacyPolicy />} />
               <Route path="terms-of-use" element={<TermsOfUse />} />
+              
+              {/* Admin Routes */}
+              <Route path="/admin" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminOverview />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/dashboard" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/users" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <UserManagement />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/reviews" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ReviewAssignment />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/security" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <SecurityDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/registrations" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <UserRegistrationReview />
+                </ProtectedRoute>
+              } />
+              
+              {/* Company Routes */}
+              <Route path="/company/dashboard" element={
+                <ProtectedRoute allowedRoles={['company', 'admin']}>
+                  <CompanyDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/company/products" element={
+                <ProtectedRoute allowedRoles={['company', 'admin']}>
+                  <CompanyProductsManager />
+                </ProtectedRoute>
+              } />
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,8 @@ interface CompanyVerification {
 }
 
 export default function ProductsManager() {
-  const { user, isCompany } = useAuth();
+  const { user } = useAuth();
+  const { isCompany, isAdmin } = useRoles();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [verifications, setVerifications] = useState<CompanyVerification[]>([]);
@@ -34,12 +36,12 @@ export default function ProductsManager() {
   const [companyId, setCompanyId] = useState<string>('');
 
   useEffect(() => {
-    if (!user || !isCompany) {
+    if (!user || (!isCompany && !isAdmin)) {
       navigate('/auth');
       return;
     }
     fetchCompanyId();
-  }, [user, isCompany]);
+  }, [user, isCompany, isAdmin]);
 
   useEffect(() => {
     if (companyId) {

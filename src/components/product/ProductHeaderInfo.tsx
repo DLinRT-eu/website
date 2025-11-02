@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, CheckCircle, XCircle, BadgeCheck } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
 import { Badge } from "@/components/ui/badge";
+import { supabase } from "@/integrations/supabase/client";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface ProductHeaderInfoProps {
   product: ProductDetails;
 }
 
 const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
+  const [verificationData, setVerificationData] = useState<{
+    verified_at: string;
+    verification_notes: string | null;
+  } | null>(null);
+
+  // Fetch company verification from database
+  useEffect(() => {
+    const fetchVerification = async () => {
+      const { data } = await supabase
+        .from('company_product_verifications')
+        .select('verified_at, verification_notes')
+        .eq('product_id', product.id)
+        .eq('company_id', product.company)
+        .order('verified_at', { ascending: false })
+        .limit(1)
+        .maybeSingle();
+
+      if (data) {
+        setVerificationData(data);
+      }
+    };
+
+    fetchVerification();
+  }, [product.id, product.company]);
+
   // Generate logo URL based on company name if needed
   const generateLogoUrl = () => {
     if (product.logoUrl && product.logoUrl.trim() !== '') {
@@ -62,16 +89,30 @@ const ProductHeaderInfo = ({ product }: ProductHeaderInfoProps) => {
           <p className="text-gray-500">{product.description}</p>
           
           <div className="mt-2 flex items-center gap-2 flex-wrap">
-            {hasCompanyRevision && (
-              <Badge 
-                variant="default"
-                className="flex items-center gap-1 bg-blue-600 text-white hover:bg-blue-700"
-              >
-                <BadgeCheck className="h-3 w-3" />
-                Company Verified: {formattedCompanyRevisionDate}
-              </Badge>
+            {verificationData && (
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Badge 
+                      variant="default"
+                      className="flex items-center gap-1 bg-blue-600 text-white hover:bg-blue-700"
+                    >
+                      <BadgeCheck className="h-3 w-3" />
+                      Verified by Company
+                      <span className="text-xs ml-1">
+                        ({new Date(verificationData.verified_at).toLocaleDateString()})
+                      </span>
+                    </Badge>
+                  </TooltipTrigger>
+                  {verificationData.verification_notes && (
+                    <TooltipContent>
+                      <p className="text-sm max-w-xs">{verificationData.verification_notes}</p>
+                    </TooltipContent>
+                  )}
+                </Tooltip>
+              </TooltipProvider>
             )}
-            <Badge 
+            <Badge
               variant={isRecentlyRevised ? "success" : isRevised ? "outline" : "secondary"} 
               className={`flex items-center gap-1 ${isRecentlyRevised ? 'bg-green-100 text-green-800' : isRevised ? '' : 'bg-gray-100 text-gray-600'}`}
             >

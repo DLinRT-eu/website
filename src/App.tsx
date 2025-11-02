@@ -24,6 +24,10 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfUse from "./pages/TermsOfUse";
 import ReviewDashboard from "./pages/ReviewDashboard";
 import ProductReview from "./pages/ProductReview";
+import Profile from "./pages/Profile";
+import MyProducts from "./pages/MyProducts";
+import RoleSelection from "./pages/RoleSelection";
+import ProductExperiences from "./pages/ProductExperiences";
 
 // Admin Pages
 import AdminOverview from "./pages/admin/AdminOverview";
@@ -36,6 +40,9 @@ import UserRegistrationReview from "./pages/admin/UserRegistrationReview";
 // Company Pages
 import CompanyDashboard from "./pages/company/Dashboard";
 import CompanyProductsManager from "./pages/company/ProductsManager";
+
+// Reviewer Pages
+import ReviewerDashboard from "./pages/reviewer/Dashboard";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -75,6 +82,28 @@ const App = () => (
               <Route path="privacy-policy" element={<PrivacyPolicy />} />
               <Route path="terms-of-use" element={<TermsOfUse />} />
               
+              {/* User Authenticated Routes */}
+              <Route path="/profile" element={
+                <ProtectedRoute requireAuth={true}>
+                  <Profile />
+                </ProtectedRoute>
+              } />
+              <Route path="/my-products" element={
+                <ProtectedRoute requireAuth={true}>
+                  <MyProducts />
+                </ProtectedRoute>
+              } />
+              <Route path="/role-selection" element={
+                <ProtectedRoute requireAuth={true}>
+                  <RoleSelection />
+                </ProtectedRoute>
+              } />
+              <Route path="/product/:productId/experiences" element={
+                <ProtectedRoute allowedRoles={['admin', 'reviewer', 'company']}>
+                  <ProductExperiences />
+                </ProtectedRoute>
+              } />
+              
               {/* Admin Routes */}
               <Route path="/admin" element={
                 <ProtectedRoute allowedRoles={['admin']}>
@@ -104,6 +133,13 @@ const App = () => (
               <Route path="/admin/registrations" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <UserRegistrationReview />
+                </ProtectedRoute>
+              } />
+              
+              {/* Reviewer Routes */}
+              <Route path="/reviewer/dashboard" element={
+                <ProtectedRoute allowedRoles={['reviewer', 'admin']}>
+                  <ReviewerDashboard />
                 </ProtectedRoute>
               } />
               

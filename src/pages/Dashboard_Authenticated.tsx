@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import PageLayout from '@/components/layout/PageLayout';
@@ -17,7 +18,8 @@ import {
 import NewsSection from '@/components/NewsSection';
 
 export default function Dashboard_Authenticated() {
-  const { user, profile, activeRole, isAdmin, isReviewer, isCompany } = useAuth();
+  const { user, profile } = useAuth();
+  const { activeRole, isAdmin, isReviewer, isCompany } = useRoles();
 
   const getRoleDescription = () => {
     if (activeRole === 'admin') {
@@ -40,6 +42,27 @@ export default function Dashboard_Authenticated() {
         icon: Shield,
         link: '/admin',
         color: 'bg-red-50 text-red-600 hover:bg-red-100'
+      },
+      {
+        title: 'User Management',
+        description: 'Assign roles and manage users',
+        icon: Users,
+        link: '/admin/users',
+        color: 'bg-red-50 text-red-600 hover:bg-red-100'
+      },
+      {
+        title: 'Review Assignments',
+        description: 'Assign products to reviewers',
+        icon: FileCheck,
+        link: '/admin/reviews',
+        color: 'bg-purple-50 text-purple-600 hover:bg-purple-100'
+      },
+      {
+        title: 'Company Oversight',
+        description: 'Oversee all company certifications',
+        icon: Building2,
+        link: '/company/dashboard',
+        color: 'bg-green-50 text-green-600 hover:bg-green-100'
       }
     ] : []),
     ...(isReviewer ? [

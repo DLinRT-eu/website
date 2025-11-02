@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
@@ -17,7 +18,8 @@ interface RoleRequestFormProps {
 }
 
 export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormProps) {
-  const { user, profile, roles } = useAuth();
+  const { user, profile } = useAuth();
+  const { roles } = useRoles();
   const [requestedRole, setRequestedRole] = useState<'reviewer' | 'company'>('reviewer');
   const [justification, setJustification] = useState('');
   const [companyId, setCompanyId] = useState('');
@@ -115,9 +117,11 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
     setSubmitting(true);
 
     try {
-      console.log('Submitting role request:', {
+      console.log('[RoleRequest] Submitting with:', {
         user_id: user.id,
         requested_role: requestedRole,
+        email_verified: user.email_confirmed_at,
+        current_roles: roles,
         company_id: requestedRole === 'company' ? companyId.trim() : null
       });
 
@@ -134,17 +138,26 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
         .single();
 
       if (error) {
-        console.error('Error submitting role request:', error);
+        console.error('[RoleRequest] Database error:', {
+          message: error.message,
+          code: error.code,
+          details: error.details,
+          hint: error.hint
+        });
         toast.error(`Failed to submit request: ${error.message}`);
       } else {
-        console.log('Role request submitted successfully:', data);
+        console.log('[RoleRequest] Success:', data);
         toast.success('Role request submitted successfully! An admin will review your request.');
         setJustification('');
         setCompanyId('');
         onRequestSubmitted();
       }
     } catch (err: any) {
-      console.error('Exception submitting role request:', err);
+      console.error('[RoleRequest] Exception:', {
+        name: err.name,
+        message: err.message,
+        stack: err.stack
+      });
       toast.error(`An error occurred: ${err.message || 'Unknown error'}`);
     } finally {
       setSubmitting(false);

@@ -70,7 +70,33 @@ export default function CompanyDashboard() {
   const fetchCompanyUser = async () => {
     if (!user) return;
 
-    // Fetch the company representative assignment for this user
+    // Check if user is admin - admins have oversight of all companies
+    const { data: adminRoleData } = await supabase
+      .from('user_roles')
+      .select('role')
+      .eq('user_id', user.id)
+      .eq('role', 'admin')
+      .maybeSingle();
+
+    if (adminRoleData) {
+      // Admin gets access to all companies
+      const mappedCompanyUser: CompanyUser = {
+        id: 'admin-oversight',
+        user_id: user.id,
+        company_name: 'ADMIN_OVERSIGHT',
+        assigned_by: user.id,
+        assigned_at: new Date().toISOString(),
+        is_active: true,
+      };
+      
+      setCompanyUser(mappedCompanyUser);
+      setCompanyProducts(products); // All products
+      fetchRevisions();
+      setLoading(false);
+      return;
+    }
+
+    // Regular company user logic
     const { data: companyRepData, error: companyError } = await supabase
       .from('company_representatives')
       .select('*')
@@ -106,6 +132,7 @@ export default function CompanyDashboard() {
 
     // Fetch revisions
     fetchRevisions();
+    setLoading(false);
   };
 
   const fetchRevisions = async () => {

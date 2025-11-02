@@ -20,7 +20,7 @@ import { RoleSelector } from '@/components/profile/RoleSelector';
 import { MFASettings } from '@/components/profile/MFASettings';
 import { DataExport } from '@/components/profile/DataExport';
 import { DeleteAccount } from '@/components/profile/DeleteAccount';
-import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package, RefreshCw } from 'lucide-react';
+import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package, RefreshCw, Users, FileCheck, LayoutDashboard, ShieldCheck } from 'lucide-react';
 import { Link, Navigate } from 'react-router-dom';
 
 export default function Profile() {
@@ -381,6 +381,59 @@ export default function Profile() {
 
           {/* Role Selector - for users with multiple roles */}
           <RoleSelector />
+
+          {/* Admin Tools Card - Only show for admins */}
+          {isAdmin && (
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5" />
+                  Admin Tools
+                </CardTitle>
+                <CardDescription>Quick access to administrative features</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link to="/admin/users">
+                      <Users className="h-4 w-4 mr-2" />
+                      User Management
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link to="/admin/reviews">
+                      <FileCheck className="h-4 w-4 mr-2" />
+                      Review Assignments
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link to="/admin">
+                      <LayoutDashboard className="h-4 w-4 mr-2" />
+                      Admin Dashboard
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link to="/admin/security">
+                      <ShieldCheck className="h-4 w-4 mr-2" />
+                      Security Dashboard
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link to="/company/dashboard">
+                      <Building2 className="h-4 w-4 mr-2" />
+                      Company Oversight
+                    </Link>
+                  </Button>
+                  <Button asChild variant="outline" className="justify-start">
+                    <Link to="/company/products-manager">
+                      <Package className="h-4 w-4 mr-2" />
+                      Manage Certifications
+                    </Link>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Profile Information Card */}
           <Card>

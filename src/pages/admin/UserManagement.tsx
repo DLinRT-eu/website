@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -28,7 +29,8 @@ interface UserProfile {
 }
 
 export default function UserManagement() {
-  const { user, isAdmin, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { isAdmin } = useRoles();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [users, setUsers] = useState<UserProfile[]>([]);

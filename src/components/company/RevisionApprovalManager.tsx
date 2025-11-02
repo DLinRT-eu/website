@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -25,7 +26,8 @@ interface CompanyRevision {
 }
 
 export default function RevisionApprovalManager() {
-  const { user, isReviewer, isAdmin } = useAuth();
+  const { user } = useAuth();
+  const { isReviewer, isAdmin } = useRoles();
   const { toast } = useToast();
   const [revisions, setRevisions] = useState<CompanyRevision[]>([]);
   const [selectedRevision, setSelectedRevision] = useState<CompanyRevision | null>(null);

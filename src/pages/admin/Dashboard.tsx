@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,8 @@ import {
   UserPlus,
   FileText,
   TrendingUp,
-  Activity
+  Activity,
+  Building2
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
@@ -50,7 +52,8 @@ interface RecentActivity {
 }
 
 export default function AdminDashboard() {
-  const { user, isAdmin, loading: authLoading } = useAuth();
+  const { user, loading: authLoading } = useAuth();
+  const { isAdmin } = useRoles();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(true);
@@ -304,7 +307,7 @@ export default function AdminDashboard() {
             <CardDescription>Common administrative tasks</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
               <Button asChild variant="outline" className="h-auto py-4 flex-col gap-2">
                 <Link to="/admin/reviews">
                   <FileText className="h-5 w-5" />
@@ -327,6 +330,12 @@ export default function AdminDashboard() {
                 <Link to="/review">
                   <Activity className="h-5 w-5" />
                   <span>Review Dashboard</span>
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="h-auto py-4 flex-col gap-2">
+                <Link to="/company/dashboard">
+                  <Building2 className="h-5 w-5" />
+                  <span>Company Oversight</span>
                 </Link>
               </Button>
             </div>

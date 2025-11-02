@@ -37,7 +37,7 @@ export function useProfile(userId: string | null) {
     fetchProfile();
   }, [userId]);
 
-  const fetchProfile = async () => {
+  const fetchProfile = async (retryCount = 0) => {
     if (!userId) {
       setLoading(false);
       return;
@@ -45,6 +45,11 @@ export function useProfile(userId: string | null) {
 
     try {
       setLoading(true);
+      
+      // Log current auth context for debugging
+      const { data: { session } } = await supabase.auth.getSession();
+      console.log('Fetching profile - userId:', userId, 'session.user.id:', session?.user?.id);
+      
       const { data, error } = await supabase
         .from('profiles')
         .select('*')
@@ -54,7 +59,16 @@ export function useProfile(userId: string | null) {
       if (error) {
         // Check if it's an RLS error (no rows returned)
         if (error.code === 'PGRST116') {
-          console.warn('Profile not found or RLS policy blocking access');
+          console.warn('Profile not found or RLS policy blocking access', { userId, retryCount });
+          
+          // Retry logic with exponential backoff
+          if (retryCount < 3) {
+            const delays = [500, 1000, 2000];
+            const delay = delays[retryCount];
+            console.log(`Retrying profile fetch in ${delay}ms (attempt ${retryCount + 1}/3)`);
+            await new Promise(resolve => setTimeout(resolve, delay));
+            return fetchProfile(retryCount + 1);
+          }
         }
         throw error;
       }

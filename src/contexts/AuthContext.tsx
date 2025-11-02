@@ -55,6 +55,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         console.log('[Auth] State change:', event);
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
+        
+        // Add small delay to ensure session context is fully established
+        if (currentSession?.user) {
+          setTimeout(() => {
+            console.log('[Auth] Session context ready after state change');
+          }, 100);
+        }
       }
     );
 
@@ -64,6 +71,13 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setSession(existingSession);
       setUser(existingSession?.user ?? null);
       setLoading(false);
+      
+      // Add small delay to ensure session context is fully established
+      if (existingSession?.user) {
+        setTimeout(() => {
+          console.log('[Auth] Session context ready for initial profile fetch');
+        }, 100);
+      }
     });
 
     return () => {

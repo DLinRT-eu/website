@@ -156,13 +156,26 @@ export default function Profile() {
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
             <AlertTitle>Profile Not Found</AlertTitle>
-            <AlertDescription>
-              Unable to load your profile. Please try signing out and back in.
+            <AlertDescription className="flex flex-col gap-3">
+              <span>Unable to load your profile. This may be a temporary session issue.</span>
+              <div className="flex gap-2">
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => window.location.reload()}
+                >
+                  Retry Loading Profile
+                </Button>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => signOut()}
+                >
+                  Sign Out
+                </Button>
+              </div>
             </AlertDescription>
           </Alert>
-          <div className="mt-4">
-            <Button onClick={() => signOut()}>Sign Out</Button>
-          </div>
         </div>
       </PageLayout>
     );

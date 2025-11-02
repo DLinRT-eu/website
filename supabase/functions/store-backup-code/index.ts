@@ -14,6 +14,20 @@ serve(async (req) => {
   }
 
   try {
+    // Extract and validate JWT token
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized' }),
+        { 
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      );
+    }
+
+    const token = authHeader.replace('Bearer ', '');
+    
     const supabaseClient = createClient(
       Deno.env.get('SUPABASE_URL') ?? '',
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '',
@@ -25,11 +39,27 @@ serve(async (req) => {
       }
     );
 
-    const { user_id, code } = await req.json();
-
-    if (!user_id || !code) {
+    // Verify the user from the JWT token
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token);
+    
+    if (authError || !user) {
       return new Response(
-        JSON.stringify({ error: 'Missing required fields' }),
+        JSON.stringify({ error: 'Unauthorized' }),
+        { 
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        }
+      );
+    }
+
+    // Extract user_id from authenticated user, not from request body
+    const user_id = user.id;
+
+    const { code } = await req.json();
+
+    if (!code) {
+      return new Response(
+        JSON.stringify({ error: 'Missing backup code' }),
         { 
           status: 400,
           headers: { ...corsHeaders, 'Content-Type': 'application/json' }

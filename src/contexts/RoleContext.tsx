@@ -49,11 +49,17 @@ export function RoleProvider({ children }: { children: ReactNode }) {
       const storedRole = localStorage.getItem('activeRole') as AppRole | null;
       if (storedRole && userRoles.includes(storedRole)) {
         setActiveRoleState(storedRole);
-      } else if (userRoles.length > 0) {
+      } else {
+        // Clear invalid localStorage value to prevent manipulation
+        if (storedRole) {
+          localStorage.removeItem('activeRole');
+        }
         // Default to highest priority role
-        const highestRole = getHighestRole(userRoles);
-        setActiveRoleState(highestRole);
-        localStorage.setItem('activeRole', highestRole);
+        if (userRoles.length > 0) {
+          const highestRole = getHighestRole(userRoles);
+          setActiveRoleState(highestRole);
+          localStorage.setItem('activeRole', highestRole);
+        }
       }
     } catch (error) {
       console.error('Error fetching roles:', error);

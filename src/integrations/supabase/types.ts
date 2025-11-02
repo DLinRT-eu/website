@@ -171,7 +171,6 @@ export type Database = {
         Row: {
           changes_summary: string | null
           company_id: string
-          company_user_id: string | null
           created_at: string | null
           id: string
           priority: string | null
@@ -186,7 +185,6 @@ export type Database = {
         Insert: {
           changes_summary?: string | null
           company_id: string
-          company_user_id?: string | null
           created_at?: string | null
           id?: string
           priority?: string | null
@@ -201,7 +199,6 @@ export type Database = {
         Update: {
           changes_summary?: string | null
           company_id?: string
-          company_user_id?: string | null
           created_at?: string | null
           id?: string
           priority?: string | null
@@ -212,42 +209,6 @@ export type Database = {
           verification_status?: string | null
           verified_at?: string | null
           verified_by?: string | null
-        }
-        Relationships: []
-      }
-      company_users: {
-        Row: {
-          id: string
-          user_id: string
-          company_name: string
-          assigned_by: string | null
-          assigned_at: string
-          is_active: boolean
-          notes: string | null
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          user_id: string
-          company_name: string
-          assigned_by?: string | null
-          assigned_at?: string
-          is_active?: boolean
-          notes?: string | null
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          user_id?: string
-          company_name?: string
-          assigned_by?: string | null
-          assigned_at?: string
-          is_active?: boolean
-          notes?: string | null
-          created_at?: string
-          updated_at?: string
         }
         Relationships: []
       }
@@ -695,6 +656,78 @@ export type Database = {
           },
         ]
       }
+      reviewer_expertise: {
+        Row: {
+          category: string
+          created_at: string | null
+          id: string
+          notes: string | null
+          priority: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          category: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          priority?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          category?: string
+          created_at?: string | null
+          id?: string
+          notes?: string | null
+          priority?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      reviewer_invitations: {
+        Row: {
+          accepted_at: string | null
+          accepted_by: string | null
+          created_at: string | null
+          email: string
+          expertise_preferences: Json | null
+          expires_at: string | null
+          id: string
+          invited_at: string | null
+          invited_by: string | null
+          status: string | null
+          token: string
+        }
+        Insert: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string | null
+          email: string
+          expertise_preferences?: Json | null
+          expires_at?: string | null
+          id?: string
+          invited_at?: string | null
+          invited_by?: string | null
+          status?: string | null
+          token: string
+        }
+        Update: {
+          accepted_at?: string | null
+          accepted_by?: string | null
+          created_at?: string | null
+          email?: string
+          expertise_preferences?: Json | null
+          expires_at?: string | null
+          id?: string
+          invited_at?: string | null
+          invited_by?: string | null
+          status?: string | null
+          token?: string
+        }
+        Relationships: []
+      }
       role_requests: {
         Row: {
           company_id: string | null
@@ -826,40 +859,40 @@ export type Database = {
       }
       user_registration_notifications: {
         Row: {
-          id: string
-          user_id: string
+          created_at: string | null
           email: string
-          notification_sent_at: string | null
-          notification_status: string
           failure_reason: string | null
-          verified: boolean
+          id: string
+          notification_sent_at: string | null
+          notification_status: string | null
+          user_id: string
+          verified: boolean | null
           verified_at: string | null
           verified_by: string | null
-          created_at: string
         }
         Insert: {
-          id?: string
-          user_id: string
+          created_at?: string | null
           email: string
-          notification_sent_at?: string | null
-          notification_status?: string
           failure_reason?: string | null
-          verified?: boolean
+          id?: string
+          notification_sent_at?: string | null
+          notification_status?: string | null
+          user_id: string
+          verified?: boolean | null
           verified_at?: string | null
           verified_by?: string | null
-          created_at?: string
         }
         Update: {
-          id?: string
-          user_id?: string
+          created_at?: string | null
           email?: string
-          notification_sent_at?: string | null
-          notification_status?: string
           failure_reason?: string | null
-          verified?: boolean
+          id?: string
+          notification_sent_at?: string | null
+          notification_status?: string | null
+          user_id?: string
+          verified?: boolean | null
           verified_at?: string | null
           verified_by?: string | null
-          created_at?: string
         }
         Relationships: []
       }
@@ -997,6 +1030,14 @@ export type Database = {
         Args: { _company_id: string; _user_id: string }
         Returns: boolean
       }
+      can_assign_company_role: {
+        Args: { p_user_id: string }
+        Returns: {
+          can_assign: boolean
+          reason: string
+        }[]
+      }
+      can_user_adopt_product: { Args: { p_user_id: string }; Returns: boolean }
       cleanup_old_analytics_data: { Args: never; Returns: undefined }
       cleanup_old_contact_submissions: { Args: never; Returns: undefined }
       cleanup_old_security_events: { Args: never; Returns: undefined }
@@ -1010,6 +1051,7 @@ export type Database = {
         }
         Returns: string
       }
+      expire_old_invitations: { Args: never; Returns: undefined }
       get_analytics_daily: {
         Args: { end_date?: string; start_date?: string }
         Returns: {
@@ -1060,12 +1102,19 @@ export type Database = {
           status: string
         }[]
       }
+      is_admin: { Args: never; Returns: boolean }
+      is_institutional_email: { Args: { email: string }; Returns: boolean }
       schedule_analytics_cleanup: { Args: never; Returns: undefined }
+      send_pending_registration_notifications: {
+        Args: never
+        Returns: {
+          email: string
+          status: string
+          user_id: string
+        }[]
+      }
       verify_user_registration: {
-        Args: {
-          p_user_id: string
-          p_verified?: boolean
-        }
+        Args: { p_user_id: string; p_verified?: boolean }
         Returns: boolean
       }
     }

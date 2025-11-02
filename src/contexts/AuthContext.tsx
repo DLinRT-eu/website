@@ -32,7 +32,8 @@ interface AuthContextType {
   resendVerificationEmail: () => Promise<{ error: Error | null }>;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+// Create context with null as initial value instead of undefined
+const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -168,15 +169,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
-  const value = {
+  const value: AuthContextType = {
     user,
     session,
-    loading, // Auth loading state
-    profileLoading, // Profile loading state (separate)
+    loading,
+    profileLoading,
     signIn,
     signUp,
     signOut,
-    // Profile management (legacy profiles table for backward compat)
     profile,
     updateProfile: updateProfileData,
     resendVerificationEmail,
@@ -197,7 +197,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
+  if (context === null) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

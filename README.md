@@ -28,8 +28,27 @@ The following pages are accessible but not listed in the main navigation:
 - **Review Dashboard** (`/review`) - Administrative interface for product review management and status tracking
 - **Product Review** (`/review/:id`) - Individual product review interface for detailed verification
 - **Timeline** (`/timeline`) - Interactive data visualization showing product release timeline and trends
+- **Review Rounds** (`/admin/review-rounds`) - Create and manage review rounds with balanced assignments
+- **Round Details** (`/admin/review-rounds/:roundId`) - View assignments and audit history for a specific round
+- **Enhanced Assignment** (`/admin/review-assignment`) - Advanced reviewer assignment interface
 
 These pages provide advanced functionality for maintainers and data analysis but are intentionally kept separate from the main user navigation.
+
+---
+
+## Reviewer Assignment System
+
+DLinRT.eu features an intelligent reviewer assignment system that:
+
+- **Multi-Dimensional Preferences**: Reviewers specify expertise across categories, companies, and products
+- **Balanced Assignments**: Algorithm automatically distributes workload evenly while matching expertise
+- **Assignment Control**: Full preview and manual override capabilities before finalizing
+- **Audit Trail**: Complete history tracking of all assignment changes with reasons
+- **Email Notifications**: Automatic notifications to reviewers with assignment details and deadlines
+
+For detailed information:
+- **Admins**: See [Admin Guide](./docs/ADMIN_GUIDE.md) and [Reviewer Assignment Guide](./docs/REVIEWER_ASSIGNMENT_GUIDE.md)
+- **Reviewers**: See [Reviewer Guide](./docs/REVIEWER_GUIDE.md)
 
 ---
 

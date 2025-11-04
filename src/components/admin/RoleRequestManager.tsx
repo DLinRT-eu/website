@@ -8,10 +8,11 @@ import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, D
 import { Textarea } from '@/components/ui/textarea';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { format } from 'date-fns';
-import { Search, Filter, X, ArrowUpDown, Download, FileSpreadsheet } from 'lucide-react';
+import { Search, Filter, X, ArrowUpDown, Download, FileSpreadsheet, CheckSquare, XSquare } from 'lucide-react';
 import * as XLSX from 'xlsx';
 
 interface RoleRequest {
@@ -49,9 +50,14 @@ export const RoleRequestManager = () => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [showFilters, setShowFilters] = useState(false);
   
+  // Bulk actions state
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
+  const [bulkProcessing, setBulkProcessing] = useState(false);
+  
   const { toast } = useToast();
 
   useEffect(() => {
+    setSelectedIds(new Set()); // Clear selections when filters change
     fetchRoleRequests();
   }, [currentPage, searchQuery, roleFilter, dateFrom, dateTo, companyFilter, sortBy, sortOrder]);
 
@@ -213,6 +219,7 @@ export const RoleRequestManager = () => {
       });
 
       setSelectedRequest(null);
+      setSelectedIds(new Set()); // Clear selections
       setCurrentPage(1); // Reset to first page
       fetchRoleRequests();
     } catch (error: any) {
@@ -249,6 +256,7 @@ export const RoleRequestManager = () => {
       });
 
       setSelectedRequest(null);
+      setSelectedIds(new Set()); // Clear selections
       setCurrentPage(1); // Reset to first page
       fetchRoleRequests();
     } catch (error: any) {
@@ -281,6 +289,160 @@ export const RoleRequestManager = () => {
   };
 
   const hasActiveFilters = searchQuery || roleFilter !== 'all' || dateFrom || dateTo || companyFilter;
+
+  const toggleSelectAll = () => {
+    if (selectedIds.size === requests.length && requests.length > 0) {
+      setSelectedIds(new Set());
+    } else {
+      setSelectedIds(new Set(requests.map(r => r.id)));
+    }
+  };
+
+  const toggleSelectRequest = (id: string) => {
+    const newSelected = new Set(selectedIds);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedIds(newSelected);
+  };
+
+  const handleBulkApprove = async () => {
+    if (selectedIds.size === 0) return;
+
+    const confirmMessage = `Are you sure you want to approve ${selectedIds.size} role request(s)?`;
+    if (!confirm(confirmMessage)) return;
+
+    setBulkProcessing(true);
+    const selectedRequests = requests.filter(r => selectedIds.has(r.id));
+    let successCount = 0;
+    let failCount = 0;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      for (const request of selectedRequests) {
+        try {
+          // Grant the role
+          const { error: roleError } = await supabase
+            .from('user_roles')
+            .insert({
+              user_id: request.user_id,
+              role: request.requested_role,
+              granted_by: user.id,
+            });
+
+          if (roleError) throw roleError;
+
+          // If company role, update company_representatives
+          if (request.requested_role === 'company' && request.company_id) {
+            const { error: companyError } = await supabase
+              .from('company_representatives')
+              .update({
+                verified: true,
+                verified_by: user.id,
+                verified_at: new Date().toISOString(),
+              })
+              .eq('user_id', request.user_id)
+              .eq('company_id', request.company_id);
+
+            if (companyError) throw companyError;
+          }
+
+          // Update request status
+          const { error: updateError } = await supabase
+            .from('role_requests')
+            .update({
+              status: 'approved',
+              reviewed_by: user.id,
+              reviewed_at: new Date().toISOString(),
+            })
+            .eq('id', request.id);
+
+          if (updateError) throw updateError;
+
+          successCount++;
+        } catch (error: any) {
+          console.error(`Error approving request ${request.id}:`, error);
+          failCount++;
+        }
+      }
+
+      toast({
+        title: 'Bulk Approval Complete',
+        description: `Successfully approved ${successCount} request(s).${failCount > 0 ? ` ${failCount} failed.` : ''}`,
+        variant: failCount > 0 ? 'destructive' : 'default',
+      });
+
+      setSelectedIds(new Set());
+      setCurrentPage(1);
+      fetchRoleRequests();
+    } catch (error: any) {
+      toast({
+        title: 'Bulk Approval Failed',
+        description: error.message,
+        variant: 'destructive',
+      });
+    } finally {
+      setBulkProcessing(false);
+    }
+  };
+
+  const handleBulkReject = async () => {
+    if (selectedIds.size === 0) return;
+
+    const confirmMessage = `Are you sure you want to reject ${selectedIds.size} role request(s)?`;
+    if (!confirm(confirmMessage)) return;
+
+    setBulkProcessing(true);
+    const selectedRequests = requests.filter(r => selectedIds.has(r.id));
+    let successCount = 0;
+    let failCount = 0;
+
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error('Not authenticated');
+
+      for (const request of selectedRequests) {
+        try {
+          const { error } = await supabase
+            .from('role_requests')
+            .update({
+              status: 'rejected',
+              reviewed_by: user.id,
+              reviewed_at: new Date().toISOString(),
+            })
+            .eq('id', request.id);
+
+          if (error) throw error;
+          successCount++;
+        } catch (error: any) {
+          console.error(`Error rejecting request ${request.id}:`, error);
+          failCount++;
+        }
+      }
+
+      toast({
+        title: 'Bulk Rejection Complete',
+        description: `Successfully rejected ${successCount} request(s).${failCount > 0 ? ` ${failCount} failed.` : ''}`,
+        variant: failCount > 0 ? 'destructive' : 'default',
+      });
+
+      setSelectedIds(new Set());
+      setCurrentPage(1);
+      fetchRoleRequests();
+    } catch (error: any) {
+      toast({
+        title: 'Bulk Rejection Failed',
+        description: error.message,
+        variant: 'destructive',
+      });
+    } finally {
+      setBulkProcessing(false);
+    }
+  };
 
   const exportToCSV = () => {
     if (requests.length === 0) {
@@ -566,57 +728,119 @@ export const RoleRequestManager = () => {
             </p>
           ) : (
             <>
-              <div className="space-y-4">
-                {requests.map((request) => (
-                <div
-                  key={request.id}
-                  className="border rounded-lg p-4 space-y-3"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="font-semibold">
-                        {request.profiles.first_name} {request.profiles.last_name}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {request.profiles.email}
-                      </p>
-                    </div>
-                    <Badge variant={getRoleBadgeVariant(request.requested_role)}>
-                      {request.requested_role}
-                    </Badge>
+              {/* Bulk Actions Bar */}
+              {selectedIds.size > 0 && (
+                <div className="mb-4 p-4 bg-muted border rounded-lg flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <span className="font-medium">
+                      {selectedIds.size} selected
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setSelectedIds(new Set())}
+                    >
+                      Clear Selection
+                    </Button>
                   </div>
-                  
-                  <div>
-                    <p className="text-sm font-medium mb-1">Justification:</p>
-                    <p className="text-sm text-muted-foreground">
-                      {request.justification}
-                    </p>
-                  </div>
-
-                  {request.company_id && (
-                    <div>
-                      <p className="text-sm font-medium mb-1">Company ID:</p>
-                      <p className="text-sm text-muted-foreground">
-                        {request.company_id}
-                      </p>
-                    </div>
-                  )}
-
-                  <div className="text-xs text-muted-foreground">
-                    Requested on {format(new Date(request.created_at), 'PPP')}
-                  </div>
-
                   <div className="flex gap-2">
                     <Button
+                      variant="outline"
                       size="sm"
-                      onClick={() => setSelectedRequest(request)}
-                      disabled={processing}
+                      onClick={handleBulkReject}
+                      disabled={bulkProcessing}
+                      className="gap-2"
                     >
-                      Review
+                      <XSquare className="h-4 w-4" />
+                      Reject Selected
+                    </Button>
+                    <Button
+                      size="sm"
+                      onClick={handleBulkApprove}
+                      disabled={bulkProcessing}
+                      className="gap-2"
+                    >
+                      <CheckSquare className="h-4 w-4" />
+                      Approve Selected
                     </Button>
                   </div>
                 </div>
-              ))}
+              )}
+
+              {/* Select All Checkbox */}
+              {requests.length > 0 && (
+                <div className="mb-4 flex items-center gap-2 py-2 px-1">
+                  <Checkbox
+                    checked={selectedIds.size === requests.length && requests.length > 0}
+                    onCheckedChange={toggleSelectAll}
+                    id="select-all"
+                  />
+                  <Label htmlFor="select-all" className="text-sm cursor-pointer">
+                    Select all on this page
+                  </Label>
+                </div>
+              )}
+
+              <div className="space-y-4">
+                {requests.map((request) => (
+                  <div
+                    key={request.id}
+                    className="border rounded-lg p-4 space-y-3"
+                  >
+                    <div className="flex items-start gap-3">
+                      <Checkbox
+                        checked={selectedIds.has(request.id)}
+                        onCheckedChange={() => toggleSelectRequest(request.id)}
+                        className="mt-1"
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-start justify-between">
+                          <div>
+                            <h3 className="font-semibold">
+                              {request.profiles.first_name} {request.profiles.last_name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {request.profiles.email}
+                            </p>
+                          </div>
+                          <Badge variant={getRoleBadgeVariant(request.requested_role)}>
+                            {request.requested_role}
+                          </Badge>
+                        </div>
+                        
+                        <div className="mt-3">
+                          <p className="text-sm font-medium mb-1">Justification:</p>
+                          <p className="text-sm text-muted-foreground">
+                            {request.justification}
+                          </p>
+                        </div>
+
+                        {request.company_id && (
+                          <div className="mt-2">
+                            <p className="text-sm font-medium mb-1">Company ID:</p>
+                            <p className="text-sm text-muted-foreground">
+                              {request.company_id}
+                            </p>
+                          </div>
+                        )}
+
+                        <div className="text-xs text-muted-foreground mt-2">
+                          Requested on {format(new Date(request.created_at), 'PPP')}
+                        </div>
+
+                        <div className="flex gap-2 mt-3">
+                          <Button
+                            size="sm"
+                            onClick={() => setSelectedRequest(request)}
+                            disabled={processing || bulkProcessing}
+                          >
+                            Review
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
 
               {/* Pagination Controls */}

@@ -29,7 +29,10 @@ export interface ReviewRoundStats {
 
 export interface ReviewerExpertise {
   user_id: string;
-  category: string;
+  preference_type: 'category' | 'company' | 'product';
+  category?: string;
+  company_id?: string;
+  product_id?: string;
   priority: number;
   notes?: string;
 }
@@ -112,7 +115,7 @@ export async function getReviewersByExpertise(category?: string): Promise<Review
 
   // Build reviewer objects with expertise
   const reviewers: ReviewerWithExpertise[] = profiles.map(profile => {
-    const userExpertise = expertise?.filter(e => e.user_id === profile.id) || [];
+    const userExpertise = (expertise?.filter(e => e.user_id === profile.id) || []) as ReviewerExpertise[];
     const workload = reviews?.filter(r => r.assigned_to === profile.id).length || 0;
 
     return {
@@ -128,7 +131,7 @@ export async function getReviewersByExpertise(category?: string): Promise<Review
   // Filter by category if specified
   if (category) {
     return reviewers.filter(r => 
-      r.expertise.some(e => e.category === category)
+      r.expertise.some(e => e.preference_type === 'category' && e.category === category)
     );
   }
 
@@ -194,6 +197,8 @@ export async function bulkAssignProducts(
     const products = ALL_PRODUCTS.filter(p => productIds.includes(p.id))
       .map(p => ({
         id: p.id,
+        name: p.name,
+        company: p.company,
         category: p.category
       }));
 
@@ -208,20 +213,49 @@ export async function bulkAssignProducts(
     const assignments = [];
 
     for (const product of products) {
-      // Find reviewers with matching expertise
-      const matchingReviewers = reviewers.filter(r =>
-        r.expertise.some(e => e.category === product.category)
-      ).sort((a, b) => {
-        // Sort by: 1) priority (lower is better), 2) current assignments
-        const aPriority = a.expertise.find(e => e.category === product.category)?.priority || 10;
-        const bPriority = b.expertise.find(e => e.category === product.category)?.priority || 10;
-        
-        if (aPriority !== bPriority) return aPriority - bPriority;
-        
-        const aCount = assignmentCount.get(a.user_id) || 0;
-        const bCount = assignmentCount.get(b.user_id) || 0;
-        return aCount - bCount;
+      // Calculate match score for each reviewer using weighted scoring
+      const reviewerScores = reviewers.map(reviewer => {
+        let score = 0;
+
+        // Product match (highest weight = 5)
+        const productMatch = reviewer.expertise.find(e => 
+          e.preference_type === 'product' && e.product_id === product.id
+        );
+        if (productMatch) {
+          score += (11 - productMatch.priority) * 5;
+        }
+
+        // Company match (medium weight = 2)
+        const companyMatch = reviewer.expertise.find(e => 
+          e.preference_type === 'company' && e.company_id === product.company.toLowerCase().replace(/\s+/g, '-')
+        );
+        if (companyMatch) {
+          score += (11 - companyMatch.priority) * 2;
+        }
+
+        // Category match (base weight = 3)
+        const categoryMatch = reviewer.expertise.find(e => 
+          e.preference_type === 'category' && e.category === product.category
+        );
+        if (categoryMatch) {
+          score += (11 - categoryMatch.priority) * 3;
+        }
+
+        return {
+          reviewer,
+          score,
+          currentAssignments: assignmentCount.get(reviewer.user_id) || 0
+        };
       });
+
+      // Sort by: 1) score (higher is better), 2) current assignments (fewer is better)
+      const matchingReviewers = reviewerScores
+        .filter(rs => rs.score > 0)
+        .sort((a, b) => {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.currentAssignments - b.currentAssignments;
+        })
+        .map(rs => rs.reviewer);
 
       if (matchingReviewers.length === 0) {
         // No matching expertise, assign to reviewer with least workload

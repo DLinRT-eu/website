@@ -803,29 +803,38 @@ export type Database = {
       }
       reviewer_expertise: {
         Row: {
-          category: string
+          category: string | null
+          company_id: string | null
           created_at: string | null
           id: string
           notes: string | null
+          preference_type: string
           priority: number | null
+          product_id: string | null
           updated_at: string | null
           user_id: string
         }
         Insert: {
-          category: string
+          category?: string | null
+          company_id?: string | null
           created_at?: string | null
           id?: string
           notes?: string | null
+          preference_type?: string
           priority?: number | null
+          product_id?: string | null
           updated_at?: string | null
           user_id: string
         }
         Update: {
-          category?: string
+          category?: string | null
+          company_id?: string | null
           created_at?: string | null
           id?: string
           notes?: string | null
+          preference_type?: string
           priority?: number | null
+          product_id?: string | null
           updated_at?: string | null
           user_id?: string
         }

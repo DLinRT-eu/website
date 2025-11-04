@@ -2,13 +2,24 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Info } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Loader2, Info, Trash2 } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { CategoryPreferences } from "./CategoryPreferences";
@@ -33,6 +44,7 @@ interface Preference {
 export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesContainerProps) {
   const [preferences, setPreferences] = useState<Preference[]>([]);
   const [loading, setLoading] = useState(true);
+  const [showClearDialog, setShowClearDialog] = useState(false);
 
   useEffect(() => {
     fetchPreferences();
@@ -223,6 +235,24 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
     }
   };
 
+  const handleClearAll = async () => {
+    try {
+      const { error } = await supabase
+        .from('reviewer_expertise')
+        .delete()
+        .eq('user_id', userId);
+
+      if (error) throw error;
+
+      toast.success('All preferences cleared');
+      setShowClearDialog(false);
+      fetchPreferences();
+    } catch (error) {
+      console.error('Error clearing preferences:', error);
+      toast.error('Failed to clear preferences');
+    }
+  };
+
   const categoryPreferences = preferences
     .filter(p => p.preference_type === 'category' && p.category)
     .map(p => ({ category: p.category!, priority: p.priority }));
@@ -285,10 +315,21 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
               {productPreferences.length} {productPreferences.length === 1 ? 'Product' : 'Products'}
             </Badge>
           </div>
-          <PreferenceImportExport
-            onExport={handleExport}
-            onImport={handleImport}
-          />
+          <div className="flex gap-2">
+            <Button
+              variant="destructive"
+              size="sm"
+              onClick={() => setShowClearDialog(true)}
+              disabled={preferences.length === 0}
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Clear All
+            </Button>
+            <PreferenceImportExport
+              onExport={handleExport}
+              onImport={handleImport}
+            />
+          </div>
         </div>
       </CardHeader>
       <CardContent>
@@ -355,6 +396,32 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
           </TabsContent>
         </Tabs>
       </CardContent>
+
+      {/* Clear All Confirmation Dialog */}
+      <AlertDialog open={showClearDialog} onOpenChange={setShowClearDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Clear All Preferences?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will remove all your expertise preferences:
+              <ul className="list-disc pl-6 mt-2 space-y-1">
+                <li>{categoryPreferences.length} {categoryPreferences.length === 1 ? 'category' : 'categories'}</li>
+                <li>{companyPreferences.length} {companyPreferences.length === 1 ? 'company' : 'companies'}</li>
+                <li>{productPreferences.length} {productPreferences.length === 1 ? 'product' : 'products'}</li>
+              </ul>
+              <p className="mt-2 text-destructive font-medium">
+                This action cannot be undone.
+              </p>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={handleClearAll} className="bg-destructive text-destructive-foreground hover:bg-destructive/90">
+              Clear All Preferences
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Card>
   );
 }

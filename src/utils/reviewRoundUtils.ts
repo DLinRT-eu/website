@@ -174,125 +174,163 @@ export function calculateReviewerWorkload(
 }
 
 /**
+ * Calculates proposed assignments without inserting them
+ */
+export async function calculateProposedAssignments(
+  productIds: string[],
+  selectedReviewerIds?: string[]
+): Promise<Array<{ product_id: string; assigned_to: string; match_score: number }>> {
+  // Get all reviewers with expertise
+  let reviewers = await getReviewersByExpertise();
+  
+  // Filter by selected reviewers if provided
+  if (selectedReviewerIds && selectedReviewerIds.length > 0) {
+    reviewers = reviewers.filter(r => selectedReviewerIds.includes(r.user_id));
+  }
+  
+  if (reviewers.length === 0) {
+    throw new Error('No reviewers available for assignment');
+  }
+
+  // Get product details from static data
+  const products = ALL_PRODUCTS.filter(p => productIds.includes(p.id))
+    .map(p => ({
+      id: p.id,
+      name: p.name,
+      company: p.company,
+      category: p.category
+    }));
+
+  // Calculate target workload per reviewer (for balancing)
+  const targetPerReviewer = Math.floor(productIds.length / reviewers.length);
+  const maxPerReviewer = Math.ceil(productIds.length / reviewers.length);
+  
+  // Track assignments per reviewer
+  const assignmentCount = new Map<string, number>();
+  reviewers.forEach(r => assignmentCount.set(r.user_id, 0));
+
+  const assignments = [];
+
+  for (const product of products) {
+    // Calculate match score for each reviewer using weighted scoring
+    const reviewerScores = reviewers.map(reviewer => {
+      let score = 0;
+
+      // Product match (highest weight = 5)
+      const productMatch = reviewer.expertise.find(e => 
+        e.preference_type === 'product' && e.product_id === product.id
+      );
+      if (productMatch) {
+        score += (11 - productMatch.priority) * 5;
+      }
+
+      // Company match (medium weight = 2)
+      const companyMatch = reviewer.expertise.find(e => 
+        e.preference_type === 'company' && e.company_id === product.company.toLowerCase().replace(/\s+/g, '-')
+      );
+      if (companyMatch) {
+        score += (11 - companyMatch.priority) * 2;
+      }
+
+      // Category match (base weight = 3)
+      const categoryMatch = reviewer.expertise.find(e => 
+        e.preference_type === 'category' && e.category === product.category
+      );
+      if (categoryMatch) {
+        score += (11 - categoryMatch.priority) * 3;
+      }
+
+      const currentCount = assignmentCount.get(reviewer.user_id) || 0;
+
+      return {
+        reviewer,
+        score,
+        currentCount
+      };
+    });
+
+    // Sort by: 1) score (higher is better), 2) current count (fewer is better)
+    // But enforce max variance of 1
+    const sortedReviewers = reviewerScores
+      .filter(rs => rs.currentCount < maxPerReviewer) // Don't exceed max
+      .sort((a, b) => {
+        // If both have good scores, prefer lower workload
+        if (a.score > 0 && b.score > 0) {
+          if (b.score !== a.score) return b.score - a.score;
+          return a.currentCount - b.currentCount;
+        }
+        // Prefer any match over no match
+        if (a.score > 0 && b.score === 0) return -1;
+        if (b.score > 0 && a.score === 0) return 1;
+        // Both have no match, just balance workload
+        return a.currentCount - b.currentCount;
+      });
+
+    if (sortedReviewers.length === 0) {
+      // All reviewers at max, find one with most capacity
+      const leastLoaded = reviewerScores.reduce((min, r) => 
+        r.currentCount < min.currentCount ? r : min
+      );
+      
+      assignments.push({
+        product_id: product.id,
+        assigned_to: leastLoaded.reviewer.user_id,
+        match_score: leastLoaded.score
+      });
+      
+      assignmentCount.set(leastLoaded.reviewer.user_id, leastLoaded.currentCount + 1);
+    } else {
+      const best = sortedReviewers[0];
+      assignments.push({
+        product_id: product.id,
+        assigned_to: best.reviewer.user_id,
+        match_score: best.score
+      });
+      
+      assignmentCount.set(best.reviewer.user_id, best.currentCount + 1);
+    }
+  }
+
+  return assignments;
+}
+
+/**
  * Assigns products to reviewers based on expertise and workload
  */
 export async function bulkAssignProducts(
   roundId: string,
   productIds: string[],
-  deadline?: string
+  deadline?: string,
+  proposedAssignments?: Array<{ product_id: string; assigned_to: string; match_score: number }>
 ): Promise<{ success: number; failed: number; errors: string[] }> {
   const errors: string[] = [];
   let success = 0;
   let failed = 0;
 
   try {
-    // Get all reviewers with expertise
-    const reviewers = await getReviewersByExpertise();
+    let assignments;
     
-    if (reviewers.length === 0) {
-      throw new Error('No reviewers with expertise found');
-    }
-
-    // Get product details from static data
-    const products = ALL_PRODUCTS.filter(p => productIds.includes(p.id))
-      .map(p => ({
-        id: p.id,
-        name: p.name,
-        company: p.company,
-        category: p.category
+    // Use provided assignments or calculate new ones
+    if (proposedAssignments && proposedAssignments.length > 0) {
+      assignments = proposedAssignments.map(pa => ({
+        product_id: pa.product_id,
+        assigned_to: pa.assigned_to,
+        review_round_id: roundId,
+        status: 'pending' as const,
+        priority: 'medium' as const,
+        deadline: deadline || null
       }));
-
-    // Calculate target workload per reviewer
-    const workloadMap = calculateReviewerWorkload(reviewers, productIds.length);
-
-    // Track assignments per reviewer
-    const assignmentCount = new Map<string, number>();
-    reviewers.forEach(r => assignmentCount.set(r.user_id, 0));
-
-    // Create assignments
-    const assignments = [];
-
-    for (const product of products) {
-      // Calculate match score for each reviewer using weighted scoring
-      const reviewerScores = reviewers.map(reviewer => {
-        let score = 0;
-
-        // Product match (highest weight = 5)
-        const productMatch = reviewer.expertise.find(e => 
-          e.preference_type === 'product' && e.product_id === product.id
-        );
-        if (productMatch) {
-          score += (11 - productMatch.priority) * 5;
-        }
-
-        // Company match (medium weight = 2)
-        const companyMatch = reviewer.expertise.find(e => 
-          e.preference_type === 'company' && e.company_id === product.company.toLowerCase().replace(/\s+/g, '-')
-        );
-        if (companyMatch) {
-          score += (11 - companyMatch.priority) * 2;
-        }
-
-        // Category match (base weight = 3)
-        const categoryMatch = reviewer.expertise.find(e => 
-          e.preference_type === 'category' && e.category === product.category
-        );
-        if (categoryMatch) {
-          score += (11 - categoryMatch.priority) * 3;
-        }
-
-        return {
-          reviewer,
-          score,
-          currentAssignments: assignmentCount.get(reviewer.user_id) || 0
-        };
-      });
-
-      // Sort by: 1) score (higher is better), 2) current assignments (fewer is better)
-      const matchingReviewers = reviewerScores
-        .filter(rs => rs.score > 0)
-        .sort((a, b) => {
-          if (b.score !== a.score) return b.score - a.score;
-          return a.currentAssignments - b.currentAssignments;
-        })
-        .map(rs => rs.reviewer);
-
-      if (matchingReviewers.length === 0) {
-        // No matching expertise, assign to reviewer with least workload
-        const leastLoadedReviewer = reviewers.reduce((min, r) => {
-          const count = assignmentCount.get(r.user_id) || 0;
-          const minCount = assignmentCount.get(min.user_id) || 0;
-          return count < minCount ? r : min;
-        });
-
-        assignments.push({
-          product_id: product.id,
-          assigned_to: leastLoadedReviewer.user_id,
-          review_round_id: roundId,
-          status: 'pending',
-          priority: 'medium',
-          deadline: deadline || null
-        });
-
-        assignmentCount.set(
-          leastLoadedReviewer.user_id, 
-          (assignmentCount.get(leastLoadedReviewer.user_id) || 0) + 1
-        );
-      } else {
-        // Assign to best matching reviewer
-        const assignedTo = matchingReviewers[0].user_id;
-        
-        assignments.push({
-          product_id: product.id,
-          assigned_to: assignedTo,
-          review_round_id: roundId,
-          status: 'pending',
-          priority: 'medium',
-          deadline: deadline || null
-        });
-
-        assignmentCount.set(assignedTo, (assignmentCount.get(assignedTo) || 0) + 1);
-      }
+    } else {
+      // Fallback to old behavior for backward compatibility
+      const proposed = await calculateProposedAssignments(productIds);
+      assignments = proposed.map(pa => ({
+        product_id: pa.product_id,
+        assigned_to: pa.assigned_to,
+        review_round_id: roundId,
+        status: 'pending' as const,
+        priority: 'medium' as const,
+        deadline: deadline || null
+      }));
     }
 
     // Insert all assignments

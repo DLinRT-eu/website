@@ -39,11 +39,15 @@ import {
   bulkAssignProducts,
   getRoundStatistics,
   updateRoundStatus,
+  calculateProposedAssignments,
+  getReviewersByExpertise,
   type ReviewRound,
   type ReviewRoundStats
 } from "@/utils/reviewRoundUtils";
 import { format } from "date-fns";
 import { ALL_PRODUCTS } from "@/data";
+import { ReviewerSelectionDialog } from "@/components/admin/review-rounds/ReviewerSelectionDialog";
+import { AssignmentPreviewDialog, type ProposedAssignment } from "@/components/admin/review-rounds/AssignmentPreviewDialog";
 
 export default function ReviewRounds() {
   const [rounds, setRounds] = useState<ReviewRound[]>([]);
@@ -55,6 +59,14 @@ export default function ReviewRounds() {
     totalReviewers: 0,
     reviewersWithExpertise: 0
   });
+  
+  // New workflow state
+  const [showReviewerSelection, setShowReviewerSelection] = useState(false);
+  const [showAssignmentPreview, setShowAssignmentPreview] = useState(false);
+  const [currentRoundId, setCurrentRoundId] = useState<string | null>(null);
+  const [currentDeadline, setCurrentDeadline] = useState<string | undefined>();
+  const [proposedAssignments, setProposedAssignments] = useState<ProposedAssignment[]>([]);
+  const [selectedReviewers, setSelectedReviewers] = useState<any[]>([]);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -152,7 +164,7 @@ export default function ReviewRounds() {
     }
   };
 
-  const handleBulkAssign = async (roundId: string, deadline?: string) => {
+  const handleStartRound = async (roundId: string, deadline?: string) => {
     // Pre-flight validation
     if (reviewerStats.reviewersWithExpertise === 0) {
       toast.error('Cannot start round: No reviewers have set their expertise preferences yet');
@@ -164,28 +176,77 @@ export default function ReviewRounds() {
       return;
     }
 
-    setAssigning(roundId);
+    // Open reviewer selection dialog
+    setCurrentRoundId(roundId);
+    setCurrentDeadline(deadline);
+    setShowReviewerSelection(true);
+  };
+
+  const handleReviewerSelectionContinue = async (selectedReviewerIds: string[]) => {
+    setShowReviewerSelection(false);
+    
+    try {
+      // Calculate proposed assignments
+      const productIds = ALL_PRODUCTS.map(p => p.id);
+      const proposed = await calculateProposedAssignments(productIds, selectedReviewerIds);
+      const reviewers = await getReviewersByExpertise();
+      
+      setProposedAssignments(proposed);
+      setSelectedReviewers(reviewers.filter(r => selectedReviewerIds.includes(r.user_id)));
+      setShowAssignmentPreview(true);
+    } catch (error) {
+      console.error('Error calculating assignments:', error);
+      toast.error('Failed to calculate assignments');
+    }
+  };
+
+  const handleRerunAssignments = async () => {
+    try {
+      const productIds = ALL_PRODUCTS.map(p => p.id);
+      const selectedIds = selectedReviewers.map(r => r.user_id);
+      const proposed = await calculateProposedAssignments(productIds, selectedIds);
+      setProposedAssignments(proposed);
+      toast.success('Assignments recalculated');
+    } catch (error) {
+      console.error('Error recalculating assignments:', error);
+      toast.error('Failed to recalculate assignments');
+    }
+  };
+
+  const handleConfirmAssignments = async (finalAssignments: ProposedAssignment[]) => {
+    if (!currentRoundId) return;
+    
+    setAssigning(currentRoundId);
     try {
       const productIds = ALL_PRODUCTS.map(p => p.id);
       
-      toast.loading(`Assigning ${productIds.length} products to ${reviewerStats.reviewersWithExpertise} reviewers...`);
+      toast.loading(`Creating ${finalAssignments.length} assignments...`);
       
-      const result = await bulkAssignProducts(roundId, productIds, deadline);
+      const result = await bulkAssignProducts(
+        currentRoundId, 
+        productIds, 
+        currentDeadline,
+        finalAssignments
+      );
 
       if (result.success > 0) {
         toast.success(`Successfully assigned ${result.success} products to reviewers`);
         
         // Update round status to active
-        await updateRoundStatus(roundId, 'active');
+        await updateRoundStatus(currentRoundId, 'active');
+        
+        // Reset state and close dialogs
+        setShowAssignmentPreview(false);
+        setCurrentRoundId(null);
+        setCurrentDeadline(undefined);
+        setProposedAssignments([]);
+        setSelectedReviewers([]);
+        
         fetchRounds();
       }
 
       if (result.failed > 0) {
-        toast.warning(`${result.failed} products could not be assigned. Reasons: ${result.errors.slice(0, 3).join(', ')}`);
-      }
-      
-      if (result.errors.length > 0) {
-        console.error('Assignment errors:', result.errors);
+        toast.warning(`${result.failed} products could not be assigned`);
       }
     } catch (error) {
       console.error('Error in bulk assignment:', error);
@@ -393,7 +454,7 @@ export default function ReviewRounds() {
                       {round.status === 'draft' && (
                         <Button
                           size="sm"
-                          onClick={() => handleBulkAssign(round.id, round.default_deadline)}
+                          onClick={() => handleStartRound(round.id, round.default_deadline)}
                           disabled={assigning === round.id || reviewerStats.reviewersWithExpertise === 0}
                           title={reviewerStats.reviewersWithExpertise === 0 ? 'No reviewers with expertise available' : ''}
                         >
@@ -488,6 +549,24 @@ export default function ReviewRounds() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      {/* Reviewer Selection Dialog */}
+      <ReviewerSelectionDialog
+        open={showReviewerSelection}
+        onOpenChange={setShowReviewerSelection}
+        onContinue={handleReviewerSelectionContinue}
+        totalProducts={ALL_PRODUCTS.length}
+      />
+
+      {/* Assignment Preview Dialog */}
+      <AssignmentPreviewDialog
+        open={showAssignmentPreview}
+        onOpenChange={setShowAssignmentPreview}
+        assignments={proposedAssignments}
+        reviewers={selectedReviewers}
+        onConfirm={handleConfirmAssignments}
+        onRerun={handleRerunAssignments}
+      />
     </div>
   );
 }

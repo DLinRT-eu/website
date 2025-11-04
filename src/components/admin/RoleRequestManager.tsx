@@ -30,14 +30,29 @@ export const RoleRequestManager = () => {
   const [selectedRequest, setSelectedRequest] = useState<RoleRequest | null>(null);
   const [adminNote, setAdminNote] = useState('');
   const [processing, setProcessing] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCount, setTotalCount] = useState(0);
+  const itemsPerPage = 10;
   const { toast } = useToast();
 
   useEffect(() => {
     fetchRoleRequests();
-  }, []);
+  }, [currentPage]);
 
   const fetchRoleRequests = async () => {
     try {
+      const from = (currentPage - 1) * itemsPerPage;
+      const to = from + itemsPerPage - 1;
+
+      // Get total count
+      const { count } = await supabase
+        .from('role_requests')
+        .select('*', { count: 'exact', head: true })
+        .eq('status', 'pending');
+
+      setTotalCount(count || 0);
+
+      // Get paginated data
       const { data: requestsData, error } = await supabase
         .from('role_requests')
         .select(`
@@ -55,13 +70,15 @@ export const RoleRequestManager = () => {
           )
         `)
         .eq('status', 'pending')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: false })
+        .range(from, to);
 
       if (error) {
         // Silently handle permission denied errors (happens during initial load)
         if (error.code === '42501' || error.message.includes('permission denied')) {
           console.warn('Permission denied for role_requests - auth may still be loading');
           setRequests([]);
+          setTotalCount(0);
           setLoading(false);
           return;
         }
@@ -137,6 +154,7 @@ export const RoleRequestManager = () => {
       });
 
       setSelectedRequest(null);
+      setCurrentPage(1); // Reset to first page
       fetchRoleRequests();
     } catch (error: any) {
       toast({
@@ -172,6 +190,7 @@ export const RoleRequestManager = () => {
       });
 
       setSelectedRequest(null);
+      setCurrentPage(1); // Reset to first page
       fetchRoleRequests();
     } catch (error: any) {
       toast({
@@ -211,13 +230,14 @@ export const RoleRequestManager = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          {requests.length === 0 ? (
+          {totalCount === 0 ? (
             <p className="text-muted-foreground text-center py-8">
               No pending role requests
             </p>
           ) : (
-            <div className="space-y-4">
-              {requests.map((request) => (
+            <>
+              <div className="space-y-4">
+                {requests.map((request) => (
                 <div
                   key={request.id}
                   className="border rounded-lg p-4 space-y-3"
@@ -267,7 +287,61 @@ export const RoleRequestManager = () => {
                   </div>
                 </div>
               ))}
-            </div>
+              </div>
+
+              {/* Pagination Controls */}
+              {totalCount > itemsPerPage && (
+                <div className="flex items-center justify-between mt-6 pt-4 border-t">
+                  <p className="text-sm text-muted-foreground">
+                    Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount} requests
+                  </p>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                      disabled={currentPage === 1 || loading}
+                    >
+                      Previous
+                    </Button>
+                    <div className="flex items-center gap-2">
+                      {Array.from({ length: Math.ceil(totalCount / itemsPerPage) }, (_, i) => i + 1)
+                        .filter(page => {
+                          // Show first page, last page, current page, and pages around current
+                          const totalPages = Math.ceil(totalCount / itemsPerPage);
+                          return page === 1 || 
+                                 page === totalPages || 
+                                 (page >= currentPage - 1 && page <= currentPage + 1);
+                        })
+                        .map((page, index, array) => (
+                          <div key={page} className="flex items-center gap-2">
+                            {index > 0 && array[index - 1] !== page - 1 && (
+                              <span className="text-muted-foreground">...</span>
+                            )}
+                            <Button
+                              variant={currentPage === page ? "default" : "outline"}
+                              size="sm"
+                              onClick={() => setCurrentPage(page)}
+                              disabled={loading}
+                              className="min-w-[2.5rem]"
+                            >
+                              {page}
+                            </Button>
+                          </div>
+                        ))}
+                    </div>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setCurrentPage(prev => Math.min(Math.ceil(totalCount / itemsPerPage), prev + 1))}
+                      disabled={currentPage >= Math.ceil(totalCount / itemsPerPage) || loading}
+                    >
+                      Next
+                    </Button>
+                  </div>
+                </div>
+              )}
+            </>
           )}
         </CardContent>
       </Card>

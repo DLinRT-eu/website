@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Menu, X, Beaker, Info, BookOpen, Shield, User as UserIcon, LogOut, FileText } from 'lucide-react';
+import { Package, Building2, Newspaper, Users, LifeBuoy, LayoutDashboard, Menu, X, Beaker, Info, BookOpen, Shield, User as UserIcon, LogOut } from 'lucide-react';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from './ui/sheet';
 import { Badge } from './ui/badge';
@@ -162,15 +162,6 @@ const MobileNav = () => {
           >
             <Info className="w-5 h-5 mr-3 text-primary" />
             <span className="font-medium">About</span>
-          </Link>
-          
-          <Link 
-            to="/changelog" 
-            onClick={handleLinkClick}
-            className="flex items-center px-6 py-4 text-gray-700 hover:bg-gray-50 hover:text-primary transition-colors border-b border-gray-50 touch-target-minimum"
-          >
-            <FileText className="w-5 h-5 mr-3 text-primary" />
-            <span className="font-medium">Changelog</span>
           </Link>
           
           <Link 

@@ -66,7 +66,6 @@ const Header = () => {
               <Link to="/resources-compliance" className="px-3 py-2 hover:text-white/90 text-sm">Resources & Compliance</Link>
               <Link to="/initiatives" className="px-3 py-2 hover:text-white/90 text-sm">Research & Initiatives</Link>
               <Link to="/about" className="px-3 py-2 hover:text-white/90 text-sm">About</Link>
-              <Link to="/changelog" className="px-3 py-2 hover:text-white/90 text-sm">Changelog</Link>
               <Link to="/support" className="px-3 py-2 hover:text-white/90 text-sm">Support & Contact</Link>
             </>
           )}

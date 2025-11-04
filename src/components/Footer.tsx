@@ -38,6 +38,9 @@ const Footer = () => {
               <Link to="/security" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
                 Security
               </Link>
+              <Link to="/changelog" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
+                Changelog
+              </Link>
               <a href="https://github.com/DLinRT-eu/website" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#00A6D6] transition-colors duration-200">
                 GitHub
               </a>

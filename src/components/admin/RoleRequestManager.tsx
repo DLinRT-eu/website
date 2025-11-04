@@ -40,33 +40,46 @@ export const RoleRequestManager = () => {
     try {
       const { data: requestsData, error } = await supabase
         .from('role_requests')
-        .select('*')
+        .select(`
+          id,
+          user_id,
+          requested_role,
+          status,
+          justification,
+          company_id,
+          created_at,
+          profiles:user_id (
+            email,
+            first_name,
+            last_name
+          )
+        `)
         .eq('status', 'pending')
         .order('created_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        // Silently handle permission denied errors (happens during initial load)
+        if (error.code === '42501' || error.message.includes('permission denied')) {
+          console.warn('Permission denied for role_requests - auth may still be loading');
+          setRequests([]);
+          setLoading(false);
+          return;
+        }
+        throw error;
+      }
 
-      // Fetch profile data for each request
-      const requestsWithProfiles = await Promise.all(
-        (requestsData || []).map(async (request) => {
-          const { data: profile } = await supabase
-            .from('profiles')
-            .select('email, first_name, last_name')
-            .eq('id', request.user_id)
-            .single();
+      // Transform nested profiles data
+      const transformedRequests = (requestsData || []).map(req => ({
+        ...req,
+        profiles: Array.isArray(req.profiles) ? req.profiles[0] : req.profiles
+      })) as RoleRequest[];
 
-          return {
-            ...request,
-            profiles: profile || { email: '', first_name: '', last_name: '' }
-          } as RoleRequest;
-        })
-      );
-
-      setRequests(requestsWithProfiles);
+      setRequests(transformedRequests);
     } catch (error: any) {
+      console.error('Error fetching role requests:', error);
       toast({
-        title: 'Error',
-        description: error.message,
+        title: 'Error loading role requests',
+        description: 'Unable to load pending role requests. Please refresh the page.',
         variant: 'destructive',
       });
     } finally {

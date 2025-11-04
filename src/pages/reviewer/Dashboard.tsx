@@ -44,6 +44,7 @@ export default function ReviewerDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pending');
   const [rounds, setRounds] = useState<ReviewRound[]>([]);
+  const [hasExpertise, setHasExpertise] = useState(true);
 
   useEffect(() => {
     // Don't check permissions while still loading auth
@@ -56,7 +57,22 @@ export default function ReviewerDashboard() {
 
     fetchReviews();
     fetchRounds();
+    checkExpertise();
   }, [user, isReviewer, isAdmin, authLoading, navigate]);
+
+  const checkExpertise = async () => {
+    if (!user) return;
+    
+    const { data, error } = await supabase
+      .from('reviewer_expertise')
+      .select('id')
+      .eq('user_id', user.id)
+      .limit(1);
+
+    if (!error) {
+      setHasExpertise((data?.length || 0) > 0);
+    }
+  };
 
   const fetchReviews = async () => {
     if (!user) return;
@@ -224,6 +240,26 @@ export default function ReviewerDashboard() {
             </Button>
           </div>
         </div>
+
+        {/* Expertise Reminder Banner */}
+        {!hasExpertise && (
+          <Card className="mb-8 border-blue-500/50 bg-blue-500/5">
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                <div className="flex-1">
+                  <h3 className="font-semibold text-blue-900 dark:text-blue-100">Set Your Expertise Preferences</h3>
+                  <p className="text-sm text-blue-800 dark:text-blue-200 mt-1">
+                    Please set your expertise preferences to receive relevant review assignments. Visit your profile page to configure your areas of expertise.
+                  </p>
+                  <Button asChild variant="outline" size="sm" className="mt-3">
+                    <Link to="/profile">Go to Profile</Link>
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Active Review Rounds */}
         {rounds.length > 0 && (

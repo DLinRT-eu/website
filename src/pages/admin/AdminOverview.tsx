@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, CheckCircle, Clock, Users, FileText, Building2, Shield, Gauge, Lock, ClipboardCheck, UserCheck } from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, Users, FileText, Building2, Shield, Gauge, Lock, ClipboardCheck, UserCheck, Calendar } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import SEO from '@/components/SEO';
@@ -407,6 +407,22 @@ export default function AdminOverview() {
                               {pendingRegistrations.length} pending
                             </Badge>
                           )}
+                        </div>
+                      </div>
+                    </Button>
+
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/admin/review-rounds')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <Calendar className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">Review Rounds</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Manage periodic review cycles and bulk product assignments
+                          </div>
                         </div>
                       </div>
                     </Button>

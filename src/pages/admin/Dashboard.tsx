@@ -19,7 +19,8 @@ import {
   FileText,
   TrendingUp,
   Activity,
-  Building2
+  Building2,
+  Calendar
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
@@ -307,7 +308,7 @@ export default function AdminDashboard() {
             <CardDescription>Common administrative tasks</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
               <Button asChild variant="outline" className="h-auto py-4 flex-col gap-2">
                 <Link to="/admin/reviews">
                   <FileText className="h-5 w-5" />
@@ -336,6 +337,12 @@ export default function AdminDashboard() {
                 <Link to="/company/dashboard">
                   <Building2 className="h-5 w-5" />
                   <span>Company Oversight</span>
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="h-auto py-4 flex-col gap-2">
+                <Link to="/admin/review-rounds">
+                  <Calendar className="h-5 w-5" />
+                  <span>Review Rounds</span>
                 </Link>
               </Button>
             </div>

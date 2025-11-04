@@ -1,7 +1,10 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "lucide-react";
 import { exportReviewToCSV, exportReviewToExcel } from '@/utils/reviewExport';
 import { useToast } from "@/hooks/use-toast";
 import RevisionSummaryCards from '@/components/revision/RevisionSummaryCards';
@@ -113,13 +116,23 @@ const ReviewDashboard = () => {
         noindex={true}
       />
       <div className="container mx-auto px-4 md:px-8 py-8 space-y-6">
-      <ReviewDashboardHeader
-        criticalCount={summaryStats.criticalCount}
-        warningCount={summaryStats.warningCount}
-        overdueCount={summaryStats.overdueCount}
-        onExportCSV={handleExportCSV}
-        onExportExcel={handleExportExcel}
-      />
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex-1">
+          <ReviewDashboardHeader
+            criticalCount={summaryStats.criticalCount}
+            warningCount={summaryStats.warningCount}
+            overdueCount={summaryStats.overdueCount}
+            onExportCSV={handleExportCSV}
+            onExportExcel={handleExportExcel}
+          />
+        </div>
+        <Button asChild variant="outline">
+          <Link to="/admin/review-rounds">
+            <Calendar className="mr-2 h-4 w-4" />
+            Review Rounds
+          </Link>
+        </Button>
+      </div>
 
       <RevisionSummaryCards
         totalProducts={ALL_PRODUCTS.length}

@@ -51,6 +51,10 @@ export default function ReviewRounds() {
   const [showCreateDialog, setShowCreateDialog] = useState(false);
   const [creating, setCreating] = useState(false);
   const [assigning, setAssigning] = useState<string | null>(null);
+  const [reviewerStats, setReviewerStats] = useState({
+    totalReviewers: 0,
+    reviewersWithExpertise: 0
+  });
   
   const [formData, setFormData] = useState({
     name: '',
@@ -62,7 +66,36 @@ export default function ReviewRounds() {
 
   useEffect(() => {
     fetchRounds();
+    fetchReviewerStats();
   }, []);
+
+  const fetchReviewerStats = async () => {
+    try {
+      // Count total reviewers
+      const { data: reviewers, error: reviewersError } = await supabase
+        .from('user_roles')
+        .select('user_id')
+        .eq('role', 'reviewer');
+
+      if (reviewersError) throw reviewersError;
+
+      // Count reviewers with expertise
+      const { data: expertise, error: expertiseError } = await supabase
+        .from('reviewer_expertise')
+        .select('user_id');
+
+      if (expertiseError) throw expertiseError;
+
+      const uniqueReviewersWithExpertise = new Set(expertise?.map(e => e.user_id) || []).size;
+
+      setReviewerStats({
+        totalReviewers: reviewers?.length || 0,
+        reviewersWithExpertise: uniqueReviewersWithExpertise
+      });
+    } catch (error) {
+      console.error('Error fetching reviewer stats:', error);
+    }
+  };
 
   const fetchRounds = async () => {
     try {
@@ -120,22 +153,27 @@ export default function ReviewRounds() {
   };
 
   const handleBulkAssign = async (roundId: string, deadline?: string) => {
+    // Pre-flight validation
+    if (reviewerStats.reviewersWithExpertise === 0) {
+      toast.error('Cannot start round: No reviewers have set their expertise preferences yet');
+      return;
+    }
+
+    if (ALL_PRODUCTS.length === 0) {
+      toast.error('No products available to assign');
+      return;
+    }
+
     setAssigning(roundId);
     try {
-      // Get all products from static data
-      if (ALL_PRODUCTS.length === 0) {
-        toast.error('No products available to assign');
-        return;
-      }
-
       const productIds = ALL_PRODUCTS.map(p => p.id);
       
-      toast.loading('Assigning products to reviewers...');
+      toast.loading(`Assigning ${productIds.length} products to ${reviewerStats.reviewersWithExpertise} reviewers...`);
       
       const result = await bulkAssignProducts(roundId, productIds, deadline);
 
       if (result.success > 0) {
-        toast.success(`Successfully assigned ${result.success} products`);
+        toast.success(`Successfully assigned ${result.success} products to reviewers`);
         
         // Update round status to active
         await updateRoundStatus(roundId, 'active');
@@ -143,11 +181,15 @@ export default function ReviewRounds() {
       }
 
       if (result.failed > 0) {
-        toast.error(`Failed to assign ${result.failed} products`);
+        toast.warning(`${result.failed} products could not be assigned. Reasons: ${result.errors.slice(0, 3).join(', ')}`);
+      }
+      
+      if (result.errors.length > 0) {
+        console.error('Assignment errors:', result.errors);
       }
     } catch (error) {
       console.error('Error in bulk assignment:', error);
-      toast.error('Failed to assign products');
+      toast.error(`Failed to assign products: ${error instanceof Error ? error.message : 'Unknown error'}`);
     } finally {
       setAssigning(null);
     }
@@ -197,8 +239,42 @@ export default function ReviewRounds() {
         </Button>
       </div>
 
+      {/* Reviewer Status Alert */}
+      {reviewerStats.totalReviewers === 0 && (
+        <Card className="border-yellow-500/50 bg-yellow-500/5">
+          <CardContent className="pt-6">
+            <div className="flex items-start gap-3">
+              <Users className="h-5 w-5 text-yellow-600 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-yellow-900 dark:text-yellow-100">No Reviewers Available</h3>
+                <p className="text-sm text-yellow-800 dark:text-yellow-200 mt-1">
+                  No users with the reviewer role found. Please assign reviewer roles to users before creating review rounds.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      
+      {reviewerStats.totalReviewers > 0 && reviewerStats.reviewersWithExpertise === 0 && (
+        <Card className="border-yellow-500/50 bg-yellow-500/5">
+          <CardContent className="pt-6">
+            <div className="flex items-start gap-3">
+              <Users className="h-5 w-5 text-yellow-600 mt-0.5" />
+              <div className="flex-1">
+                <h3 className="font-semibold text-yellow-900 dark:text-yellow-100">Reviewers Need to Set Expertise</h3>
+                <p className="text-sm text-yellow-800 dark:text-yellow-200 mt-1">
+                  You have {reviewerStats.totalReviewers} reviewer{reviewerStats.totalReviewers !== 1 ? 's' : ''}, but none have set their expertise preferences yet. 
+                  Ask reviewers to visit their Profile page and set their expertise areas before starting a review round.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
         <Card>
           <CardHeader className="pb-3">
             <CardDescription>Total Rounds</CardDescription>
@@ -229,11 +305,19 @@ export default function ReviewRounds() {
         </Card>
         <Card>
           <CardHeader className="pb-3">
-            <CardDescription>Draft Rounds</CardDescription>
+            <CardDescription>Total Reviewers</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {rounds.filter(r => r.status === 'draft').length}
+            <div className="text-2xl font-bold">{reviewerStats.totalReviewers}</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader className="pb-3">
+            <CardDescription>With Expertise</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-green-600">
+              {reviewerStats.reviewersWithExpertise}
             </div>
           </CardContent>
         </Card>
@@ -310,7 +394,8 @@ export default function ReviewRounds() {
                         <Button
                           size="sm"
                           onClick={() => handleBulkAssign(round.id, round.default_deadline)}
-                          disabled={assigning === round.id}
+                          disabled={assigning === round.id || reviewerStats.reviewersWithExpertise === 0}
+                          title={reviewerStats.reviewersWithExpertise === 0 ? 'No reviewers with expertise available' : ''}
                         >
                           {assigning === round.id ? (
                             <>

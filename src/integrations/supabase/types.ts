@@ -424,6 +424,7 @@ export type Database = {
           notes: string | null
           priority: string | null
           product_id: string
+          review_round_id: string | null
           review_score: number | null
           started_at: string | null
           status: string | null
@@ -443,6 +444,7 @@ export type Database = {
           notes?: string | null
           priority?: string | null
           product_id: string
+          review_round_id?: string | null
           review_score?: number | null
           started_at?: string | null
           status?: string | null
@@ -462,13 +464,22 @@ export type Database = {
           notes?: string | null
           priority?: string | null
           product_id?: string
+          review_round_id?: string | null
           review_score?: number | null
           started_at?: string | null
           status?: string | null
           time_spent_minutes?: number | null
           updated_at?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "product_reviews_review_round_id_fkey"
+            columns: ["review_round_id"]
+            isOneToOne: false
+            referencedRelation: "review_rounds"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profile_document_access_log: {
         Row: {
@@ -703,6 +714,92 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      review_round_stats: {
+        Row: {
+          completed_count: number | null
+          id: string
+          in_progress_count: number | null
+          pending_count: number | null
+          round_id: string | null
+          total_assignments: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          completed_count?: number | null
+          id?: string
+          in_progress_count?: number | null
+          pending_count?: number | null
+          round_id?: string | null
+          total_assignments?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          completed_count?: number | null
+          id?: string
+          in_progress_count?: number | null
+          pending_count?: number | null
+          round_id?: string | null
+          total_assignments?: number | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_round_stats_round_id_fkey"
+            columns: ["round_id"]
+            isOneToOne: true
+            referencedRelation: "review_rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      review_rounds: {
+        Row: {
+          created_at: string | null
+          created_by: string | null
+          default_deadline: string | null
+          description: string | null
+          end_date: string | null
+          id: string
+          name: string
+          round_number: number
+          start_date: string
+          status: string
+          total_assignments: number | null
+          total_products: number | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          created_by?: string | null
+          default_deadline?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name: string
+          round_number: number
+          start_date: string
+          status?: string
+          total_assignments?: number | null
+          total_products?: number | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          created_by?: string | null
+          default_deadline?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          round_number?: number
+          start_date?: string
+          status?: string
+          total_assignments?: number | null
+          total_products?: number | null
+          updated_at?: string | null
+        }
+        Relationships: []
       }
       reviewer_expertise: {
         Row: {

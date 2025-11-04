@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { Calendar, Clock, AlertCircle, CheckCircle2, Play, BookOpen } from 'lucide-react';
+import { Calendar, Clock, AlertCircle, CheckCircle2, Play, BookOpen, Package } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, format } from 'date-fns';
 import RevisionApprovalManager from '@/components/company/RevisionApprovalManager';
 
 interface ReviewAssignment {
@@ -24,6 +24,16 @@ interface ReviewAssignment {
   started_at: string | null;
   completed_at: string | null;
   notes: string | null;
+  review_round_id?: string | null;
+}
+
+interface ReviewRound {
+  id: string;
+  name: string;
+  description?: string;
+  round_number: number;
+  status: string;
+  default_deadline?: string;
 }
 
 export default function ReviewerDashboard() {
@@ -33,6 +43,7 @@ export default function ReviewerDashboard() {
   const [reviews, setReviews] = useState<ReviewAssignment[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('pending');
+  const [rounds, setRounds] = useState<ReviewRound[]>([]);
 
   useEffect(() => {
     // Don't check permissions while still loading auth
@@ -44,6 +55,7 @@ export default function ReviewerDashboard() {
     }
 
     fetchReviews();
+    fetchRounds();
   }, [user, isReviewer, isAdmin, authLoading, navigate]);
 
   const fetchReviews = async () => {
@@ -59,6 +71,21 @@ export default function ReviewerDashboard() {
       setReviews(data as ReviewAssignment[]);
     }
     setLoading(false);
+  };
+
+  const fetchRounds = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('review_rounds')
+        .select('*')
+        .eq('status', 'active')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setRounds(data || []);
+    } catch (error) {
+      console.error('Error fetching rounds:', error);
+    }
   };
 
   const handleStartReview = async (reviewId: string) => {
@@ -84,41 +111,40 @@ export default function ReviewerDashboard() {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'text-green-500';
-      case 'in_progress': return 'text-blue-500';
       case 'pending': return 'text-yellow-500';
-      default: return 'text-gray-500';
+      case 'in_progress': return 'text-blue-500';
+      case 'completed': return 'text-green-500';
+      case 'company_reviewed': return 'text-purple-500';
+      default: return 'text-muted-foreground';
     }
   };
 
   const getDeadlineStatus = (deadline: string | null) => {
-    if (!deadline) return null;
-    
-    const daysUntil = Math.ceil((new Date(deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24));
-    
-    if (daysUntil < 0) return { text: 'Overdue', variant: 'destructive' as const };
-    if (daysUntil <= 3) return { text: `${daysUntil} days left`, variant: 'destructive' as const };
-    if (daysUntil <= 7) return { text: `${daysUntil} days left`, variant: 'default' as const };
-    return { text: `${daysUntil} days left`, variant: 'secondary' as const };
-  };
+    if (!deadline) return { text: 'No deadline', color: 'text-muted-foreground' };
 
-  const filterReviews = (status: string) => {
-    return reviews.filter(r => r.status === status);
+    const now = new Date();
+    const deadlineDate = new Date(deadline);
+    const daysUntil = Math.ceil((deadlineDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (daysUntil < 0) return { text: 'Overdue', color: 'text-destructive' };
+    if (daysUntil === 0) return { text: 'Due today', color: 'text-destructive' };
+    if (daysUntil <= 3) return { text: `Due in ${daysUntil} day${daysUntil === 1 ? '' : 's'}`, color: 'text-orange-500' };
+    return { text: `Due in ${daysUntil} days`, color: 'text-muted-foreground' };
   };
 
   const ReviewCard = ({ review }: { review: ReviewAssignment }) => {
     const deadlineStatus = getDeadlineStatus(review.deadline);
 
     return (
-      <Card className="hover:shadow-lg transition-shadow">
+      <Card className="hover:shadow-md transition-shadow">
         <CardHeader>
           <div className="flex items-start justify-between">
-            <div className="space-y-1 flex-1">
-              <CardTitle className="text-lg">{review.product_id}</CardTitle>
-              <CardDescription className="flex items-center gap-2">
-                <Calendar className="h-3 w-3" />
-                Assigned {formatDistanceToNow(new Date(review.assigned_at), { addSuffix: true })}
-              </CardDescription>
+            <div className="space-y-1">
+              <CardTitle className="text-lg">Product: {review.product_id}</CardTitle>
+              <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                <Calendar className="h-4 w-4" />
+                <span>Assigned {formatDistanceToNow(new Date(review.assigned_at), { addSuffix: true })}</span>
+              </div>
             </div>
             <Badge variant={getPriorityColor(review.priority)}>
               {review.priority}
@@ -126,20 +152,17 @@ export default function ReviewerDashboard() {
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex items-center gap-2 text-sm">
-            {review.status === 'completed' && <CheckCircle2 className={`h-4 w-4 ${getStatusColor(review.status)}`} />}
-            {review.status === 'in_progress' && <Clock className={`h-4 w-4 ${getStatusColor(review.status)}`} />}
-            {review.status === 'pending' && <AlertCircle className={`h-4 w-4 ${getStatusColor(review.status)}`} />}
-            <span className="capitalize">{review.status.replace('_', ' ')}</span>
-          </div>
-
-          {review.deadline && deadlineStatus && (
-            <div className="flex items-center gap-2">
-              <Badge variant={deadlineStatus.variant}>
+          <div className="flex items-center justify-between text-sm">
+            <span className={`font-medium ${getStatusColor(review.status)}`}>
+              {review.status.replace('_', ' ').toUpperCase()}
+            </span>
+            {review.deadline && (
+              <span className={`flex items-center gap-1 ${deadlineStatus.color}`}>
+                <Clock className="h-4 w-4" />
                 {deadlineStatus.text}
-              </Badge>
-            </div>
-          )}
+              </span>
+            )}
+          </div>
 
           {review.notes && (
             <p className="text-sm text-muted-foreground">{review.notes}</p>
@@ -150,18 +173,21 @@ export default function ReviewerDashboard() {
               <Button
                 size="sm"
                 onClick={() => handleStartReview(review.id)}
-                className="gap-2"
+                className="w-full"
               >
-                <Play className="h-4 w-4" />
+                <Play className="mr-2 h-4 w-4" />
                 Start Review
               </Button>
             )}
             <Button
               size="sm"
               variant="outline"
-              onClick={() => navigate(`/review/${review.product_id}`)}
+              asChild
+              className="w-full"
             >
-              View Details
+              <Link to={`/review/${review.product_id}`}>
+                View Details
+              </Link>
             </Button>
           </div>
         </CardContent>
@@ -169,15 +195,10 @@ export default function ReviewerDashboard() {
     );
   };
 
-  if (loading || authLoading) {
-    return (
-      <PageLayout>
-        <div className="flex items-center justify-center min-h-screen">
-          <LoadingSpinner />
-        </div>
-      </PageLayout>
-    );
-  }
+  const filterReviews = (status: string) => {
+    if (status === 'all') return reviews;
+    return reviews.filter(r => r.status === status);
+  };
 
   const pendingReviews = filterReviews('pending');
   const inProgressReviews = filterReviews('in_progress');
@@ -203,6 +224,36 @@ export default function ReviewerDashboard() {
             </Button>
           </div>
         </div>
+
+        {/* Active Review Rounds */}
+        {rounds.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            {rounds.map((round) => (
+              <Card key={round.id}>
+                <CardHeader className="pb-3">
+                  <div className="flex items-center justify-between">
+                    <Badge>{`Round #${round.round_number}`}</Badge>
+                    <Package className="h-4 w-4 text-muted-foreground" />
+                  </div>
+                  <CardTitle className="text-lg mt-2">{round.name}</CardTitle>
+                  <CardDescription className="line-clamp-2">
+                    {round.description || 'Active review round'}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-sm text-muted-foreground">
+                    {round.default_deadline && (
+                      <div className="flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        Deadline: {format(new Date(round.default_deadline), 'MMM d, yyyy')}
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        )}
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -240,29 +291,29 @@ export default function ReviewerDashboard() {
           </Card>
         </div>
 
-        {/* Pending Revisions */}
-        <RevisionApprovalManager />
+        {/* Revision Approval */}
+        <div className="mb-8">
+          <RevisionApprovalManager />
+        </div>
 
         {/* Reviews List */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mt-8">
-          <TabsList className="grid w-full grid-cols-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-4">
+          <TabsList>
             <TabsTrigger value="all">All ({reviews.length})</TabsTrigger>
             <TabsTrigger value="pending">Pending ({pendingReviews.length})</TabsTrigger>
             <TabsTrigger value="in_progress">In Progress ({inProgressReviews.length})</TabsTrigger>
             <TabsTrigger value="completed">Completed ({completedReviews.length})</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="all" className="space-y-4 mt-6">
+          <TabsContent value="all" className="space-y-4">
             {reviews.length === 0 ? (
               <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-lg font-medium">No reviews assigned yet</p>
-                  <p className="text-sm text-muted-foreground">Check back later for new assignments</p>
+                <CardContent className="py-12 text-center">
+                  <p className="text-muted-foreground">No reviews assigned yet</p>
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {reviews.map(review => (
                   <ReviewCard key={review.id} review={review} />
                 ))}
@@ -270,16 +321,15 @@ export default function ReviewerDashboard() {
             )}
           </TabsContent>
 
-          <TabsContent value="pending" className="space-y-4 mt-6">
+          <TabsContent value="pending" className="space-y-4">
             {pendingReviews.length === 0 ? (
               <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <CheckCircle2 className="h-12 w-12 text-green-500 mb-4" />
-                  <p className="text-lg font-medium">No pending reviews</p>
+                <CardContent className="py-12 text-center">
+                  <p className="text-muted-foreground">No pending reviews</p>
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {pendingReviews.map(review => (
                   <ReviewCard key={review.id} review={review} />
                 ))}
@@ -287,16 +337,15 @@ export default function ReviewerDashboard() {
             )}
           </TabsContent>
 
-          <TabsContent value="in_progress" className="space-y-4 mt-6">
+          <TabsContent value="in_progress" className="space-y-4">
             {inProgressReviews.length === 0 ? (
               <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <Clock className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-lg font-medium">No reviews in progress</p>
+                <CardContent className="py-12 text-center">
+                  <p className="text-muted-foreground">No reviews in progress</p>
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {inProgressReviews.map(review => (
                   <ReviewCard key={review.id} review={review} />
                 ))}
@@ -304,16 +353,15 @@ export default function ReviewerDashboard() {
             )}
           </TabsContent>
 
-          <TabsContent value="completed" className="space-y-4 mt-6">
+          <TabsContent value="completed" className="space-y-4">
             {completedReviews.length === 0 ? (
               <Card>
-                <CardContent className="flex flex-col items-center justify-center py-12">
-                  <AlertCircle className="h-12 w-12 text-muted-foreground mb-4" />
-                  <p className="text-lg font-medium">No completed reviews</p>
+                <CardContent className="py-12 text-center">
+                  <p className="text-muted-foreground">No completed reviews</p>
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {completedReviews.map(review => (
                   <ReviewCard key={review.id} review={review} />
                 ))}

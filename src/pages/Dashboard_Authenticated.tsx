@@ -143,47 +143,60 @@ export default function Dashboard_Authenticated() {
         {isAdmin && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-6">Admin Overview</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Users className="h-5 w-5" />
-                    User Management
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Button asChild className="w-full">
-                    <Link to="/admin/users">Manage Users</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileCheck className="h-5 w-5" />
-                    Reviews
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Button asChild className="w-full">
-                    <Link to="/admin/reviews">Assign Reviews</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Shield className="h-5 w-5" />
-                    Security
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Button asChild className="w-full">
-                    <Link to="/admin/security">Security Dashboard</Link>
-                  </Button>
-                </CardContent>
-              </Card>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  User Management
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="/admin/users">Manage Users</Link>
+                </Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileCheck className="h-5 w-5" />
+                  Reviews
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="/admin/reviews">Assign Reviews</Link>
+                </Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="h-5 w-5" />
+                  Security
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="/admin/security">Security Dashboard</Link>
+                </Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Building2 className="h-5 w-5" />
+                  Company Oversight
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="/company/dashboard">Open Oversight</Link>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
           </div>
         )}
 

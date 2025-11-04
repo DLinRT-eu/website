@@ -17,3 +17,6 @@ verify_jwt = false
 
 [functions.notify-reviewer-assignment]
 verify_jwt = false
+
+[functions.generate-changelog]
+verify_jwt = true

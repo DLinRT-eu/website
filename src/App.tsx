@@ -33,6 +33,7 @@ import RoleSelection from "./pages/RoleSelection";
 import ProductExperiences from "./pages/ProductExperiences";
 import Auth from "./pages/Auth";
 import Changelog from "./pages/Changelog";
+import ChangelogGenerator from "./pages/admin/ChangelogGenerator";
 
 // Admin Pages
 import AdminOverview from "./pages/admin/AdminOverview";
@@ -176,6 +177,11 @@ const App = () => (
               <Route path="/admin/changelog" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <ChangelogAdmin />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/changelog-generator" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ChangelogGenerator />
                 </ProtectedRoute>
               } />
               

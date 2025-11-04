@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -7,11 +7,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { toast } from 'sonner';
-import { AlertTriangle } from 'lucide-react';
+import { AlertTriangle, Building2 } from 'lucide-react';
 import { validateInstitutionalEmail } from '@/utils/emailValidation';
+import { ALL_PRODUCTS } from '@/data';
+import { extractCompaniesFromProducts } from '@/utils/companyUtils';
+import { CompanySelectorDialog } from '@/components/company/CompanySelectorDialog';
 
 interface RoleRequestFormProps {
   onRequestSubmitted: () => void;
@@ -23,8 +25,13 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
   const [requestedRole, setRequestedRole] = useState<'reviewer' | 'company'>('reviewer');
   const [justification, setJustification] = useState('');
   const [companyId, setCompanyId] = useState('');
+  const [companyName, setCompanyName] = useState('');
+  const [companySelectorOpen, setCompanySelectorOpen] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [hasUserProducts, setHasUserProducts] = useState(false);
+
+  // Extract companies from product catalog
+  const companies = useMemo(() => extractCompaniesFromProducts(ALL_PRODUCTS), []);
 
   // Compute which roles the user already has
   const hasReviewerRole = roles.includes('reviewer');
@@ -164,22 +171,40 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
     }
   };
 
+  const handleCompanySelect = (selectedId: string, selectedName: string) => {
+    setCompanyId(selectedId);
+    setCompanyName(selectedName);
+    setCompanySelectorOpen(false);
+  };
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Request a Role</CardTitle>
-        {(hasReviewerRole || hasCompanyRole) && (
-          <CardDescription className="text-amber-600">
-            You can request additional roles. Note: Company role is incompatible with Reviewer role.
-          </CardDescription>
-        )}
-        {!hasReviewerRole && !hasCompanyRole && (
-          <CardDescription>
-            Request a specialized role to contribute to the DLinRT platform. All registered users already have basic access - only request Reviewer or Company Representative roles if needed.
-          </CardDescription>
-        )}
-      </CardHeader>
-      <CardContent>
+    <>
+      {/* Company Selector Dialog */}
+      <CompanySelectorDialog
+        open={companySelectorOpen}
+        onOpenChange={setCompanySelectorOpen}
+        onSelectCompany={handleCompanySelect}
+        selectedCompanyId={companyId}
+        companies={companies}
+        title="Select Your Company"
+        description="Search and select the company you represent from our catalog"
+      />
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Request a Role</CardTitle>
+          {(hasReviewerRole || hasCompanyRole) && (
+            <CardDescription className="text-amber-600">
+              You can request additional roles. Note: Company role is incompatible with Reviewer role.
+            </CardDescription>
+          )}
+          {!hasReviewerRole && !hasCompanyRole && (
+            <CardDescription>
+              Request a specialized role to contribute to the DLinRT platform. All registered users already have basic access - only request Reviewer or Company Representative roles if needed.
+            </CardDescription>
+          )}
+        </CardHeader>
+        <CardContent>
         <Alert className="mb-4">
           <AlertTriangle className="h-4 w-4" />
           <AlertDescription>
@@ -238,16 +263,37 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
           </div>
 
           {requestedRole === 'company' && (
-            <div>
-              <Label htmlFor="companyId">Company ID</Label>
-              <Input
-                id="companyId"
-                value={companyId}
-                onChange={(e) => setCompanyId(e.target.value)}
-                placeholder="e.g., mim-software, siemens"
-              />
-              <p className="text-xs text-muted-foreground mt-1">
-                Enter your company identifier from the DLinRT database
+            <div className="space-y-2">
+              <Label>Company</Label>
+              {companyName ? (
+                <div className="flex items-center gap-2 p-3 bg-muted rounded-lg">
+                  <Building2 className="h-4 w-4 text-muted-foreground" />
+                  <div className="flex-1">
+                    <p className="font-medium">{companyName}</p>
+                    <p className="text-xs text-muted-foreground">ID: {companyId}</p>
+                  </div>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setCompanySelectorOpen(true)}
+                  >
+                    Change
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full justify-start gap-2"
+                  onClick={() => setCompanySelectorOpen(true)}
+                >
+                  <Building2 className="h-4 w-4" />
+                  Select Company
+                </Button>
+              )}
+              <p className="text-xs text-muted-foreground">
+                Search and select your company from the DLinRT catalog
               </p>
             </div>
           )}
@@ -267,7 +313,8 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
             {submitting ? 'Submitting...' : 'Submit Request'}
           </Button>
         </form>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </>
   );
 }

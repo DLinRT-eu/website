@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_audit_log: {
+        Row: {
+          action_type: string
+          created_at: string
+          details: Json | null
+          id: string
+          ip_address: string | null
+          performed_by: string
+          performed_by_email: string
+          target_user_email: string | null
+          target_user_id: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          action_type: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          performed_by: string
+          performed_by_email: string
+          target_user_email?: string | null
+          target_user_id?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          action_type?: string
+          created_at?: string
+          details?: Json | null
+          id?: string
+          ip_address?: string | null
+          performed_by?: string
+          performed_by_email?: string
+          target_user_email?: string | null
+          target_user_id?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       analytics_daily: {
         Row: {
           created_at: string
@@ -1137,6 +1176,15 @@ export type Database = {
       }
       is_admin: { Args: never; Returns: boolean }
       is_institutional_email: { Args: { email: string }; Returns: boolean }
+      log_admin_action: {
+        Args: {
+          p_action_type: string
+          p_details?: Json
+          p_target_user_email?: string
+          p_target_user_id?: string
+        }
+        Returns: string
+      }
       schedule_analytics_cleanup: { Args: never; Returns: undefined }
       send_pending_registration_notifications: {
         Args: never

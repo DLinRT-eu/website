@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { RoleRequestManager } from '@/components/admin/RoleRequestManager';
+import { AuditLogViewer } from '@/components/admin/AuditLogViewer';
 import { useToast } from '@/hooks/use-toast';
 import { Shield, UserPlus, UserMinus, Search, ArrowUpDown, ArrowUp, ArrowDown, Filter, Trash2 } from 'lucide-react';
 
@@ -368,6 +369,23 @@ export default function UserManagement() {
     setDeleteLoading(true);
 
     try {
+      // Log the deletion attempt first (before actual deletion)
+      const { error: logError } = await supabase.rpc('log_admin_action', {
+        p_action_type: 'user_deleted',
+        p_target_user_id: deleteDialog.userId,
+        p_target_user_email: deleteDialog.userEmail,
+        p_details: {
+          target_user_name: deleteDialog.userName,
+          timestamp: new Date().toISOString(),
+          reason: 'admin_deletion'
+        }
+      });
+
+      if (logError) {
+        console.error('Error logging deletion:', logError);
+        // Continue with deletion even if logging fails
+      }
+
       const { error } = await supabase.auth.admin.deleteUser(deleteDialog.userId);
 
       if (error) {
@@ -458,6 +476,9 @@ export default function UserManagement() {
         <div className="space-y-6">
           {/* Role Requests Section */}
           <RoleRequestManager />
+
+          {/* Audit Log Section */}
+          <AuditLogViewer />
 
           {/* Existing Users Section */}
           <Card>

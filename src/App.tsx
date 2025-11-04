@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { RoleProvider } from "@/contexts/RoleContext";
 import { ProtectedRoute } from "@/components/auth/ProtectedRoute";
+import { ApprovalGate } from "@/components/auth/ApprovalGate";
 import Header from "./components/Header";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
@@ -92,25 +93,33 @@ const App = () => (
               <Route path="terms-of-use" element={<TermsOfUse />} />
               <Route path="auth" element={<Auth />} />
               
-              {/* User Authenticated Routes */}
+              {/* User Authenticated Routes - Protected by ApprovalGate */}
               <Route path="/profile" element={
                 <ProtectedRoute requireAuth={true}>
-                  <Profile />
+                  <ApprovalGate>
+                    <Profile />
+                  </ApprovalGate>
                 </ProtectedRoute>
               } />
               <Route path="/my-products" element={
                 <ProtectedRoute requireAuth={true}>
-                  <MyProducts />
+                  <ApprovalGate>
+                    <MyProducts />
+                  </ApprovalGate>
                 </ProtectedRoute>
               } />
               <Route path="/role-selection" element={
                 <ProtectedRoute requireAuth={true}>
-                  <RoleSelection />
+                  <ApprovalGate>
+                    <RoleSelection />
+                  </ApprovalGate>
                 </ProtectedRoute>
               } />
               <Route path="/product/:productId/experiences" element={
                 <ProtectedRoute allowedRoles={['admin', 'reviewer', 'company']}>
-                  <ProductExperiences />
+                  <ApprovalGate>
+                    <ProductExperiences />
+                  </ApprovalGate>
                 </ProtectedRoute>
               } />
               

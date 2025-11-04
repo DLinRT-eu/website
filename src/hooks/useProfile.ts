@@ -18,6 +18,9 @@ export interface Profile {
   mfa_enrolled_at?: string | null;
   mfa_backup_codes_generated_at?: string | null;
   notification_preferences?: any;
+  approval_status?: 'pending' | 'approved' | 'rejected';
+  approved_by?: string | null;
+  approved_at?: string | null;
   created_at?: string;
   updated_at?: string;
 }
@@ -110,7 +113,7 @@ export function useProfile(userId: string | null) {
             .maybeSingle();
 
           if (!err2 && data2) {
-            setProfile(data2);
+            setProfile(data2 as Profile);
             return;
           }
         }
@@ -129,7 +132,7 @@ export function useProfile(userId: string | null) {
         return;
       }
 
-      setProfile(data);
+      setProfile(data as Profile);
     } catch (error: any) {
       console.error('Error fetching profile:', error);
       // Don't show toast for missing profile, just log it
@@ -161,7 +164,7 @@ export function useProfile(userId: string | null) {
 
       if (error) throw error;
 
-      setProfile(data);
+      setProfile(data as Profile);
       
       toast({
         title: "Profile updated",

@@ -10,12 +10,15 @@ interface ApprovalGateProps {
 }
 
 /**
- * ApprovalGate - Wrapper component that checks approval status
+ * ApprovalGate - Wrapper component that checks user approval status
  * 
- * For Phase 2 implementation:
- * - Currently allows all authenticated users through
- * - Future: Check approval_status field when added to profiles table
- * - Shows pending/rejected messages as needed
+ * Blocks access to content for users whose registration is:
+ * - Still pending admin approval
+ * - Rejected by admin
+ * 
+ * Allows access for:
+ * - Core team members (auto-approved)
+ * - Users with 'approved' status
  */
 export function ApprovalGate({ children }: ApprovalGateProps) {
   const { user, profile, loading, signOut } = useAuth();
@@ -51,27 +54,74 @@ export function ApprovalGate({ children }: ApprovalGateProps) {
     );
   }
 
-  // Check if approval_status exists (future implementation)
-  // For now, we'll check if the profile has is_core_team flag
   // Core team members are automatically approved
   if (profile?.is_core_team) {
     return <>{children}</>;
   }
 
-  // Future: Add approval_status field to profiles table
-  // For now, allow all authenticated users with profiles through
-  if (profile) {
+  // Check approval status
+  if (profile?.approval_status === 'rejected') {
+    return (
+      <div className="container max-w-2xl mx-auto py-8">
+        <Alert variant="destructive">
+          <XCircle className="h-4 w-4" />
+          <AlertTitle>Registration Rejected</AlertTitle>
+          <AlertDescription>
+            Your registration has been reviewed and unfortunately we cannot approve access at this time. 
+            If you believe this is an error, please contact support at info@dlinrt.eu.
+          </AlertDescription>
+          <Button 
+            variant="outline" 
+            onClick={signOut}
+            className="mt-4"
+          >
+            Sign Out
+          </Button>
+        </Alert>
+      </div>
+    );
+  }
+
+  if (profile?.approval_status === 'pending') {
+    return (
+      <div className="container max-w-2xl mx-auto py-8">
+        <Alert>
+          <Clock className="h-4 w-4" />
+          <AlertTitle>Awaiting Approval</AlertTitle>
+          <AlertDescription>
+            Your registration is currently under review by our administrators. 
+            You will receive access once your account has been approved.
+            <br /><br />
+            <strong>Email:</strong> {profile.email}
+            <br />
+            This typically takes 1-2 business days. If you have questions, contact info@dlinrt.eu.
+          </AlertDescription>
+          <Button 
+            variant="outline" 
+            onClick={signOut}
+            className="mt-4"
+          >
+            Sign Out
+          </Button>
+        </Alert>
+      </div>
+    );
+  }
+
+  // Approved users can access
+  if (profile?.approval_status === 'approved') {
     return <>{children}</>;
   }
 
-  // Profile doesn't exist - shouldn't happen but handle gracefully
+  // Profile doesn't exist or missing approval_status - shouldn't happen
   return (
     <div className="container max-w-2xl mx-auto py-8">
       <Alert variant="destructive">
         <AlertCircle className="h-4 w-4" />
         <AlertTitle>Profile Not Found</AlertTitle>
         <AlertDescription>
-          We couldn't find your profile. Please try logging out and back in.
+          We couldn't find your profile or approval status. Please try logging out and back in.
+          If the issue persists, contact support.
         </AlertDescription>
         <Button 
           variant="outline" 

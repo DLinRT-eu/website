@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { AlertCircle, CheckCircle, Clock, Users, FileText, Building2, Shield, Gauge, Lock, ClipboardCheck } from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, Users, FileText, Building2, Shield, Gauge, Lock, ClipboardCheck, UserCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import SEO from '@/components/SEO';
@@ -45,6 +45,14 @@ interface RecentUser {
   created_at: string;
 }
 
+interface PendingRegistration {
+  id: string;
+  user_id: string;
+  email: string;
+  notification_status: string;
+  created_at: string;
+}
+
 export default function AdminOverview() {
   const { user } = useAuth();
   const { isAdmin } = useRoles();
@@ -54,6 +62,7 @@ export default function AdminOverview() {
   const [unassignedReviews, setUnassignedReviews] = useState<UnassignedReview[]>([]);
   const [pendingRevisions, setPendingRevisions] = useState<PendingRevision[]>([]);
   const [recentUsers, setRecentUsers] = useState<RecentUser[]>([]);
+  const [pendingRegistrations, setPendingRegistrations] = useState<PendingRegistration[]>([]);
 
   useEffect(() => {
     if (!isAdmin) {
@@ -125,6 +134,15 @@ export default function AdminOverview() {
         .order('created_at', { ascending: false })
         .limit(10);
       setRecentUsers(users || []);
+
+      // Fetch pending registrations
+      const { data: registrations } = await supabase
+        .from('user_registration_notifications')
+        .select('id, user_id, email, notification_status, created_at')
+        .eq('verified', false)
+        .neq('notification_status', 'rejected')
+        .order('created_at', { ascending: false });
+      setPendingRegistrations(registrations || []);
     } catch (error) {
       console.error('Error fetching admin data:', error);
       toast.error('Failed to load admin data');
@@ -280,12 +298,12 @@ export default function AdminOverview() {
 
             <Card>
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">New Users</CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
+                <CardTitle className="text-sm font-medium">Pending Registrations</CardTitle>
+                <UserCheck className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{recentUsers.length}</div>
-                <p className="text-xs text-muted-foreground">Last 7 days</p>
+                <div className="text-2xl font-bold">{pendingRegistrations.length}</div>
+                <p className="text-xs text-muted-foreground">Awaiting approval</p>
               </CardContent>
             </Card>
           </div>
@@ -368,6 +386,27 @@ export default function AdminOverview() {
                           <div className="text-xs text-muted-foreground mt-0.5">
                             Monitor security events and system health
                           </div>
+                        </div>
+                      </div>
+                    </Button>
+
+                    <Button 
+                      variant="outline" 
+                      className="justify-start h-auto py-3"
+                      onClick={() => navigate('/admin/registrations')}
+                    >
+                      <div className="flex items-start gap-3 w-full">
+                        <UserCheck className="h-5 w-5 mt-0.5 flex-shrink-0" />
+                        <div className="text-left flex-1">
+                          <div className="font-semibold">User Registration Review</div>
+                          <div className="text-xs text-muted-foreground mt-0.5">
+                            Approve or reject new user registrations
+                          </div>
+                          {pendingRegistrations.length > 0 && (
+                            <Badge variant="destructive" className="mt-1">
+                              {pendingRegistrations.length} pending
+                            </Badge>
+                          )}
                         </div>
                       </div>
                     </Button>

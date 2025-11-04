@@ -13,7 +13,8 @@ import {
   ShoppingCart,
   Shield,
   Settings,
-  Bell
+  Bell,
+  UserCheck
 } from 'lucide-react';
 import NewsSection from '@/components/NewsSection';
 
@@ -193,6 +194,19 @@ export default function Dashboard_Authenticated() {
               <CardContent>
                 <Button asChild className="w-full">
                   <Link to="/company/dashboard">Open Oversight</Link>
+                </Button>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <UserCheck className="h-5 w-5" />
+                  Registration Review
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Button asChild className="w-full">
+                  <Link to="/admin/registrations">Review Registrations</Link>
                 </Button>
               </CardContent>
             </Card>

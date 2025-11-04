@@ -15,7 +15,7 @@ import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { RoleRequestManager } from '@/components/admin/RoleRequestManager';
 import { useToast } from '@/hooks/use-toast';
-import { Shield, UserPlus, UserMinus, Search, ArrowUpDown, ArrowUp, ArrowDown, Filter } from 'lucide-react';
+import { Shield, UserPlus, UserMinus, Search, ArrowUpDown, ArrowUp, ArrowDown, Filter, Trash2 } from 'lucide-react';
 
 type AppRole = 'admin' | 'reviewer' | 'company';
 type SortColumn = 'name' | 'email' | 'institution' | null;
@@ -59,6 +59,9 @@ export default function UserManagement() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [operationLoading, setOperationLoading] = useState<string | null>(null); // userId-role for loading state
   const [revokeDialog, setRevokeDialog] = useState<{ open: boolean; userId: string; role: AppRole; userName: string } | null>(null);
+  const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; userId: string; userEmail: string; userName: string } | null>(null);
+  const [deleteConfirmEmail, setDeleteConfirmEmail] = useState('');
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   useEffect(() => {
     // Don't check permissions while still loading auth
@@ -334,6 +337,75 @@ export default function UserManagement() {
     }
   };
 
+  const openDeleteDialog = (userId: string, userEmail: string, userName: string) => {
+    setDeleteDialog({ open: true, userId, userEmail, userName });
+    setDeleteConfirmEmail('');
+  };
+
+  const handleDeleteUser = async () => {
+    if (!deleteDialog || !user) return;
+
+    // Safety check: prevent self-deletion
+    if (deleteDialog.userId === user.id) {
+      toast({
+        title: 'Error',
+        description: 'You cannot delete your own account from this interface',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Verify email confirmation
+    if (deleteConfirmEmail !== deleteDialog.userEmail) {
+      toast({
+        title: 'Error',
+        description: 'Email confirmation does not match',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    setDeleteLoading(true);
+
+    try {
+      const { error } = await supabase.auth.admin.deleteUser(deleteDialog.userId);
+
+      if (error) {
+        console.error('Error deleting user:', error);
+        
+        let errorMessage = 'Failed to delete user';
+        if (error.message.includes('permission') || error.message.includes('authorized')) {
+          errorMessage = 'Permission denied. You may not have sufficient privileges';
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        toast({
+          title: 'Error',
+          description: errorMessage,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: `User ${deleteDialog.userName} has been permanently deleted`,
+        });
+        await fetchUsers();
+        setDeleteDialog(null);
+        setDeleteConfirmEmail('');
+      }
+    } catch (error: any) {
+      console.error('Unexpected error deleting user:', error);
+      toast({
+        title: 'Error',
+        description: `Unexpected error: ${error.message || 'Unknown error'}`,
+        variant: 'destructive',
+      });
+    } finally {
+      setDeleteLoading(false);
+    }
+  };
+
   const handleSort = (column: SortColumn) => {
     if (sortColumn === column) {
       // Toggle direction
@@ -508,17 +580,18 @@ export default function UserManagement() {
                       </div>
                     </TableCell>
                     <TableCell className="text-right">
-                      <Dialog open={dialogOpen && selectedUser?.id === userProfile.id} onOpenChange={setDialogOpen}>
-                        <DialogTrigger asChild>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={() => setSelectedUser(userProfile)}
-                          >
-                            <UserPlus className="h-4 w-4 mr-2" />
-                            Add Role
-                          </Button>
-                        </DialogTrigger>
+                      <div className="flex gap-2 justify-end">
+                        <Dialog open={dialogOpen && selectedUser?.id === userProfile.id} onOpenChange={setDialogOpen}>
+                          <DialogTrigger asChild>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => setSelectedUser(userProfile)}
+                            >
+                              <UserPlus className="h-4 w-4 mr-2" />
+                              Add Role
+                            </Button>
+                          </DialogTrigger>
                         <DialogContent>
                           <DialogHeader>
                             <DialogTitle>Grant Role</DialogTitle>
@@ -561,7 +634,17 @@ export default function UserManagement() {
                             </Button>
                           </DialogFooter>
                         </DialogContent>
-                      </Dialog>
+                        </Dialog>
+                        <Button
+                          size="sm"
+                          variant="destructive"
+                          onClick={() => openDeleteDialog(userProfile.id, userProfile.email, `${userProfile.first_name} ${userProfile.last_name}`)}
+                          disabled={userProfile.id === user?.id}
+                          title={userProfile.id === user?.id ? 'Cannot delete your own account' : 'Delete user'}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                   ))
@@ -598,6 +681,69 @@ export default function UserManagement() {
                   </>
                 ) : (
                   'Revoke Role'
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+
+        {/* Delete User Confirmation Dialog */}
+        <AlertDialog open={deleteDialog?.open || false} onOpenChange={(open) => {
+          if (!open) {
+            setDeleteDialog(null);
+            setDeleteConfirmEmail('');
+          }
+        }}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-destructive">Delete User Account</AlertDialogTitle>
+              <AlertDialogDescription asChild>
+                <div className="space-y-4">
+                  <p className="font-semibold">
+                    You are about to permanently delete the account for:
+                  </p>
+                  <div className="bg-muted p-4 rounded-md">
+                    <p className="font-medium">{deleteDialog?.userName}</p>
+                    <p className="text-sm text-muted-foreground">{deleteDialog?.userEmail}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-semibold text-destructive">⚠️ This action cannot be undone!</p>
+                    <p>The following data will be permanently deleted:</p>
+                    <ul className="list-disc list-inside text-sm space-y-1 ml-2">
+                      <li>User profile and account</li>
+                      <li>All assigned roles</li>
+                      <li>Product adoptions and experiences</li>
+                      <li>Review assignments and comments</li>
+                      <li>Company representative information</li>
+                      <li>All associated notifications</li>
+                    </ul>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-medium">Type the user's email to confirm:</p>
+                    <Input
+                      value={deleteConfirmEmail}
+                      onChange={(e) => setDeleteConfirmEmail(e.target.value)}
+                      placeholder={deleteDialog?.userEmail || ''}
+                      disabled={deleteLoading}
+                    />
+                  </div>
+                </div>
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={deleteLoading}>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleDeleteUser}
+                disabled={deleteLoading || deleteConfirmEmail !== deleteDialog?.userEmail}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {deleteLoading ? (
+                  <>
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+                    Deleting...
+                  </>
+                ) : (
+                  'Delete User Permanently'
                 )}
               </AlertDialogAction>
             </AlertDialogFooter>

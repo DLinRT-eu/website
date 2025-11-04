@@ -6,8 +6,12 @@ import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { format } from 'date-fns';
+import { Search, Filter, X, ArrowUpDown } from 'lucide-react';
 
 interface RoleRequest {
   id: string;
@@ -33,27 +37,30 @@ export const RoleRequestManager = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const itemsPerPage = 10;
+  
+  // Filter and search states
+  const [searchQuery, setSearchQuery] = useState('');
+  const [roleFilter, setRoleFilter] = useState<string>('all');
+  const [dateFrom, setDateFrom] = useState('');
+  const [dateTo, setDateTo] = useState('');
+  const [companyFilter, setCompanyFilter] = useState('');
+  const [sortBy, setSortBy] = useState<'date' | 'role' | 'name'>('date');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+  const [showFilters, setShowFilters] = useState(false);
+  
   const { toast } = useToast();
 
   useEffect(() => {
     fetchRoleRequests();
-  }, [currentPage]);
+  }, [currentPage, searchQuery, roleFilter, dateFrom, dateTo, companyFilter, sortBy, sortOrder]);
 
   const fetchRoleRequests = async () => {
     try {
       const from = (currentPage - 1) * itemsPerPage;
       const to = from + itemsPerPage - 1;
 
-      // Get total count
-      const { count } = await supabase
-        .from('role_requests')
-        .select('*', { count: 'exact', head: true })
-        .eq('status', 'pending');
-
-      setTotalCount(count || 0);
-
-      // Get paginated data
-      const { data: requestsData, error } = await supabase
+      // Build query
+      let query = supabase
         .from('role_requests')
         .select(`
           id,
@@ -68,10 +75,38 @@ export const RoleRequestManager = () => {
             first_name,
             last_name
           )
-        `)
-        .eq('status', 'pending')
-        .order('created_at', { ascending: false })
-        .range(from, to);
+        `, { count: 'exact' })
+        .eq('status', 'pending');
+
+      // Apply role filter
+      if (roleFilter !== 'all') {
+        query = query.eq('requested_role', roleFilter as 'admin' | 'reviewer' | 'company');
+      }
+
+      // Apply date range filter
+      if (dateFrom) {
+        query = query.gte('created_at', new Date(dateFrom).toISOString());
+      }
+      if (dateTo) {
+        const endDate = new Date(dateTo);
+        endDate.setHours(23, 59, 59, 999);
+        query = query.lte('created_at', endDate.toISOString());
+      }
+
+      // Apply company filter
+      if (companyFilter.trim()) {
+        query = query.ilike('company_id', `%${companyFilter.trim()}%`);
+      }
+
+      // Apply sorting
+      if (sortBy === 'date') {
+        query = query.order('created_at', { ascending: sortOrder === 'asc' });
+      } else if (sortBy === 'role') {
+        query = query.order('requested_role', { ascending: sortOrder === 'asc' });
+      }
+      // Note: name sorting will be done client-side since it's in profiles table
+
+      const { data: requestsData, error, count } = await query.range(from, to);
 
       if (error) {
         // Silently handle permission denied errors (happens during initial load)
@@ -86,12 +121,35 @@ export const RoleRequestManager = () => {
       }
 
       // Transform nested profiles data
-      const transformedRequests = (requestsData || []).map(req => ({
+      let transformedRequests = (requestsData || []).map(req => ({
         ...req,
         profiles: Array.isArray(req.profiles) ? req.profiles[0] : req.profiles
       })) as RoleRequest[];
 
+      // Apply search filter (client-side since it involves profiles table)
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase().trim();
+        transformedRequests = transformedRequests.filter(req => 
+          req.profiles?.email?.toLowerCase().includes(query) ||
+          req.profiles?.first_name?.toLowerCase().includes(query) ||
+          req.profiles?.last_name?.toLowerCase().includes(query) ||
+          `${req.profiles?.first_name} ${req.profiles?.last_name}`.toLowerCase().includes(query)
+        );
+      }
+
+      // Apply name sorting (client-side)
+      if (sortBy === 'name') {
+        transformedRequests.sort((a, b) => {
+          const nameA = `${a.profiles?.first_name || ''} ${a.profiles?.last_name || ''}`.toLowerCase();
+          const nameB = `${b.profiles?.first_name || ''} ${b.profiles?.last_name || ''}`.toLowerCase();
+          return sortOrder === 'asc' 
+            ? nameA.localeCompare(nameB)
+            : nameB.localeCompare(nameA);
+        });
+      }
+
       setRequests(transformedRequests);
+      setTotalCount(count || 0);
     } catch (error: any) {
       console.error('Error fetching role requests:', error);
       toast({
@@ -212,6 +270,17 @@ export const RoleRequestManager = () => {
     }
   };
 
+  const clearFilters = () => {
+    setSearchQuery('');
+    setRoleFilter('all');
+    setDateFrom('');
+    setDateTo('');
+    setCompanyFilter('');
+    setCurrentPage(1);
+  };
+
+  const hasActiveFilters = searchQuery || roleFilter !== 'all' || dateFrom || dateTo || companyFilter;
+
   if (loading) {
     return (
       <div className="flex justify-center p-8">
@@ -230,9 +299,143 @@ export const RoleRequestManager = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
+          {/* Search and Sort Controls */}
+          <div className="space-y-4 mb-6">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search by name or email..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setCurrentPage(1);
+                  }}
+                  className="pl-9"
+                />
+              </div>
+              
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="default"
+                  onClick={() => setShowFilters(!showFilters)}
+                  className="gap-2"
+                >
+                  <Filter className="h-4 w-4" />
+                  Filters
+                  {hasActiveFilters && (
+                    <Badge variant="secondary" className="ml-1 h-5 px-1">
+                      {[roleFilter !== 'all', dateFrom, dateTo, companyFilter].filter(Boolean).length}
+                    </Badge>
+                  )}
+                </Button>
+
+                <Select value={`${sortBy}-${sortOrder}`} onValueChange={(value) => {
+                  const [newSortBy, newSortOrder] = value.split('-') as [typeof sortBy, typeof sortOrder];
+                  setSortBy(newSortBy);
+                  setSortOrder(newSortOrder);
+                  setCurrentPage(1);
+                }}>
+                  <SelectTrigger className="w-[180px] gap-2">
+                    <ArrowUpDown className="h-4 w-4" />
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="date-desc">Newest First</SelectItem>
+                    <SelectItem value="date-asc">Oldest First</SelectItem>
+                    <SelectItem value="role-asc">Role (A-Z)</SelectItem>
+                    <SelectItem value="role-desc">Role (Z-A)</SelectItem>
+                    <SelectItem value="name-asc">Name (A-Z)</SelectItem>
+                    <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Filter Panel */}
+            {showFilters && (
+              <div className="border rounded-lg p-4 space-y-4 bg-muted/50">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="font-semibold text-sm">Filters</h3>
+                  {hasActiveFilters && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={clearFilters}
+                      className="h-8 gap-2"
+                    >
+                      <X className="h-3 w-3" />
+                      Clear All
+                    </Button>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="role-filter">Role Type</Label>
+                    <Select value={roleFilter} onValueChange={(value) => {
+                      setRoleFilter(value);
+                      setCurrentPage(1);
+                    }}>
+                      <SelectTrigger id="role-filter">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="all">All Roles</SelectItem>
+                        <SelectItem value="admin">Admin</SelectItem>
+                        <SelectItem value="reviewer">Reviewer</SelectItem>
+                        <SelectItem value="company">Company</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="date-from">From Date</Label>
+                    <Input
+                      id="date-from"
+                      type="date"
+                      value={dateFrom}
+                      onChange={(e) => {
+                        setDateFrom(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="date-to">To Date</Label>
+                    <Input
+                      id="date-to"
+                      type="date"
+                      value={dateTo}
+                      onChange={(e) => {
+                        setDateTo(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="company-filter">Company ID</Label>
+                    <Input
+                      id="company-filter"
+                      placeholder="Filter by company..."
+                      value={companyFilter}
+                      onChange={(e) => {
+                        setCompanyFilter(e.target.value);
+                        setCurrentPage(1);
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
           {totalCount === 0 ? (
             <p className="text-muted-foreground text-center py-8">
-              No pending role requests
+              {hasActiveFilters ? 'No role requests match your filters' : 'No pending role requests'}
             </p>
           ) : (
             <>

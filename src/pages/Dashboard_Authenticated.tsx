@@ -73,6 +73,13 @@ export default function Dashboard_Authenticated() {
         icon: FileCheck,
         link: '/reviewer/dashboard',
         color: 'bg-blue-50 text-blue-600 hover:bg-blue-100'
+      },
+      {
+        title: 'Expertise Preferences',
+        description: 'Configure your review preferences',
+        icon: Settings,
+        link: '/reviewer/preferences',
+        color: 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'
       }
     ] : []),
     ...(isCompany ? [

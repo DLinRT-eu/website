@@ -13,6 +13,7 @@ import { Calendar, Clock, AlertCircle, CheckCircle2, Play, BookOpen, Package } f
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow, format } from 'date-fns';
 import RevisionApprovalManager from '@/components/company/RevisionApprovalManager';
+import OnboardingChecklist from '@/components/reviewer/OnboardingChecklist';
 
 interface ReviewAssignment {
   id: string;
@@ -241,25 +242,10 @@ export default function ReviewerDashboard() {
           </div>
         </div>
 
-        {/* Expertise Reminder Banner */}
-        {!hasExpertise && (
-          <Card className="mb-8 border-blue-500/50 bg-blue-500/5">
-            <CardContent className="pt-6">
-              <div className="flex items-start gap-3">
-                <AlertCircle className="h-5 w-5 text-blue-600 mt-0.5" />
-                <div className="flex-1">
-                  <h3 className="font-semibold text-blue-900 dark:text-blue-100">Set Your Expertise Preferences</h3>
-                  <p className="text-sm text-blue-800 dark:text-blue-200 mt-1">
-                    Configure your areas of expertise to receive relevant review assignments that match your knowledge and experience.
-                  </p>
-                  <Button asChild variant="outline" size="sm" className="mt-3">
-                    <Link to="/reviewer/preferences">Manage Preferences</Link>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        )}
+        {/* Onboarding Checklist */}
+        <div className="mb-8">
+          <OnboardingChecklist />
+        </div>
 
         {/* Active Review Rounds */}
         {rounds.length > 0 && (

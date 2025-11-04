@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -10,6 +10,11 @@ import { Badge } from '@/components/ui/badge';
 
 export default function ReviewerGuide() {
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Mark guide as read when component mounts
+  useEffect(() => {
+    localStorage.setItem('reviewer_guide_read', 'true');
+  }, []);
 
   // Define all guide sections with searchable content
   const guideSections = useMemo(() => [

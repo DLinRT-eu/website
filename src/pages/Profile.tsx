@@ -20,7 +20,6 @@ import { RoleSelector } from '@/components/profile/RoleSelector';
 import { MFASettings } from '@/components/profile/MFASettings';
 import { DataExport } from '@/components/profile/DataExport';
 import { DeleteAccount } from '@/components/profile/DeleteAccount';
-import { ReviewerPreferences } from '@/components/profile/ReviewerPreferences';
 import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package, RefreshCw, Users, FileCheck, LayoutDashboard, ShieldCheck } from 'lucide-react';
 import { Link, Navigate } from 'react-router-dom';
 
@@ -543,11 +542,6 @@ export default function Profile() {
               </form>
             </CardContent>
           </Card>
-
-          {/* Reviewer Preferences - Show for reviewers */}
-          {roles.includes('reviewer') && user && (
-            <ReviewerPreferences userId={user.id} />
-          )}
 
           {/* Admin Tools */}
           {isAdmin && (

@@ -250,10 +250,10 @@ export default function ReviewerDashboard() {
                 <div className="flex-1">
                   <h3 className="font-semibold text-blue-900 dark:text-blue-100">Set Your Expertise Preferences</h3>
                   <p className="text-sm text-blue-800 dark:text-blue-200 mt-1">
-                    Please set your expertise preferences to receive relevant review assignments. Visit your profile page to configure your areas of expertise.
+                    Configure your areas of expertise to receive relevant review assignments that match your knowledge and experience.
                   </p>
                   <Button asChild variant="outline" size="sm" className="mt-3">
-                    <Link to="/profile">Go to Profile</Link>
+                    <Link to="/reviewer/preferences">Manage Preferences</Link>
                   </Button>
                 </div>
               </div>

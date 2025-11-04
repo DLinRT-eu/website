@@ -47,6 +47,7 @@ import CompanyProductsManager from "./pages/company/ProductsManager";
 
 // Reviewer Pages
 import ReviewerDashboard from "./pages/reviewer/Dashboard";
+import ReviewerGuide from "./pages/reviewer/ReviewerGuide";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -159,6 +160,11 @@ const App = () => (
               <Route path="/reviewer/dashboard" element={
                 <ProtectedRoute allowedRoles={['reviewer', 'admin']}>
                   <ReviewerDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/reviewer/guide" element={
+                <ProtectedRoute allowedRoles={['reviewer', 'admin']}>
+                  <ReviewerGuide />
                 </ProtectedRoute>
               } />
               

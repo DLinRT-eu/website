@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { Calendar, Clock, AlertCircle, CheckCircle2, Play } from 'lucide-react';
+import { Calendar, Clock, AlertCircle, CheckCircle2, Play, BookOpen } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import RevisionApprovalManager from '@/components/company/RevisionApprovalManager';
@@ -191,9 +191,17 @@ export default function ReviewerDashboard() {
             <h1 className="text-3xl font-bold">My Reviews</h1>
             <p className="text-muted-foreground mt-2">Manage your assigned product reviews</p>
           </div>
-          <Button asChild>
-            <Link to="/reviewer/due-reviews">View Due Reviews</Link>
-          </Button>
+          <div className="flex gap-2">
+            <Button asChild variant="outline">
+              <Link to="/reviewer/guide">
+                <BookOpen className="mr-2 h-4 w-4" />
+                Review Guide
+              </Link>
+            </Button>
+            <Button asChild>
+              <Link to="/reviewer/due-reviews">View Due Reviews</Link>
+            </Button>
+          </div>
         </div>
 
         {/* Stats Cards */}

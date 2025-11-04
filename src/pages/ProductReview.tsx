@@ -9,7 +9,7 @@ import { useCompanyData } from '@/hooks/useCompanyData';
 import ProductDetails from '@/components/ProductDetails';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
-import { ArrowLeft, Clipboard } from 'lucide-react';
+import { ArrowLeft, Clipboard, HelpCircle } from 'lucide-react';
 import { ALL_PRODUCTS } from '@/data';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 import { createIssueUrl } from '@/utils/githubUrlHelper';
@@ -63,6 +63,12 @@ const ProductReview = () => {
           <p className="text-muted-foreground">Review Mode</p>
         </div>
         <div className="flex gap-2">
+          <Button asChild variant="outline">
+            <Link to="/reviewer/guide">
+              <HelpCircle className="mr-2 h-4 w-4" />
+              Need Help?
+            </Link>
+          </Button>
           <Button asChild variant="outline">
             <Link to={`/product/${id}`}>
               <ArrowLeft className="mr-2 h-4 w-4" />

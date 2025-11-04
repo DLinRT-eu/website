@@ -32,6 +32,7 @@ import MyProducts from "./pages/MyProducts";
 import RoleSelection from "./pages/RoleSelection";
 import ProductExperiences from "./pages/ProductExperiences";
 import Auth from "./pages/Auth";
+import Changelog from "./pages/Changelog";
 
 // Admin Pages
 import AdminOverview from "./pages/admin/AdminOverview";
@@ -40,6 +41,7 @@ import UserManagement from "./pages/admin/UserManagement";
 import ReviewAssignment from "./pages/admin/ReviewAssignment";
 import SecurityDashboard from "./pages/admin/SecurityDashboard";
 import UserRegistrationReview from "./pages/admin/UserRegistrationReview";
+import ChangelogAdmin from "./pages/admin/ChangelogAdmin";
 
 // Company Pages
 import CompanyDashboard from "./pages/company/Dashboard";
@@ -97,6 +99,7 @@ const App = () => (
               <Route path="privacy-policy" element={<PrivacyPolicy />} />
               <Route path="terms-of-use" element={<TermsOfUse />} />
               <Route path="auth" element={<Auth />} />
+              <Route path="changelog" element={<Changelog />} />
               
               {/* User Authenticated Routes - Protected by ApprovalGate */}
               <Route path="/profile" element={
@@ -167,6 +170,11 @@ const App = () => (
               <Route path="/admin/registrations" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <UserRegistrationReview />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/changelog" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ChangelogAdmin />
                 </ProtectedRoute>
               } />
               

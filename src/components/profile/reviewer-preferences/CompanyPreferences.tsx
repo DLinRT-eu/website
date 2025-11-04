@@ -3,9 +3,11 @@ import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { X, PackagePlus } from "lucide-react";
 import { PreferenceSearchCombo } from "./PreferenceSearchCombo";
 import { COMPANIES } from "@/data";
+import { ALL_PRODUCTS } from "@/data";
+import { toast } from "sonner";
 
 interface CompanyPreference {
   company_id: string;
@@ -17,6 +19,7 @@ interface CompanyPreferencesProps {
   onAdd: (companyId: string) => void;
   onRemove: (companyId: string) => void;
   onPriorityChange: (companyId: string, priority: number) => void;
+  onBulkAddProducts: (productIds: string[], priority: number) => Promise<void>;
 }
 
 export function CompanyPreferences({
@@ -24,6 +27,7 @@ export function CompanyPreferences({
   onAdd,
   onRemove,
   onPriorityChange,
+  onBulkAddProducts,
 }: CompanyPreferencesProps) {
   const selectedCompanyIds = preferences.map(p => p.company_id);
 
@@ -34,6 +38,31 @@ export function CompanyPreferences({
     });
     return map;
   }, []);
+
+  const handleSelectAllProducts = async (companyId: string, priority: number) => {
+    const company = companyMap.get(companyId);
+    if (!company) return;
+
+    // Get all products for this company
+    const companyProducts = ALL_PRODUCTS.filter(p => 
+      p.company.toLowerCase().replace(/\s+/g, '-') === companyId
+    );
+
+    if (companyProducts.length === 0) {
+      toast.error('No products found for this company');
+      return;
+    }
+
+    const productIds = companyProducts.map(p => p.id).filter(Boolean) as string[];
+    
+    try {
+      await onBulkAddProducts(productIds, priority);
+      toast.success(`Added ${productIds.length} products from ${company.name}`);
+    } catch (error) {
+      console.error('Error adding products:', error);
+      toast.error('Failed to add products');
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -77,13 +106,23 @@ export function CompanyPreferences({
                       Priority: {item.priority}
                     </span>
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => onRemove(item.company_id)}
-                  >
-                    <X className="h-4 w-4" />
-                  </Button>
+                  <div className="flex gap-1">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleSelectAllProducts(item.company_id, item.priority)}
+                      title="Add all products from this company"
+                    >
+                      <PackagePlus className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => onRemove(item.company_id)}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
                 </div>
                 {company?.productIds && (
                   <p className="text-xs text-muted-foreground">

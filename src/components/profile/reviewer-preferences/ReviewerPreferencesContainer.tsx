@@ -14,6 +14,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { CategoryPreferences } from "./CategoryPreferences";
 import { CompanyPreferences } from "./CompanyPreferences";
 import { ProductPreferences } from "./ProductPreferences";
+import { PreferenceImportExport } from "./PreferenceImportExport";
 
 interface ReviewerPreferencesContainerProps {
   userId: string;
@@ -150,6 +151,78 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
     }
   };
 
+  const handleBulkAddProducts = async (productIds: string[], priority: number) => {
+    try {
+      const insertData = productIds.map(productId => ({
+        user_id: userId,
+        preference_type: 'product' as const,
+        product_id: productId,
+        priority,
+      }));
+
+      const { error } = await supabase
+        .from('reviewer_expertise')
+        .insert(insertData);
+
+      if (error) throw error;
+
+      fetchPreferences();
+    } catch (error) {
+      console.error('Error bulk adding products:', error);
+      throw error;
+    }
+  };
+
+  const handleExport = () => {
+    return {
+      version: '1.0',
+      exported_at: new Date().toISOString(),
+      categories: categoryPreferences,
+      companies: companyPreferences,
+      products: productPreferences,
+    };
+  };
+
+  const handleImport = async (data: {
+    categories: Array<{ category: string; priority: number }>;
+    companies: Array<{ company_id: string; priority: number }>;
+    products: Array<{ product_id: string; priority: number }>;
+  }) => {
+    try {
+      const insertData = [
+        ...data.categories.map(c => ({
+          user_id: userId,
+          preference_type: 'category' as const,
+          category: c.category,
+          priority: c.priority,
+        })),
+        ...data.companies.map(c => ({
+          user_id: userId,
+          preference_type: 'company' as const,
+          company_id: c.company_id,
+          priority: c.priority,
+        })),
+        ...data.products.map(p => ({
+          user_id: userId,
+          preference_type: 'product' as const,
+          product_id: p.product_id,
+          priority: p.priority,
+        })),
+      ];
+
+      const { error } = await supabase
+        .from('reviewer_expertise')
+        .insert(insertData);
+
+      if (error) throw error;
+
+      fetchPreferences();
+    } catch (error) {
+      console.error('Error importing preferences:', error);
+      throw error;
+    }
+  };
+
   const categoryPreferences = preferences
     .filter(p => p.preference_type === 'category' && p.category)
     .map(p => ({ category: p.category!, priority: p.priority }));
@@ -199,17 +272,23 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
             </Tooltip>
           </TooltipProvider>
         </div>
-        {/* Summary Stats */}
-        <div className="flex gap-2 mt-4">
-          <Badge variant="outline">
-            {categoryPreferences.length} {categoryPreferences.length === 1 ? 'Category' : 'Categories'}
-          </Badge>
-          <Badge variant="outline">
-            {companyPreferences.length} {companyPreferences.length === 1 ? 'Company' : 'Companies'}
-          </Badge>
-          <Badge variant="outline">
-            {productPreferences.length} {productPreferences.length === 1 ? 'Product' : 'Products'}
-          </Badge>
+        {/* Summary Stats and Actions */}
+        <div className="flex items-center justify-between mt-4">
+          <div className="flex gap-2">
+            <Badge variant="outline">
+              {categoryPreferences.length} {categoryPreferences.length === 1 ? 'Category' : 'Categories'}
+            </Badge>
+            <Badge variant="outline">
+              {companyPreferences.length} {companyPreferences.length === 1 ? 'Company' : 'Companies'}
+            </Badge>
+            <Badge variant="outline">
+              {productPreferences.length} {productPreferences.length === 1 ? 'Product' : 'Products'}
+            </Badge>
+          </div>
+          <PreferenceImportExport
+            onExport={handleExport}
+            onImport={handleImport}
+          />
         </div>
       </CardHeader>
       <CardContent>
@@ -260,6 +339,7 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
               onPriorityChange={(companyId, priority) => 
                 handlePriorityChange('company', companyId, priority)
               }
+              onBulkAddProducts={handleBulkAddProducts}
             />
           </TabsContent>
 

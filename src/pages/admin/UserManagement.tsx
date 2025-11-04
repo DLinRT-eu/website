@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
@@ -56,6 +57,8 @@ export default function UserManagement() {
   const [roleFilter, setRoleFilter] = useState<AppRole | 'all' | 'none'>('all');
   const [sortColumn, setSortColumn] = useState<SortColumn>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
+  const [operationLoading, setOperationLoading] = useState<string | null>(null); // userId-role for loading state
+  const [revokeDialog, setRevokeDialog] = useState<{ open: boolean; userId: string; role: AppRole; userName: string } | null>(null);
 
   useEffect(() => {
     // Don't check permissions while still loading auth
@@ -218,6 +221,9 @@ export default function UserManagement() {
   const handleGrantRole = async () => {
     if (!selectedUser || !user) return;
 
+    const loadingKey = `${selectedUser.id}-grant`;
+    setOperationLoading(loadingKey);
+
     try {
       // If granting admin role, also grant reviewer and company for testing
       const rolesToGrant: Array<{ user_id: string; role: AppRole; granted_by: string }> = selectedRole === 'admin' 
@@ -235,9 +241,20 @@ export default function UserManagement() {
 
       if (error) {
         console.error('Error granting role:', error);
+        
+        // Provide specific error messages
+        let errorMessage = 'Failed to grant role';
+        if (error.code === '23505') {
+          errorMessage = 'This user already has this role';
+        } else if (error.code === '42501') {
+          errorMessage = 'Permission denied. You may not have sufficient privileges';
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
         toast({
           title: 'Error',
-          description: `Failed to grant role: ${error.message}. Code: ${error.code}`,
+          description: errorMessage,
           variant: 'destructive',
         });
       } else {
@@ -249,7 +266,7 @@ export default function UserManagement() {
           title: 'Success',
           description: `${message} to ${selectedUser.first_name} ${selectedUser.last_name}`,
         });
-        fetchUsers();
+        await fetchUsers();
         setDialogOpen(false);
       }
     } catch (error: any) {
@@ -259,28 +276,61 @@ export default function UserManagement() {
         description: `Unexpected error: ${error.message || 'Unknown error'}`,
         variant: 'destructive',
       });
+    } finally {
+      setOperationLoading(null);
     }
   };
 
-  const handleRevokeRole = async (userId: string, role: AppRole) => {
-    const { error } = await supabase
-      .from('user_roles')
-      .delete()
-      .eq('user_id', userId)
-      .eq('role', role);
+  const openRevokeDialog = (userId: string, role: AppRole, userName: string) => {
+    setRevokeDialog({ open: true, userId, role, userName });
+  };
 
-    if (error) {
+  const handleRevokeRole = async () => {
+    if (!revokeDialog) return;
+    
+    const { userId, role } = revokeDialog;
+    const loadingKey = `${userId}-${role}`;
+    setOperationLoading(loadingKey);
+
+    try {
+      const { error } = await supabase
+        .from('user_roles')
+        .delete()
+        .eq('user_id', userId)
+        .eq('role', role);
+
+      if (error) {
+        console.error('Error revoking role:', error);
+        
+        let errorMessage = 'Failed to revoke role';
+        if (error.code === '42501') {
+          errorMessage = 'Permission denied. You may not have sufficient privileges';
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        toast({
+          title: 'Error',
+          description: errorMessage,
+          variant: 'destructive',
+        });
+      } else {
+        toast({
+          title: 'Success',
+          description: `${role} role revoked from ${revokeDialog.userName}`,
+        });
+        await fetchUsers();
+      }
+    } catch (error: any) {
+      console.error('Unexpected error revoking role:', error);
       toast({
         title: 'Error',
-        description: error.message,
+        description: `Unexpected error: ${error.message || 'Unknown error'}`,
         variant: 'destructive',
       });
-    } else {
-      toast({
-        title: 'Success',
-        description: `${role} role revoked`,
-      });
-      fetchUsers();
+    } finally {
+      setOperationLoading(null);
+      setRevokeDialog(null);
     }
   };
 
@@ -432,17 +482,26 @@ export default function UserManagement() {
                     <TableCell>
                       <div className="flex gap-1 flex-wrap">
                         {userProfile.roles.length > 0 ? (
-                          userProfile.roles.map(role => (
-                            <Badge key={role} variant={getRoleBadgeVariant(role)} className="gap-1">
-                              {role}
-                              <button
-                                onClick={() => handleRevokeRole(userProfile.id, role)}
-                                className="ml-1 hover:text-destructive"
-                              >
-                                <UserMinus className="h-3 w-3" />
-                              </button>
-                            </Badge>
-                          ))
+                          userProfile.roles.map(role => {
+                            const isRevoking = operationLoading === `${userProfile.id}-${role}`;
+                            return (
+                              <Badge key={role} variant={getRoleBadgeVariant(role)} className="gap-1">
+                                {role}
+                                <button
+                                  onClick={() => openRevokeDialog(userProfile.id, role, `${userProfile.first_name} ${userProfile.last_name}`)}
+                                  className="ml-1 hover:text-destructive disabled:opacity-50"
+                                  disabled={isRevoking}
+                                  title="Revoke role"
+                                >
+                                  {isRevoking ? (
+                                    <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                                  ) : (
+                                    <UserMinus className="h-3 w-3" />
+                                  )}
+                                </button>
+                              </Badge>
+                            );
+                          })
                         ) : (
                           <Badge variant="outline">No roles</Badge>
                         )}
@@ -480,11 +539,25 @@ export default function UserManagement() {
                             </Select>
                           </div>
                           <DialogFooter>
-                            <Button variant="outline" onClick={() => setDialogOpen(false)}>
+                            <Button 
+                              variant="outline" 
+                              onClick={() => setDialogOpen(false)}
+                              disabled={operationLoading === `${userProfile.id}-grant`}
+                            >
                               Cancel
                             </Button>
-                            <Button onClick={handleGrantRole}>
-                              Grant Role
+                            <Button 
+                              onClick={handleGrantRole}
+                              disabled={operationLoading === `${userProfile.id}-grant`}
+                            >
+                              {operationLoading === `${userProfile.id}-grant` ? (
+                                <>
+                                  <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+                                  Granting...
+                                </>
+                              ) : (
+                                'Grant Role'
+                              )}
                             </Button>
                           </DialogFooter>
                         </DialogContent>
@@ -498,6 +571,38 @@ export default function UserManagement() {
           </CardContent>
         </Card>
         </div>
+
+        {/* Revoke Role Confirmation Dialog */}
+        <AlertDialog open={revokeDialog?.open || false} onOpenChange={(open) => !open && setRevokeDialog(null)}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Revoke Role?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to revoke the <strong>{revokeDialog?.role}</strong> role from{' '}
+                <strong>{revokeDialog?.userName}</strong>?
+                <br /><br />
+                This action will immediately remove their access to {revokeDialog?.role}-specific features.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={!!operationLoading}>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleRevokeRole}
+                disabled={!!operationLoading}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                {operationLoading ? (
+                  <>
+                    <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent mr-2" />
+                    Revoking...
+                  </>
+                ) : (
+                  'Revoke Role'
+                )}
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </PageLayout>
   );

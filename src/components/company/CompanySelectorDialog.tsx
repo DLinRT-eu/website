@@ -9,8 +9,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, X, Building2, CheckCircle2 } from "lucide-react";
+import { Search, X, Building2, CheckCircle2, ArrowUpDown, Filter } from "lucide-react";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
@@ -34,28 +36,57 @@ export const CompanySelectorDialog = ({
   description = "Search and select the company you represent",
 }: CompanySelectorDialogProps) => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortBy, setSortBy] = useState<'name-asc' | 'name-desc' | 'products-desc' | 'products-asc'>('name-asc');
+  const [productCountFilter, setProductCountFilter] = useState<'all' | '1-5' | '6-10' | '11+'>('all');
+  const [showFilters, setShowFilters] = useState(false);
   const [tempSelectedId, setTempSelectedId] = useState<string | undefined>(
     selectedCompanyId
   );
 
   // Filter companies based on search
   const filteredCompanies = useMemo(() => {
-    if (!searchQuery.trim()) return companies;
-    
-    const query = searchQuery.toLowerCase().trim();
-    return companies.filter(
-      (company) =>
-        company.name.toLowerCase().includes(query) ||
-        company.id.toLowerCase().includes(query)
-    );
-  }, [companies, searchQuery]);
+    let filtered = companies;
 
-  // Sort by name
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(
+        (company) =>
+          company.name.toLowerCase().includes(query) ||
+          company.id.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply product count filter
+    if (productCountFilter !== 'all') {
+      filtered = filtered.filter((company) => {
+        if (productCountFilter === '1-5') return company.productCount >= 1 && company.productCount <= 5;
+        if (productCountFilter === '6-10') return company.productCount >= 6 && company.productCount <= 10;
+        if (productCountFilter === '11+') return company.productCount >= 11;
+        return true;
+      });
+    }
+
+    return filtered;
+  }, [companies, searchQuery, productCountFilter]);
+
+  // Sort companies
   const sortedCompanies = useMemo(() => {
-    return [...filteredCompanies].sort((a, b) => 
-      a.name.localeCompare(b.name)
-    );
-  }, [filteredCompanies]);
+    const sorted = [...filteredCompanies];
+    
+    switch (sortBy) {
+      case 'name-asc':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name-desc':
+        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+      case 'products-desc':
+        return sorted.sort((a, b) => b.productCount - a.productCount);
+      case 'products-asc':
+        return sorted.sort((a, b) => a.productCount - b.productCount);
+      default:
+        return sorted;
+    }
+  }, [filteredCompanies, sortBy]);
 
   const handleConfirm = () => {
     if (tempSelectedId) {
@@ -71,6 +102,14 @@ export const CompanySelectorDialog = ({
     setSearchQuery("");
   };
 
+  const handleClearFilters = () => {
+    setSearchQuery("");
+    setProductCountFilter('all');
+    setSortBy('name-asc');
+  };
+
+  const hasActiveFilters = searchQuery || productCountFilter !== 'all' || sortBy !== 'name-asc';
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-3xl max-h-[90vh] p-0 gap-0">
@@ -80,39 +119,109 @@ export const CompanySelectorDialog = ({
         </DialogHeader>
 
         <div className="px-6 pb-4 space-y-4">
-          {/* Search Bar */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search by company name or ID..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-9"
-            />
-            {searchQuery && (
-              <button
-                onClick={handleClearSearch}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+          {/* Search and Sort Controls */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            {/* Search Bar */}
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search by company name or ID..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 pr-9"
+              />
+              {searchQuery && (
+                <button
+                  onClick={handleClearSearch}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+
+            <div className="flex gap-2">
+              {/* Filter Toggle */}
+              <Button
+                variant="outline"
+                size="default"
+                onClick={() => setShowFilters(!showFilters)}
+                className="gap-2"
               >
-                <X className="h-4 w-4" />
-              </button>
-            )}
+                <Filter className="h-4 w-4" />
+                Filters
+                {(productCountFilter !== 'all') && (
+                  <Badge variant="secondary" className="ml-1 h-5 px-1">
+                    1
+                  </Badge>
+                )}
+              </Button>
+
+              {/* Sort Dropdown */}
+              <Select value={sortBy} onValueChange={(value: any) => setSortBy(value)}>
+                <SelectTrigger className="w-[180px] gap-2">
+                  <ArrowUpDown className="h-4 w-4" />
+                  <span className="truncate">Sort</span>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="name-asc">Name (A-Z)</SelectItem>
+                  <SelectItem value="name-desc">Name (Z-A)</SelectItem>
+                  <SelectItem value="products-desc">Most Products</SelectItem>
+                  <SelectItem value="products-asc">Fewest Products</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
+
+          {/* Filter Panel */}
+          {showFilters && (
+            <div className="border rounded-lg p-4 space-y-4 bg-muted/50">
+              <div className="flex items-center justify-between mb-2">
+                <h3 className="font-semibold text-sm">Filters</h3>
+                {hasActiveFilters && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleClearFilters}
+                    className="h-8 gap-2"
+                  >
+                    <X className="h-3 w-3" />
+                    Clear All
+                  </Button>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="product-count-filter">Product Count</Label>
+                <Select value={productCountFilter} onValueChange={(value: any) => setProductCountFilter(value)}>
+                  <SelectTrigger id="product-count-filter">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Companies</SelectItem>
+                    <SelectItem value="1-5">1-5 Products</SelectItem>
+                    <SelectItem value="6-10">6-10 Products</SelectItem>
+                    <SelectItem value="11+">11+ Products</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          )}
 
           {/* Results Count */}
           <div className="flex items-center justify-between text-sm">
             <p className="text-muted-foreground">
               {sortedCompanies.length} compan{sortedCompanies.length !== 1 ? "ies" : "y"} found
             </p>
-            {searchQuery && (
+            {hasActiveFilters && (
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={handleClearSearch}
+                onClick={handleClearFilters}
                 className="h-8"
               >
                 <X className="h-3 w-3 mr-1" />
-                Clear search
+                Clear all
               </Button>
             )}
           </div>

@@ -8,9 +8,12 @@ interface RoleContextType {
   roles: AppRole[];
   activeRole: AppRole | null;
   highestRole: AppRole | null;
-  isAdmin: boolean;
-  isReviewer: boolean;
-  isCompany: boolean;
+  isAdmin: boolean;  // True if admin is ACTIVE role
+  isReviewer: boolean;  // True if reviewer is ACTIVE role
+  isCompany: boolean;  // True if company is ACTIVE role
+  hasAdminRole: boolean;  // True if user HAS admin role (regardless of active)
+  hasReviewerRole: boolean;  // True if user HAS reviewer role
+  hasCompanyRole: boolean;  // True if user HAS company role
   requiresRoleSelection: boolean;
   loading: boolean;
   setActiveRole: (role: AppRole) => void;
@@ -89,9 +92,17 @@ export function RoleProvider({ children }: { children: ReactNode }) {
   };
 
   const highestRole = useMemo(() => getHighestRole(roles), [roles]);
-  const isAdmin = roles.includes('admin');
-  const isReviewer = roles.includes('reviewer');
-  const isCompany = roles.includes('company');
+  
+  // Check if user HAS these roles (for general permissions)
+  const hasAdminRole = roles.includes('admin');
+  const hasReviewerRole = roles.includes('reviewer');
+  const hasCompanyRole = roles.includes('company');
+  
+  // Check if these are the ACTIVE role (for UI display)
+  const isAdmin = activeRole === 'admin';
+  const isReviewer = activeRole === 'reviewer';
+  const isCompany = activeRole === 'company';
+  
   const requiresRoleSelection = roles.length > 1 && !activeRole;
 
   const value = useMemo(() => ({
@@ -101,11 +112,14 @@ export function RoleProvider({ children }: { children: ReactNode }) {
     isAdmin,
     isReviewer,
     isCompany,
+    hasAdminRole,
+    hasReviewerRole,
+    hasCompanyRole,
     requiresRoleSelection,
     loading,
     setActiveRole,
     refetch: fetchRoles,
-  }), [roles, activeRole, highestRole, isAdmin, isReviewer, isCompany, requiresRoleSelection, loading]);
+  }), [roles, activeRole, highestRole, isAdmin, isReviewer, isCompany, hasAdminRole, hasReviewerRole, hasCompanyRole, requiresRoleSelection, loading]);
 
   return <RoleContext.Provider value={value}>{children}</RoleContext.Provider>;
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -45,7 +46,8 @@ interface RecentUser {
 }
 
 export default function AdminOverview() {
-  const { isAdmin } = useAuth();
+  const { user } = useAuth();
+  const { isAdmin } = useRoles();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [roleRequests, setRoleRequests] = useState<PendingRoleRequest[]>([]);

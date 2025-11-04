@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -38,7 +39,8 @@ interface ProductReview {
 }
 
 export default function ReviewAssignment() {
-  const { user, isAdmin } = useAuth();
+  const { user } = useAuth();
+  const { isAdmin } = useRoles();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [reviewers, setReviewers] = useState<Reviewer[]>([]);

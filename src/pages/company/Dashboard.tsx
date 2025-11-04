@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -43,7 +44,8 @@ interface CompanyUser {
 }
 
 export default function CompanyDashboard() {
-  const { user, isCompany } = useAuth();
+  const { user } = useAuth();
+  const { isCompany } = useRoles();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [revisions, setRevisions] = useState<CompanyRevision[]>([]);

@@ -1,12 +1,91 @@
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import PageLayout from '@/components/layout/PageLayout';
-import { ArrowLeft, BookOpen, CheckCircle, FileText, GitBranch, Globe, Shield, AlertCircle } from 'lucide-react';
+import { ArrowLeft, BookOpen, CheckCircle, FileText, GitBranch, Globe, Shield, AlertCircle, Search, X } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
 export default function ReviewerGuide() {
+  const [searchQuery, setSearchQuery] = useState('');
+
+  // Define all guide sections with searchable content
+  const guideSections = useMemo(() => [
+    {
+      id: 'getting-started',
+      title: 'Getting Started',
+      icon: BookOpen,
+      keywords: ['reviewer', 'assignments', 'priority', 'deadline', 'onboarding', 'role'],
+      content: 'What is a Reviewer? How Assignments Work Priority Levels deadline management'
+    },
+    {
+      id: 'workflow',
+      title: 'Review Workflow',
+      icon: CheckCircle,
+      keywords: ['process', 'steps', 'checklist', 'start', 'complete', 'verify', 'github', 'issue'],
+      content: 'Step-by-Step Process receive assignment start review checklist verify create issues'
+    },
+    {
+      id: 'what-to-review',
+      title: 'What to Review',
+      icon: FileText,
+      keywords: ['information', 'details', 'regulatory', 'compliance', 'documentation', 'technical'],
+      content: 'Basic Product Information Technical Details Regulatory Compliance Documentation'
+    },
+    {
+      id: 'verification',
+      title: 'Verification Sources',
+      icon: Globe,
+      keywords: ['sources', 'verify', 'FDA', 'database', 'literature', 'official', 'documentation'],
+      content: 'Primary Sources Regulatory Databases Scientific Literature company websites'
+    },
+    {
+      id: 'checklist',
+      title: 'Review Checklist Explained',
+      icon: CheckCircle,
+      keywords: ['checklist', 'items', 'sections', 'notes', 'verify', 'validation'],
+      content: 'Basic Information Section Technical Details Section Compliance Regulatory Section'
+    },
+    {
+      id: 'github',
+      title: 'Creating Review Issues',
+      icon: GitBranch,
+      keywords: ['github', 'issue', 'template', 'create', 'report', 'bug', 'error'],
+      content: 'When to Create an Issue How to Create an Issue template information evidence'
+    },
+    {
+      id: 'best-practices',
+      title: 'Best Practices',
+      icon: Shield,
+      keywords: ['quality', 'documentation', 'efficiency', 'communication', 'tips', 'guidelines'],
+      content: 'Review Quality Documentation Efficiency Communication best practices'
+    },
+    {
+      id: 'faq',
+      title: 'Common Questions',
+      icon: AlertCircle,
+      keywords: ['faq', 'questions', 'help', 'time', 'verify', 'contact', 'mistake', 'deadline'],
+      content: 'FAQ common questions help verify information deadline extension mistakes'
+    }
+  ], []);
+
+  // Filter sections based on search query
+  const filteredSections = useMemo(() => {
+    if (!searchQuery.trim()) return guideSections;
+
+    const query = searchQuery.toLowerCase();
+    return guideSections.filter(section => 
+      section.title.toLowerCase().includes(query) ||
+      section.keywords.some(keyword => keyword.toLowerCase().includes(query)) ||
+      section.content.toLowerCase().includes(query)
+    );
+  }, [searchQuery, guideSections]);
+
+  // Automatically open all sections when searching
+  const accordionValue = searchQuery.trim() ? filteredSections.map(s => s.id).join(',') : undefined;
+
   return (
     <PageLayout>
       <div className="container max-w-5xl py-8">
@@ -28,8 +107,39 @@ export default function ReviewerGuide() {
           </p>
         </div>
 
+        {/* Search Bar */}
+        <Card className="mb-6">
+          <CardContent className="pt-6">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search guide (e.g., 'github issue', 'verification', 'deadline')..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 pr-9"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="Clear search"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              )}
+            </div>
+            {searchQuery && (
+              <p className="text-sm text-muted-foreground mt-2">
+                Found {filteredSections.length} {filteredSections.length === 1 ? 'section' : 'sections'} matching "{searchQuery}"
+              </p>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Quick Start Card */}
-        <Card className="mb-8 border-primary">
+        {!searchQuery && (
+          <Card className="mb-8 border-primary">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <CheckCircle className="h-5 w-5 text-primary" />
@@ -47,17 +157,31 @@ export default function ReviewerGuide() {
             </ol>
           </CardContent>
         </Card>
+        )}
 
         {/* Main Guide Content */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Comprehensive Guide</CardTitle>
-            <CardDescription>Everything you need to know about reviewing products</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <Accordion type="single" collapsible className="w-full">
+        {filteredSections.length > 0 ? (
+          <Card>
+            <CardHeader>
+              <CardTitle>
+                {searchQuery ? `Search Results (${filteredSections.length})` : 'Comprehensive Guide'}
+              </CardTitle>
+              <CardDescription>
+                {searchQuery 
+                  ? `Showing sections matching "${searchQuery}"`
+                  : 'Everything you need to know about reviewing products'
+                }
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Accordion 
+                type="multiple" 
+                value={accordionValue ? accordionValue.split(',') : undefined}
+                className="w-full"
+              >
               
               {/* Section 1: Getting Started */}
+              {filteredSections.some(s => s.id === 'getting-started') && (
               <AccordionItem value="getting-started">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -111,8 +235,10 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
               {/* Section 2: Review Workflow */}
+              {filteredSections.some(s => s.id === 'workflow') && (
               <AccordionItem value="workflow">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -164,8 +290,10 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
               {/* Section 3: What to Review */}
+              {filteredSections.some(s => s.id === 'what-to-review') && (
               <AccordionItem value="what-to-review">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -216,8 +344,10 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
               {/* Section 4: Verification Sources */}
+              {filteredSections.some(s => s.id === 'verification') && (
               <AccordionItem value="verification">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -268,8 +398,10 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
               {/* Section 5: Review Checklist */}
+              {filteredSections.some(s => s.id === 'checklist') && (
               <AccordionItem value="checklist">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -326,8 +458,10 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
               {/* Section 6: GitHub Issues */}
+              {filteredSections.some(s => s.id === 'github') && (
               <AccordionItem value="github">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -395,8 +529,10 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
               {/* Section 7: Best Practices */}
+              {filteredSections.some(s => s.id === 'best-practices') && (
               <AccordionItem value="best-practices">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -447,8 +583,10 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
               {/* Section 8: Common Questions */}
+              {filteredSections.some(s => s.id === 'faq') && (
               <AccordionItem value="faq">
                 <AccordionTrigger className="text-lg font-semibold">
                   <div className="flex items-center gap-2">
@@ -517,10 +655,25 @@ export default function ReviewerGuide() {
                   </div>
                 </AccordionContent>
               </AccordionItem>
+              )}
 
             </Accordion>
           </CardContent>
         </Card>
+        ) : (
+          <Card>
+            <CardContent className="py-12 text-center">
+              <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-lg font-semibold mb-2">No results found</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                No sections match your search for "{searchQuery}"
+              </p>
+              <Button variant="outline" onClick={() => setSearchQuery('')}>
+                Clear Search
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Footer Actions */}
         <div className="mt-8 flex justify-center gap-4">

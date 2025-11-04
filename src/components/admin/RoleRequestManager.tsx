@@ -11,7 +11,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { format } from 'date-fns';
-import { Search, Filter, X, ArrowUpDown } from 'lucide-react';
+import { Search, Filter, X, ArrowUpDown, Download, FileSpreadsheet } from 'lucide-react';
+import * as XLSX from 'xlsx';
 
 interface RoleRequest {
   id: string;
@@ -281,6 +282,106 @@ export const RoleRequestManager = () => {
 
   const hasActiveFilters = searchQuery || roleFilter !== 'all' || dateFrom || dateTo || companyFilter;
 
+  const exportToCSV = () => {
+    if (requests.length === 0) {
+      toast({
+        title: 'No data to export',
+        description: 'There are no role requests to export.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Prepare CSV data
+    const csvData = requests.map(req => ({
+      'Request ID': req.id,
+      'User Email': req.profiles?.email || 'N/A',
+      'First Name': req.profiles?.first_name || 'N/A',
+      'Last Name': req.profiles?.last_name || 'N/A',
+      'Requested Role': req.requested_role,
+      'Status': req.status,
+      'Company ID': req.company_id || 'N/A',
+      'Justification': req.justification,
+      'Created At': format(new Date(req.created_at), 'yyyy-MM-dd HH:mm:ss'),
+    }));
+
+    // Convert to CSV string
+    const headers = Object.keys(csvData[0]).join(',');
+    const rows = csvData.map(row => 
+      Object.values(row).map(value => 
+        `"${String(value).replace(/"/g, '""')}"`
+      ).join(',')
+    );
+    const csv = [headers, ...rows].join('\n');
+
+    // Download
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `role-requests-${format(new Date(), 'yyyy-MM-dd-HHmmss')}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    toast({
+      title: 'Export successful',
+      description: `Exported ${requests.length} role request(s) to CSV`,
+    });
+  };
+
+  const exportToExcel = () => {
+    if (requests.length === 0) {
+      toast({
+        title: 'No data to export',
+        description: 'There are no role requests to export.',
+        variant: 'destructive',
+      });
+      return;
+    }
+
+    // Prepare Excel data
+    const excelData = requests.map(req => ({
+      'Request ID': req.id,
+      'User Email': req.profiles?.email || 'N/A',
+      'First Name': req.profiles?.first_name || 'N/A',
+      'Last Name': req.profiles?.last_name || 'N/A',
+      'Requested Role': req.requested_role,
+      'Status': req.status,
+      'Company ID': req.company_id || 'N/A',
+      'Justification': req.justification,
+      'Created At': format(new Date(req.created_at), 'yyyy-MM-dd HH:mm:ss'),
+    }));
+
+    // Create workbook and worksheet
+    const ws = XLSX.utils.json_to_sheet(excelData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Role Requests');
+
+    // Set column widths
+    const columnWidths = [
+      { wch: 36 }, // Request ID
+      { wch: 30 }, // User Email
+      { wch: 15 }, // First Name
+      { wch: 15 }, // Last Name
+      { wch: 12 }, // Requested Role
+      { wch: 10 }, // Status
+      { wch: 30 }, // Company ID
+      { wch: 50 }, // Justification
+      { wch: 20 }, // Created At
+    ];
+    ws['!cols'] = columnWidths;
+
+    // Download
+    XLSX.writeFile(wb, `role-requests-${format(new Date(), 'yyyy-MM-dd-HHmmss')}.xlsx`);
+
+    toast({
+      title: 'Export successful',
+      description: `Exported ${requests.length} role request(s) to Excel`,
+    });
+  };
+
   if (loading) {
     return (
       <div className="flex justify-center p-8">
@@ -293,10 +394,36 @@ export const RoleRequestManager = () => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Pending Role Requests</CardTitle>
-          <CardDescription>
-            Review and approve role requests from users
-          </CardDescription>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <CardTitle>Pending Role Requests</CardTitle>
+              <CardDescription>
+                Review and approve role requests from users
+              </CardDescription>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportToCSV}
+                disabled={loading || requests.length === 0}
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                CSV
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportToExcel}
+                disabled={loading || requests.length === 0}
+                className="gap-2"
+              >
+                <FileSpreadsheet className="h-4 w-4" />
+                Excel
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           {/* Search and Sort Controls */}

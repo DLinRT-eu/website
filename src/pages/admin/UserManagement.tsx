@@ -59,7 +59,7 @@ export default function UserManagement() {
   const [sortColumn, setSortColumn] = useState<SortColumn>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>('asc');
   const [operationLoading, setOperationLoading] = useState<string | null>(null); // userId-role for loading state
-  const [revokeDialog, setRevokeDialog] = useState<{ open: boolean; userId: string; role: AppRole; userName: string } | null>(null);
+  const [revokeDialog, setRevokeDialog] = useState<{ open: boolean; userId: string; role: AppRole; userName: string; userEmail: string } | null>(null);
   const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; userId: string; userEmail: string; userName: string } | null>(null);
   const [deleteConfirmEmail, setDeleteConfirmEmail] = useState('');
   const [deleteLoading, setDeleteLoading] = useState(false);
@@ -262,6 +262,19 @@ export default function UserManagement() {
           variant: 'destructive',
         });
       } else {
+        // Log the role grant action
+        const rolesGranted = rolesToGrant.map(r => r.role).join(', ');
+        await supabase.rpc('log_admin_action', {
+          p_action_type: 'role_granted',
+          p_target_user_id: selectedUser.id,
+          p_target_user_email: selectedUser.email,
+          p_details: {
+            target_user_name: `${selectedUser.first_name} ${selectedUser.last_name}`,
+            roles_granted: rolesGranted,
+            timestamp: new Date().toISOString()
+          }
+        });
+
         const message = selectedRole === 'admin'
           ? `Admin role granted (includes reviewer & company for testing)`
           : `${selectedRole} role granted`;
@@ -285,8 +298,8 @@ export default function UserManagement() {
     }
   };
 
-  const openRevokeDialog = (userId: string, role: AppRole, userName: string) => {
-    setRevokeDialog({ open: true, userId, role, userName });
+  const openRevokeDialog = (userId: string, role: AppRole, userName: string, userEmail: string) => {
+    setRevokeDialog({ open: true, userId, role, userName, userEmail });
   };
 
   const handleRevokeRole = async () => {
@@ -319,6 +332,18 @@ export default function UserManagement() {
           variant: 'destructive',
         });
       } else {
+        // Log the role revocation action
+        await supabase.rpc('log_admin_action', {
+          p_action_type: 'role_revoked',
+          p_target_user_id: userId,
+          p_target_user_email: revokeDialog.userEmail,
+          p_details: {
+            target_user_name: revokeDialog.userName,
+            role_revoked: role,
+            timestamp: new Date().toISOString()
+          }
+        });
+
         toast({
           title: 'Success',
           description: `${role} role revoked from ${revokeDialog.userName}`,
@@ -581,7 +606,7 @@ export default function UserManagement() {
                               <Badge key={role} variant={getRoleBadgeVariant(role)} className="gap-1">
                                 {role}
                                 <button
-                                  onClick={() => openRevokeDialog(userProfile.id, role, `${userProfile.first_name} ${userProfile.last_name}`)}
+                                  onClick={() => openRevokeDialog(userProfile.id, role, `${userProfile.first_name} ${userProfile.last_name}`, userProfile.email)}
                                   className="ml-1 hover:text-destructive disabled:opacity-50"
                                   disabled={isRevoking}
                                   title="Revoke role"

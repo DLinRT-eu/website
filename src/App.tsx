@@ -51,6 +51,7 @@ import ReviewerGuide from "./pages/reviewer/ReviewerGuide";
 
 // Admin Review Pages
 import ReviewRounds from "./pages/admin/ReviewRounds";
+import ReviewRoundDetails from "./pages/admin/ReviewRoundDetails";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -151,6 +152,11 @@ const App = () => (
               <Route path="/admin/review-rounds" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <ReviewRounds />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/review-rounds/:roundId" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <ReviewRoundDetails />
                 </ProtectedRoute>
               } />
               <Route path="/admin/security" element={

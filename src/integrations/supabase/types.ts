@@ -134,6 +134,50 @@ export type Database = {
         }
         Relationships: []
       }
+      assignment_history: {
+        Row: {
+          assigned_to: string | null
+          change_type: string
+          changed_by: string
+          created_at: string
+          id: string
+          previous_assignee: string | null
+          product_id: string
+          reason: string | null
+          review_round_id: string
+        }
+        Insert: {
+          assigned_to?: string | null
+          change_type: string
+          changed_by: string
+          created_at?: string
+          id?: string
+          previous_assignee?: string | null
+          product_id: string
+          reason?: string | null
+          review_round_id: string
+        }
+        Update: {
+          assigned_to?: string | null
+          change_type?: string
+          changed_by?: string
+          created_at?: string
+          id?: string
+          previous_assignee?: string | null
+          product_id?: string
+          reason?: string | null
+          review_round_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "assignment_history_review_round_id_fkey"
+            columns: ["review_round_id"]
+            isOneToOne: false
+            referencedRelation: "review_rounds"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_product_verifications: {
         Row: {
           company_id: string

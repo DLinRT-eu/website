@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -50,6 +51,7 @@ import { ReviewerSelectionDialog } from "@/components/admin/review-rounds/Review
 import { AssignmentPreviewDialog, type ProposedAssignment } from "@/components/admin/review-rounds/AssignmentPreviewDialog";
 
 export default function ReviewRounds() {
+  const navigate = useNavigate();
   const [rounds, setRounds] = useState<ReviewRound[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateDialog, setShowCreateDialog] = useState(false);
@@ -425,7 +427,13 @@ export default function ReviewRounds() {
                     <TableCell className="font-medium">#{round.round_number}</TableCell>
                     <TableCell>
                       <div>
-                        <div className="font-medium">{round.name}</div>
+                        <Button
+                          variant="link"
+                          className="p-0 h-auto font-medium"
+                          onClick={() => navigate(`/admin/review-rounds/${round.id}`)}
+                        >
+                          {round.name}
+                        </Button>
                         {round.description && (
                           <div className="text-sm text-muted-foreground line-clamp-1">
                             {round.description}

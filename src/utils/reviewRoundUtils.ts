@@ -308,6 +308,10 @@ export async function bulkAssignProducts(
   let failed = 0;
 
   try {
+    // Get current user for audit logging
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error('User not authenticated');
+
     let assignments;
     
     // Use provided assignments or calculate new ones
@@ -341,6 +345,69 @@ export async function bulkAssignProducts(
     if (insertError) throw insertError;
 
     success = assignments.length;
+
+    // Create assignment history records
+    const historyRecords = assignments.map(a => ({
+      review_round_id: roundId,
+      product_id: a.product_id,
+      assigned_to: a.assigned_to,
+      changed_by: user.id,
+      change_type: 'initial' as const,
+      reason: 'Automatic assignment during round start'
+    }));
+
+    const { error: historyError } = await supabase
+      .from('assignment_history')
+      .insert(historyRecords);
+
+    if (historyError) {
+      console.error('Error creating assignment history:', historyError);
+      // Don't fail the whole operation if history logging fails
+    }
+
+    // Get round details for notifications
+    const { data: round } = await supabase
+      .from('review_rounds')
+      .select('name')
+      .eq('id', roundId)
+      .single();
+
+    // Group assignments by reviewer for notifications
+    const assignmentsByReviewer = new Map<string, string[]>();
+    assignments.forEach(a => {
+      const products = assignmentsByReviewer.get(a.assigned_to) || [];
+      products.push(a.product_id);
+      assignmentsByReviewer.set(a.assigned_to, products);
+    });
+
+    // Send email notifications to each reviewer
+    const notificationPromises = Array.from(assignmentsByReviewer.entries()).map(
+      async ([reviewerId, productIds]) => {
+        try {
+          const productNames = productIds
+            .map(id => ALL_PRODUCTS.find(p => p.id === id)?.name)
+            .filter(Boolean) as string[];
+
+          await supabase.functions.invoke('notify-reviewer-assignment', {
+            body: {
+              reviewerId,
+              roundName: round?.name || 'Review Round',
+              assignmentCount: productIds.length,
+              deadline: deadline || null,
+              productNames
+            }
+          });
+        } catch (error) {
+          console.error(`Failed to send notification to reviewer ${reviewerId}:`, error);
+          // Don't fail the whole operation if notifications fail
+        }
+      }
+    );
+
+    // Send notifications in parallel but don't wait for them
+    Promise.all(notificationPromises).catch(err => 
+      console.error('Some notifications failed:', err)
+    );
 
     // Update round totals
     await supabase

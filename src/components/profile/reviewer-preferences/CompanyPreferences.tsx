@@ -4,7 +4,7 @@ import { Slider } from "@/components/ui/slider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { X, PackagePlus } from "lucide-react";
-import { PreferenceSearchCombo } from "./PreferenceSearchCombo";
+import { CompanySelectionTable } from "./CompanySelectionTable";
 import { COMPANIES } from "@/data";
 import { ALL_PRODUCTS } from "@/data";
 import { toast } from "sonner";
@@ -66,26 +66,13 @@ export function CompanyPreferences({
 
   return (
     <div className="space-y-6">
-      {/* Search and Add */}
+      {/* Browse and Add Companies */}
       <div className="space-y-3">
-        <Label>Search and Add Companies</Label>
-        <PreferenceSearchCombo
-          items={COMPANIES}
+        <Label>Browse and Add Companies</Label>
+        <CompanySelectionTable
+          companies={COMPANIES}
           selectedIds={selectedCompanyIds}
-          onSelect={onAdd}
-          getId={(company) => company.id}
-          getLabel={(company) => company.name}
-          getSearchText={(company) => `${company.name} ${company.description || ''}`}
-          renderItem={(company) => (
-            <div className="flex flex-col">
-              <span className="font-medium">{company.name}</span>
-              <span className="text-xs text-muted-foreground">
-                {company.productIds?.length || 0} products
-              </span>
-            </div>
-          )}
-          placeholder="Search companies..."
-          emptyText="No companies found."
+          onAdd={onAdd}
         />
       </div>
 

@@ -70,6 +70,122 @@ function generateVersionNumber(date: string, existingVersions: Set<string>): str
   return version;
 }
 
+function aggregateCommitMessages(commits: GitHubCommit[]): string[] {
+  const messages: string[] = [];
+  
+  commits.forEach(commit => {
+    const { title } = parseCommitMessage(commit.commit.message);
+    messages.push(title);
+  });
+  
+  return messages;
+}
+
+function generateMonthlySummaries(commitsByMonth: Map<string, GitHubCommit[]>): ChangelogEntry[] {
+  const summaries: ChangelogEntry[] = [];
+  const sortedMonths = Array.from(commitsByMonth.keys()).sort().reverse();
+  
+  sortedMonths.forEach((monthKey, index) => {
+    const monthCommits = commitsByMonth.get(monthKey)!;
+    const [year, month] = monthKey.split('-');
+    
+    // Group by category
+    const categoryCounts: Record<string, number> = {
+      feature: 0,
+      improvement: 0,
+      bugfix: 0,
+      documentation: 0,
+      security: 0,
+    };
+    
+    const categoryCommits: Record<string, GitHubCommit[]> = {
+      feature: [],
+      improvement: [],
+      bugfix: [],
+      documentation: [],
+      security: [],
+    };
+    
+    monthCommits.forEach(commit => {
+      const category = categorizeCommit(commit.commit.message);
+      categoryCounts[category]++;
+      categoryCommits[category].push(commit);
+    });
+    
+    // Generate details with categorized changes
+    let details = '';
+    
+    if (categoryCounts.feature > 0) {
+      details += `### New Features (${categoryCounts.feature})\n`;
+      aggregateCommitMessages(categoryCommits.feature).forEach(msg => {
+        details += `- ${msg}\n`;
+      });
+      details += '\n';
+    }
+    
+    if (categoryCounts.improvement > 0) {
+      details += `### Improvements (${categoryCounts.improvement})\n`;
+      aggregateCommitMessages(categoryCommits.improvement).forEach(msg => {
+        details += `- ${msg}\n`;
+      });
+      details += '\n';
+    }
+    
+    if (categoryCounts.bugfix > 0) {
+      details += `### Bug Fixes (${categoryCounts.bugfix})\n`;
+      aggregateCommitMessages(categoryCommits.bugfix).forEach(msg => {
+        details += `- ${msg}\n`;
+      });
+      details += '\n';
+    }
+    
+    if (categoryCounts.documentation > 0) {
+      details += `### Documentation (${categoryCounts.documentation})\n`;
+      aggregateCommitMessages(categoryCommits.documentation).forEach(msg => {
+        details += `- ${msg}\n`;
+      });
+      details += '\n';
+    }
+    
+    if (categoryCounts.security > 0) {
+      details += `### Security (${categoryCounts.security})\n`;
+      aggregateCommitMessages(categoryCommits.security).forEach(msg => {
+        details += `- ${msg}\n`;
+      });
+      details += '\n';
+    }
+    
+    // Generate description
+    const parts: string[] = [];
+    if (categoryCounts.feature > 0) parts.push(`${categoryCounts.feature} new feature${categoryCounts.feature > 1 ? 's' : ''}`);
+    if (categoryCounts.improvement > 0) parts.push(`${categoryCounts.improvement} improvement${categoryCounts.improvement > 1 ? 's' : ''}`);
+    if (categoryCounts.bugfix > 0) parts.push(`${categoryCounts.bugfix} bug fix${categoryCounts.bugfix > 1 ? 'es' : ''}`);
+    
+    const description = `Monthly release including ${parts.join(', ')}`;
+    
+    // Get month name
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthName = monthNames[parseInt(month) - 1];
+    
+    // Last day of month
+    const lastDay = new Date(parseInt(year), parseInt(month), 0).getDate();
+    const date = `${year}-${month}-${String(lastDay).padStart(2, '0')}`;
+    
+    summaries.push({
+      id: `changelog-summary-${year}-${month}`,
+      version: `${year}.${month}.0`,
+      date,
+      category: 'improvement',
+      title: `${monthName} ${year} Updates`,
+      description,
+      details: details.trim(),
+    });
+  });
+  
+  return summaries;
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -168,10 +284,15 @@ serve(async (req) => {
 
     console.log(`Generated ${changelogEntries.length} changelog entries`);
 
+    // Generate monthly summaries
+    const monthlySummaries = generateMonthlySummaries(commitsByMonth);
+    console.log(`Generated ${monthlySummaries.length} monthly summaries`);
+
     return new Response(
       JSON.stringify({ 
         success: true, 
         entries: changelogEntries,
+        summaries: monthlySummaries,
         totalCommits: commits.length,
         monthsProcessed: commitsByMonth.size,
       }),

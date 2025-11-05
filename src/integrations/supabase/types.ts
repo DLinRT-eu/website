@@ -178,6 +178,95 @@ export type Database = {
           },
         ]
       }
+      changelog_entries: {
+        Row: {
+          author: string | null
+          auto_generated: boolean | null
+          category: string
+          created_at: string | null
+          created_by: string | null
+          date: string
+          description: string
+          details: string | null
+          entry_id: string
+          github_data: Json | null
+          id: string
+          published_at: string | null
+          status: string
+          title: string
+          updated_at: string | null
+          version: string
+        }
+        Insert: {
+          author?: string | null
+          auto_generated?: boolean | null
+          category: string
+          created_at?: string | null
+          created_by?: string | null
+          date: string
+          description: string
+          details?: string | null
+          entry_id: string
+          github_data?: Json | null
+          id?: string
+          published_at?: string | null
+          status?: string
+          title: string
+          updated_at?: string | null
+          version: string
+        }
+        Update: {
+          author?: string | null
+          auto_generated?: boolean | null
+          category?: string
+          created_at?: string | null
+          created_by?: string | null
+          date?: string
+          description?: string
+          details?: string | null
+          entry_id?: string
+          github_data?: Json | null
+          id?: string
+          published_at?: string | null
+          status?: string
+          title?: string
+          updated_at?: string | null
+          version?: string
+        }
+        Relationships: []
+      }
+      changelog_links: {
+        Row: {
+          changelog_entry_id: string | null
+          created_at: string | null
+          id: string
+          text: string
+          url: string
+        }
+        Insert: {
+          changelog_entry_id?: string | null
+          created_at?: string | null
+          id?: string
+          text: string
+          url: string
+        }
+        Update: {
+          changelog_entry_id?: string | null
+          created_at?: string | null
+          id?: string
+          text?: string
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "changelog_links_changelog_entry_id_fkey"
+            columns: ["changelog_entry_id"]
+            isOneToOne: false
+            referencedRelation: "changelog_entries"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       company_product_verifications: {
         Row: {
           company_id: string

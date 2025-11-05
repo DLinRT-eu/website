@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react';
 import { format } from 'date-fns';
+import { useQuery } from '@tanstack/react-query';
 import { 
   Search, 
   Filter, 
@@ -30,6 +31,7 @@ import {
 } from '@/data/changelog';
 import ReactMarkdown from 'react-markdown';
 import PageLayout from '@/components/layout/PageLayout';
+import { supabase } from '@/integrations/supabase/client';
 
 const Changelog = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -37,7 +39,52 @@ const Changelog = () => {
   const [selectedVersion, setSelectedVersion] = useState<string>('all');
   const [expandedEntries, setExpandedEntries] = useState<Set<string>>(new Set());
 
-  const versions = useMemo(() => getAllVersions(), []);
+  // Fetch published changelog entries from database
+  const { data: dbEntries = [] } = useQuery({
+    queryKey: ['changelog-entries'],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from('changelog_entries')
+        .select(`
+          *,
+          changelog_links (
+            text,
+            url
+          )
+        `)
+        .eq('status', 'published')
+        .order('date', { ascending: false });
+      
+      if (error) throw error;
+      
+      // Transform to match ChangelogEntry interface
+      return (data || []).map(entry => ({
+        id: entry.entry_id,
+        version: entry.version,
+        date: entry.date,
+        category: entry.category as ChangelogCategory,
+        title: entry.title,
+        description: entry.description,
+        details: entry.details || undefined,
+        author: entry.author || undefined,
+        links: entry.changelog_links?.map((l: any) => ({
+          text: l.text,
+          url: l.url,
+        })),
+      })) as ChangelogEntry[];
+    },
+  });
+
+  // Combine static and database entries
+  const allEntries = useMemo(() => {
+    return [...changelogData, ...dbEntries]
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  }, [dbEntries]);
+
+  const versions = useMemo(() => {
+    const versionSet = new Set(allEntries.map(entry => entry.version));
+    return Array.from(versionSet).sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
+  }, [allEntries]);
   
   const categories: Array<{ value: ChangelogCategory | 'all'; label: string; icon: any }> = [
     { value: 'all', label: 'All Changes', icon: Filter },
@@ -49,7 +96,7 @@ const Changelog = () => {
   ];
 
   const filteredChangelog = useMemo(() => {
-    return changelogData.filter(entry => {
+    return allEntries.filter(entry => {
       const matchesSearch = searchQuery === '' || 
         entry.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         entry.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -59,8 +106,8 @@ const Changelog = () => {
       const matchesVersion = selectedVersion === 'all' || entry.version === selectedVersion;
       
       return matchesSearch && matchesCategory && matchesVersion;
-    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  }, [searchQuery, selectedCategory, selectedVersion]);
+    });
+  }, [allEntries, searchQuery, selectedCategory, selectedVersion]);
 
   const groupedByVersion = useMemo(() => {
     const groups: Record<string, ChangelogEntry[]> = {};

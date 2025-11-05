@@ -20,3 +20,6 @@ verify_jwt = false
 
 [functions.generate-changelog]
 verify_jwt = true
+
+[functions.auto-generate-monthly-changelog]
+verify_jwt = false

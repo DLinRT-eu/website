@@ -33,7 +33,9 @@ import {
   CheckCircle2,
   Clock,
   PlayCircle,
-  Archive
+  Archive,
+  Download,
+  FileSpreadsheet
 } from "lucide-react";
 import {
   createReviewRound,
@@ -49,6 +51,11 @@ import { format } from "date-fns";
 import { ALL_PRODUCTS } from "@/data";
 import { ReviewerSelectionDialog } from "@/components/admin/review-rounds/ReviewerSelectionDialog";
 import { AssignmentPreviewDialog, type ProposedAssignment } from "@/components/admin/review-rounds/AssignmentPreviewDialog";
+import { 
+  fetchAllRoundAssignments, 
+  exportToCSV, 
+  exportToExcel 
+} from "@/utils/exportReviewRounds";
 
 export default function ReviewRounds() {
   const navigate = useNavigate();
@@ -69,6 +76,7 @@ export default function ReviewRounds() {
   const [currentDeadline, setCurrentDeadline] = useState<string | undefined>();
   const [proposedAssignments, setProposedAssignments] = useState<ProposedAssignment[]>([]);
   const [selectedReviewers, setSelectedReviewers] = useState<any[]>([]);
+  const [exporting, setExporting] = useState(false);
   
   const [formData, setFormData] = useState({
     name: '',
@@ -258,6 +266,42 @@ export default function ReviewRounds() {
     }
   };
 
+  const handleExportCSV = async () => {
+    setExporting(true);
+    try {
+      const data = await fetchAllRoundAssignments();
+      if (data.length === 0) {
+        toast.error('No assignments to export');
+        return;
+      }
+      exportToCSV(data, `review-assignments-${new Date().toISOString().split('T')[0]}.csv`);
+      toast.success('CSV exported successfully');
+    } catch (error) {
+      console.error('Error exporting CSV:', error);
+      toast.error('Failed to export CSV');
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleExportExcel = async () => {
+    setExporting(true);
+    try {
+      const data = await fetchAllRoundAssignments();
+      if (data.length === 0) {
+        toast.error('No assignments to export');
+        return;
+      }
+      exportToExcel(data, `review-assignments-${new Date().toISOString().split('T')[0]}.xlsx`);
+      toast.success('Excel file exported successfully');
+    } catch (error) {
+      console.error('Error exporting Excel:', error);
+      toast.error('Failed to export Excel file');
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const getStatusBadge = (status: string) => {
     const variants: Record<string, any> = {
       draft: { variant: 'secondary', icon: Clock },
@@ -296,10 +340,36 @@ export default function ReviewRounds() {
             Manage periodic product review cycles
           </p>
         </div>
-        <Button onClick={() => setShowCreateDialog(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Create New Round
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            variant="outline" 
+            onClick={handleExportCSV}
+            disabled={exporting || rounds.length === 0}
+          >
+            {exporting ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <Download className="h-4 w-4 mr-2" />
+            )}
+            Export CSV
+          </Button>
+          <Button 
+            variant="outline" 
+            onClick={handleExportExcel}
+            disabled={exporting || rounds.length === 0}
+          >
+            {exporting ? (
+              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+            ) : (
+              <FileSpreadsheet className="h-4 w-4 mr-2" />
+            )}
+            Export Excel
+          </Button>
+          <Button onClick={() => setShowCreateDialog(true)}>
+            <Plus className="h-4 w-4 mr-2" />
+            Create New Round
+          </Button>
+        </div>
       </div>
 
       {/* Reviewer Status Alert */}

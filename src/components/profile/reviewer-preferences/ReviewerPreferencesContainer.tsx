@@ -47,22 +47,56 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
   const [showClearDialog, setShowClearDialog] = useState(false);
 
   useEffect(() => {
+    const verifySession = async () => {
+      const { data: { session }, error } = await supabase.auth.getSession();
+      console.log('🔵 [Preferences] Session verification:', {
+        userId,
+        sessionUserId: session?.user?.id,
+        sessionEmail: session?.user?.email,
+        sessionMatch: session?.user?.id === userId,
+        error,
+        timestamp: new Date().toISOString()
+      });
+    };
+    
+    verifySession();
     fetchPreferences();
   }, [userId]);
 
   const fetchPreferences = async () => {
     try {
+      console.log('🔵 [Preferences] Fetching preferences for userId:', userId);
+      
       const { data, error } = await supabase
         .from('reviewer_expertise')
         .select('*')
         .eq('user_id', userId)
         .returns<Preference[]>();
 
-      if (error) throw error;
+      if (error) {
+        console.error('🔴 [Preferences] Fetch error:', {
+          error,
+          errorCode: error.code,
+          errorMessage: error.message,
+          errorDetails: error.details,
+          timestamp: new Date().toISOString()
+        });
+        throw error;
+      }
+
+      console.log('✅ [Preferences] Successfully fetched preferences:', {
+        count: data?.length || 0,
+        data,
+        timestamp: new Date().toISOString()
+      });
 
       setPreferences((data || []) as Preference[]);
-    } catch (error) {
-      console.error('Error fetching preferences:', error);
+    } catch (error: any) {
+      console.error('🔴 [Preferences] Error in catch block:', {
+        error,
+        errorString: error?.toString(),
+        timestamp: new Date().toISOString()
+      });
       toast.error('Failed to load preferences');
     } finally {
       setLoading(false);
@@ -84,17 +118,55 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
       else if (type === 'company') insertData.company_id = value;
       else if (type === 'product') insertData.product_id = value;
 
-      const { error } = await supabase
-        .from('reviewer_expertise')
-        .insert(insertData);
+      // LOG: Data being inserted
+      console.log('🔵 [Preferences] Attempting to add preference:', {
+        type,
+        value,
+        insertData,
+        userId,
+        timestamp: new Date().toISOString()
+      });
 
-      if (error) throw error;
+      const { data, error } = await supabase
+        .from('reviewer_expertise')
+        .insert(insertData)
+        .select(); // Add .select() to get back the inserted record
+
+      if (error) {
+        // LOG: Detailed error information
+        console.error('🔴 [Preferences] Insert failed:', {
+          error,
+          errorCode: error.code,
+          errorMessage: error.message,
+          errorDetails: error.details,
+          errorHint: error.hint,
+          insertData,
+          timestamp: new Date().toISOString()
+        });
+        throw error;
+      }
+
+      // LOG: Success with inserted record
+      console.log('✅ [Preferences] Successfully added preference:', {
+        type,
+        value,
+        insertedRecord: data,
+        timestamp: new Date().toISOString()
+      });
 
       toast.success(`${type.charAt(0).toUpperCase() + type.slice(1)} added`);
       fetchPreferences();
-    } catch (error) {
-      console.error('Error adding preference:', error);
-      toast.error('Failed to add preference');
+    } catch (error: any) {
+      // LOG: Catch block error
+      console.error('🔴 [Preferences] Error in catch block:', {
+        error,
+        errorString: error?.toString(),
+        errorMessage: error?.message,
+        timestamp: new Date().toISOString()
+      });
+      
+      // Show more detailed error to user
+      toast.error(`Failed to add preference: ${error?.message || 'Unknown error'}`);
     }
   };
 
@@ -103,6 +175,13 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
     value: string
   ) => {
     try {
+      console.log('🔵 [Preferences] Attempting to remove preference:', {
+        type,
+        value,
+        userId,
+        timestamp: new Date().toISOString()
+      });
+
       const query = supabase
         .from('reviewer_expertise')
         .delete()
@@ -115,13 +194,31 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
 
       const { error } = await query;
 
-      if (error) throw error;
+      if (error) {
+        console.error('🔴 [Preferences] Remove failed:', {
+          error,
+          errorCode: error.code,
+          errorMessage: error.message,
+          timestamp: new Date().toISOString()
+        });
+        throw error;
+      }
+
+      console.log('✅ [Preferences] Successfully removed preference:', {
+        type,
+        value,
+        timestamp: new Date().toISOString()
+      });
 
       toast.success(`${type.charAt(0).toUpperCase() + type.slice(1)} removed`);
       fetchPreferences();
-    } catch (error) {
-      console.error('Error removing preference:', error);
-      toast.error('Failed to remove preference');
+    } catch (error: any) {
+      console.error('🔴 [Preferences] Error removing preference:', {
+        error,
+        errorMessage: error?.message,
+        timestamp: new Date().toISOString()
+      });
+      toast.error(`Failed to remove preference: ${error?.message || 'Unknown error'}`);
     }
   };
 
@@ -131,6 +228,14 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
     priority: number
   ) => {
     try {
+      console.log('🔵 [Preferences] Attempting to update priority:', {
+        type,
+        value,
+        priority,
+        userId,
+        timestamp: new Date().toISOString()
+      });
+
       // Update local state immediately for better UX
       setPreferences(prev =>
         prev.map(p => {
@@ -155,10 +260,29 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
 
       const { error } = await query;
 
-      if (error) throw error;
-    } catch (error) {
-      console.error('Error updating priority:', error);
-      toast.error('Failed to update priority');
+      if (error) {
+        console.error('🔴 [Preferences] Priority update failed:', {
+          error,
+          errorCode: error.code,
+          errorMessage: error.message,
+          timestamp: new Date().toISOString()
+        });
+        throw error;
+      }
+
+      console.log('✅ [Preferences] Successfully updated priority:', {
+        type,
+        value,
+        priority,
+        timestamp: new Date().toISOString()
+      });
+    } catch (error: any) {
+      console.error('🔴 [Preferences] Error updating priority:', {
+        error,
+        errorMessage: error?.message,
+        timestamp: new Date().toISOString()
+      });
+      toast.error(`Failed to update priority: ${error?.message || 'Unknown error'}`);
       fetchPreferences(); // Revert on error
     }
   };
@@ -172,15 +296,42 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
         priority,
       }));
 
-      const { error } = await supabase
-        .from('reviewer_expertise')
-        .insert(insertData);
+      console.log('🔵 [Preferences] Attempting bulk add products:', {
+        productCount: productIds.length,
+        productIds,
+        priority,
+        userId,
+        timestamp: new Date().toISOString()
+      });
 
-      if (error) throw error;
+      const { data, error } = await supabase
+        .from('reviewer_expertise')
+        .insert(insertData)
+        .select();
+
+      if (error) {
+        console.error('🔴 [Preferences] Bulk add failed:', {
+          error,
+          errorCode: error.code,
+          errorMessage: error.message,
+          errorDetails: error.details,
+          timestamp: new Date().toISOString()
+        });
+        throw error;
+      }
+
+      console.log('✅ [Preferences] Successfully bulk added products:', {
+        insertedCount: data?.length || 0,
+        timestamp: new Date().toISOString()
+      });
 
       fetchPreferences();
-    } catch (error) {
-      console.error('Error bulk adding products:', error);
+    } catch (error: any) {
+      console.error('🔴 [Preferences] Error bulk adding products:', {
+        error,
+        errorMessage: error?.message,
+        timestamp: new Date().toISOString()
+      });
       throw error;
     }
   };
@@ -222,15 +373,43 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
         })),
       ];
 
-      const { error } = await supabase
-        .from('reviewer_expertise')
-        .insert(insertData);
+      console.log('🔵 [Preferences] Attempting to import preferences:', {
+        totalCount: insertData.length,
+        categoriesCount: data.categories.length,
+        companiesCount: data.companies.length,
+        productsCount: data.products.length,
+        userId,
+        timestamp: new Date().toISOString()
+      });
 
-      if (error) throw error;
+      const { data: insertedData, error } = await supabase
+        .from('reviewer_expertise')
+        .insert(insertData)
+        .select();
+
+      if (error) {
+        console.error('🔴 [Preferences] Import failed:', {
+          error,
+          errorCode: error.code,
+          errorMessage: error.message,
+          errorDetails: error.details,
+          timestamp: new Date().toISOString()
+        });
+        throw error;
+      }
+
+      console.log('✅ [Preferences] Successfully imported preferences:', {
+        insertedCount: insertedData?.length || 0,
+        timestamp: new Date().toISOString()
+      });
 
       fetchPreferences();
-    } catch (error) {
-      console.error('Error importing preferences:', error);
+    } catch (error: any) {
+      console.error('🔴 [Preferences] Error importing preferences:', {
+        error,
+        errorMessage: error?.message,
+        timestamp: new Date().toISOString()
+      });
       throw error;
     }
   };

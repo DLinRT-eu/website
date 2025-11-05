@@ -12,7 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface PreferenceSearchComboProps<T> {
@@ -40,13 +40,18 @@ export function PreferenceSearchCombo<T>({
 }: PreferenceSearchComboProps<T>) {
   const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const [isFiltering, setIsFiltering] = useState(false);
 
   const filteredItems = useMemo(() => {
+    setIsFiltering(true);
     const searchLower = search.toLowerCase();
-    return items.filter(item => 
+    const result = items.filter(item => 
       getSearchText(item).toLowerCase().includes(searchLower) &&
       !selectedIds.includes(getId(item))
     );
+    // Small delay to show loading state for better UX
+    setTimeout(() => setIsFiltering(false), 100);
+    return result;
   }, [items, search, selectedIds, getSearchText, getId]);
 
   return (
@@ -71,28 +76,34 @@ export function PreferenceSearchCombo<T>({
           />
           <CommandEmpty>{emptyText}</CommandEmpty>
           <CommandGroup className="max-h-[300px] overflow-y-auto">
-            {filteredItems.map((item) => {
-              const id = getId(item);
-              return (
-                <CommandItem
-                  key={id}
-                  value={id}
-                  onSelect={() => {
-                    onSelect(id);
-                    setOpen(false);
-                    setSearch("");
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      selectedIds.includes(id) ? "opacity-100" : "opacity-0"
-                    )}
-                  />
-                  {renderItem ? renderItem(item) : getLabel(item)}
-                </CommandItem>
-              );
-            })}
+            {isFiltering ? (
+              <div className="flex items-center justify-center py-6">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              </div>
+            ) : (
+              filteredItems.map((item) => {
+                const id = getId(item);
+                return (
+                  <CommandItem
+                    key={id}
+                    value={id}
+                    onSelect={() => {
+                      onSelect(id);
+                      setOpen(false);
+                      setSearch("");
+                    }}
+                  >
+                    <Check
+                      className={cn(
+                        "mr-2 h-4 w-4",
+                        selectedIds.includes(id) ? "opacity-100" : "opacity-0"
+                      )}
+                    />
+                    {renderItem ? renderItem(item) : getLabel(item)}
+                  </CommandItem>
+                );
+              })
+            )}
           </CommandGroup>
         </Command>
       </PopoverContent>

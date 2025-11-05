@@ -108,6 +108,28 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
     value: string
   ) => {
     try {
+      // Check for duplicates before attempting insert
+      const isDuplicate = preferences.some(pref => {
+        if (pref.preference_type !== type) return false;
+        
+        switch (type) {
+          case 'category':
+            return pref.category === value;
+          case 'company':
+            return pref.company_id === value;
+          case 'product':
+            return pref.product_id === value;
+          default:
+            return false;
+        }
+      });
+
+      if (isDuplicate) {
+        console.log('⚠️ [Preferences] Duplicate preference detected:', { type, value });
+        toast.error('This preference has already been added to your list.');
+        return;
+      }
+
       const insertData: any = {
         user_id: userId,
         preference_type: type,
@@ -130,7 +152,7 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
       const { data, error } = await supabase
         .from('reviewer_expertise')
         .insert(insertData)
-        .select(); // Add .select() to get back the inserted record
+        .select();
 
       if (error) {
         // LOG: Detailed error information
@@ -289,7 +311,29 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
 
   const handleBulkAddProducts = async (productIds: string[], priority: number) => {
     try {
-      const insertData = productIds.map(productId => ({
+      // Get existing product IDs to filter out duplicates
+      const existingProductIds = new Set(
+        preferences
+          .filter(pref => pref.preference_type === 'product')
+          .map(pref => pref.product_id)
+      );
+
+      // Filter out products that already exist
+      const newProductIds = productIds.filter(id => !existingProductIds.has(id));
+
+      if (newProductIds.length === 0) {
+        console.log('⚠️ [Preferences] All products already added');
+        toast.error('All selected products have already been added to your preferences.');
+        return;
+      }
+
+      if (newProductIds.length < productIds.length) {
+        const skippedCount = productIds.length - newProductIds.length;
+        console.log(`⚠️ [Preferences] Skipping ${skippedCount} duplicate products`);
+        toast.info(`Skipping ${skippedCount} product(s) that were already added.`);
+      }
+
+      const insertData = newProductIds.map(productId => ({
         user_id: userId,
         preference_type: 'product' as const,
         product_id: productId,
@@ -297,8 +341,8 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
       }));
 
       console.log('🔵 [Preferences] Attempting bulk add products:', {
-        productCount: productIds.length,
-        productIds,
+        productCount: newProductIds.length,
+        productIds: newProductIds,
         priority,
         userId,
         timestamp: new Date().toISOString()
@@ -325,6 +369,7 @@ export function ReviewerPreferencesContainer({ userId }: ReviewerPreferencesCont
         timestamp: new Date().toISOString()
       });
 
+      toast.success(`Added ${newProductIds.length} product(s) successfully`);
       fetchPreferences();
     } catch (error: any) {
       console.error('🔴 [Preferences] Error bulk adding products:', {

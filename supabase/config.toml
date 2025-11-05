@@ -1,5 +1,8 @@
 project_id = "msyfxyxzjyowwasgturs"
 
+[functions.backfill-changelog-history]
+verify_jwt = true
+
 [functions.rss-feed]
 verify_jwt = false
 

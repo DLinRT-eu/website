@@ -192,6 +192,30 @@ const ChangelogAdmin = () => {
     },
   });
 
+  // Backfill changelog history mutation
+  const backfillMutation = useMutation({
+    mutationFn: async () => {
+      const { data, error } = await supabase.functions.invoke('backfill-changelog-history');
+      
+      if (error) throw error;
+      return data;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['changelog-entries-admin'] });
+      toast({
+        title: 'Backfill Complete',
+        description: data.message || 'Changelog history has been backfilled.',
+      });
+    },
+    onError: (error: any) => {
+      toast({
+        title: 'Backfill Failed',
+        description: error.message,
+        variant: 'destructive',
+      });
+    },
+  });
+
   const getCategoryIcon = (category: ChangelogCategory) => {
     const icons = {
       feature: Sparkles,
@@ -243,11 +267,19 @@ const ChangelogAdmin = () => {
           <div className="flex gap-2">
             <Button
               variant="outline"
+              onClick={() => backfillMutation.mutate()}
+              disabled={backfillMutation.isPending}
+            >
+              <RefreshCw className={`h-4 w-4 mr-2 ${backfillMutation.isPending ? 'animate-spin' : ''}`} />
+              Backfill from April 2025
+            </Button>
+            <Button
+              variant="outline"
               onClick={() => triggerGenerationMutation.mutate()}
               disabled={triggerGenerationMutation.isPending}
             >
               <RefreshCw className={`h-4 w-4 mr-2 ${triggerGenerationMutation.isPending ? 'animate-spin' : ''}`} />
-              Generate Now
+              Generate Current Month
             </Button>
             <Button
               variant="outline"

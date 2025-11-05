@@ -219,14 +219,19 @@ export default function ReviewAssignment() {
             <h1 className="text-3xl font-bold">Review Assignments</h1>
             <p className="text-muted-foreground mt-2">Assign products to reviewers</p>
           </div>
-          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-            <DialogTrigger asChild>
-              <Button className="gap-2">
-                <UserPlus className="h-4 w-4" />
-                Assign Review
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl">
+          <div className="flex gap-2">
+            <Button variant="outline" className="gap-2" onClick={() => navigate('/admin/review-rounds')}>
+              <Calendar className="h-4 w-4" />
+              Review Rounds
+            </Button>
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+              <DialogTrigger asChild>
+                <Button className="gap-2">
+                  <UserPlus className="h-4 w-4" />
+                  Assign Review
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="max-w-2xl">
               <DialogHeader>
                 <DialogTitle>Assign Product Review</DialogTitle>
                 <DialogDescription>
@@ -314,6 +319,7 @@ export default function ReviewAssignment() {
               </DialogFooter>
             </DialogContent>
           </Dialog>
+          </div>
         </div>
 
         {/* Reviewer Workload */}

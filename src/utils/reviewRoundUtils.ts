@@ -175,6 +175,7 @@ export function calculateReviewerWorkload(
 
 /**
  * Calculates proposed assignments without inserting them
+ * Handles reviewers with and without expertise preferences
  */
 export async function calculateProposedAssignments(
   productIds: string[],
@@ -201,8 +202,11 @@ export async function calculateProposedAssignments(
       category: p.category
     }));
 
+  // Separate reviewers by expertise status
+  const reviewersWithExpertise = reviewers.filter(r => r.expertise.length > 0);
+  const reviewersWithoutExpertise = reviewers.filter(r => r.expertise.length === 0);
+
   // Calculate target workload per reviewer (for balancing)
-  const targetPerReviewer = Math.floor(productIds.length / reviewers.length);
   const maxPerReviewer = Math.ceil(productIds.length / reviewers.length);
   
   // Track assignments per reviewer
@@ -211,9 +215,33 @@ export async function calculateProposedAssignments(
 
   const assignments = [];
 
+  // If all reviewers have no expertise, do pure random balanced distribution
+  if (reviewersWithExpertise.length === 0) {
+    // Shuffle products for random distribution
+    const shuffledProducts = [...products].sort(() => Math.random() - 0.5);
+    
+    shuffledProducts.forEach((product, index) => {
+      // Round-robin assignment for perfect balance
+      const reviewerIndex = index % reviewers.length;
+      const reviewer = reviewers[reviewerIndex];
+      
+      assignments.push({
+        product_id: product.id,
+        assigned_to: reviewer.user_id,
+        match_score: 0 // No expertise match
+      });
+      
+      const currentCount = assignmentCount.get(reviewer.user_id) || 0;
+      assignmentCount.set(reviewer.user_id, currentCount + 1);
+    });
+    
+    return assignments;
+  }
+
+  // Mixed approach: expertise-based + random
   for (const product of products) {
-    // Calculate match score for each reviewer using weighted scoring
-    const reviewerScores = reviewers.map(reviewer => {
+    // Calculate match score for reviewers WITH expertise
+    const expertiseScores = reviewersWithExpertise.map(reviewer => {
       let score = 0;
 
       // Product match (highest weight = 5)
@@ -245,13 +273,24 @@ export async function calculateProposedAssignments(
       return {
         reviewer,
         score,
-        currentCount
+        currentCount,
+        hasExpertise: true
       };
     });
 
+    // Include reviewers WITHOUT expertise for balanced distribution
+    const noExpertiseScores = reviewersWithoutExpertise.map(reviewer => ({
+      reviewer,
+      score: 0,
+      currentCount: assignmentCount.get(reviewer.user_id) || 0,
+      hasExpertise: false
+    }));
+
+    // Combine all reviewers
+    const allReviewerScores = [...expertiseScores, ...noExpertiseScores];
+
     // Sort by: 1) score (higher is better), 2) current count (fewer is better)
-    // But enforce max variance of 1
-    const sortedReviewers = reviewerScores
+    const sortedReviewers = allReviewerScores
       .filter(rs => rs.currentCount < maxPerReviewer) // Don't exceed max
       .sort((a, b) => {
         // If both have good scores, prefer lower workload
@@ -268,7 +307,7 @@ export async function calculateProposedAssignments(
 
     if (sortedReviewers.length === 0) {
       // All reviewers at max, find one with most capacity
-      const leastLoaded = reviewerScores.reduce((min, r) => 
+      const leastLoaded = allReviewerScores.reduce((min, r) => 
         r.currentCount < min.currentCount ? r : min
       );
       

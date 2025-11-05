@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { SimpleTable, Column } from "@/components/ui/simple-table";
 import {
   Select,
@@ -11,9 +12,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Plus, Search } from "lucide-react";
+import { Plus, Search, CheckSquare } from "lucide-react";
 import { ProductDetails } from "@/types/productDetails";
 import { CATEGORY_LABELS } from "@/constants/productCategories";
+import { toast } from "@/hooks/use-toast";
 
 interface ProductSelectionTableProps {
   products: ProductDetails[];
@@ -30,6 +32,8 @@ export function ProductSelectionTable({
   const [filterCompany, setFilterCompany] = useState<string>("all");
   const [filterCategory, setFilterCategory] = useState<string>("all");
   const [addingId, setAddingId] = useState<string | null>(null);
+  const [bulkSelected, setBulkSelected] = useState<Set<string>>(new Set());
+  const [isAddingBulk, setIsAddingBulk] = useState(false);
 
   const companies = useMemo(() => {
     const uniqueCompanies = new Set(products.map(p => p.company));
@@ -66,7 +70,71 @@ export function ProductSelectionTable({
     }
   };
 
+  const handleBulkAdd = async () => {
+    if (bulkSelected.size === 0) return;
+    
+    setIsAddingBulk(true);
+    try {
+      const selectedArray = Array.from(bulkSelected);
+      for (const productId of selectedArray) {
+        await onAdd(productId);
+      }
+      setBulkSelected(new Set());
+      toast({
+        title: "Success",
+        description: `Added ${selectedArray.length} ${selectedArray.length === 1 ? 'product' : 'products'}`,
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to add some products",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAddingBulk(false);
+    }
+  };
+
+  const toggleProductSelection = (productId: string) => {
+    setBulkSelected(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(productId)) {
+        newSet.delete(productId);
+      } else {
+        newSet.add(productId);
+      }
+      return newSet;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    if (bulkSelected.size === filteredProducts.length) {
+      setBulkSelected(new Set());
+    } else {
+      setBulkSelected(new Set(filteredProducts.map(p => p.id || "")));
+    }
+  };
+
+  const allSelected = filteredProducts.length > 0 && bulkSelected.size === filteredProducts.length;
+
   const columns: Column<ProductDetails>[] = [
+    {
+      id: 'select',
+      header: (
+        <Checkbox
+          checked={allSelected}
+          onCheckedChange={toggleSelectAll}
+          aria-label="Select all products"
+        />
+      ),
+      cell: (product) => (
+        <Checkbox
+          checked={bulkSelected.has(product.id || "")}
+          onCheckedChange={() => toggleProductSelection(product.id || "")}
+          aria-label={`Select ${product.name}`}
+        />
+      ),
+    },
     {
       id: 'name',
       header: 'Product Name',
@@ -178,6 +246,32 @@ export function ProductSelectionTable({
           </div>
         </div>
       </div>
+
+      {/* Bulk Actions Bar */}
+      {bulkSelected.size > 0 && (
+        <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
+          <span className="text-sm font-medium">
+            {bulkSelected.size} {bulkSelected.size === 1 ? 'product' : 'products'} selected
+          </span>
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setBulkSelected(new Set())}
+            >
+              Clear
+            </Button>
+            <Button
+              onClick={handleBulkAdd}
+              disabled={isAddingBulk}
+              size="sm"
+            >
+              <CheckSquare className="h-4 w-4 mr-2" />
+              Add Selected
+            </Button>
+          </div>
+        </div>
+      )}
 
       {/* Results count */}
       <div className="text-sm text-muted-foreground">

@@ -54,10 +54,7 @@ export function AuditLogViewer() {
       }
 
       const { data, error: queryError } = await supabase
-        .from('admin_audit_log')
-        .select('id, action_type, performed_by_email, target_user_email, details, created_at')
-        .order('created_at', { ascending: false })
-        .limit(100);
+        .rpc('get_audit_logs_admin');
 
       if (queryError) {
         console.error('Error fetching audit logs:', queryError);

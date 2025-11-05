@@ -1363,6 +1363,17 @@ export type Database = {
           visit_count: number
         }[]
       }
+      get_audit_logs_admin: {
+        Args: never
+        Returns: {
+          action_type: string
+          created_at: string
+          details: Json
+          id: string
+          performed_by_email: string
+          target_user_email: string
+        }[]
+      }
       get_highest_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]

@@ -65,15 +65,15 @@ serve(async (req) => {
       throw new Error('Admin access required');
     }
 
-    // Validate GITHUB_REPOSITORY environment variable
-    const githubRepo = Deno.env.get('GITHUB_REPOSITORY');
+    // Validate REPO_NAME environment variable
+    const githubRepo = Deno.env.get('REPO_NAME');
     
     if (!githubRepo) {
       return new Response(
         JSON.stringify({ 
-          error: 'GitHub repository not configured',
-          message: 'Please set GITHUB_REPOSITORY secret in Supabase Edge Function settings (e.g., "username/repo-name")',
-          instructions: 'Go to Supabase Dashboard → Edge Functions → backfill-changelog-history → Settings → Secrets'
+          error: 'Repository not configured',
+          message: 'Please set REPO_NAME secret in Supabase Edge Function settings (e.g., "username/repo-name")',
+          instructions: 'Go to Supabase Dashboard → Edge Functions → Secrets → Add REPO_NAME'
         }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
@@ -84,7 +84,7 @@ serve(async (req) => {
     // Fetch commits from GitHub (April 2025 to now)
     const startDate = new Date('2025-04-01T00:00:00Z');
     
-    const githubToken = Deno.env.get('GITHUB_TOKEN');
+    const githubToken = Deno.env.get('REPO_TOKEN');
     const headers: HeadersInit = {
       'Accept': 'application/vnd.github.v3+json',
       'User-Agent': 'Supabase-Function',

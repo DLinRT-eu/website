@@ -38,16 +38,36 @@ export function RoleProvider({ children }: { children: ReactNode }) {
 
     try {
       setLoading(true);
-      
-      // Use secure RPC to fetch current user's roles
-      const { data, error } = await supabase.rpc('current_user_roles' as any);
+      let userRoles: AppRole[] = [];
 
-      if (error) {
-        console.error('Failed to fetch roles via RPC:', error);
-        throw error;
+      // 1) Try secure RPC (bypasses RLS)
+      const { data: rpcData, error: rpcError } = await supabase.rpc('current_user_roles' as any);
+      if (!rpcError && Array.isArray(rpcData)) {
+        userRoles = rpcData as AppRole[];
+      } else {
+        console.warn('[Roles] RPC failed or returned invalid data, falling back to direct select', rpcError);
+        // 2) Fallback to direct select with RLS
+        const { data: rows, error: selectError } = await supabase
+          .from('user_roles' as any)
+          .select('role')
+          .eq('user_id', user.id);
+        if (!selectError && rows) {
+          userRoles = (rows || []).map((r: any) => r.role as AppRole);
+        } else {
+          console.warn('[Roles] Direct select failed, fallback to highest role RPC', selectError);
+          // 3) Last resort: get single highest role via secure RPC
+          const { data: highest, error: highestError } = await supabase.rpc('get_user_role_secure' as any, {
+            user_id_param: user.id,
+          });
+          if (!highestError && highest) {
+            userRoles = [highest as AppRole];
+          } else {
+            console.error('[Roles] Highest role RPC failed:', highestError);
+            throw highestError || selectError || rpcError;
+          }
+        }
       }
 
-      const userRoles = (data || []) as AppRole[];
       setRoles(userRoles);
 
       // Set active role from localStorage or use highest role
@@ -55,19 +75,21 @@ export function RoleProvider({ children }: { children: ReactNode }) {
       if (storedRole && userRoles.includes(storedRole)) {
         setActiveRoleState(storedRole);
       } else {
-        // Clear invalid localStorage value to prevent manipulation
-        if (storedRole) {
-          localStorage.removeItem('activeRole');
-        }
-        // Default to highest priority role
+        if (storedRole) localStorage.removeItem('activeRole');
         if (userRoles.length > 0) {
           const highestRole = getHighestRole(userRoles);
-          setActiveRoleState(highestRole);
-          localStorage.setItem('activeRole', highestRole);
+          if (highestRole) {
+            setActiveRoleState(highestRole);
+            localStorage.setItem('activeRole', highestRole);
+          } else {
+            setActiveRoleState(null);
+          }
+        } else {
+          setActiveRoleState(null);
         }
       }
     } catch (error) {
-      console.error('Error fetching roles:', error);
+      console.error('[Roles] Error fetching roles:', error);
       setRoles([]);
       setActiveRoleState(null);
     } finally {

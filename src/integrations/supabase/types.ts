@@ -1576,6 +1576,14 @@ export type Database = {
         }
         Returns: string
       }
+      quick_assign_products: {
+        Args: {
+          p_deadline?: string
+          p_product_ids: string[]
+          p_reviewer_id: string
+        }
+        Returns: Json
+      }
       schedule_analytics_cleanup: { Args: never; Returns: undefined }
       send_pending_registration_notifications: {
         Args: never

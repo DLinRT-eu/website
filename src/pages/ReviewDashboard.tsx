@@ -1,10 +1,11 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Calendar } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Calendar, UserCheck } from "lucide-react";
 import { exportReviewToCSV, exportReviewToExcel } from '@/utils/reviewExport';
 import { useToast } from "@/hooks/use-toast";
 import RevisionSummaryCards from '@/components/revision/RevisionSummaryCards';
@@ -13,7 +14,9 @@ import { ReviewProductsTable } from '@/components/revision/ReviewProductsTable';
 import { ReviewFilters } from '@/components/revision/ReviewFilters';
 import { ReviewDashboardHeader } from '@/components/dashboard/ReviewDashboardHeader';
 import { ReviewDashboardAlerts } from '@/components/dashboard/ReviewDashboardAlerts';
+import { QuickAssignDialog } from '@/components/revision/QuickAssignDialog';
 import { useReviewData } from '@/hooks/useReviewData';
+import { useAuth } from '@/contexts/AuthContext';
 import { ALL_PRODUCTS } from '@/data';
 import { runUrlValidation } from '@/utils/urlValidation';
 
@@ -21,6 +24,7 @@ import SEO from '@/components/SEO';
 
 const ReviewDashboard = () => {
   const { toast } = useToast();
+  const { isAdmin } = useAuth();
   const {
     filteredProducts,
     revisionStats,
@@ -35,6 +39,10 @@ const ReviewDashboard = () => {
     setSelectedStatus,
     setSelectedUrgency
   } = useReviewData();
+
+  // Quick assignment state
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+  const [showQuickAssign, setShowQuickAssign] = useState(false);
 
   const structuredData = {
     "@context": "https://schema.org",
@@ -106,6 +114,41 @@ const ReviewDashboard = () => {
     }
   };
 
+  // Handle product selection for quick assign
+  const handleProductSelect = (productId: string, checked: boolean) => {
+    setSelectedProductIds(prev =>
+      checked ? [...prev, productId] : prev.filter(id => id !== productId)
+    );
+  };
+
+  const handleSelectAll = (checked: boolean) => {
+    setSelectedProductIds(checked ? filteredProducts.map(p => p.id as string) : []);
+  };
+
+  const handleQuickAssign = () => {
+    if (selectedProductIds.length === 0) {
+      toast({
+        title: "No Products Selected",
+        description: "Please select at least one product to assign",
+        variant: "destructive",
+      });
+      return;
+    }
+    setShowQuickAssign(true);
+  };
+
+  const handleAssignmentComplete = () => {
+    setSelectedProductIds([]);
+    toast({
+      title: "Assignment Complete",
+      description: "Products have been assigned and notifications sent",
+    });
+  };
+
+  const selectedProductNames = filteredProducts
+    .filter(p => selectedProductIds.includes(p.id as string))
+    .map(p => p.name);
+
   return (
     <div className="min-h-screen bg-gray-50">
       <SEO
@@ -126,12 +169,20 @@ const ReviewDashboard = () => {
             onExportExcel={handleExportExcel}
           />
         </div>
-        <Button asChild variant="outline">
-          <Link to="/admin/review-rounds">
-            <Calendar className="mr-2 h-4 w-4" />
-            Review Rounds
-          </Link>
-        </Button>
+        <div className="flex gap-2">
+          {isAdmin && selectedProductIds.length > 0 && (
+            <Button onClick={handleQuickAssign} variant="default">
+              <UserCheck className="mr-2 h-4 w-4" />
+              Quick Assign ({selectedProductIds.length})
+            </Button>
+          )}
+          <Button asChild variant="outline">
+            <Link to="/admin/review-rounds">
+              <Calendar className="mr-2 h-4 w-4" />
+              Review Rounds
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <RevisionSummaryCards
@@ -155,7 +206,21 @@ const ReviewDashboard = () => {
         <TabsContent value="table">
           <Card>
             <CardHeader>
-              <CardTitle>Products Requiring Review</CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle>Products Requiring Review</CardTitle>
+                {isAdmin && (
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="select-all"
+                      checked={selectedProductIds.length === filteredProducts.length && filteredProducts.length > 0}
+                      onCheckedChange={handleSelectAll}
+                    />
+                    <label htmlFor="select-all" className="text-sm font-medium cursor-pointer">
+                      Select All ({filteredProducts.length})
+                    </label>
+                  </div>
+                )}
+              </div>
             </CardHeader>
             <CardContent>
               <ReviewFilters
@@ -165,6 +230,9 @@ const ReviewDashboard = () => {
               />
               <ReviewProductsTable 
                 products={filteredProducts}
+                enableSelection={isAdmin}
+                selectedIds={selectedProductIds}
+                onSelectionChange={handleProductSelect}
               />
             </CardContent>
           </Card>
@@ -178,6 +246,15 @@ const ReviewDashboard = () => {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Quick Assignment Dialog */}
+      <QuickAssignDialog
+        open={showQuickAssign}
+        onOpenChange={setShowQuickAssign}
+        productIds={selectedProductIds}
+        productNames={selectedProductNames}
+        onAssignmentComplete={handleAssignmentComplete}
+      />
       </div>
     </div>
   );

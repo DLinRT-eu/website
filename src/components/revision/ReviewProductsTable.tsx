@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { SimpleTable, Column } from "@/components/ui/simple-table";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Shield, AlertTriangle, Clock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,14 +20,30 @@ interface ReviewProduct {
 interface ReviewProductsTableProps {
   products: ReviewProduct[];
   defaultSort?: { id: string; desc: boolean; }[];
+  enableSelection?: boolean;
+  selectedIds?: string[];
+  onSelectionChange?: (productId: string, checked: boolean) => void;
 }
 
 export const ReviewProductsTable: React.FC<ReviewProductsTableProps> = ({
   products,
-  defaultSort = [{ id: 'issueCount', desc: true }]
+  defaultSort = [{ id: 'issueCount', desc: true }],
+  enableSelection = false,
+  selectedIds = [],
+  onSelectionChange
 }) => {  const navigate = useNavigate();
 
   const columns: Column<ReviewProduct>[] = [
+    ...(enableSelection ? [{
+      id: "select",
+      header: "",
+      cell: (row: ReviewProduct) => (
+        <Checkbox
+          checked={selectedIds.includes(row.id)}
+          onCheckedChange={(checked) => onSelectionChange?.(row.id, checked as boolean)}
+        />
+      )
+    }] : []),
     {
       id: "name",
       header: "Product",

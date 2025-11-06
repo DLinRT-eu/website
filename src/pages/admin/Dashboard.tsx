@@ -20,7 +20,9 @@ import {
   TrendingUp,
   Activity,
   Building2,
-  Calendar
+  Calendar,
+  Stethoscope,
+  RefreshCw
 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { format } from 'date-fns';
@@ -67,6 +69,8 @@ export default function AdminDashboard() {
     recentSecurityEvents: 0,
   });
   const [recentActivity, setRecentActivity] = useState<RecentActivity[]>([]);
+  const [healthCheckRunning, setHealthCheckRunning] = useState(false);
+  const [healthCheckResult, setHealthCheckResult] = useState<any>(null);
 
   useEffect(() => {
     // Don't check permissions while still loading auth
@@ -212,6 +216,40 @@ export default function AdminDashboard() {
     }
   };
 
+  const runHealthCheck = async () => {
+    setHealthCheckRunning(true);
+    try {
+      const { data, error } = await supabase.rpc('admin_health_check');
+      
+      if (error) {
+        console.error('Health check error:', error);
+        toast({
+          title: 'Health Check Failed',
+          description: error.message || 'Failed to run health check',
+          variant: 'destructive',
+        });
+        setHealthCheckResult({ error: error.message });
+        return;
+      }
+      
+      setHealthCheckResult(data);
+      toast({
+        title: 'Health Check Complete',
+        description: 'System diagnostics completed successfully',
+      });
+    } catch (error: any) {
+      console.error('Health check error:', error);
+      toast({
+        title: 'Health Check Failed',
+        description: error.message || 'An unexpected error occurred',
+        variant: 'destructive',
+      });
+      setHealthCheckResult({ error: error.message });
+    } finally {
+      setHealthCheckRunning(false);
+    }
+  };
+
   if (loading || authLoading) {
     return (
       <PageLayout>
@@ -345,6 +383,120 @@ export default function AdminDashboard() {
                   <span>Review Rounds</span>
                 </Link>
               </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* System Diagnostics */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Stethoscope className="h-5 w-5" />
+              System Diagnostics
+            </CardTitle>
+            <CardDescription>
+              Check admin permissions and authentication status to troubleshoot access issues
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4">
+                <Button 
+                  onClick={runHealthCheck}
+                  disabled={healthCheckRunning}
+                  className="flex items-center gap-2"
+                >
+                  <RefreshCw className={`h-4 w-4 ${healthCheckRunning ? 'animate-spin' : ''}`} />
+                  {healthCheckRunning ? 'Running...' : 'Run Health Check'}
+                </Button>
+                <div className="text-sm text-muted-foreground">
+                  <p>Tests your authentication status, role assignments, and permission levels.</p>
+                  <p className="mt-1">Use this if you're experiencing permission denied errors.</p>
+                </div>
+              </div>
+
+              {healthCheckResult && (
+                <div className="mt-4 p-4 rounded-lg bg-muted border">
+                  <h4 className="font-semibold mb-3 flex items-center gap-2">
+                    {healthCheckResult.error ? (
+                      <>
+                        <AlertTriangle className="h-4 w-4 text-destructive" />
+                        <span className="text-destructive">Diagnostic Failed</span>
+                      </>
+                    ) : (
+                      <>
+                        <CheckCircle className="h-4 w-4 text-green-600" />
+                        <span>Diagnostic Results</span>
+                      </>
+                    )}
+                  </h4>
+                  
+                  {healthCheckResult.error ? (
+                    <div className="space-y-2 text-sm">
+                      <div className="text-destructive">
+                        <strong>Error:</strong> {healthCheckResult.error}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <span className="text-muted-foreground">User ID:</span>
+                        <div className="font-mono text-xs mt-1 bg-background p-2 rounded">
+                          {healthCheckResult.auth_uid || 'null'}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Timestamp:</span>
+                        <div className="font-mono text-xs mt-1 bg-background p-2 rounded">
+                          {healthCheckResult.timestamp ? format(new Date(healthCheckResult.timestamp), 'MMM d, HH:mm:ss') : 'N/A'}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Admin Status:</span>
+                        <div className="mt-1">
+                          {healthCheckResult.has_admin_role ? (
+                            <Badge className="bg-green-600">✓ Admin</Badge>
+                          ) : (
+                            <Badge variant="destructive">✗ Not Admin</Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Can Manage Reviews:</span>
+                        <div className="mt-1">
+                          {healthCheckResult.can_manage_reviews ? (
+                            <Badge className="bg-green-600">✓ Yes</Badge>
+                          ) : (
+                            <Badge variant="outline">✗ No</Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Can View Security:</span>
+                        <div className="mt-1">
+                          {healthCheckResult.can_view_security ? (
+                            <Badge className="bg-green-600">✓ Yes</Badge>
+                          ) : (
+                            <Badge variant="outline">✗ No</Badge>
+                          )}
+                        </div>
+                      </div>
+                      <div>
+                        <span className="text-muted-foreground">Assigned Roles:</span>
+                        <div className="mt-1 flex gap-1 flex-wrap">
+                          {healthCheckResult.user_roles && healthCheckResult.user_roles.length > 0 ? (
+                            healthCheckResult.user_roles.map((role: string) => (
+                              <Badge key={role} variant="secondary">{role}</Badge>
+                            ))
+                          ) : (
+                            <Badge variant="outline">None</Badge>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

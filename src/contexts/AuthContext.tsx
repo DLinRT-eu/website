@@ -86,30 +86,32 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signIn = async (email: string, password: string) => {
     try {
-      console.log('[Auth] Signing in...');
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
       if (error) {
-        console.error('[Auth] Sign in error:', error.message);
+        // Provide user-friendly error messages
+        if (error.message.includes('Invalid login credentials')) {
+          return { error: new Error('Invalid email or password. Please try again.') };
+        }
+        if (error.message.includes('Email not confirmed')) {
+          return { error: new Error('Please verify your email address before signing in.') };
+        }
         return { error };
       }
 
-      console.log('[Auth] Sign in successful');
       return { error: null };
     } catch (error: any) {
-      console.error('[Auth] Sign in exception:', error);
+      console.error('[Auth] Sign in failed');
       return { error };
     }
   };
 
   const signUp = async (email: string, password: string, data: SignUpData) => {
     try {
-      console.log('[Auth] Signing up...');
-      
-      // Warn about institutional email preference (but don't block)
+      // Check if email domain is institutional
       const emailDomain = email.toLowerCase().split('@')[1];
       const blockedDomains = [
         'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com',
@@ -119,14 +121,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       ];
       
       if (blockedDomains.includes(emailDomain)) {
-        console.warn('[Auth] Non-institutional email detected:', emailDomain);
-        // Show warning but don't block signup
-        // The warning will be shown by the signup form
+        return { error: new Error('Please use an institutional email address (e.g., university or company email).') };
       }
       
       const redirectUrl = `${window.location.origin}/`;
       
-      const { data: signUpData, error } = await supabase.auth.signUp({
+      const { error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -139,40 +139,19 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       });
 
       if (error) {
-        console.error('[Auth] Sign up error:', error.message);
+        // Provide user-friendly error messages
+        if (error.message.includes('already registered')) {
+          return { error: new Error('This email is already registered. Please sign in instead.') };
+        }
+        if (error.message.includes('email not confirmed')) {
+          return { error: new Error('Please verify your email address before signing in.') };
+        }
         return { error };
       }
 
-      // Send notification to admin about new registration
-      if (signUpData.user) {
-        try {
-          console.log('[Auth] Sending registration notification...');
-          const { error: notificationError } = await supabase.functions.invoke('notify-user-registration', {
-            body: {
-              userId: signUpData.user.id,
-              email: email,
-              firstName: data.firstName,
-              lastName: data.lastName,
-              createdAt: signUpData.user.created_at || new Date().toISOString()
-            }
-          });
-          
-          if (notificationError) {
-            console.error('[Auth] Failed to send registration notification:', notificationError);
-            // Don't fail the signup if notification fails
-          } else {
-            console.log('[Auth] Registration notification sent successfully');
-          }
-        } catch (notifError) {
-          console.error('[Auth] Exception sending registration notification:', notifError);
-          // Don't fail the signup if notification fails
-        }
-      }
-
-      console.log('[Auth] Sign up successful - check email for verification');
       return { error: null };
     } catch (error: any) {
-      console.error('[Auth] Sign up exception:', error);
+      console.error('[Auth] Sign up failed');
       return { error };
     }
   };

@@ -59,12 +59,12 @@ export default function SecurityDashboard() {
     try {
       setLoading(true);
       
-      // Fetch security events using admin RPC (last 7 days)
       const { data: eventsData, error: eventsError } = await supabase
         .rpc('get_security_events_admin', { last_n_days: 7 });
 
       if (eventsError) {
-        throw eventsError;
+        console.error('RPC error loading security events:', eventsError);
+        throw new Error(`${eventsError.message} (Code: ${eventsError.code || 'unknown'})`);
       }
 
       setEvents(eventsData || []);
@@ -94,11 +94,11 @@ export default function SecurityDashboard() {
         mfaEnrollment: Math.round(((mfaEnabled || 0) / (totalUsers || 1)) * 100),
         totalUsers: totalUsers || 0,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error fetching security data:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to load security data',
+        title: 'Failed to Load Security Data',
+        description: error.message || 'Check console for details',
         variant: 'destructive',
       });
     } finally {

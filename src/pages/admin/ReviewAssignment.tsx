@@ -113,40 +113,46 @@ export default function ReviewAssignment() {
     if (!selectedProduct || !selectedReviewer) {
       toast({
         title: 'Error',
-        description: 'Please select a product and reviewer',
+        description: 'Please select both a product and a reviewer',
         variant: 'destructive',
       });
       return;
     }
 
-    const { error } = await supabase
-      .from('product_reviews')
-      .insert({
-        product_id: selectedProduct,
-        assigned_to: selectedReviewer,
-        priority,
-        deadline: deadline || null,
-        status: 'pending',
+    try {
+      // Use secure RPC for assignment
+      const { data, error } = await supabase.rpc('create_product_review_admin' as any, {
+        _product_id: selectedProduct,
+        _assigned_to: selectedReviewer,
+        _priority: priority,
+        _deadline: deadline || null,
       });
 
-    if (error) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
+      if (error) {
+        console.error('Assignment RPC error:', error);
+        throw new Error(`${error.message} (Code: ${error.code || 'unknown'})`);
+      }
+
       toast({
         title: 'Success',
         description: 'Review assigned successfully',
       });
+
       setDialogOpen(false);
       setSelectedProduct('');
       setSelectedReviewer('');
       setPriority('medium');
       setDeadline('');
+      
       fetchReviews();
       fetchReviewers();
+    } catch (error: any) {
+      console.error('Error assigning review:', error);
+      toast({
+        title: 'Assignment Failed',
+        description: error.message || 'Failed to assign review. Check console for details.',
+        variant: 'destructive',
+      });
     }
   };
 

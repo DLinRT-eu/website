@@ -38,12 +38,12 @@ export default function UserRegistrationReview() {
   const loadNotifications = async () => {
     try {
       setLoading(true);
-      
-      // Use admin RPC to fetch registration notifications with user details
-      const { data, error } = await supabase.rpc('get_registration_notifications_admin');
+      const { data, error } = await supabase
+        .rpc('get_registration_notifications_admin');
 
       if (error) {
-        throw error;
+        console.error('RPC error loading notifications:', error);
+        throw new Error(`${error.message} (Code: ${error.code || 'unknown'})`);
       }
 
       // Transform RPC data to match component interface
@@ -59,11 +59,11 @@ export default function UserRegistrationReview() {
 
       setNotifications(transformedData);
     } catch (error: any) {
-      console.error('Error loading registration notifications:', error);
+      console.error('Error loading notifications:', error);
       toast({
-        title: "Error",
-        description: error.message || "Failed to load user registrations",
-        variant: "destructive",
+        title: 'Failed to Load Registrations',
+        description: error.message || 'Check console for details',
+        variant: 'destructive',
       });
     } finally {
       setLoading(false);

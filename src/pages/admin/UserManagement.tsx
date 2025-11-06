@@ -14,6 +14,7 @@ import { Input } from '@/components/ui/input';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { RoleRequestManager } from '@/components/admin/RoleRequestManager';
+import { PermissionDiagnostics } from '@/components/admin/PermissionDiagnostics';
 
 import { useToast } from '@/hooks/use-toast';
 import { Shield, UserPlus, UserMinus, Search, ArrowUpDown, ArrowUp, ArrowDown, Filter, Trash2 } from 'lucide-react';
@@ -499,6 +500,9 @@ export default function UserManagement() {
         </div>
 
         <div className="space-y-6">
+          {/* Permission Diagnostics - for troubleshooting */}
+          <PermissionDiagnostics />
+
           {/* Role Requests Section */}
           <RoleRequestManager />
 

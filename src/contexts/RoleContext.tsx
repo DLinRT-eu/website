@@ -38,14 +38,16 @@ export function RoleProvider({ children }: { children: ReactNode }) {
 
     try {
       setLoading(true);
-      const { data, error } = await supabase
-        .from('user_roles')
-        .select('role')
-        .eq('user_id', user.id);
+      
+      // Use secure RPC to fetch current user's roles
+      const { data, error } = await supabase.rpc('current_user_roles' as any);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Failed to fetch roles via RPC:', error);
+        throw error;
+      }
 
-      const userRoles = (data || []).map(r => r.role as AppRole);
+      const userRoles = (data || []) as AppRole[];
       setRoles(userRoles);
 
       // Set active role from localStorage or use highest role

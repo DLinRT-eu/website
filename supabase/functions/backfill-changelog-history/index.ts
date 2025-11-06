@@ -65,23 +65,24 @@ serve(async (req) => {
       throw new Error('Admin access required');
     }
 
-    console.log('Starting changelog backfill from April 2025...');
-
-    // Fetch commits from GitHub (April 2025 to now)
-    const startDate = new Date('2025-04-01T00:00:00Z');
-    
-    // Get GitHub repository from environment variable
+    // Validate GITHUB_REPOSITORY environment variable
     const githubRepo = Deno.env.get('GITHUB_REPOSITORY');
     
     if (!githubRepo) {
       return new Response(
         JSON.stringify({ 
           error: 'GitHub repository not configured',
-          message: 'Please set GITHUB_REPOSITORY environment variable (e.g., "username/repo-name")'
+          message: 'Please set GITHUB_REPOSITORY secret in Supabase Edge Function settings (e.g., "username/repo-name")',
+          instructions: 'Go to Supabase Dashboard → Edge Functions → backfill-changelog-history → Settings → Secrets'
         }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    console.log('Starting changelog backfill from April 2025...');
+
+    // Fetch commits from GitHub (April 2025 to now)
+    const startDate = new Date('2025-04-01T00:00:00Z');
     
     const githubToken = Deno.env.get('GITHUB_TOKEN');
     const headers: HeadersInit = {

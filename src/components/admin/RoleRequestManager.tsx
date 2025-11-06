@@ -61,115 +61,88 @@ export const RoleRequestManager = () => {
     fetchRoleRequests();
   }, [currentPage, searchQuery, roleFilter, dateFrom, dateTo, companyFilter, sortBy, sortOrder]);
 
-  const fetchRoleRequests = async (attempts: number = 0) => {
+  const fetchRoleRequests = async () => {
     try {
-      const from = (currentPage - 1) * itemsPerPage;
-      const to = from + itemsPerPage - 1;
-
-      // Build query
-      let query = supabase
-        .from('role_requests')
-        .select(`
-          id,
-          user_id,
-          requested_role,
-          status,
-          justification,
-          company_id,
-          created_at,
-          profiles:user_id (
-            email,
-            first_name,
-            last_name
-          )
-        `, { count: 'exact' })
-        .eq('status', 'pending');
-
-      // Apply role filter
-      if (roleFilter !== 'all') {
-        query = query.eq('requested_role', roleFilter as 'admin' | 'reviewer' | 'company');
-      }
-
-      // Apply date range filter
-      if (dateFrom) {
-        query = query.gte('created_at', new Date(dateFrom).toISOString());
-      }
-      if (dateTo) {
-        const endDate = new Date(dateTo);
-        endDate.setHours(23, 59, 59, 999);
-        query = query.lte('created_at', endDate.toISOString());
-      }
-
-      // Apply company filter
-      if (companyFilter.trim()) {
-        query = query.ilike('company_id', `%${companyFilter.trim()}%`);
-      }
-
-      // Apply sorting
-      if (sortBy === 'date') {
-        query = query.order('created_at', { ascending: sortOrder === 'asc' });
-      } else if (sortBy === 'role') {
-        query = query.order('requested_role', { ascending: sortOrder === 'asc' });
-      }
-      // Note: name sorting will be done client-side since it's in profiles table
-
-      const { data: requestsData, error, count } = await query.range(from, to);
+      setLoading(true);
+      
+      // Use admin RPC to fetch role requests with user details
+      const { data, error } = await supabase.rpc('get_pending_role_requests_admin');
 
       if (error) {
-        // Handle permission denied errors with retry logic
-        if (error.code === '42501' || error.message.includes('permission denied')) {
-          console.warn('Permission denied for role_requests - auth may still be loading, will retry...');
-          // Retry up to 3 times with increasing delay
-          if (attempts < 3) {
-            setTimeout(() => {
-              fetchRoleRequests(attempts + 1);
-            }, 1000 * (attempts + 1)); // 1s, 2s, 3s delays
-            return;
-          }
-          // After 3 attempts, show empty state
-          setRequests([]);
-          setTotalCount(0);
-          setLoading(false);
-          return;
-        }
         throw error;
       }
 
-      // Transform nested profiles data
-      let transformedRequests = (requestsData || []).map(req => ({
-        ...req,
-        profiles: Array.isArray(req.profiles) ? req.profiles[0] : req.profiles
+      // Transform RPC data to match component interface
+      let transformedRequests = (data || []).map((item: any) => ({
+        ...item,
+        profiles: {
+          email: item.email,
+          first_name: item.first_name,
+          last_name: item.last_name,
+        }
       })) as RoleRequest[];
 
-      // Apply search filter (client-side since it involves profiles table)
+      // Apply client-side filters
+      if (roleFilter !== 'all') {
+        transformedRequests = transformedRequests.filter(r => r.requested_role === roleFilter);
+      }
+
+      if (dateFrom) {
+        transformedRequests = transformedRequests.filter(r => 
+          new Date(r.created_at) >= new Date(dateFrom)
+        );
+      }
+
+      if (dateTo) {
+        const endDate = new Date(dateTo);
+        endDate.setHours(23, 59, 59, 999);
+        transformedRequests = transformedRequests.filter(r => 
+          new Date(r.created_at) <= endDate
+        );
+      }
+
+      if (companyFilter.trim()) {
+        transformedRequests = transformedRequests.filter(r => 
+          r.company_id?.toLowerCase().includes(companyFilter.toLowerCase())
+        );
+      }
+
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase().trim();
         transformedRequests = transformedRequests.filter(req => 
           req.profiles?.email?.toLowerCase().includes(query) ||
           req.profiles?.first_name?.toLowerCase().includes(query) ||
-          req.profiles?.last_name?.toLowerCase().includes(query) ||
-          `${req.profiles?.first_name} ${req.profiles?.last_name}`.toLowerCase().includes(query)
+          req.profiles?.last_name?.toLowerCase().includes(query)
         );
       }
 
-      // Apply name sorting (client-side)
-      if (sortBy === 'name') {
-        transformedRequests.sort((a, b) => {
-          const nameA = `${a.profiles?.first_name || ''} ${a.profiles?.last_name || ''}`.toLowerCase();
-          const nameB = `${b.profiles?.first_name || ''} ${b.profiles?.last_name || ''}`.toLowerCase();
-          return sortOrder === 'asc' 
-            ? nameA.localeCompare(nameB)
-            : nameB.localeCompare(nameA);
-        });
-      }
+      // Apply sorting
+      transformedRequests.sort((a, b) => {
+        let compareValue = 0;
+        if (sortBy === 'date') {
+          compareValue = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+        } else if (sortBy === 'role') {
+          compareValue = a.requested_role.localeCompare(b.requested_role);
+        } else if (sortBy === 'name') {
+          const nameA = `${a.profiles?.first_name} ${a.profiles?.last_name}`.toLowerCase();
+          const nameB = `${b.profiles?.first_name} ${b.profiles?.last_name}`.toLowerCase();
+          compareValue = nameA.localeCompare(nameB);
+        }
+        return sortOrder === 'asc' ? compareValue : -compareValue;
+      });
 
-      setRequests(transformedRequests);
-      setTotalCount(count || 0);
+      // Apply pagination
+      const from = (currentPage - 1) * itemsPerPage;
+      const to = from + itemsPerPage;
+      const paginatedRequests = transformedRequests.slice(from, to);
+
+      setRequests(paginatedRequests);
+      setTotalCount(transformedRequests.length);
     } catch (error: any) {
       console.error('Error fetching role requests:', error);
       toast({
         title: 'Error loading role requests',
-        description: 'Unable to load pending role requests. Please refresh the page.',
+        description: error.message || 'Unable to load pending role requests. Please refresh the page.',
         variant: 'destructive',
       });
     } finally {

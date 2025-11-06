@@ -66,39 +66,25 @@ export default function ReviewAssignment() {
   }, [user, isAdmin]);
 
   const fetchReviewers = async () => {
-    // Get all users with reviewer or admin role
-    const { data: roleData } = await supabase
-      .from('user_roles')
-      .select('user_id, role')
-      .in('role', ['reviewer', 'admin']);
+    const { data, error } = await supabase.rpc('get_reviewers_with_workload_admin');
+    
+    if (error) {
+      console.error('Error fetching reviewers:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to load reviewers',
+        variant: 'destructive',
+      });
+      return;
+    }
 
-    if (!roleData) return;
-
-    const reviewerIds = [...new Set(roleData.map(r => r.user_id))];
-
-    // Get profiles for these users
-    const { data: profiles } = await supabase
-      .from('profiles')
-      .select('id, first_name, last_name, email')
-      .in('id', reviewerIds);
-
-    if (!profiles) return;
-
-    // Count assignments for each reviewer
-    const reviewersWithCount = await Promise.all(
-      profiles.map(async (profile) => {
-        const { count } = await supabase
-          .from('product_reviews')
-          .select('*', { count: 'exact', head: true })
-          .eq('assigned_to', profile.id)
-          .neq('status', 'completed');
-
-        return {
-          ...profile,
-          assignedCount: count || 0,
-        };
-      })
-    );
+    const reviewersWithCount = (data || []).map((reviewer: any) => ({
+      id: reviewer.id,
+      first_name: reviewer.first_name,
+      last_name: reviewer.last_name,
+      email: reviewer.email,
+      assignedCount: Number(reviewer.active_assignments) || 0
+    }));
 
     setReviewers(reviewersWithCount);
   };

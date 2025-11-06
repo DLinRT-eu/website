@@ -35,40 +35,34 @@ export default function UserRegistrationReview() {
     loadNotifications();
   }, []);
 
-  const loadNotifications = async (attempts: number = 0) => {
+  const loadNotifications = async () => {
     try {
       setLoading(true);
       
-      // Fetch notifications with user data
-      const { data, error } = await supabase
-        .from('user_registration_notifications')
-        .select(`
-          *,
-          profiles!user_id (
-            first_name,
-            last_name,
-            email
-          )
-        `)
-        .order('created_at', { ascending: false })
-        .limit(50);
+      // Use admin RPC to fetch registration notifications with user details
+      const { data, error } = await supabase.rpc('get_registration_notifications_admin');
 
       if (error) {
-        // Handle permission denied errors with retry logic
-        if ((error.code === '42501' || error.message.includes('permission denied')) && attempts < 3) {
-          console.warn('Permission denied for user_registration_notifications - retrying...');
-          setTimeout(() => loadNotifications(attempts + 1), 1000 * (attempts + 1));
-          return;
-        }
         throw error;
       }
 
-      setNotifications(data || []);
+      // Transform RPC data to match component interface
+      const transformedData = (data || []).map((item: any) => ({
+        ...item,
+        profiles: {
+          first_name: item.first_name,
+          last_name: item.last_name,
+          email: item.email,
+          approval_status: item.approval_status
+        }
+      }));
+
+      setNotifications(transformedData);
     } catch (error: any) {
       console.error('Error loading registration notifications:', error);
       toast({
         title: "Error",
-        description: "Failed to load user registrations",
+        description: error.message || "Failed to load user registrations",
         variant: "destructive",
       });
     } finally {

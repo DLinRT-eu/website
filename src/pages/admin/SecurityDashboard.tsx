@@ -55,32 +55,21 @@ export default function SecurityDashboard() {
     fetchSecurityData();
   }, [user, isAdmin, authLoading, navigate]);
 
-  const fetchSecurityData = async (attempts: number = 0) => {
+  const fetchSecurityData = async () => {
     try {
-      // Fetch recent security events (last 7 days)
-      const sevenDaysAgo = new Date();
-      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      setLoading(true);
+      
+      // Fetch security events using admin RPC (last 7 days)
+      const { data: eventsData, error: eventsError } = await supabase
+        .rpc('get_security_events_admin', { last_n_days: 7 });
 
-      const { data: eventsData, error } = await supabase
-        .from('security_events')
-        .select('*')
-        .gte('created_at', sevenDaysAgo.toISOString())
-        .order('created_at', { ascending: false })
-        .limit(50);
-
-      if (error) {
-        // Handle permission denied errors with retry logic
-        if ((error.code === '42501' || error.message.includes('permission denied')) && attempts < 3) {
-          console.warn('Permission denied for security_events - retrying...');
-          setTimeout(() => fetchSecurityData(attempts + 1), 1000 * (attempts + 1));
-          return;
-        }
-        throw error;
+      if (eventsError) {
+        throw eventsError;
       }
 
       setEvents(eventsData || []);
 
-      // Calculate stats
+      // Calculate stats from events
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
 
@@ -88,6 +77,7 @@ export default function SecurityDashboard() {
         new Date(e.created_at) >= yesterday
       ) || [];
 
+      // Get MFA enrollment stats
       const { count: totalUsers } = await supabase
         .from('profiles')
         .select('*', { count: 'exact', head: true });
@@ -104,8 +94,6 @@ export default function SecurityDashboard() {
         mfaEnrollment: Math.round(((mfaEnabled || 0) / (totalUsers || 1)) * 100),
         totalUsers: totalUsers || 0,
       });
-
-      setLoading(false);
     } catch (error) {
       console.error('Error fetching security data:', error);
       toast({
@@ -113,6 +101,7 @@ export default function SecurityDashboard() {
         description: 'Failed to load security data',
         variant: 'destructive',
       });
+    } finally {
       setLoading(false);
     }
   };

@@ -1384,6 +1384,90 @@ export type Database = {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
       }
+      get_pending_role_requests_admin: {
+        Args: never
+        Returns: {
+          company_id: string
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          institution: string
+          justification: string
+          last_name: string
+          requested_role: Database["public"]["Enums"]["app_role"]
+          reviewed_at: string
+          reviewed_by: string
+          status: string
+          user_id: string
+        }[]
+      }
+      get_registration_notifications_admin: {
+        Args: never
+        Returns: {
+          approval_status: string
+          created_at: string
+          email: string
+          failure_reason: string
+          first_name: string
+          id: string
+          institution: string
+          last_name: string
+          notification_status: string
+          user_id: string
+          verified: boolean
+          verified_at: string
+          verified_by: string
+        }[]
+      }
+      get_review_rounds_admin: {
+        Args: never
+        Returns: {
+          completed_count: number
+          created_at: string
+          created_by: string
+          default_deadline: string
+          description: string
+          end_date: string
+          id: string
+          in_progress_count: number
+          name: string
+          pending_count: number
+          round_number: number
+          start_date: string
+          status: string
+          total_assignments: number
+          total_products: number
+          updated_at: string
+        }[]
+      }
+      get_reviewers_with_workload_admin: {
+        Args: never
+        Returns: {
+          active_assignments: number
+          email: string
+          first_name: string
+          id: string
+          institution: string
+          last_name: string
+          roles: string[]
+        }[]
+      }
+      get_security_events_admin: {
+        Args: { last_n_days?: number }
+        Returns: {
+          created_at: string
+          details: Json
+          event_type: string
+          id: string
+          ip_hash: string
+          notes: string
+          resolved_at: string
+          severity: string
+          url: string
+          user_agent_hash: string
+        }[]
+      }
       get_user_role_secure: {
         Args: { user_id_param: string }
         Returns: Database["public"]["Enums"]["app_role"]

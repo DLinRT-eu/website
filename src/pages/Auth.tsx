@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Checkbox } from '@/components/ui/checkbox';
 import { AlertCircle, CheckCircle2, AlertTriangle } from 'lucide-react';
 import { z } from 'zod';
 import SEO from '@/components/SEO';
@@ -40,6 +41,9 @@ const signupSchema = z.object({
     .min(1, 'Last name is required')
     .max(100, 'Last name must be less than 100 characters')
     .trim(),
+  dataProcessingConsent: z.boolean().refine(val => val === true, {
+    message: 'You must consent to data processing to create an account'
+  })
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
@@ -64,6 +68,7 @@ export default function Auth() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
+  const [dataProcessingConsent, setDataProcessingConsent] = useState(false);
 
   // Redirect if already authenticated
   useEffect(() => {
@@ -115,6 +120,7 @@ export default function Auth() {
         confirmPassword,
         firstName: firstName.trim(),
         lastName: lastName.trim(),
+        dataProcessingConsent,
       });
       
       // Check if email is institutional and show warning if not
@@ -139,6 +145,8 @@ export default function Auth() {
         {
           firstName: validation.firstName,
           lastName: validation.lastName,
+          dataProcessingConsent: true,
+          consentTimestamp: new Date().toISOString(),
         }
       );
       
@@ -153,6 +161,7 @@ export default function Auth() {
         setConfirmPassword('');
         setFirstName('');
         setLastName('');
+        setDataProcessingConsent(false);
       }
     } catch (err) {
       if (err instanceof z.ZodError) {
@@ -333,7 +342,55 @@ export default function Auth() {
                     />
                   </div>
                   
-                  <Button type="submit" className="w-full" disabled={loading}>
+                  {/* GDPR Consent Section */}
+                  <div className="space-y-4 rounded-lg border p-4 bg-muted/50">
+                    <div className="flex items-start space-x-3">
+                      <Checkbox 
+                        id="data-consent"
+                        checked={dataProcessingConsent}
+                        onCheckedChange={(checked) => setDataProcessingConsent(checked === true)}
+                        required
+                        disabled={loading}
+                      />
+                      <div className="space-y-1 leading-tight flex-1">
+                        <label 
+                          htmlFor="data-consent" 
+                          className="text-sm font-medium cursor-pointer"
+                        >
+                          Data Processing Consent (Required) *
+                        </label>
+                        <p className="text-xs text-muted-foreground">
+                          I hereby provide my <strong>explicit and informed consent</strong> for DLinRT.eu to collect, 
+                          process, and store my personal data (name, email, and profile information) in accordance with 
+                          the General Data Protection Regulation (GDPR) Article 6(1)(a). I understand that:
+                        </p>
+                        <ul className="text-xs text-muted-foreground list-disc pl-4 space-y-1 mt-2">
+                          <li>My data will be used solely for platform functionality and communication</li>
+                          <li>My data will be stored securely on EU-based Supabase servers</li>
+                          <li>I can withdraw this consent at any time from my profile settings</li>
+                          <li>Upon withdrawal, my data will be anonymized or deleted within 30 days</li>
+                          <li>I have the right to access, rectify, or export my data at any time</li>
+                        </ul>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          For details, see our{' '}
+                          <a href="/privacy" target="_blank" className="underline hover:text-foreground">
+                            Privacy Policy
+                          </a>
+                          .
+                        </p>
+                      </div>
+                    </div>
+                    {!dataProcessingConsent && (
+                      <Alert variant="default" className="bg-amber-50 border-amber-200 dark:bg-amber-950 dark:border-amber-800">
+                        <AlertTriangle className="h-4 w-4 text-amber-600" />
+                        <AlertDescription className="text-xs text-amber-800 dark:text-amber-200">
+                          You must provide consent to process your personal data to use this platform.
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                  </div>
+                  
+                  <Button type="submit" className="w-full" disabled={loading || !dataProcessingConsent}>
                     {loading ? 'Creating account...' : 'Create Account'}
                   </Button>
                 </form>

@@ -23,6 +23,11 @@ export interface Profile {
   approved_at?: string | null;
   created_at?: string;
   updated_at?: string;
+  data_processing_consent_given?: boolean;
+  data_processing_consent_timestamp?: string | null;
+  data_processing_consent_withdrawn?: boolean;
+  data_processing_consent_withdrawn_at?: string | null;
+  data_processing_consent_version?: string | null;
 }
 
 export function useProfile(userId: string | null) {

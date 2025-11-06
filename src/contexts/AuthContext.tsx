@@ -8,6 +8,8 @@ type AppRole = 'admin' | 'reviewer' | 'company';
 interface SignUpData {
   firstName: string;
   lastName: string;
+  dataProcessingConsent?: boolean;
+  consentTimestamp?: string;
 }
 
 interface AuthContextType {
@@ -134,6 +136,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           data: {
             first_name: data.firstName,
             last_name: data.lastName,
+            dataProcessingConsent: data.dataProcessingConsent,
+            consentTimestamp: data.consentTimestamp,
           },
         },
       });

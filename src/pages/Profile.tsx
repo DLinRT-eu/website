@@ -20,6 +20,7 @@ import { RoleSelector } from '@/components/profile/RoleSelector';
 import { MFASettings } from '@/components/profile/MFASettings';
 import { DataExport } from '@/components/profile/DataExport';
 import { DeleteAccount } from '@/components/profile/DeleteAccount';
+import { ConsentManagement } from '@/components/profile/ConsentManagement';
 import { User, Mail, Building2, Briefcase, Shield, AlertCircle, Package, RefreshCw, Users, FileCheck, LayoutDashboard, ShieldCheck } from 'lucide-react';
 import { Link, Navigate } from 'react-router-dom';
 
@@ -565,6 +566,7 @@ export default function Profile() {
           <MFASettings />
 
           {/* GDPR Compliance */}
+          <ConsentManagement />
           <DataExport />
           <DeleteAccount />
 

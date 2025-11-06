@@ -384,6 +384,36 @@ export type Database = {
         }
         Relationships: []
       }
+      consent_audit_log: {
+        Row: {
+          action: string
+          consent_version: string
+          created_at: string
+          id: string
+          ip_hash: string | null
+          user_agent: string | null
+          user_id: string
+        }
+        Insert: {
+          action: string
+          consent_version: string
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          user_agent?: string | null
+          user_id: string
+        }
+        Update: {
+          action?: string
+          consent_version?: string
+          created_at?: string
+          id?: string
+          ip_hash?: string | null
+          user_agent?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       contact_submissions: {
         Row: {
           created_at: string
@@ -707,6 +737,11 @@ export type Database = {
           approved_by: string | null
           bio: string | null
           created_at: string | null
+          data_processing_consent_given: boolean
+          data_processing_consent_timestamp: string | null
+          data_processing_consent_version: string | null
+          data_processing_consent_withdrawn: boolean
+          data_processing_consent_withdrawn_at: string | null
           display_order: number | null
           email: string
           first_name: string
@@ -730,6 +765,11 @@ export type Database = {
           approved_by?: string | null
           bio?: string | null
           created_at?: string | null
+          data_processing_consent_given?: boolean
+          data_processing_consent_timestamp?: string | null
+          data_processing_consent_version?: string | null
+          data_processing_consent_withdrawn?: boolean
+          data_processing_consent_withdrawn_at?: string | null
           display_order?: number | null
           email: string
           first_name: string
@@ -753,6 +793,11 @@ export type Database = {
           approved_by?: string | null
           bio?: string | null
           created_at?: string | null
+          data_processing_consent_given?: boolean
+          data_processing_consent_timestamp?: string | null
+          data_processing_consent_version?: string | null
+          data_processing_consent_withdrawn?: boolean
+          data_processing_consent_withdrawn_at?: string | null
           display_order?: number | null
           email?: string
           first_name?: string

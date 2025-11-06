@@ -61,7 +61,7 @@ export const RoleRequestManager = () => {
     fetchRoleRequests();
   }, [currentPage, searchQuery, roleFilter, dateFrom, dateTo, companyFilter, sortBy, sortOrder]);
 
-  const fetchRoleRequests = async () => {
+  const fetchRoleRequests = async (attempts: number = 0) => {
     try {
       const from = (currentPage - 1) * itemsPerPage;
       const to = from + itemsPerPage - 1;
@@ -116,9 +116,17 @@ export const RoleRequestManager = () => {
       const { data: requestsData, error, count } = await query.range(from, to);
 
       if (error) {
-        // Silently handle permission denied errors (happens during initial load)
+        // Handle permission denied errors with retry logic
         if (error.code === '42501' || error.message.includes('permission denied')) {
-          console.warn('Permission denied for role_requests - auth may still be loading');
+          console.warn('Permission denied for role_requests - auth may still be loading, will retry...');
+          // Retry up to 3 times with increasing delay
+          if (attempts < 3) {
+            setTimeout(() => {
+              fetchRoleRequests(attempts + 1);
+            }, 1000 * (attempts + 1)); // 1s, 2s, 3s delays
+            return;
+          }
+          // After 3 attempts, show empty state
           setRequests([]);
           setTotalCount(0);
           setLoading(false);

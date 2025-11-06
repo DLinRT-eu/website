@@ -55,7 +55,7 @@ export default function SecurityDashboard() {
     fetchSecurityData();
   }, [user, isAdmin, authLoading, navigate]);
 
-  const fetchSecurityData = async () => {
+  const fetchSecurityData = async (attempts: number = 0) => {
     try {
       // Fetch recent security events (last 7 days)
       const sevenDaysAgo = new Date();
@@ -68,7 +68,15 @@ export default function SecurityDashboard() {
         .order('created_at', { ascending: false })
         .limit(50);
 
-      if (error) throw error;
+      if (error) {
+        // Handle permission denied errors with retry logic
+        if ((error.code === '42501' || error.message.includes('permission denied')) && attempts < 3) {
+          console.warn('Permission denied for security_events - retrying...');
+          setTimeout(() => fetchSecurityData(attempts + 1), 1000 * (attempts + 1));
+          return;
+        }
+        throw error;
+      }
 
       setEvents(eventsData || []);
 

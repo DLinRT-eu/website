@@ -35,7 +35,7 @@ export default function UserRegistrationReview() {
     loadNotifications();
   }, []);
 
-  const loadNotifications = async () => {
+  const loadNotifications = async (attempts: number = 0) => {
     try {
       setLoading(true);
       
@@ -53,7 +53,15 @@ export default function UserRegistrationReview() {
         .order('created_at', { ascending: false })
         .limit(50);
 
-      if (error) throw error;
+      if (error) {
+        // Handle permission denied errors with retry logic
+        if ((error.code === '42501' || error.message.includes('permission denied')) && attempts < 3) {
+          console.warn('Permission denied for user_registration_notifications - retrying...');
+          setTimeout(() => loadNotifications(attempts + 1), 1000 * (attempts + 1));
+          return;
+        }
+        throw error;
+      }
 
       setNotifications(data || []);
     } catch (error: any) {

@@ -1313,6 +1313,7 @@ export type Database = {
       }
     }
     Functions: {
+      admin_health_check: { Args: never; Returns: Json }
       can_access_company: {
         Args: { _company_id: string; _user_id: string }
         Returns: boolean
@@ -1324,7 +1325,12 @@ export type Database = {
           reason: string
         }[]
       }
+      can_manage_reviews: { Args: { user_id_param: string }; Returns: boolean }
       can_user_adopt_product: { Args: { p_user_id: string }; Returns: boolean }
+      can_view_security_data: {
+        Args: { user_id_param: string }
+        Returns: boolean
+      }
       cleanup_old_analytics_data: { Args: never; Returns: undefined }
       cleanup_old_contact_submissions: { Args: never; Returns: undefined }
       cleanup_old_security_events: { Args: never; Returns: undefined }
@@ -1378,6 +1384,10 @@ export type Database = {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
       }
+      get_user_role_secure: {
+        Args: { user_id_param: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
       get_users_with_roles: {
         Args: never
         Returns: {
@@ -1425,6 +1435,7 @@ export type Database = {
         }[]
       }
       is_admin: { Args: never; Returns: boolean }
+      is_admin_secure: { Args: never; Returns: boolean }
       is_institutional_email: { Args: { email: string }; Returns: boolean }
       log_admin_action: {
         Args: {

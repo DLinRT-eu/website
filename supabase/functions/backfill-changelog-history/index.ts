@@ -69,6 +69,20 @@ serve(async (req) => {
 
     // Fetch commits from GitHub (April 2025 to now)
     const startDate = new Date('2025-04-01T00:00:00Z');
+    
+    // Get GitHub repository from environment variable
+    const githubRepo = Deno.env.get('GITHUB_REPOSITORY');
+    
+    if (!githubRepo) {
+      return new Response(
+        JSON.stringify({ 
+          error: 'GitHub repository not configured',
+          message: 'Please set GITHUB_REPOSITORY environment variable (e.g., "username/repo-name")'
+        }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    
     const githubToken = Deno.env.get('GITHUB_TOKEN');
     const headers: HeadersInit = {
       'Accept': 'application/vnd.github.v3+json',
@@ -79,7 +93,7 @@ serve(async (req) => {
       headers['Authorization'] = `token ${githubToken}`;
     }
 
-    const githubApiUrl = `https://api.github.com/repos/LovableLabs/openr-insights/commits?since=${startDate.toISOString()}&per_page=100`;
+    const githubApiUrl = `https://api.github.com/repos/${githubRepo}/commits?since=${startDate.toISOString()}&per_page=100`;
     
     const githubResponse = await fetch(githubApiUrl, { headers });
     

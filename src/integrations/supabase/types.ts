@@ -1314,6 +1314,7 @@ export type Database = {
     }
     Functions: {
       admin_health_check: { Args: never; Returns: Json }
+      auto_grant_dlinrt_reviewer_role: { Args: never; Returns: undefined }
       can_access_company: {
         Args: { _company_id: string; _user_id: string }
         Returns: boolean

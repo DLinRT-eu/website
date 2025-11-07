@@ -101,7 +101,7 @@ export default function ReviewAssignment() {
       .from('product_reviews')
       .select(`
         *,
-        profiles!product_reviews_assigned_to_fkey(first_name, last_name)
+        reviewer:profiles!assigned_to(first_name, last_name)
       `)
       .order('deadline', { ascending: true, nullsFirst: false });
 
@@ -116,7 +116,7 @@ export default function ReviewAssignment() {
     } else {
       const reviewsWithReviewer = (data || []).map(review => ({
         ...review,
-        reviewer: review.profiles as any,
+        reviewer: review.reviewer as any,
       }));
       setReviews(reviewsWithReviewer);
     }

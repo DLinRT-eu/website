@@ -9,12 +9,13 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import PageLayout from '@/components/layout/PageLayout';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useToast } from '@/hooks/use-toast';
-import { Calendar, UserPlus, Search } from 'lucide-react';
+import { Calendar, UserPlus, Search, Filter } from 'lucide-react';
 import { ALL_PRODUCTS } from '@/data';
 
 interface Reviewer {
@@ -55,6 +56,9 @@ export default function ReviewAssignment() {
   const [priority, setPriority] = useState<string>('medium');
   const [deadline, setDeadline] = useState<string>('');
   const [searchTerm, setSearchTerm] = useState('');
+  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [reviewToDelete, setReviewToDelete] = useState<string | null>(null);
 
   const products = ALL_PRODUCTS;
 
@@ -201,13 +205,20 @@ export default function ReviewAssignment() {
     }
   };
 
-  const handleDeleteAssignment = async (reviewId: string) => {
-    const review = reviews.find(r => r.id === reviewId);
+  const handleDeleteClick = (reviewId: string) => {
+    setReviewToDelete(reviewId);
+    setConfirmDeleteOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!reviewToDelete) return;
+
+    const review = reviews.find(r => r.id === reviewToDelete);
     
     const { error } = await supabase
       .from('product_reviews')
       .delete()
-      .eq('id', reviewId);
+      .eq('id', reviewToDelete);
 
     if (error) {
       toast({
@@ -235,12 +246,20 @@ export default function ReviewAssignment() {
       fetchReviews();
       fetchReviewers();
     }
+
+    setConfirmDeleteOpen(false);
+    setReviewToDelete(null);
   };
 
   const filteredProducts = products.filter(p => 
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.company.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const filteredReviews = reviews.filter(review => {
+    if (statusFilter === 'all') return true;
+    return review.status === statusFilter;
+  });
 
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -394,8 +413,26 @@ export default function ReviewAssignment() {
         {/* Assignments Table */}
         <Card>
           <CardHeader>
-            <CardTitle>All Assignments</CardTitle>
-            <CardDescription>Manage product review assignments</CardDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <CardTitle>All Assignments</CardTitle>
+                <CardDescription>Manage product review assignments</CardDescription>
+              </div>
+              <div className="flex items-center gap-2">
+                <Filter className="h-4 w-4 text-muted-foreground" />
+                <Select value={statusFilter} onValueChange={setStatusFilter}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Filter by status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Statuses</SelectItem>
+                    <SelectItem value="pending">Pending</SelectItem>
+                    <SelectItem value="in_progress">In Progress</SelectItem>
+                    <SelectItem value="completed">Completed</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <Table>
@@ -410,14 +447,17 @@ export default function ReviewAssignment() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {reviews.length === 0 ? (
+                {filteredReviews.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
-                      No assignments yet. Click "Assign Review" to get started.
+                      {reviews.length === 0 
+                        ? "No assignments yet. Click 'Assign Review' to get started."
+                        : `No ${statusFilter === 'all' ? '' : statusFilter.replace('_', ' ')} assignments found.`
+                      }
                     </TableCell>
                   </TableRow>
                 ) : (
-                  reviews.map((review) => {
+                  filteredReviews.map((review) => {
                     const product = products.find(p => p.id === review.product_id);
                     return (
                       <TableRow key={review.id}>
@@ -480,7 +520,7 @@ export default function ReviewAssignment() {
                             <Button
                               size="sm"
                               variant="destructive"
-                              onClick={() => handleDeleteAssignment(review.id)}
+                              onClick={() => handleDeleteClick(review.id)}
                             >
                               Remove
                             </Button>
@@ -494,6 +534,30 @@ export default function ReviewAssignment() {
             </Table>
           </CardContent>
         </Card>
+
+        {/* Confirmation Dialog */}
+        <AlertDialog open={confirmDeleteOpen} onOpenChange={setConfirmDeleteOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This will permanently remove this assignment. The reviewer will no longer have access to this product review.
+                This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setReviewToDelete(null)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={handleConfirmDelete}
+                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              >
+                Remove Assignment
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </PageLayout>
   );

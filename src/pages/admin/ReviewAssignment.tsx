@@ -32,6 +32,9 @@ interface ProductReview {
   status: string;
   priority: string;
   deadline: string | null;
+  review_round_id: string | null;
+  started_at: string | null;
+  completed_at: string | null;
   reviewer?: {
     first_name: string;
     last_name: string;
@@ -98,8 +101,16 @@ export default function ReviewAssignment() {
       `)
       .order('deadline', { ascending: true, nullsFirst: false });
 
-    if (!error && data) {
-      const reviewsWithReviewer = data.map(review => ({
+    if (error) {
+      console.error('Error fetching reviews:', error);
+      toast({
+        title: 'Error Loading Assignments',
+        description: error.message,
+        variant: 'destructive',
+      });
+      setReviews([]);
+    } else {
+      const reviewsWithReviewer = (data || []).map(review => ({
         ...review,
         reviewer: review.profiles as any,
       }));
@@ -155,7 +166,44 @@ export default function ReviewAssignment() {
     }
   };
 
+  const handleUpdateStatus = async (reviewId: string, newStatus: string) => {
+    const review = reviews.find(r => r.id === reviewId);
+    if (!review) return;
+
+    const updates: any = { status: newStatus };
+    
+    // Track timing
+    if (newStatus === 'in_progress' && !review.started_at) {
+      updates.started_at = new Date().toISOString();
+    }
+    if (newStatus === 'completed') {
+      updates.completed_at = new Date().toISOString();
+    }
+
+    const { error } = await supabase
+      .from('product_reviews')
+      .update(updates)
+      .eq('id', reviewId);
+
+    if (error) {
+      toast({ 
+        title: 'Error', 
+        description: error.message, 
+        variant: 'destructive' 
+      });
+    } else {
+      toast({ 
+        title: 'Success', 
+        description: `Review marked as ${newStatus.replace('_', ' ')}` 
+      });
+      fetchReviews();
+      fetchReviewers();
+    }
+  };
+
   const handleDeleteAssignment = async (reviewId: string) => {
+    const review = reviews.find(r => r.id === reviewId);
+    
     const { error } = await supabase
       .from('product_reviews')
       .delete()
@@ -168,9 +216,21 @@ export default function ReviewAssignment() {
         variant: 'destructive',
       });
     } else {
+      // Log the removal to assignment history
+      if (review && review.review_round_id) {
+        await supabase.from('assignment_history').insert({
+          review_round_id: review.review_round_id,
+          product_id: review.product_id,
+          previous_assignee: review.assigned_to,
+          change_type: 'remove',
+          changed_by: user?.id,
+          reason: 'Removed by admin via assignment manager'
+        });
+      }
+      
       toast({
         title: 'Success',
-        description: 'Assignment deleted',
+        description: 'Assignment removed',
       });
       fetchReviews();
       fetchReviewers();
@@ -350,48 +410,86 @@ export default function ReviewAssignment() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {reviews.map((review) => {
-                  const product = products.find(p => p.id === review.product_id);
-                  return (
-                    <TableRow key={review.id}>
-                      <TableCell className="font-medium">
-                        {product?.name || review.product_id}
-                      </TableCell>
-                      <TableCell>
-                        {review.reviewer 
-                          ? `${review.reviewer.first_name} ${review.reviewer.last_name}`
-                          : 'Unassigned'}
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant={getPriorityColor(review.priority)}>
-                          {review.priority}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <Badge variant="outline" className="capitalize">
-                          {review.status.replace('_', ' ')}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        {review.deadline ? (
-                          <div className="flex items-center gap-1 text-sm">
-                            <Calendar className="h-3 w-3" />
-                            {new Date(review.deadline).toLocaleDateString()}
+                {reviews.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={6} className="text-center py-8 text-muted-foreground">
+                      No assignments yet. Click "Assign Review" to get started.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  reviews.map((review) => {
+                    const product = products.find(p => p.id === review.product_id);
+                    return (
+                      <TableRow key={review.id}>
+                        <TableCell className="font-medium">
+                          {product?.name || review.product_id}
+                        </TableCell>
+                        <TableCell>
+                          {review.reviewer 
+                            ? `${review.reviewer.first_name} ${review.reviewer.last_name}`
+                            : 'Unassigned'}
+                        </TableCell>
+                        <TableCell>
+                          <Badge variant={getPriorityColor(review.priority)}>
+                            {review.priority}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge 
+                            variant={
+                              review.status === 'completed' ? 'success' : 
+                              review.status === 'in_progress' ? 'default' : 
+                              'outline'
+                            } 
+                            className="capitalize"
+                          >
+                            {review.status.replace('_', ' ')}
+                          </Badge>
+                        </TableCell>
+                        <TableCell>
+                          {review.deadline ? (
+                            <div className="flex items-center gap-1 text-sm">
+                              <Calendar className="h-3 w-3" />
+                              {new Date(review.deadline).toLocaleDateString()}
+                            </div>
+                          ) : '-'}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex gap-2 justify-end">
+                            {review.status === 'pending' && (
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                onClick={() => handleUpdateStatus(review.id, 'in_progress')}
+                              >
+                                Start
+                              </Button>
+                            )}
+                            {review.status === 'in_progress' && (
+                              <Button
+                                size="sm"
+                                variant="default"
+                                onClick={() => handleUpdateStatus(review.id, 'completed')}
+                              >
+                                Complete
+                              </Button>
+                            )}
+                            {review.status === 'completed' && (
+                              <Badge variant="success" className="mr-2">✓ Done</Badge>
+                            )}
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleDeleteAssignment(review.id)}
+                            >
+                              Remove
+                            </Button>
                           </div>
-                        ) : '-'}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => handleDeleteAssignment(review.id)}
-                        >
-                          Remove
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                )}
               </TableBody>
             </Table>
           </CardContent>

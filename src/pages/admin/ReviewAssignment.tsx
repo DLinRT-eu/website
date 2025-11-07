@@ -120,12 +120,11 @@ export default function ReviewAssignment() {
     }
 
     try {
-      // Use secure RPC for assignment
-      const { data, error } = await supabase.rpc('create_product_review_admin' as any, {
-        _product_id: selectedProduct,
-        _assigned_to: selectedReviewer,
-        _priority: priority,
-        _deadline: deadline || null,
+      // Use quick assign function with single product
+      const { data, error } = await supabase.rpc('quick_assign_products', {
+        p_product_ids: [selectedProduct],
+        p_reviewer_id: selectedReviewer,
+        p_deadline: deadline || null,
       });
 
       if (error) {

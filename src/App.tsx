@@ -52,6 +52,7 @@ import CompanyProductsManager from "./pages/company/ProductsManager";
 import ReviewerDashboard from "./pages/reviewer/Dashboard";
 import ReviewerGuide from "./pages/reviewer/ReviewerGuide";
 import ReviewerPreferences from "./pages/reviewer/Preferences";
+import DueReviews from "./pages/reviewer/DueReviews";
 
 // Admin Review Pages
 import ReviewRounds from "./pages/admin/ReviewRounds";
@@ -189,6 +190,11 @@ const App = () => (
               <Route path="/reviewer/dashboard" element={
                 <ProtectedRoute allowedRoles={['reviewer', 'admin']}>
                   <ReviewerDashboard />
+                </ProtectedRoute>
+              } />
+              <Route path="/reviewer/due-reviews" element={
+                <ProtectedRoute allowedRoles={['reviewer', 'admin']}>
+                  <DueReviews />
                 </ProtectedRoute>
               } />
               <Route path="/reviewer/guide" element={

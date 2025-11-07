@@ -101,7 +101,7 @@ export default function ReviewAssignment() {
       .from('product_reviews')
       .select(`
         *,
-        reviewer:profiles!assigned_to(first_name, last_name)
+        reviewer:profiles!product_reviews_assigned_to_fkey(first_name, last_name, email)
       `)
       .order('deadline', { ascending: true, nullsFirst: false });
 

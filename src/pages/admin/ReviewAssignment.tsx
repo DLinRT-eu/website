@@ -97,31 +97,53 @@ export default function ReviewAssignment() {
   };
 
   const fetchReviews = async () => {
-    const { data, error } = await supabase
-      .from('product_reviews')
-      .select(`
-        *,
-        reviewer:profiles!product_reviews_assigned_to_fkey(first_name, last_name, email)
-      `)
-      .order('deadline', { ascending: true, nullsFirst: false });
+    try {
+      // Step 1: Fetch all product reviews
+      const { data: reviewsData, error: reviewsError } = await supabase
+        .from('product_reviews')
+        .select('*')
+        .order('deadline', { ascending: true, nullsFirst: false });
 
-    if (error) {
+      if (reviewsError) throw reviewsError;
+
+      // Step 2: Collect unique assigned_to IDs
+      const assignedToIds = Array.from(
+        new Set(reviewsData?.map(r => r.assigned_to).filter(Boolean) || [])
+      );
+
+      // Step 3: Fetch profiles for those IDs
+      let profilesMap = new Map();
+      if (assignedToIds.length > 0) {
+        const { data: profilesData, error: profilesError } = await supabase
+          .from('profiles')
+          .select('id, first_name, last_name, email')
+          .in('id', assignedToIds);
+
+        if (profilesError) {
+          console.error('Error fetching profiles:', profilesError);
+        } else {
+          profilesData?.forEach(p => {
+            profilesMap.set(p.id, p);
+          });
+        }
+      }
+
+      // Step 4: Map reviewer data to reviews
+      const reviewsWithReviewer = (reviewsData || []).map(review => ({
+        ...review,
+        reviewer: review.assigned_to ? profilesMap.get(review.assigned_to) : null,
+      }));
+
+      setReviews(reviewsWithReviewer);
+    } catch (error: any) {
       console.error('Error fetching reviews:', error);
       toast({
         title: 'Error Loading Assignments',
-        description: error.message,
+        description: error.message || 'Failed to load reviews',
         variant: 'destructive',
       });
       setReviews([]);
-    } else {
-      const reviewsWithReviewer = (data || []).map(review => ({
-        ...review,
-        reviewer: review.reviewer as any,
-      }));
-      setReviews(reviewsWithReviewer);
     }
-
-    setLoading(false);
   };
 
   const handleAssignReview = async () => {

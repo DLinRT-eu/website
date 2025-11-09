@@ -165,32 +165,52 @@ export default function AdminDashboard() {
   const fetchRecentActivity = async () => {
     const activities: RecentActivity[] = [];
 
-    // Recent role requests (last 5)
+    // Step 1: Fetch recent role requests (last 5)
     const { data: requests } = await supabase
       .from('role_requests')
-      .select('id, requested_role, created_at, profiles(email)')
+      .select('id, requested_role, created_at, user_id')
       .eq('status', 'pending')
       .order('created_at', { ascending: false })
       .limit(5);
 
+    // Step 2: Fetch recent review assignments (last 5)
+    const { data: reviews } = await supabase
+      .from('product_reviews')
+      .select('id, product_id, assigned_at, assigned_to')
+      .order('assigned_at', { ascending: false })
+      .limit(5);
+
+    // Step 3: Collect all unique user IDs
+    const userIds = new Set<string>();
+    requests?.forEach(req => req.user_id && userIds.add(req.user_id));
+    reviews?.forEach(rev => rev.assigned_to && userIds.add(rev.assigned_to));
+
+    // Step 4: Fetch profiles for all those user IDs
+    let profilesMap = new Map();
+    if (userIds.size > 0) {
+      const { data: profilesData } = await supabase
+        .from('profiles')
+        .select('id, email, first_name, last_name')
+        .in('id', Array.from(userIds));
+
+      profilesData?.forEach(p => {
+        profilesMap.set(p.id, p);
+      });
+    }
+
+    // Step 5: Build activities with mapped profiles
     requests?.forEach(req => {
+      const profile = profilesMap.get(req.user_id);
       activities.push({
         id: req.id,
         type: 'role_request',
-        description: `${(req.profiles as any)?.email || 'User'} requested ${req.requested_role} role`,
+        description: `${profile?.email || 'User'} requested ${req.requested_role} role`,
         timestamp: req.created_at,
       });
     });
 
-    // Recent review assignments (last 5)
-    const { data: reviews } = await supabase
-      .from('product_reviews')
-      .select('id, product_id, assigned_at, profiles(first_name, last_name)')
-      .order('assigned_at', { ascending: false })
-      .limit(5);
-
     reviews?.forEach(rev => {
-      const profile = rev.profiles as any;
+      const profile = profilesMap.get(rev.assigned_to);
       activities.push({
         id: rev.id,
         type: 'review_assignment',

@@ -43,8 +43,8 @@ interface ProductReview {
 }
 
 export default function ReviewAssignment() {
-  const { user } = useAuth();
-  const { isAdmin } = useRoles();
+  const { user, loading: authLoading } = useAuth();
+  const { isAdmin, loading: rolesLoading } = useRoles();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [reviewers, setReviewers] = useState<Reviewer[]>([]);
@@ -63,14 +63,29 @@ export default function ReviewAssignment() {
   const products = ALL_PRODUCTS;
 
   useEffect(() => {
+    // Wait for both auth and roles to load
+    if (authLoading || rolesLoading) {
+      return;
+    }
+
+    // Redirect if not authenticated or not admin
     if (!user || !isAdmin) {
       navigate('/');
       return;
     }
 
-    fetchReviewers();
-    fetchReviews();
-  }, [user, isAdmin]);
+    // Fetch data only when ready
+    const loadData = async () => {
+      setLoading(true);
+      try {
+        await Promise.all([fetchReviewers(), fetchReviews()]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, [user, isAdmin, authLoading, rolesLoading]);
 
   const fetchReviewers = async () => {
     const { data, error } = await supabase.rpc('get_reviewers_with_workload_admin');
@@ -98,20 +113,54 @@ export default function ReviewAssignment() {
 
   const fetchReviews = async () => {
     try {
-      // Step 1: Fetch all product reviews
+      // Try direct SELECT first
       const { data: reviewsData, error: reviewsError } = await supabase
         .from('product_reviews')
         .select('*')
         .order('deadline', { ascending: true, nullsFirst: false });
 
+      // If permission denied, try admin RPC fallback
+      if (reviewsError && (reviewsError.code === '42501' || reviewsError.code === 'PGRST301')) {
+        console.warn('Direct SELECT failed, trying admin RPC:', reviewsError);
+        
+        const { data: rpcData, error: rpcError } = await supabase
+          .rpc('get_product_reviews_admin_secure');
+
+        if (rpcError) {
+          throw new Error(`Admin RPC failed: ${rpcError.message}. Please check System Diagnostics.`);
+        }
+
+        // Map RPC results to expected format
+        const reviewsWithReviewer = (rpcData || []).map((r: any) => ({
+          id: r.id,
+          product_id: r.product_id,
+          review_round_id: r.review_round_id,
+          assigned_to: r.assigned_to,
+          status: r.status,
+          priority: r.priority,
+          deadline: r.deadline,
+          notes: r.notes,
+          started_at: r.started_at,
+          completed_at: r.completed_at,
+          last_activity_at: r.last_activity_at,
+          created_at: r.created_at,
+          reviewer: r.assigned_to ? {
+            first_name: r.reviewer_first_name,
+            last_name: r.reviewer_last_name,
+          } : null,
+        }));
+
+        setReviews(reviewsWithReviewer);
+        return;
+      }
+
       if (reviewsError) throw reviewsError;
 
-      // Step 2: Collect unique assigned_to IDs
+      // Two-step fetch: collect assigned_to IDs and fetch profiles
       const assignedToIds = Array.from(
         new Set(reviewsData?.map(r => r.assigned_to).filter(Boolean) || [])
       );
 
-      // Step 3: Fetch profiles for those IDs
       let profilesMap = new Map();
       if (assignedToIds.length > 0) {
         const { data: profilesData, error: profilesError } = await supabase
@@ -128,7 +177,6 @@ export default function ReviewAssignment() {
         }
       }
 
-      // Step 4: Map reviewer data to reviews
       const reviewsWithReviewer = (reviewsData || []).map(review => ({
         ...review,
         reviewer: review.assigned_to ? profilesMap.get(review.assigned_to) : null,
@@ -138,8 +186,8 @@ export default function ReviewAssignment() {
     } catch (error: any) {
       console.error('Error fetching reviews:', error);
       toast({
-        title: 'Error Loading Assignments',
-        description: error.message || 'Failed to load reviews',
+        title: 'Permission Denied',
+        description: error.message || 'Failed to load reviews. Please verify your admin role in System Diagnostics.',
         variant: 'destructive',
       });
       setReviews([]);

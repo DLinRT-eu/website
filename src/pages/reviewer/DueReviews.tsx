@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
+import { useRoles } from '@/contexts/RoleContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -23,18 +24,26 @@ interface ReviewAssignment {
 }
 
 export default function DueReviews() {
-  const { user, isReviewer, isAdmin } = useAuth();
+  const { user } = useAuth();
+  const { isReviewer, isAdmin, loading: rolesLoading } = useRoles();
   const navigate = useNavigate();
   const [reviews, setReviews] = useState<ReviewAssignment[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // Wait for roles to load
+    if (rolesLoading) {
+      return;
+    }
+
+    // Redirect if not reviewer or admin
     if (!user || (!isReviewer && !isAdmin)) {
       navigate('/auth');
       return;
     }
+
     fetchReviews();
-  }, [user, isReviewer, isAdmin]);
+  }, [user, isReviewer, isAdmin, rolesLoading]);
 
   const fetchReviews = async () => {
     if (!user) return;

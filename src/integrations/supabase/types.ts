@@ -1448,6 +1448,26 @@ export type Database = {
           user_id: string
         }[]
       }
+      get_product_reviews_admin_secure: {
+        Args: never
+        Returns: {
+          assigned_to: string
+          completed_at: string
+          created_at: string
+          deadline: string
+          id: string
+          last_activity_at: string
+          notes: string
+          priority: string
+          product_id: string
+          review_round_id: string
+          reviewer_email: string
+          reviewer_first_name: string
+          reviewer_last_name: string
+          started_at: string
+          status: string
+        }[]
+      }
       get_registration_notifications_admin: {
         Args: never
         Returns: {

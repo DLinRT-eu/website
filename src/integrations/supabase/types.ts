@@ -1390,6 +1390,10 @@ export type Database = {
         }
         Returns: string
       }
+      delete_product_review_admin: {
+        Args: { review_id: string }
+        Returns: Json
+      }
       expire_old_invitations: { Args: never; Returns: undefined }
       get_analytics_daily: {
         Args: { end_date?: string; start_date?: string }

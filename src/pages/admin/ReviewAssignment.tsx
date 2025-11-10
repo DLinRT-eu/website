@@ -285,36 +285,60 @@ export default function ReviewAssignment() {
 
     const review = reviews.find(r => r.id === reviewToDelete);
     
-    const { error } = await supabase
-      .from('product_reviews')
-      .delete()
-      .eq('id', reviewToDelete);
+    try {
+      // Try direct DELETE first
+      const { error: deleteError } = await supabase
+        .from('product_reviews')
+        .delete()
+        .eq('id', reviewToDelete);
 
-    if (error) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
-      // Log the removal to assignment history
-      if (review && review.review_round_id) {
-        await supabase.from('assignment_history').insert({
-          review_round_id: review.review_round_id,
-          product_id: review.product_id,
-          previous_assignee: review.assigned_to,
-          change_type: 'remove',
-          changed_by: user?.id,
-          reason: 'Removed by admin via assignment manager'
+      // If permission denied, try admin RPC fallback
+      if (deleteError && (deleteError.code === '42501' || deleteError.code === 'PGRST301')) {
+        console.warn('Direct DELETE failed, trying admin RPC:', deleteError);
+        
+        const { data, error: rpcError } = await supabase
+          .rpc('delete_product_review_admin', {
+            review_id: reviewToDelete
+          });
+
+        if (rpcError) {
+          throw new Error(`Failed to delete review: ${rpcError.message}. Please check System Diagnostics.`);
+        }
+
+        toast({
+          title: 'Success',
+          description: 'Assignment removed (via admin function)',
+        });
+      } else if (deleteError) {
+        throw deleteError;
+      } else {
+        // Direct DELETE succeeded - log to assignment history manually
+        if (review && review.review_round_id) {
+          await supabase.from('assignment_history').insert({
+            review_round_id: review.review_round_id,
+            product_id: review.product_id,
+            previous_assignee: review.assigned_to,
+            change_type: 'remove',
+            changed_by: user?.id,
+            reason: 'Removed by admin via assignment manager'
+          });
+        }
+        
+        toast({
+          title: 'Success',
+          description: 'Assignment removed',
         });
       }
-      
-      toast({
-        title: 'Success',
-        description: 'Assignment removed',
-      });
+
       fetchReviews();
       fetchReviewers();
+    } catch (error: any) {
+      console.error('Error deleting review:', error);
+      toast({
+        title: 'Delete Failed',
+        description: error.message || 'Failed to delete assignment. Please verify your admin permissions.',
+        variant: 'destructive',
+      });
     }
 
     setConfirmDeleteOpen(false);

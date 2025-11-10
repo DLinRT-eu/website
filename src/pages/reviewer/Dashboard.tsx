@@ -39,7 +39,7 @@ interface ReviewRound {
 
 export default function ReviewerDashboard() {
   const { user, loading: authLoading } = useAuth();
-  const { isReviewer, isAdmin } = useRoles();
+  const { isReviewer, isAdmin, loading: rolesLoading } = useRoles();
   const navigate = useNavigate();
   const [reviews, setReviews] = useState<ReviewAssignment[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,8 +48,8 @@ export default function ReviewerDashboard() {
   const [hasExpertise, setHasExpertise] = useState(true);
 
   useEffect(() => {
-    // Don't check permissions while still loading auth
-    if (authLoading) return;
+    // Wait for both auth and roles to finish loading
+    if (authLoading || rolesLoading) return;
     
     if (!user || (!isReviewer && !isAdmin)) {
       navigate('/auth');
@@ -59,7 +59,7 @@ export default function ReviewerDashboard() {
     fetchReviews();
     fetchRounds();
     checkExpertise();
-  }, [user, isReviewer, isAdmin, authLoading, navigate]);
+  }, [user, isReviewer, isAdmin, authLoading, rolesLoading, navigate]);
 
   const checkExpertise = async () => {
     if (!user) return;

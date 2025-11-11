@@ -227,24 +227,49 @@ export default function ReviewRounds() {
     if (!currentRoundId) return;
     
     setAssigning(currentRoundId);
+    
+    console.log('[ReviewRounds] Starting atomic assignment:', {
+      roundId: currentRoundId,
+      assignmentCount: finalAssignments.length,
+      deadline: currentDeadline
+    });
+    
+    const toastId = toast.loading(`Creating ${finalAssignments.length} assignments...`);
+    
     try {
-      const productIds = ALL_PRODUCTS.map(p => p.id);
-      
-      toast.loading(`Creating ${finalAssignments.length} assignments...`);
-      
-      const result = await bulkAssignProducts(
-        currentRoundId, 
-        productIds, 
-        currentDeadline,
-        finalAssignments
-      );
+      // Use the new atomic RPC function for reliable assignment
+      const assignmentsWithDeadline = finalAssignments.map(a => ({
+        ...a,
+        deadline: currentDeadline || new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().split('T')[0]
+      }));
 
-      if (result.success > 0) {
-        toast.success(`Successfully assigned ${result.success} products to reviewers`);
+      console.log('[ReviewRounds] Calling start_review_round_atomic RPC');
+      
+      const { data: result, error: rpcError } = await supabase
+        .rpc('start_review_round_atomic', {
+          p_round_id: currentRoundId,
+          p_assignments: assignmentsWithDeadline as any
+        });
+
+      if (rpcError) {
+        console.error('[ReviewRounds] ❌ RPC error:', rpcError);
+        throw new Error(rpcError.message);
+      }
+
+      console.log('[ReviewRounds] ✅ Assignment result:', result);
+
+      if (result && typeof result === 'object' && 'success' in result) {
+        const typedResult = result as { success: boolean; assigned_count: number; failed_count: number; errors: any[] };
         
-        // Update round status to active
-        await updateRoundStatus(currentRoundId, 'active');
-        
+        toast.success(`Successfully assigned ${typedResult.assigned_count} products to reviewers`, {
+          id: toastId
+        });
+
+        if (typedResult.failed_count > 0) {
+          console.warn('[ReviewRounds] Some assignments failed:', typedResult.errors);
+          toast.warning(`${typedResult.failed_count} products could not be assigned`);
+        }
+
         // Reset state and close dialogs
         setShowAssignmentPreview(false);
         setCurrentRoundId(null);
@@ -252,15 +277,17 @@ export default function ReviewRounds() {
         setProposedAssignments([]);
         setSelectedReviewers([]);
         
-        fetchRounds();
-      }
-
-      if (result.failed > 0) {
-        toast.warning(`${result.failed} products could not be assigned`);
+        // Refresh rounds list
+        await fetchRounds();
+      } else {
+        throw new Error('Assignment failed without detailed error');
       }
     } catch (error) {
-      console.error('Error in bulk assignment:', error);
-      toast.error(`Failed to assign products: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      console.error('[ReviewRounds] ❌ Error in assignment:', error);
+      toast.error(
+        `Failed to assign products: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        { id: toastId }
+      );
     } finally {
       setAssigning(null);
     }

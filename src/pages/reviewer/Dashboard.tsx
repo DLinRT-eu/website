@@ -76,18 +76,55 @@ export default function ReviewerDashboard() {
   };
 
   const fetchReviews = async () => {
-    if (!user) return;
-
-    const { data, error } = await supabase
-      .from('product_reviews')
-      .select('*')
-      .eq('assigned_to', user.id)
-      .order('deadline', { ascending: true, nullsFirst: false });
-
-    if (!error && data) {
-      setReviews(data as ReviewAssignment[]);
+    if (!user) {
+      console.log('[Dashboard] No user, skipping fetch');
+      return;
     }
-    setLoading(false);
+
+    console.log('[Dashboard] Fetching reviews for user:', user.id);
+    console.log('[Dashboard] isReviewer:', isReviewer, 'isAdmin:', isAdmin);
+
+    try {
+      // Phase 1: Try secure RPC first (bypasses potential RLS issues)
+      console.log('[Dashboard] Attempting RPC call: get_my_reviews_secure');
+      const { data: rpcData, error: rpcError } = await supabase
+        .rpc('get_my_reviews_secure');
+
+      if (!rpcError && rpcData) {
+        console.log('[Dashboard] ✅ RPC successful:', rpcData.length, 'reviews');
+        setReviews(rpcData as ReviewAssignment[]);
+        setLoading(false);
+        return;
+      }
+
+      console.warn('[Dashboard] ⚠️ RPC failed, trying direct query:', rpcError?.message);
+
+      // Phase 2: Fallback to direct query with detailed logging
+      const { data, error } = await supabase
+        .from('product_reviews')
+        .select('*')
+        .eq('assigned_to', user.id)
+        .order('deadline', { ascending: true, nullsFirst: false });
+
+      if (!error && data) {
+        console.log('[Dashboard] ✅ Direct query successful:', data.length, 'reviews');
+        setReviews(data as ReviewAssignment[]);
+      } else {
+        console.error('[Dashboard] ❌ Both RPC and direct query failed:', error?.message);
+        
+        // Phase 3: Debug diagnostics
+        const { data: debugData, error: debugError } = await supabase
+          .rpc('debug_reviewer_access', { reviewer_id: user.id });
+        
+        if (!debugError) {
+          console.log('[Dashboard] 🔍 Debug info:', debugData);
+        }
+      }
+    } catch (error) {
+      console.error('[Dashboard] ❌ Unexpected error:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const fetchRounds = async () => {

@@ -1390,6 +1390,7 @@ export type Database = {
         }
         Returns: string
       }
+      debug_reviewer_access: { Args: { reviewer_id: string }; Returns: Json }
       delete_product_review_admin: {
         Args: { review_id: string }
         Returns: Json
@@ -1433,6 +1434,24 @@ export type Database = {
       get_highest_role: {
         Args: { _user_id: string }
         Returns: Database["public"]["Enums"]["app_role"]
+      }
+      get_my_reviews_secure: {
+        Args: never
+        Returns: {
+          assigned_at: string
+          assigned_to: string
+          completed_at: string
+          created_at: string
+          deadline: string
+          id: string
+          last_activity_at: string
+          notes: string
+          priority: string
+          product_id: string
+          review_round_id: string
+          started_at: string
+          status: string
+        }[]
       }
       get_pending_role_requests_admin: {
         Args: never
@@ -1616,6 +1635,10 @@ export type Database = {
           status: string
           user_id: string
         }[]
+      }
+      start_review_round_atomic: {
+        Args: { p_assignments: Json; p_round_id: string }
+        Returns: Json
       }
       verify_user_registration: {
         Args: { p_user_id: string; p_verified?: boolean }

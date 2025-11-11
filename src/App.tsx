@@ -34,6 +34,7 @@ import ProductExperiences from "./pages/ProductExperiences";
 import Auth from "./pages/Auth";
 import Changelog from "./pages/Changelog";
 import ChangelogGenerator from "./pages/admin/ChangelogGenerator";
+import CompanyManagement from "./pages/admin/CompanyManagement";
 
 // Admin Pages
 import AdminOverview from "./pages/admin/AdminOverview";
@@ -183,6 +184,11 @@ const App = () => (
               <Route path="/admin/changelog-generator" element={
                 <ProtectedRoute allowedRoles={['admin']}>
                   <ChangelogGenerator />
+                </ProtectedRoute>
+              } />
+              <Route path="/admin/companies" element={
+                <ProtectedRoute allowedRoles={['admin']}>
+                  <CompanyManagement />
                 </ProtectedRoute>
               } />
               

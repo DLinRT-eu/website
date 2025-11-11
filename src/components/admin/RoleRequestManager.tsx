@@ -167,19 +167,43 @@ export const RoleRequestManager = () => {
 
       if (roleError) throw roleError;
 
-      // If company role, update company_representatives
+      // If company role, verify or create company_representatives entry
       if (request.requested_role === 'company' && request.company_id) {
-        const { error: companyError } = await supabase
+        // Check if entry exists
+        const { data: existingRep } = await supabase
           .from('company_representatives')
-          .update({
-            verified: true,
-            verified_by: user.id,
-            verified_at: new Date().toISOString(),
-          })
+          .select('*')
           .eq('user_id', request.user_id)
-          .eq('company_id', request.company_id);
+          .eq('company_id', request.company_id)
+          .maybeSingle();
 
-        if (companyError) throw companyError;
+        if (existingRep) {
+          // Update existing entry
+          const { error: companyError } = await supabase
+            .from('company_representatives')
+            .update({
+              verified: true,
+              verified_by: user.id,
+              verified_at: new Date().toISOString(),
+            })
+            .eq('id', existingRep.id);
+
+          if (companyError) throw companyError;
+        } else {
+          // Create new entry
+          const { error: companyError } = await supabase
+            .from('company_representatives')
+            .insert({
+              user_id: request.user_id,
+              company_name: request.company_id,
+              company_id: request.company_id,
+              verified: true,
+              verified_by: user.id,
+              verified_at: new Date().toISOString(),
+            });
+
+          if (companyError) throw companyError;
+        }
       }
 
       // Update request status
@@ -317,19 +341,40 @@ export const RoleRequestManager = () => {
 
           if (roleError) throw roleError;
 
-          // If company role, update company_representatives
+          // If company role, verify or create company_representatives entry
           if (request.requested_role === 'company' && request.company_id) {
-            const { error: companyError } = await supabase
+            const { data: existingRep } = await supabase
               .from('company_representatives')
-              .update({
-                verified: true,
-                verified_by: user.id,
-                verified_at: new Date().toISOString(),
-              })
+              .select('*')
               .eq('user_id', request.user_id)
-              .eq('company_id', request.company_id);
+              .eq('company_id', request.company_id)
+              .maybeSingle();
 
-            if (companyError) throw companyError;
+            if (existingRep) {
+              const { error: companyError } = await supabase
+                .from('company_representatives')
+                .update({
+                  verified: true,
+                  verified_by: user.id,
+                  verified_at: new Date().toISOString(),
+                })
+                .eq('id', existingRep.id);
+
+              if (companyError) throw companyError;
+            } else {
+              const { error: companyError } = await supabase
+                .from('company_representatives')
+                .insert({
+                  user_id: request.user_id,
+                  company_name: request.company_id,
+                  company_id: request.company_id,
+                  verified: true,
+                  verified_by: user.id,
+                  verified_at: new Date().toISOString(),
+                });
+
+              if (companyError) throw companyError;
+            }
           }
 
           // Update request status

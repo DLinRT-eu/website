@@ -26,10 +26,52 @@ const matchesTask = (product: ProductDetails, task: string): boolean => {
  * DataService provides methods to access and manipulate product, company, and news data
  */
 class DataService {
+  private products: ProductDetails[] = [];
+  private verificationsLoaded = false;
+
+  constructor() {
+    this.loadCompanyVerifications();
+  }
+
+  // Load company verifications and merge with products
+  async loadCompanyVerifications() {
+    if (this.verificationsLoaded) return;
+
+    try {
+      const { supabase } = await import('@/integrations/supabase/client');
+      const { data } = await supabase
+        .from('company_product_verifications')
+        .select('product_id, verified_at')
+        .order('verified_at', { ascending: false });
+      
+      if (data) {
+        // Create map of product_id -> latest verification date
+        const verificationMap = new Map<string, string>();
+        data.forEach(v => {
+          if (!verificationMap.has(v.product_id)) {
+            verificationMap.set(v.product_id, v.verified_at);
+          }
+        });
+        
+        // Merge with ALL_PRODUCTS
+        this.products = ALL_PRODUCTS.map(product => ({
+          ...product,
+          companyRevisionDate: verificationMap.get(product.id) || product.companyRevisionDate
+        }));
+        
+        this.verificationsLoaded = true;
+      }
+    } catch (error) {
+      console.error('Error loading company verifications:', error);
+      this.products = [...ALL_PRODUCTS];
+    }
+  }
+
   // Product methods
   getAllProducts(): ProductDetails[] {
     // Return all products with regulatory approval
-    return ALL_PRODUCTS.filter(product => hasRegulatoryApproval(product));
+    const productList = this.verificationsLoaded ? this.products : ALL_PRODUCTS;
+    return productList.filter(product => hasRegulatoryApproval(product));
   }
 
   getProductById(id: string): ProductDetails | undefined {
@@ -39,13 +81,15 @@ class DataService {
     };
     
     const actualId = legacyIdMapping[id] || id;
+    const productList = this.verificationsLoaded ? this.products : ALL_PRODUCTS;
     
-    return ALL_PRODUCTS.find(product => product.id === actualId && 
+    return productList.find(product => product.id === actualId && 
       hasRegulatoryApproval(product));
   }
 
   getProductsByCategory(category: string): ProductDetails[] {
-    return ALL_PRODUCTS.filter(product => 
+    const productList = this.verificationsLoaded ? this.products : ALL_PRODUCTS;
+    return productList.filter(product => 
       matchesTask(product, category) && hasRegulatoryApproval(product)
     );
   }
@@ -54,13 +98,15 @@ class DataService {
     const company = this.getCompanyById(companyId);
     if (!company) return [];
     
-    return ALL_PRODUCTS.filter(product => 
+    const productList = this.verificationsLoaded ? this.products : ALL_PRODUCTS;
+    return productList.filter(product => 
       company.productIds.includes(product.id || '') && hasRegulatoryApproval(product)
     );
   }
 
   filterProducts(filters: FilterState): ProductDetails[] {
-    return ALL_PRODUCTS.filter((product: ProductDetails) => {
+    const productList = this.verificationsLoaded ? this.products : ALL_PRODUCTS;
+    return productList.filter((product: ProductDetails) => {
       // First check regulatory approval
       if (!hasRegulatoryApproval(product)) {
         return false;

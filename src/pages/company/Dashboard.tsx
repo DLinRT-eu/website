@@ -165,29 +165,47 @@ export default function CompanyDashboard() {
     const product = companyProducts.find(p => p.id === selectedProduct);
     if (!product || !companyUser) return;
 
-    // Insert/update company revision with approved status automatically
-    // This sets the companyRevisionDate in the database
-    const { error } = await supabase
-      .from('company_revisions')
-      .insert({
-        product_id: selectedProduct,
-        company_id: product.company,
-        revised_by: user!.id,
-        company_user_id: companyUser.id,
-        revision_date: format(certificationDate, 'yyyy-MM-dd'),
-        changes_summary: 'Company certification: Product information verified and approved',
-        verification_status: 'approved', // Auto-approved since it's from the company itself
-        verified_by: user!.id,
-        verified_at: new Date().toISOString(),
-      });
+    try {
+      // Insert into company_product_verifications (for badge display)
+      const { error: verificationError } = await supabase
+        .from('company_product_verifications')
+        .insert({
+          company_id: product.company,
+          product_id: selectedProduct,
+          verified_by: user!.id,
+          verified_at: new Date().toISOString(),
+          verification_notes: 'Product information certified as accurate by company representative',
+        });
 
-    if (error) {
-      toast({
-        title: 'Error',
-        description: error.message,
-        variant: 'destructive',
-      });
-    } else {
+      if (verificationError) {
+        console.error('Error creating verification:', verificationError);
+        toast({
+          title: 'Error',
+          description: 'Failed to create product verification. Please try again.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      // Also insert into company_revisions (for audit trail)
+      const { error: revisionError } = await supabase
+        .from('company_revisions')
+        .insert({
+          product_id: selectedProduct,
+          company_id: product.company,
+          revised_by: user!.id,
+          revision_date: format(certificationDate, 'yyyy-MM-dd'),
+          changes_summary: 'Company certification: Product information verified and approved',
+          verification_status: 'approved',
+          verified_by: user!.id,
+          verified_at: new Date().toISOString(),
+        });
+
+      if (revisionError) {
+        console.error('Error creating revision:', revisionError);
+        // Don't fail if revision creation fails, verification is more important
+      }
+
       toast({
         title: 'Success',
         description: `${product.name} has been certified. The verification badge will now appear on the product page.`,
@@ -196,6 +214,13 @@ export default function CompanyDashboard() {
       setSelectedProduct('');
       setCertificationDate(new Date());
       fetchRevisions();
+    } catch (error: any) {
+      console.error('Error in certification process:', error);
+      toast({
+        title: 'Error',
+        description: error.message || 'An unexpected error occurred',
+        variant: 'destructive',
+      });
     }
   };
 

@@ -132,6 +132,27 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
         company_id: requestedRole === 'company' ? companyId.trim() : null
       });
 
+      // If company role, create company_representatives entry first
+      if (requestedRole === 'company' && companyId) {
+        const { error: companyRepError } = await supabase
+          .from('company_representatives')
+          .insert({
+            user_id: user.id,
+            company_name: companyName,
+            company_id: companyId.trim(),
+            position: justification.substring(0, 100), // Extract position from justification
+            verified: false,
+            verified_by: null,
+          });
+
+        if (companyRepError) {
+          console.error('[RoleRequest] Company rep creation error:', companyRepError);
+          toast.error(`Failed to create company representative entry: ${companyRepError.message}`);
+          setSubmitting(false);
+          return;
+        }
+      }
+
       const { data, error } = await supabase
         .from('role_requests')
         .insert({
@@ -157,6 +178,7 @@ export default function RoleRequestForm({ onRequestSubmitted }: RoleRequestFormP
         toast.success('Role request submitted successfully! An admin will review your request.');
         setJustification('');
         setCompanyId('');
+        setCompanyName('');
         onRequestSubmitted();
       }
     } catch (err: any) {

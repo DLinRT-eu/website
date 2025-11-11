@@ -1372,6 +1372,10 @@ export type Database = {
         }[]
       }
       can_manage_reviews: { Args: { user_id_param: string }; Returns: boolean }
+      can_represent_company: {
+        Args: { p_company_id: string; p_user_id: string }
+        Returns: boolean
+      }
       can_user_adopt_product: { Args: { p_user_id: string }; Returns: boolean }
       can_view_security_data: {
         Args: { user_id_param: string }

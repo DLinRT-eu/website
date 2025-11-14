@@ -26,15 +26,7 @@ export const MEDLEVER_PLATFORM_PRODUCTS: ProductDetails[] = [
     keyFeatures: [
       "Workflow orchestration: Coordinate simulation, planning, treatment, and QA across all roles and modalities with unified task management",
       "Documentation automation: Streamline reporting, reduce clicks, and eliminate redundant data entry across the entire care pathway",
-      "Interoperability: Bridge data across disparate systems like ARIA, MOSAIQ, and Epic for a unified view of operations",
-      "Real-time analytics & visibility: Deliver performance insights for administrators, physicists, and clinicians to spot workflow gaps",
-      "Data integrity foundation: Built with data integrity and workflow alignment at the center to prevent fragmented outputs",
-      "Clinical and financial pathway unification: Seamless flow of documentation, data points, and tasks across clinical and billing workflows",
       "AI workflow optimization: AI acts as a true partner to spot workflow gaps, ensure timely task completion, and improve accuracy",
-      "Missed charge prevention: Automated billing checks ensure simulations, contour reviews, and treatment verifications are properly documented",
-      "Compliance management: Address rising compliance demands with consistent documentation and automated verification workflows",
-      "Labor shortage mitigation: Intelligent automation reduces burden on staff while maintaining quality and safety standards",
-      "Cost management: Reduce rising operational costs through workflow efficiency and revenue cycle optimization",
       "Patient safety enhancement: Ensure treatment verifications and QA happen on time with workflow tracking and automated alerts"
     ],
     technicalSpecifications: {
@@ -60,9 +52,6 @@ export const MEDLEVER_PLATFORM_PRODUCTS: ProductDetails[] = [
       ]
     },
     regulatory: {
-      ce: {
-        status: "Not specified"
-      },
       fda: {
         status: "Approved",
         class: "Class II",
@@ -71,13 +60,11 @@ export const MEDLEVER_PLATFORM_PRODUCTS: ProductDetails[] = [
       intendedUseStatement: "Workflow orchestration and documentation automation for radiation oncology departments"
     },
     market: {
-      onMarketSince: "Information not specified",
+      onMarketSince: "2024",
       distributionChannels: ["Direct sales"]
     },
-    version: "Information not specified",
     lastUpdated: "2025-11-02",
     lastRevised: "2025-11-02",
-    companyRevisionDate: "2025-11-02",
-    releaseDate: "Information not specified"
+    companyRevisionDate: "2025-11-02"
   }
 ];

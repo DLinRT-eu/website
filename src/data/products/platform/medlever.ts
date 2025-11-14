@@ -43,10 +43,10 @@ export const MEDLEVER_PLATFORM_PRODUCTS: ProductDetails[] = [
         "Epic EMR",
         "Oncology Information Systems (OIS)",
         "Electronic Medical Records (EMR)",
-        "Billing systems",
-        "QA systems"
+        "Billing systems",        "QA systems"
       ],
-      deployment: ["Cloud-based", "On-premise"],      triggerForAnalysis: "Integrated within clinical workflow",
+      deployment: ["Cloud-based", "On-premise"],
+      triggerForAnalysis: "Integrated within clinical workflow",
       processingTime: "Real-time workflow management"
     },
     regulatory: {

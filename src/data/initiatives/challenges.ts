@@ -83,19 +83,19 @@ export const CHALLENGE_INITIATIVES: Initiative[] = [
     participationInfo: "Currently ongoing"
   },
   {
-    id: "autoplanheadneck",
+    id: "autortp",
     name: "AutoPlan Head & Neck",
     category: "Grand Challenge",
     description: "Automatic treatment planning challenge for head and neck cancer, focusing on generating high-quality treatment plans automatically.",
-    website: "https://www.auto-planning-challenge.org/",
-    organization: "University Medical Center Groningen",
-    startDate: "2022-03-01",
-    endDate: "2022-12-15",
-    status: "Completed",
-    tags: ["Head and Neck Cancer", "Treatment Planning", "Optimization", "Dose Prediction"],
+    website: "https://auto-rtp.grand-challenge.org/",
+    organization: "ESTRO",
+    startDate: "2023-05-01",
+    endDate: "2024-01-01",
+    status: "Active",
+    tags: ["Prostate Cancer", "Treatment Planning", "Optimization", "Dose Prediction"],
     features: ["Clinical CT datasets", "Structure sets", "Evaluation based on clinical metrics"],
     dataAccess: "Available for research purposes",
-    resultsUrl: "https://www.auto-planning-challenge.org/results",
+    resultsUrl: "https://auto-rtp.grand-challenge.org/evaluation/always-open/leaderboard/",
     participationInfo: "Was open to academic and commercial participants"
   },
   {

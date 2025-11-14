@@ -84,9 +84,9 @@ export const CHALLENGE_INITIATIVES: Initiative[] = [
   },
   {
     id: "autortp",
-    name: "AutoPlan Head & Neck",
+    name: "AUTO-RTP",
     category: "Grand Challenge",
-    description: "Automatic treatment planning challenge for head and neck cancer, focusing on generating high-quality treatment plans automatically.",
+    description: "Automatic treatment planning challenge for prostate, focusing on generating high-quality treatment plans automatically.",
     website: "https://auto-rtp.grand-challenge.org/",
     organization: "ESTRO",
     startDate: "2023-05-01",

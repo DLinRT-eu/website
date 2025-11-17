@@ -11,63 +11,17 @@
 
 ## Documentation
 
-For a comprehensive guide to reviewing and updating product information:
+### For Administrators
+- [Admin Guide](./docs/ADMIN_GUIDE.md) - User management, review assignment, security monitoring
 
-- [Documentation Quick Links](./DOCUMENTATION_LINKS.md) - Start here for an overview
-- [Review Guide](./docs/review/GUIDE.md) - Complete review documentation
-- [Review Status Dashboard](./docs/review/STATUS.md) - Current review status
-- [Products Revision Guide](./docs/review/README.md) - How to update products
-- [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md) - Templates for manufacturer communication
+### For Reviewers  
+- [Reviewer Guide](./docs/REVIEWER_GUIDE.md) - Product review workflow and best practices
 
----
+### For Product Updates
+- [Review Guide](./docs/review/GUIDE.md) - How to review and update product information
+- [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md) - Communication templates
 
-## Hidden/Admin Pages
 
-The following pages are accessible but not listed in the main navigation:
-
-- **Review Dashboard** (`/review`) - Administrative interface for product review management and status tracking
-- **Product Review** (`/review/:id`) - Individual product review interface for detailed verification
-- **Timeline** (`/timeline`) - Interactive data visualization showing product release timeline and trends
-- **Review Rounds** (`/admin/review-rounds`) - Create and manage review rounds with balanced assignments
-- **Round Details** (`/admin/review-rounds/:roundId`) - View assignments and audit history for a specific round
-- **Enhanced Assignment** (`/admin/review-assignment`) - Advanced reviewer assignment interface
-
-These pages provide advanced functionality for maintainers and data analysis but are intentionally kept separate from the main user navigation.
-
----
-
-## Reviewer Assignment System
-
-DLinRT.eu features an intelligent reviewer assignment system that:
-
-- **Multi-Dimensional Preferences**: Reviewers specify expertise across categories, companies, and products
-- **Balanced Assignments**: Algorithm automatically distributes workload evenly while matching expertise
-- **Assignment Control**: Full preview and manual override capabilities before finalizing
-- **Audit Trail**: Complete history tracking of all assignment changes with reasons
-- **Email Notifications**: Automatic notifications to reviewers with assignment details and deadlines
-
-For detailed information:
-- **Admins**: See [Admin Guide](./docs/ADMIN_GUIDE.md) and [Reviewer Assignment Guide](./docs/REVIEWER_ASSIGNMENT_GUIDE.md)
-- **Reviewers**: See [Reviewer Guide](./docs/REVIEWER_GUIDE.md)
-
----
-
-## Reviewing Product Content
-
-If you want to review or update the content of a product, follow the instructions in the [Review Guide](./docs/review/GUIDE.md).
-
-### Key Files to Review
-1. **`src/data/products/*.ts`**  
-   These files contain the core product data, including details like name, modality, anatomy, and certifications.  
-
-2. **`src/components/product/*.tsx`**  
-   Components that display product information on the website.  
-
-3. **`src/config/tags.ts`**  
-   Defines valid tags for modality, anatomy, and certifications.  
-
-4. **`src/utils/validateTags.ts`**  
-   Utility that validates product tags against predefined valid tags.
 
 ---
 

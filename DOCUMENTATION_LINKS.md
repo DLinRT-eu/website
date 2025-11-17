@@ -1,61 +1,49 @@
+# Documentation Overview
 
-# DLinRT.eu Documentation Quick Links
+## For Administrators
 
-## Review Process Documentation
+- **[Admin Guide](./docs/ADMIN_GUIDE.md)** - User management, review rounds, security monitoring
+- **[Reviewer Assignment Guide](./docs/REVIEWER_ASSIGNMENT_GUIDE.md)** - Detailed assignment workflows
 
-| Document | Purpose | Key Sections |
-|----------|----------|--------------|
-| [Review Guide](./docs/review/GUIDE.md) | Central hub for all review documentation | • Multi-Category Products  • Product Versioning  • Review Workflow |
-| [Review Status](./docs/review/STATUS.md) | Track review progress | • Status Legend  • Product Status  • Review Priority |
-| [Product Documentation](./docs/review/README.md) | Product data management | • Multi-Category Support  • Versioning Support  • Hidden Admin Pages |
-| [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md) | Communication templates | • Verification Request  • Follow-up  • Update Confirmation |
+## For Reviewers
 
-## Common Tasks
+- **[Reviewer Guide](./docs/REVIEWER_GUIDE.md)** - Review workflow, preferences, best practices
 
-1. **Reviewing Products**
-   - Follow the [Product Review Guide](./docs/review/GUIDE.md)
-   - Use the in-site review interface at `/review`
-   - Reference [Example Templates](./src/data/products/examples)
+## For Product Management
 
-2. **Creating Multi-Category Products**
-   - Use primary `category` for main functionality
-   - Add `secondaryCategories` for additional features
-   - Follow field documentation in [Review Guide](./docs/review/GUIDE.md)
-   - Submit through the product interface
+- **[Review Guide](./docs/review/GUIDE.md)** - How to review and update products
+- **[Manufacturer Templates](./MANUFACTURER_TEMPLATES.md)** - Communication templates
 
-3. **Managing Product Versions**
-   - Create separate entries for major versions
-   - Use consistent ID patterns (`product-v1`, `product-v2`)
-   - Track with `version` and `releaseDate` fields
-   - Reference versioning guide in [Review Guide](./docs/review/GUIDE.md)
+## Technical Reference
 
-4. **Contacting Manufacturers**
-   - Use [Manufacturer Templates](./MANUFACTURER_TEMPLATES.md)
-   - Submit through the in-site forms
-   - Track in the product dashboard
+- **[Admin Routes](./docs/ADMIN_COMPANY_ROUTES.md)** - Complete route reference
+- **[Security](./SECURITY.md)** - Security policies and reporting
 
-5. **Using Hidden Admin Pages**
-   - **Review Dashboard**: `/review` - Product review management
-   - **Timeline Analysis**: `/timeline` - Data visualization and trends
-   - **Individual Reviews**: `/review/:id` - Detailed product verification
+---
 
-6. **Legacy Documentation**
-   - [Manual Update Guide](./docs/review/README.md)
-   - Update [Review Status](./docs/review/STATUS.md)
+## Key Application Routes
 
-## Documentation Updates
+### Public Pages
+- `/products` - Browse all products
+- `/companies` - Company directory
+- `/timeline` - Product release timeline
 
-Last Updated: 2025-05-27
+### Admin Pages
+- `/admin` - Admin dashboard
+- `/admin/users` - User management
+- `/admin/reviews` - Review assignment
+- `/admin/review-rounds` - Review round management
+- `/admin/companies` - Company management
 
-**Recent Changes:**
-- Added multi-category product support documentation
-- Documented hidden administrative pages
-- Updated versioning guidelines
-- Clarified product structure capabilities
+### Reviewer Pages
+- `/reviewer` - Reviewer dashboard
+- `/reviewer/preferences` - Set expertise preferences
+- `/reviewer/due-reviews` - View assigned reviews
 
-For any documentation improvements or issues, please:
+### Company Pages
+- `/company/dashboard` - Company dashboard
+- `/company/products` - Manage company products
 
-1. Open an issue in the repository
-2. Reference specific documents
-3. Suggest concrete improvements
-4. Tag relevant team members
+---
+
+**Last Updated**: November 2025

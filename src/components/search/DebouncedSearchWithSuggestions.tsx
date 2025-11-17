@@ -6,7 +6,6 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ProductDetails } from '@/types/productDetails';
 
-interface DebouncedSearchWithSuggestionsProps {
   onSearch: (query: string) => void;
   products?: ProductDetails[];
   placeholder?: string;
@@ -32,10 +31,15 @@ const DebouncedSearchWithSuggestions = ({
 
   // Load recent searches from localStorage
   useEffect(() => {
-    const stored = localStorage.getItem('recentSearches');
-    if (stored) {
-      setRecentSearches(JSON.parse(stored));
-    }
+    let cancelled = false;
+    (async () => {
+      const stored = localStorage.getItem('recentSearches');
+      if (stored) {
+        const decrypted = await decryptSearches(stored);
+        if (decrypted && !cancelled) setRecentSearches(decrypted);
+      }
+    })();
+    return () => { cancelled = true; };
   }, []);
 
   // Debounced search effect
@@ -113,7 +117,10 @@ const DebouncedSearchWithSuggestions = ({
     
     const updated = [query, ...recentSearches.filter(s => s !== query)].slice(0, 5);
     setRecentSearches(updated);
-    localStorage.setItem('recentSearches', JSON.stringify(updated));
+    // must encrypt before storing
+    encryptSearches(updated).then(enc => {
+      localStorage.setItem('recentSearches', enc);
+    });
   };
 
   const clearRecentSearches = () => {

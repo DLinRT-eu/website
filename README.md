@@ -7,7 +7,7 @@
 
 # Deep learning in Radiotherapy products
 
-> **Note**: The website is currently under development. We welcome contributions to verify and improve the product information accuracy.
+> **Note**: The website repository has been migrated to [https://github.com/DLinRT-eu/dlinrteu-website](https://github.com/DLinRT-eu/dlinrteu-website).
 
 ## Documentation
 

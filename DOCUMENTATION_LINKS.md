@@ -19,6 +19,12 @@
 - **[Admin Routes](./docs/ADMIN_COMPANY_ROUTES.md)** - Complete route reference
 - **[Security](./SECURITY.md)** - Security policies and reporting
 
+## Database & Migrations
+
+- **[Supabase Migration Audit](./docs/SUPABASE_MIGRATION_AUDIT.md)** - Comprehensive audit of all 96 migrations
+- **[Migration Cleanup Guide](./docs/MIGRATION_CLEANUP_GUIDE.md)** - How to clean up duplicate migrations
+- **[Fix: User Registration Notifications](./docs/FIX_USER_REGISTRATION_NOTIFICATIONS.md)** - Internal error fix documentation
+
 ---
 
 ## Key Application Routes
